@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/*
+ * Canopy palette. Light, clean control-room feel: cool off-white ground,
+ * deep ink text, one living green, and the pink of grow lights as a rare accent.
+ */
+:root {
+  --bg: #eef2f5;
+  --paper: #ffffff;
+  --ink: #141b2b;
+  --muted: #5b677d;
+  --line: #dce2ec;
+  --green: #2e9e5b;
+  --green-ink: #086b4a;
+  --led: #ff4fd8;
+  --night: #0b1222;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-green: var(--green);
+  --color-green-ink: var(--green-ink);
+  --color-led: var(--led);
+  --color-night: var(--night);
+  --font-sans: var(--cf-sans);
+  --font-display: var(--cf-display);
+  --font-mono: var(--cf-mono);
+}
+
+html[lang="ar"] {
+  --cf-sans: var(--cf-arabic), var(--cf-latin), system-ui, sans-serif;
+  --cf-display: var(--cf-arabic), var(--cf-latin-display), system-ui, sans-serif;
+}
+html[lang="en"] {
+  --cf-sans: var(--cf-latin), system-ui, sans-serif;
+  --cf-display: var(--cf-latin-display), system-ui, sans-serif;
+}
+
+/* Letter-spacing breaks the joins between Arabic letters. */
+html[lang="ar"] [class*="tracking-"] {
+  letter-spacing: 0 !important;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--green);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
