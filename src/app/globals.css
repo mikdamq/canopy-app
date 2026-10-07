@@ -10,7 +10,10 @@
   --ink: #141b2b;
   --muted: #5b677d;
   --line: #dce2ec;
-  --green: #2e9e5b;
+  /* Buttons and green text: deep enough for white text and small labels (5.4:1). */
+  --green: #1f7a45;
+  /* The brand's lighter green, for shapes only: logo mark, progress bars, dots, glows. */
+  --leaf: #2e9e5b;
   --green-ink: #086b4a;
   --led: #ff4fd8;
   --night: #0b1222;
@@ -23,6 +26,7 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-green: var(--green);
+  --color-leaf: var(--leaf);
   --color-green-ink: var(--green-ink);
   --color-led: var(--led);
   --color-night: var(--night);
@@ -115,4 +119,13 @@ body:has([data-consent-wait]) .consent-card {
   body:has([data-cta-bar]) .consent-card {
     bottom: 84px;
   }
+}
+
+/* The one LED left on in the 404 shelf. Stops with reduced motion (see above). */
+@keyframes status-flicker {
+  0%, 18%, 22%, 60%, 64%, 100% { opacity: 1; }
+  20%, 62% { opacity: 0.35; }
+}
+.status-flicker {
+  animation: status-flicker 3.2s steps(1, end) infinite;
 }

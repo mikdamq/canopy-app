@@ -107,7 +107,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
           </article>
         </div>
       </main>
-      <SiteFooter lang={lang} d={d.footer} />
+      <SiteFooter lang={lang} d={d.footer} wa={d.whatsapp} />
     </div>
   );
 }

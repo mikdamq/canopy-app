@@ -3,7 +3,7 @@
  * these are the custom steps after it. Everything is a no-op until the Umami / Clarity
  * IDs are set, so nothing breaks in development.
  */
-export type FunnelEvent = "demo_opened" | "demo_interaction" | "request_sent";
+export type FunnelEvent = "demo_opened" | "demo_interaction" | "request_sent" | "whatsapp_click";
 type Data = Record<string, string | number | boolean>;
 
 declare global {
@@ -16,6 +16,22 @@ declare global {
 export const UMAMI_ID = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID || "";
 export const UMAMI_SRC = process.env.NEXT_PUBLIC_UMAMI_SRC || "https://cloud.umami.is/script.js";
 export const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID || "";
+
+/**
+ * Umami calls this before sending anything. It drops the farm name (?farm=) from the
+ * address but keeps campaign tags (utm_source and friends) so outreach can be measured.
+ */
+export function stripFarm<T extends { url?: string }>(_type: string, payload: T): T {
+  if (!payload?.url) return payload;
+  try {
+    const u = new URL(payload.url, window.location.origin);
+    u.searchParams.delete("farm");
+    const absolute = /^https?:/.test(payload.url);
+    return { ...payload, url: absolute ? u.href : u.pathname + u.search };
+  } catch {
+    return payload;
+  }
+}
 
 // Events fired before the Umami script has loaded wait here and are sent on load.
 const pending: [FunnelEvent, Data | undefined][] = [];

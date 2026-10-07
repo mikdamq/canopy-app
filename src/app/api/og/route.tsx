@@ -29,7 +29,7 @@ function toFont(data: Buffer) {
   return parsed.get(data)!;
 }
 
-const C = { bg: "#eef2f5", ink: "#141b2b", muted: "#5b677d", line: "#dce2ec", green: "#2e9e5b", led: "#ff4fd8", night: "#0b1222" };
+const C = { bg: "#eef2f5", ink: "#141b2b", muted: "#5b677d", line: "#dce2ec", green: "#2e9e5b", greenText: "#1f7a45", led: "#ff4fd8", night: "#0b1222" };
 
 /** A small front view of a lit tower farm: four floors of plants under pink grow lights. */
 function Tower() {
@@ -140,7 +140,7 @@ export async function GET(req: Request) {
             <Words
               measure={measure?.regular}
               text={kicker}
-              style={{ fontFamily: rtl ? "Plex Arabic" : "Mono", fontSize: 24, color: C.green, letterSpacing: rtl ? 0 : 2, textTransform: rtl ? "none" : "uppercase" }}
+              style={{ fontFamily: rtl ? "Plex Arabic" : "Mono", fontSize: 24, color: C.greenText, letterSpacing: rtl ? 0 : 2, textTransform: rtl ? "none" : "uppercase" }}
             />
             <Words
               measure={measure?.bold}

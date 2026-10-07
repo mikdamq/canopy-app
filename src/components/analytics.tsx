@@ -13,11 +13,15 @@ import {
   UMAMI_SRC,
   consentSnapshot,
   flushPending,
+  stripFarm,
   saveConsent,
   subscribeConsent,
   type Consent,
 } from "@/lib/analytics";
 import { SITE_URL } from "@/lib/site";
+
+// Umami looks this hook up by name on window when it loads.
+if (typeof window !== "undefined") (window as unknown as Record<string, unknown>).canopyBeforeSend = stripFarm;
 
 /**
  * Umami (no cookies) always runs once its ID is set. Microsoft Clarity sets cookies,
@@ -59,8 +63,8 @@ export function Analytics({ lang, d }: { lang: Locale; d: Dict["consent"] }) {
         <Script
           src={UMAMI_SRC}
           data-website-id={UMAMI_ID}
-          // The farm name lives in ?farm=, so leave query strings out of the stats.
-          data-exclude-search="true"
+          // Drops ?farm= from addresses, keeps utm_ tags (see stripFarm).
+          data-before-send="canopyBeforeSend"
           {...(host ? { "data-domains": host } : {})}
           strategy="afterInteractive"
           onLoad={flushPending}

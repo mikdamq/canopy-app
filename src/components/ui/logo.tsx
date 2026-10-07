@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export function Mark({ className }: { className?: string }) {
   return (
-    <span className={cn("grid size-7 shrink-0 place-items-center rounded-lg bg-green text-white", className)}>
+    <span className={cn("grid size-7 shrink-0 place-items-center rounded-lg bg-leaf text-white", className)}>
       <Sprout className="size-4" strokeWidth={2.2} aria-hidden />
     </span>
   );

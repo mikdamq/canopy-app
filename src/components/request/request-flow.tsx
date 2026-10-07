@@ -16,6 +16,7 @@ import {
   requestSchema,
   type FieldName,
 } from "@/lib/request-schema";
+import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -134,6 +135,7 @@ function Chips<T extends string>({
 export default function RequestFlow({
   lang,
   r,
+  wa,
   farm,
   source,
   bookingUrl,
@@ -141,6 +143,7 @@ export default function RequestFlow({
 }: {
   lang: Locale;
   r: R;
+  wa: Dict["whatsapp"];
   farm: string;
   source: string;
   bookingUrl: string;
@@ -261,6 +264,15 @@ export default function RequestFlow({
               {r.privacyLink}
             </Link>
           </p>
+          <WhatsAppLink
+            d={wa}
+            farm={farm}
+            place="request"
+            className="inline-flex items-center gap-2 self-start rounded-full border border-line bg-white px-4 py-2 text-[13.5px] font-semibold transition-colors hover:border-ink"
+          >
+            <WhatsAppIcon className="size-4 text-[#25d366]" />
+            {wa.prefer} {wa.short}
+          </WhatsAppLink>
         </aside>
 
         {/* Form card */}

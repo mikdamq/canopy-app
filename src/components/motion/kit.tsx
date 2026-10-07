@@ -67,7 +67,8 @@ export function WordReveal({
   const words = text.split(" ");
   const trigger = immediate ? { animate: "show" } : { whileInView: "show", viewport: { once: true, margin: "0px 0px -10% 0px" } };
   return (
-    <Tag className={className} aria-label={text}>
+    <Tag className={className}>
+      <span className="sr-only">{text}</span>
       <motion.span initial="hide" {...trigger} transition={{ staggerChildren: stagger, delayChildren: delay }} aria-hidden className="inline">
         {words.map((w, i) => (
           <span key={i} className="inline-block overflow-hidden pb-[0.12em] align-top -mb-[0.12em]">
@@ -146,7 +147,8 @@ export function Typewriter({
     );
   }
   return (
-    <span className={className} aria-label={words[i]}>
+    <span className={className}>
+      <span className="sr-only">{words[i]}</span>
       <span aria-hidden>{words[i].slice(0, n)}</span>
       <span aria-hidden className="ms-[0.04em] inline-block h-[0.82em] w-[0.08em] translate-y-[0.06em] animate-[caret_1s_steps(1)_infinite] bg-current align-baseline" />
     </span>
@@ -250,7 +252,7 @@ export function ScrollProgress() {
     <motion.div
       aria-hidden
       style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-green rtl:origin-right"
+      className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-leaf rtl:origin-right"
     />
   );
 }

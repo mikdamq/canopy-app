@@ -35,6 +35,7 @@ export default async function RequestPage({ params, searchParams }: PageProps<"/
         <RequestFlow
           lang={lang}
           r={d.request}
+          wa={d.whatsapp}
           farm={farm}
           source={farm ? "demo" : "landing"}
           bookingUrl={BOOKING_URL}

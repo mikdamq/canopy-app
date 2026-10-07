@@ -4,10 +4,11 @@ import type { Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
 import { BRAND, CONTACT_EMAIL } from "@/lib/site";
 import { Logo } from "./logo";
+import { WhatsAppLink } from "./whatsapp-link";
 
 const link = "text-ink underline-offset-4 hover:underline";
 
-export function SiteFooter({ lang, d }: { lang: Locale; d: Dict["footer"] }) {
+export function SiteFooter({ lang, d, wa }: { lang: Locale; d: Dict["footer"]; wa: Dict["whatsapp"] }) {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-line">
@@ -22,6 +23,9 @@ export function SiteFooter({ lang, d }: { lang: Locale; d: Dict["footer"] }) {
             <a href={`mailto:${CONTACT_EMAIL}`} className={link} dir="ltr">
               {CONTACT_EMAIL}
             </a>
+            <WhatsAppLink d={wa} place="footer" className={`${link} ms-3 inline-flex items-center gap-1.5`}>
+              {wa.short}
+            </WhatsAppLink>
           </span>
           <span className="flex flex-wrap gap-x-4 gap-y-1">
             <Link href={`/${lang}/privacy`} className={link}>

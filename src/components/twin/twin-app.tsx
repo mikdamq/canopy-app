@@ -13,6 +13,7 @@ import { cleanFarmName, MAX_FARM_NAME } from "@/lib/site";
 import { useMedia } from "@/lib/use-media";
 import { cn } from "@/lib/utils";
 import { Mark } from "@/components/ui/logo";
+import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
 import type { AnchorSink } from "./scene";
 import { FarmSim, JOURNEY, SPECTRA, fmtHour, type JourneyStep, type LogEntry, type Snapshot, type Spectrum } from "./sim";
 
@@ -155,7 +156,7 @@ function TopBar({ snap, d, farm, ctaHref, langHref, langLabel, langTitle }: {
         <Search className="size-3.5 shrink-0" aria-hidden />
         <span className="truncate">{d.search}</span>
       </div>
-      <div className="ms-auto flex items-center gap-1.5 font-mono text-[12px] whitespace-nowrap text-[#0e9f6e] xl:ms-0" dir="ltr">
+      <div className="ms-auto flex items-center gap-1.5 font-mono text-[12px] whitespace-nowrap text-green xl:ms-0" dir="ltr">
         {night ? <Moon className="size-3.5 text-[#5b6fa8]" aria-hidden /> : <Sun className="size-3.5 text-[#f5a524]" aria-hidden />}
         {fmtHour(snap.hour)}
       </div>
@@ -186,7 +187,7 @@ function TopBar({ snap, d, farm, ctaHref, langHref, langLabel, langTitle }: {
 function Stats({ snap, d }: { snap: Snapshot; d: D }) {
   const solarShare = Math.min(100, Math.round((snap.solarKw / snap.loadKw) * 100));
   const items = [
-    { k: d.stats.harvested, v: fmt(d.counts.kg, { n: snap.stats.kg }), s: fmt(d.stats.crates, { n: snap.stats.crates }), c: "text-[#0e9f6e]" },
+    { k: d.stats.harvested, v: fmt(d.counts.kg, { n: snap.stats.kg }), s: fmt(d.stats.crates, { n: snap.stats.crates }), c: "text-green" },
     {
       k: d.stats.solar,
       v: `${solarShare}%`,
@@ -320,8 +321,8 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
 
           <div className="grid grid-cols-3 gap-2">
             {[
-              [d.growthSpeed, `${f.speedPct}%`, f.speedPct >= 100 ? "text-[#0e9f6e]" : "text-[#b76e00]"],
-              [d.energyPerKg, `${f.kwhPerKg.toFixed(1)} kWh`, f.kwhPerKg <= 9.6 ? "text-[#0e9f6e]" : "text-[#b76e00]"],
+              [d.growthSpeed, `${f.speedPct}%`, f.speedPct >= 100 ? "text-green" : "text-[#b76e00]"],
+              [d.energyPerKg, `${f.kwhPerKg.toFixed(1)} kWh`, f.kwhPerKg <= 9.6 ? "text-green" : "text-[#b76e00]"],
               [d.air, `${f.temp.toFixed(1)} °C`, "text-ink"],
             ].map(([a, b, c]) => (
               <div key={a} className="min-w-0 rounded-xl bg-[#f4f6fa] px-2 py-1.5">
@@ -485,18 +486,29 @@ function Clock({ snap, sim, d }: { snap: Snapshot; sim: FarmSim; d: D }) {
 
 /* ------------------------------- CTA card ------------------------------- */
 
-function CtaCard({ d, farm, href }: { d: D; farm: string; href: string }) {
+function CtaCard({ d, wa, farm, named, href }: { d: D; wa: Dict["whatsapp"]; farm: string; named: string; href: string }) {
   return (
     <Card delay={0.25} className="flex flex-col gap-2.5 border-transparent bg-ink p-4 text-white">
       <div className="font-display text-[18px] leading-snug font-bold">{fmt(d.cta.title, { farm })}</div>
       <p className="text-[12.5px] leading-snug text-white/70">{d.cta.sub}</p>
-      <Link
-        href={href}
-        className="mt-1 flex items-center justify-center gap-1.5 rounded-xl bg-green px-3 py-2.5 text-[13.5px] font-semibold transition-colors hover:bg-[#35b468]"
-      >
-        {d.cta.button}
-        <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
-      </Link>
+      <div className="mt-1 flex gap-2">
+        <Link
+          href={href}
+          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-green px-3 py-2.5 text-[13.5px] font-semibold text-white transition-colors hover:bg-green-ink"
+        >
+          {d.cta.button}
+          <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+        </Link>
+        <WhatsAppLink
+          d={wa}
+          farm={named}
+          place="demo"
+          className="grid w-11 shrink-0 place-items-center rounded-xl bg-white/10 text-white transition-colors hover:bg-white/20"
+        >
+          <WhatsAppIcon className="size-[18px]" />
+          <span className="sr-only">{wa.label}</span>
+        </WhatsAppLink>
+      </div>
     </Card>
   );
 }
@@ -513,6 +525,9 @@ function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: str
   return (
     <motion.div
       data-consent-wait
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="welcome-title"
       className="fixed inset-0 z-50 grid place-items-center bg-[#0b1222]/45 p-4 backdrop-blur-[2px]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -522,9 +537,6 @@ function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: str
       }}
     >
       <motion.form
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="welcome-title"
         initial={{ opacity: 0, y: 16, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 8 }}
@@ -578,6 +590,7 @@ function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: str
 export default function TwinApp({
   lang,
   dict,
+  wa,
   farm: initialFarm,
   fallbackName,
   langLabel,
@@ -585,6 +598,7 @@ export default function TwinApp({
 }: {
   lang: Locale;
   dict: D;
+  wa: Dict["whatsapp"];
   farm: string;
   fallbackName: string;
   langLabel: string;
@@ -668,7 +682,7 @@ export default function TwinApp({
             <div className="absolute end-4 top-[84px] bottom-4 z-30 flex w-[340px] flex-col gap-3 overflow-y-auto pb-1">
               <FloorPanel snap={snap} sim={sim} reduce={reduce} d={dict} />
               <Clock snap={snap} sim={sim} d={dict} />
-              <CtaCard d={dict} farm={shown} href={ctaHref} />
+              <CtaCard d={dict} wa={wa} farm={shown} named={farm} href={ctaHref} />
             </div>
             <div className="absolute start-4 bottom-4 z-30 w-[min(560px,calc(100%-388px))]">
               <Journey snap={snap} d={dict} />
@@ -678,7 +692,7 @@ export default function TwinApp({
           <div className="flex flex-col gap-3 border-t border-line bg-[#f1f4f8] p-3">
             <Stats snap={snap} d={dict} />
             <FloorPanel snap={snap} sim={sim} reduce={reduce} d={dict} />
-            <CtaCard d={dict} farm={shown} href={ctaHref} />
+            <CtaCard d={dict} wa={wa} farm={shown} named={farm} href={ctaHref} />
             <Journey snap={snap} d={dict} />
             <Clock snap={snap} sim={sim} d={dict} />
           </div>

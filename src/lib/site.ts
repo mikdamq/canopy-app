@@ -7,6 +7,13 @@ export const BRAND = "Canopy";
 /** Shown in the footer and used as the reply-to on confirmation emails. */
 export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@mikdam.com";
 
+/** WhatsApp number in international format, digits only. Empty = hide the WhatsApp buttons. */
+export const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "962787016351").replace(/\D/g, "");
+
+export function whatsappUrl(text: string) {
+  return WHATSAPP_NUMBER ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}` : "";
+}
+
 /** Cal.com or Calendly link shown after a request is sent. Empty = show the fallback text. */
 export const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL || "";
 

@@ -34,6 +34,7 @@ All settings are environment variables (see `.env.example`).
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | The live address. Used for share previews, canonical links and the sitemap. |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | Shown in the footer and error messages. |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Number for the WhatsApp buttons (defaults to +962 78 7016 351; empty hides them). |
 | `NEXT_PUBLIC_BOOKING_URL` | Your Cal.com or Calendly link. Shown as an embedded calendar after the form. |
 | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | Where requests are saved. |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` | Email sending. Your cPanel mailbox works. |
@@ -69,10 +70,13 @@ Create a 30-minute event in [Cal.com](https://cal.com) or [Calendly](https://cal
 3. The funnel is tracked for you. Page views on `/en` or `/ar` are the landing step, then these events:
    - `demo_opened`: the demo loaded (`named` says whether a farm name was given);
    - `demo_interaction`: the first click, tap or key press inside the demo after the welcome card;
-   - `request_sent`: a pilot request went through (`source` is `landing` or `demo`).
+   - `request_sent`: a pilot request went through (`source` is `landing` or `demo`);
+   - `whatsapp_click`: someone opened WhatsApp (`place` says which button: `landing`, `founder`, `footer`, `request` or `demo`).
 4. In Umami, open **Reports → Funnel** and add the steps: page `/en` (or `/ar`), then `demo_opened`, `demo_interaction`, `request_sent`.
 
-The farm name in `?farm=` is left out of the stats on purpose.
+The farm name in `?farm=` is removed before anything is sent to Umami (`stripFarm` in `src/lib/analytics.ts`), while campaign tags (`utm_source`, `utm_campaign`, `utm_content`) are kept. After connecting Umami, open one demo link and check in Umami that no farm name appears.
+
+**Outreach links:** `docs/outreach-links.xlsx` builds a personalised demo link, a ready message (EN/AR) and a one-tap WhatsApp link for each farm you contact. Import it into Google Sheets (File → Import → Upload). Each link carries `utm_source` (channel), `utm_campaign` (round) and `utm_content` (row number, never the farm name).
 
 **Microsoft Clarity** (heatmaps and recordings) sets cookies, so it only loads after the visitor clicks **Allow** in a small prompt. Visitors can change their choice from **Cookie settings** in the footer.
 
@@ -110,6 +114,7 @@ src/
   app/[lang]/demo/page.tsx     Personalised demo
   app/[lang]/request/page.tsx  Pilot request form
   app/[lang]/privacy/page.tsx  Privacy policy
+  app/[lang]/not-found.tsx     Branded 404 (error.tsx: the "something went wrong" page)
   app/api/requests/route.ts    Saves and emails requests
   app/api/og/route.tsx         Share preview images
   app/robots.ts, sitemap.ts    For search engines

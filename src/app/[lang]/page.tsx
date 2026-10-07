@@ -1,4 +1,4 @@
-import { ArrowRight, Check, ChevronDown, Moon, PackageCheck, Scissors, Sprout, Sun, Truck } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, Mail, Moon, PackageCheck, Scissors, Sprout, Sun, Truck } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -12,9 +12,11 @@ import { MotionRoot } from "@/components/motion/motion-root";
 import { Magnetic, Reveal, ScrollProgress, Spotlight, WordReveal } from "@/components/motion/kit";
 import { SiteFooter } from "@/components/ui/site-footer";
 import { SiteHeader } from "@/components/ui/site-header";
-import { hasLocale } from "@/i18n/config";
+import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
+import { fmt, hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageMeta } from "@/lib/seo";
+import { BRAND, CONTACT_EMAIL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 function Eyebrow({ children, dark }: { children: ReactNode; dark?: boolean }) {
@@ -71,17 +73,14 @@ function FeatureArt({ i }: { i: number }) {
   );
 }
 
-function PrimaryCta({ href, children, label, light }: { href: string; children: ReactNode; label: string; light?: boolean }) {
+function PrimaryCta({ href, children, label }: { href: string; children: ReactNode; label: string }) {
   return (
     <Magnetic>
       <Link
         href={href}
         data-cursor="cta"
         data-cursor-label={label}
-        className={cn(
-          "flex w-fit items-center gap-2 rounded-xl px-5 py-3 text-[15px] font-semibold text-white transition-colors",
-          light ? "bg-green hover:bg-[#35b468]" : "bg-green hover:bg-green-ink",
-        )}
+        className="flex w-fit items-center gap-2 rounded-xl bg-green px-5 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-green-ink"
       >
         {children}
         <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
@@ -125,7 +124,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
               {marquee.map((t, i) => (
                 <span key={i} className="flex items-center gap-10 pe-10 text-[15px] font-semibold whitespace-nowrap" aria-hidden={i >= d.built.items.length}>
                   {t}
-                  <span className="size-1.5 rounded-full bg-green" aria-hidden />
+                  <span className="size-1.5 rounded-full bg-leaf" aria-hidden />
                 </span>
               ))}
             </div>
@@ -252,6 +251,55 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
         </Reveal>
       </section>
 
+      {/* Founder */}
+      <section className="mx-auto w-full max-w-6xl px-4 pb-20 sm:px-6 lg:pb-28">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-14">
+          <div className="flex flex-col gap-4">
+            <Eyebrow>{d.founder.eyebrow}</Eyebrow>
+            <WordReveal text={d.founder.title} className={h2} />
+          </div>
+          <Reveal>
+            <figure className="relative rounded-[32px] border border-line bg-white p-6 sm:p-10">
+              <div className="flex flex-col gap-4 text-[17px] leading-relaxed">
+                {d.founder.note.map((p) => (
+                  <p key={p}>{fmt(p, { brand: BRAND })}</p>
+                ))}
+              </div>
+              <figcaption className="mt-8 flex flex-wrap items-center gap-4 border-t border-line pt-6">
+                <span
+                  aria-hidden
+                  className="grid size-14 shrink-0 place-items-center rounded-full bg-green font-display text-[18px] font-bold text-white shadow-[0_0_0_6px_rgba(46,158,91,0.14)]"
+                  dir="ltr"
+                >
+                  {d.founder.initials}
+                </span>
+                <span className="flex min-w-0 flex-col">
+                  <span className="font-display text-[18px] font-bold">{d.founder.name}</span>
+                  <span className="text-[14px] text-muted">{d.founder.role}</span>
+                </span>
+                <span className="flex flex-wrap gap-2 sm:ms-auto">
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-[14px] font-semibold transition-colors hover:border-ink"
+                  >
+                    <Mail className="size-4" aria-hidden />
+                    {d.founder.email}
+                  </a>
+                  <WhatsAppLink
+                    d={d.whatsapp}
+                    place="founder"
+                    className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-[14px] font-semibold transition-colors hover:border-ink"
+                  >
+                    <WhatsAppIcon className="size-4 text-[#25d366]" />
+                    {d.whatsapp.short}
+                  </WhatsAppLink>
+                </span>
+              </figcaption>
+            </figure>
+          </Reveal>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section id="faq" className="scroll-mt-6 bg-white">
         <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:py-28">
@@ -285,7 +333,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
             <WordReveal text={d.final.title} className={cn(h2, "relative text-white")} />
             <p className="relative max-w-[46ch] text-[16px] text-white/65">{d.final.sub}</p>
             <div className="relative flex flex-wrap items-center gap-3">
-              <PrimaryCta href={`/${lang}/request`} label={d.cursor.go} light>
+              <PrimaryCta href={`/${lang}/request`} label={d.cursor.go}>
                 {d.final.cta}
               </PrimaryCta>
               <Magnetic>
@@ -298,12 +346,17 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
                   {d.final.demo}
                 </Link>
               </Magnetic>
+              <WhatsAppLink
+                d={d.whatsapp}
+                place="landing"
+                className="flex items-center gap-2 rounded-xl px-3 py-3 text-[15px] font-semibold text-[#7fe0a6] transition-colors hover:text-white"
+              />
             </div>
           </div>
         </Reveal>
       </section>
 
-      <SiteFooter lang={lang} d={d.footer} />
+      <SiteFooter lang={lang} d={d.footer} wa={d.whatsapp} />
     </div>
     </MotionRoot>
   );

@@ -117,6 +117,18 @@ const en = {
     later: ["Live sensor connections", "Alerts and reports", "Several sites and team seats", "Yield and energy forecasts"],
     cta: "Request a pilot",
   },
+  founder: {
+    eyebrow: "Who's behind it",
+    title: "You'll work with me directly",
+    note: [
+      "I'm Mikdam, a senior UX/UI designer based in Amman. I'm building {brand} because farm teams track so much, in so many places, and still can't see the whole farm at once.",
+      "During the pilot you talk to me, not a support queue. I'll learn how your farm runs and shape the twin around it.",
+    ],
+    name: "Mikdam Qandil",
+    role: "Founder · UX/UI designer",
+    initials: "MQ",
+    email: "Email me",
+  },
   faq: {
     eyebrow: "FAQ",
     title: "Questions farm owners ask us",
@@ -156,6 +168,13 @@ const en = {
     rights: "All rights reserved.",
     privacy: "Privacy",
     cookies: "Cookie settings",
+  },
+  whatsapp: {
+    label: "Chat on WhatsApp",
+    short: "WhatsApp",
+    message: "Hi! I'd like to see {brand} for my farm.",
+    messageFarm: "Hi! I'd like to see {brand} for {farm}.",
+    prefer: "Prefer to chat?",
   },
   consent: {
     text: "Can we record anonymous visits to see how people use the demo? It sets a cookie and helps us make it better.",
@@ -205,6 +224,7 @@ const en = {
         t: "Who else handles it",
         p: [
           "We use a few trusted services to run the site: our hosting provider, Supabase (database), our email provider (to send you a copy of your request), Cal.com (if you book a call), Umami (visit counts) and Microsoft Clarity (only if you allow it). They only process your data to provide their service to us.",
+          "If you message us on WhatsApp, that conversation is handled by WhatsApp (Meta) under its own privacy policy, and we see your name and number there.",
           "Some of these services store data outside Jordan, for example in the European Union or the United States.",
         ],
       },
