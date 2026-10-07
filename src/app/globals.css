@@ -75,3 +75,32 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Typewriter caret */
+@keyframes caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* The custom cursor replaces the system pointer; text fields keep their caret. */
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+.has-cursor input:not([type="range"]):not([type="checkbox"]),
+.has-cursor textarea {
+  cursor: text !important;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+@keyframes faq-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}

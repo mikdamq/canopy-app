@@ -1,8 +1,14 @@
 import { ArrowRight, Check, ChevronDown, Moon, PackageCheck, Scissors, Sprout, Sun, Truck } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { HeroTwin } from "@/components/landing/hero-twin";
+import type { ReactNode } from "react";
+import { FeatureTour } from "@/components/landing/feature-tour";
+import { Hero } from "@/components/landing/hero";
 import { NameForm } from "@/components/landing/name-form";
+import { Steps } from "@/components/landing/steps";
+import { Cursor } from "@/components/motion/cursor";
+import { MotionRoot } from "@/components/motion/motion-root";
+import { Magnetic, Reveal, ScrollProgress, Spotlight, WordReveal } from "@/components/motion/kit";
 import { Logo } from "@/components/ui/logo";
 import { SiteHeader } from "@/components/ui/site-header";
 import { hasLocale } from "@/i18n/config";
@@ -10,23 +16,21 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { BRAND, CONTACT_EMAIL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-function Eyebrow({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
-  return <p className={cn("font-mono text-[12px] tracking-[0.12em] uppercase", dark ? "text-[#7fe0a6]" : "text-green")}>{children}</p>;
-}
-
-function H2({ children, className }: { children: React.ReactNode; className?: string }) {
+function Eyebrow({ children, dark }: { children: ReactNode; dark?: boolean }) {
   return (
-    <h2 className={cn("max-w-[22ch] font-display text-[32px] leading-[1.05] font-bold tracking-[-0.02em] text-balance sm:text-[42px]", className)}>
-      {children}
-    </h2>
+    <Reveal y={10}>
+      <p className={cn("font-mono text-[12px] tracking-[0.12em] uppercase", dark ? "text-[#7fe0a6]" : "text-green")}>{children}</p>
+    </Reveal>
   );
 }
 
-/* Small illustrations for the feature cards, drawn from the product's own UI. */
+const h2 = "max-w-[22ch] font-display text-[32px] leading-[1.05] font-bold tracking-[-0.02em] sm:text-[42px]";
+
+/* Small illustrations for the feature cards on phones, drawn from the product's own UI. */
 function FeatureArt({ i }: { i: number }) {
   if (i === 0)
     return (
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1.5" dir="ltr">
         {[["F4", "22%"], ["F3", "97%"], ["F2", "50%"]].map(([f, v], k) => (
           <div key={f} className={cn("flex items-center gap-2 rounded-full border px-2.5 py-1 text-[11px] font-semibold", k === 1 ? "border-ink bg-ink text-white" : "border-line bg-white")}>
             <span>{f}</span>
@@ -38,7 +42,7 @@ function FeatureArt({ i }: { i: number }) {
     );
   if (i === 1)
     return (
-      <div className="grid grid-cols-3 gap-1.5">
+      <div className="grid grid-cols-3 gap-1.5" dir="ltr">
         {["#ff4fd8", "#fff1d6", "#5b8cff"].map((c, k) => (
           <div key={c} className={cn("flex flex-col gap-1.5 rounded-xl border bg-white p-2", k === 0 ? "border-ink" : "border-line")}>
             <span className="h-1.5 rounded-full" style={{ background: c, boxShadow: `0 0 10px ${c}` }} />
@@ -59,11 +63,29 @@ function FeatureArt({ i }: { i: number }) {
       </div>
     );
   return (
-    <div className="relative h-[54px] overflow-hidden rounded-xl" style={{ background: "linear-gradient(90deg,#0b1222 0%,#1d2a4a 22%,#e8eef4 40%,#e8eef4 62%,#1d2a4a 80%,#0b1222 100%)" }}>
+    <div className="relative h-[54px] overflow-hidden rounded-xl" dir="ltr" style={{ background: "linear-gradient(90deg,#0b1222 0%,#1d2a4a 22%,#e8eef4 40%,#e8eef4 62%,#1d2a4a 80%,#0b1222 100%)" }}>
       <Sun className="absolute top-3 left-1/2 size-5 -translate-x-1/2 text-[#f5a524]" aria-hidden />
       <Moon className="absolute top-3 left-3 size-4 text-[#9fb2ff]" aria-hidden />
-      <span className="absolute inset-x-0 bottom-0 h-1.5 bg-[#ff4fd8]/70 [clip-path:polygon(0_0,30%_0,30%_100%,0_100%)]" />
     </div>
+  );
+}
+
+function PrimaryCta({ href, children, label, light }: { href: string; children: ReactNode; label: string; light?: boolean }) {
+  return (
+    <Magnetic>
+      <Link
+        href={href}
+        data-cursor="cta"
+        data-cursor-label={label}
+        className={cn(
+          "flex w-fit items-center gap-2 rounded-xl px-5 py-3 text-[15px] font-semibold text-white transition-colors",
+          light ? "bg-green hover:bg-[#35b468]" : "bg-green hover:bg-green-ink",
+        )}
+      >
+        {children}
+        <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+      </Link>
+    </Magnetic>
   );
 }
 
@@ -73,53 +95,34 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
   const d = await getDictionary(lang);
   const other = lang === "en" ? "ar" : "en";
   const year = new Date().getFullYear();
+  const marquee = [...d.built.items, ...d.built.items];
 
   return (
+    <MotionRoot>
     <div className="bg-bg">
+      <ScrollProgress />
+      <Cursor />
+
       {/* Hero */}
       <section className="relative overflow-hidden bg-[radial-gradient(120%_80%_at_70%_40%,#f7f9fb_0%,#e3e9f0_70%)]">
         <SiteHeader lang={lang} nav={d.nav} langHref={`/${other}`} className="relative z-20" />
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-6 px-4 pt-4 pb-10 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:pt-10 lg:pb-20">
-          <div className="relative z-10 flex flex-col gap-6">
-            <Eyebrow>{d.hero.eyebrow}</Eyebrow>
-            <h1 className="max-w-[14ch] font-display text-[44px] leading-[0.98] font-extrabold tracking-[-0.03em] text-balance sm:text-[60px] lg:text-[68px]">
-              {d.hero.title}
-            </h1>
-            <p className="max-w-[48ch] text-[17px] leading-relaxed text-muted">{d.hero.sub}</p>
-            <NameForm
-              lang={lang}
-              label={d.hero.inputLabel}
-              placeholder={d.hero.placeholder}
-              button={d.hero.open}
-              error={d.hero.nameError}
-              note={d.hero.note}
-            />
-          </div>
-          <div className="relative h-[340px] sm:h-[440px] lg:h-[560px]">
-            <div className="absolute inset-0 overflow-hidden rounded-[28px] border border-white/70 bg-[#e8eef4] shadow-[0_40px_80px_-50px_rgba(20,27,43,0.6)]">
-              <HeroTwin />
-            </div>
-            <div className="absolute start-3 top-3 rounded-2xl border border-line bg-white/95 px-3 py-2 shadow-sm sm:start-5 sm:top-5">
-              <div className="text-[11px] text-muted">{d.hero.stat1}</div>
-              <div className="text-[13px] font-semibold text-[#8a5300]">{d.hero.stat1v}</div>
-            </div>
-            <div className="absolute end-3 bottom-3 rounded-2xl border border-line bg-white/95 px-3 py-2 shadow-sm sm:end-5 sm:bottom-5">
-              <div className="text-[11px] text-muted">{d.hero.stat2}</div>
-              <div className="text-[13px] font-semibold text-green-ink">{d.hero.stat2v}</div>
-            </div>
-          </div>
-        </div>
+        <Hero lang={lang} d={d.hero} cursor={d.cursor} />
       </section>
 
-      {/* Built for */}
-      <section className="border-y border-line bg-white">
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-8 gap-y-3 px-4 py-5 sm:px-6">
-          <span className="font-mono text-[12px] tracking-[0.1em] text-muted uppercase">{d.built.title}</span>
-          {d.built.items.map((t) => (
-            <span key={t} className="text-[15px] font-semibold">
-              {t}
-            </span>
-          ))}
+      {/* Built for: slow marquee */}
+      <section className="overflow-hidden border-y border-line bg-white">
+        <div className="mx-auto flex w-full max-w-6xl items-center gap-8 px-4 py-5 sm:px-6">
+          <span className="shrink-0 font-mono text-[12px] tracking-[0.1em] text-muted uppercase">{d.built.title}</span>
+          <div className="relative min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
+            <div className="flex w-max animate-[marquee_28s_linear_infinite] rtl:animate-[marquee-rtl_28s_linear_infinite] motion-reduce:animate-none!">
+              {marquee.map((t, i) => (
+                <span key={i} className="flex items-center gap-10 pe-10 text-[15px] font-semibold whitespace-nowrap" aria-hidden={i >= d.built.items.length}>
+                  {t}
+                  <span className="size-1.5 rounded-full bg-green" aria-hidden />
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -127,50 +130,55 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
       <section id="how" className="mx-auto w-full max-w-6xl scroll-mt-6 px-4 py-20 sm:px-6 lg:py-28">
         <div className="flex flex-col gap-4">
           <Eyebrow>{d.how.eyebrow}</Eyebrow>
-          <H2>{d.how.title}</H2>
+          <WordReveal text={d.how.title} className={h2} />
         </div>
-        <ol className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
-          {d.how.steps.map((s, i) => (
-            <li key={i} className="flex flex-col gap-3 border-t-2 border-ink pt-5">
-              <span className="font-mono text-[13px] text-muted">0{i + 1}</span>
-              <h3 className="font-display text-[22px] font-bold">{s.t}</h3>
-              <p className="max-w-[38ch] text-[15.5px] leading-relaxed text-muted">{s.d}</p>
-            </li>
-          ))}
-        </ol>
+        <Steps steps={d.how.steps} />
       </section>
 
-      {/* Features */}
-      <section id="features" className="scroll-mt-6 bg-white">
-        <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
-          <div className="flex flex-col gap-4">
-            <Eyebrow>{d.features.eyebrow}</Eyebrow>
-            <H2>{d.features.title}</H2>
-          </div>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2">
-            {d.features.items.map((f, i) => (
-              <article key={i} className="flex flex-col gap-5 rounded-3xl border border-line bg-bg p-6">
-                <div className="rounded-2xl border border-line bg-[#f7f9fb] p-4">
-                  <FeatureArt i={i} />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h3 className="font-display text-[21px] font-bold">{f.t}</h3>
-                  <p className="text-[15px] leading-relaxed text-muted">{f.d}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Features: pinned 3D tour on desktop, cards on phones */}
+      <FeatureTour
+        d={d.features}
+        fallback={
+          <section id="features" className="scroll-mt-6 bg-white">
+            <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
+              <div className="flex flex-col gap-4">
+                <Eyebrow>{d.features.eyebrow}</Eyebrow>
+                <WordReveal text={d.features.title} className={h2} />
+              </div>
+              <div className="mt-12 grid gap-4 sm:grid-cols-2">
+                {d.features.items.map((f, i) => (
+                  <Reveal key={i} delay={(i % 2) * 0.1}>
+                    <article className="flex h-full flex-col gap-5 rounded-3xl border border-line bg-bg p-6">
+                      <div className="rounded-2xl border border-line bg-[#f7f9fb] p-4">
+                        <FeatureArt i={i} />
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <h3 className="font-display text-[21px] font-bold">{f.t}</h3>
+                        <p className="text-[15px] leading-relaxed text-muted">{f.d}</p>
+                      </div>
+                    </article>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        }
+      />
 
       {/* Try with your name */}
-      <section className="bg-night text-white">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-20">
+      <section className="relative overflow-hidden bg-night text-white">
+        <div aria-hidden className="pointer-events-none absolute -top-40 end-[-10%] size-[520px] rounded-full bg-[radial-gradient(circle,rgba(255,79,216,0.22),transparent_65%)]" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-48 start-[-10%] size-[520px] rounded-full bg-[radial-gradient(circle,rgba(46,158,91,0.25),transparent_65%)]" />
+        <div className="relative mx-auto grid w-full max-w-6xl items-center gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-24">
           <div className="flex flex-col gap-3">
-            <H2 className="text-white">{d.tryBand.title}</H2>
-            <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/65">{d.tryBand.sub}</p>
+            <WordReveal text={d.tryBand.title} className={cn(h2, "text-white")} />
+            <Reveal delay={0.2}>
+              <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/65">{d.tryBand.sub}</p>
+            </Reveal>
           </div>
-          <NameForm lang={lang} tone="dark" label={d.hero.inputLabel} placeholder={d.hero.placeholder} button={d.hero.open} error={d.hero.nameError} />
+          <Reveal delay={0.25}>
+            <NameForm lang={lang} tone="dark" label={d.hero.inputLabel} placeholder={d.hero.placeholder} button={d.hero.open} error={d.hero.nameError} />
+          </Reveal>
         </div>
       </section>
 
@@ -178,58 +186,63 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
       <section id="who" className="mx-auto w-full max-w-6xl scroll-mt-6 px-4 py-20 sm:px-6 lg:py-28">
         <div className="flex flex-col gap-4">
           <Eyebrow>{d.who.eyebrow}</Eyebrow>
-          <H2>{d.who.title}</H2>
+          <WordReveal text={d.who.title} className={h2} />
         </div>
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
-          {d.who.items.map((w) => (
-            <div key={w.t} className="flex flex-col gap-2">
-              <h3 className="font-display text-[20px] font-bold">{w.t}</h3>
-              <p className="text-[15px] leading-relaxed text-muted">{w.d}</p>
-            </div>
+        <div className="mt-12 grid gap-4 md:grid-cols-3">
+          {d.who.items.map((w, i) => (
+            <Reveal key={w.t} delay={i * 0.12} className="h-full">
+              <Spotlight className="h-full rounded-3xl border border-line bg-white p-6">
+                <div className="flex flex-col gap-2">
+                  <span className="font-mono text-[12px] text-green">0{i + 1}</span>
+                  <h3 className="font-display text-[20px] font-bold">{w.t}</h3>
+                  <p className="text-[15px] leading-relaxed text-muted">{w.d}</p>
+                </div>
+              </Spotlight>
+            </Reveal>
           ))}
         </div>
       </section>
 
       {/* Pilot */}
       <section className="mx-auto w-full max-w-6xl px-4 pb-20 sm:px-6 lg:pb-28">
-        <div className="grid gap-8 rounded-[32px] border border-line bg-white p-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-          <div className="flex flex-col gap-4">
-            <Eyebrow>{d.pilot.eyebrow}</Eyebrow>
-            <H2>{d.pilot.title}</H2>
-            <p className="max-w-[44ch] text-[16px] leading-relaxed text-muted">{d.pilot.sub}</p>
-            <Link
-              href={`/${lang}/request`}
-              className="mt-2 flex w-fit items-center gap-2 rounded-xl bg-green px-5 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-green-ink"
-            >
-              {d.pilot.cta}
-              <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
-            </Link>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="flex flex-col gap-3 rounded-2xl bg-[#eef6f1] p-5">
-              <h3 className="font-semibold">{d.pilot.freeTitle}</h3>
-              <ul className="flex flex-col gap-2.5">
-                {d.pilot.free.map((t) => (
-                  <li key={t} className="flex gap-2 text-[14.5px]">
-                    <Check className="mt-0.5 size-4 shrink-0 text-green" aria-hidden />
-                    {t}
-                  </li>
-                ))}
-              </ul>
+        <Reveal>
+          <div className="grid gap-8 rounded-[32px] border border-line bg-white p-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+            <div className="flex flex-col gap-4">
+              <Eyebrow>{d.pilot.eyebrow}</Eyebrow>
+              <WordReveal text={d.pilot.title} className={h2} />
+              <p className="max-w-[44ch] text-[16px] leading-relaxed text-muted">{d.pilot.sub}</p>
+              <div className="mt-2">
+                <PrimaryCta href={`/${lang}/request`} label={d.cursor.go}>
+                  {d.pilot.cta}
+                </PrimaryCta>
+              </div>
             </div>
-            <div className="flex flex-col gap-3 rounded-2xl bg-bg p-5">
-              <h3 className="font-semibold text-muted">{d.pilot.laterTitle}</h3>
-              <ul className="flex flex-col gap-2.5">
-                {d.pilot.later.map((t) => (
-                  <li key={t} className="flex gap-2 text-[14.5px] text-muted">
-                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#9aa6ba]" aria-hidden />
-                    {t}
-                  </li>
-                ))}
-              </ul>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Spotlight className="rounded-2xl bg-[#eef6f1] p-5" glow="rgba(46,158,91,0.18)">
+                <h3 className="mb-3 font-semibold">{d.pilot.freeTitle}</h3>
+                <ul className="flex flex-col gap-2.5">
+                  {d.pilot.free.map((t, i) => (
+                    <Reveal key={t} as="li" delay={0.1 + i * 0.07} y={10} className="flex gap-2 text-[14.5px]">
+                      <Check className="mt-0.5 size-4 shrink-0 text-green" aria-hidden />
+                      {t}
+                    </Reveal>
+                  ))}
+                </ul>
+              </Spotlight>
+              <div className="rounded-2xl bg-bg p-5">
+                <h3 className="mb-3 font-semibold text-muted">{d.pilot.laterTitle}</h3>
+                <ul className="flex flex-col gap-2.5">
+                  {d.pilot.later.map((t, i) => (
+                    <Reveal key={t} as="li" delay={0.2 + i * 0.07} y={10} className="flex gap-2 text-[14.5px] text-muted">
+                      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#9aa6ba]" aria-hidden />
+                      {t}
+                    </Reveal>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* FAQ */}
@@ -237,17 +250,21 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
         <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:py-28">
           <div className="flex flex-col gap-4">
             <Eyebrow>{d.faq.eyebrow}</Eyebrow>
-            <H2>{d.faq.title}</H2>
+            <WordReveal text={d.faq.title} className={h2} />
           </div>
           <div className="flex flex-col">
-            {d.faq.items.map((f) => (
-              <details key={f.q} className="group border-b border-line py-5 first:pt-0">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
-                  {f.q}
-                  <ChevronDown className="size-5 shrink-0 text-muted transition-transform group-open:rotate-180" aria-hidden />
-                </summary>
-                <p className="mt-3 max-w-[60ch] text-[15.5px] leading-relaxed text-muted">{f.a}</p>
-              </details>
+            {d.faq.items.map((f, i) => (
+              <Reveal key={f.q} delay={i * 0.06} y={14}>
+                <details className="group border-b border-line py-5">
+                  <summary className="flex list-none items-center justify-between gap-4 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
+                    {f.q}
+                    <span className="grid size-8 shrink-0 place-items-center rounded-full border border-line transition-all duration-300 group-open:rotate-180 group-open:border-ink group-open:bg-ink group-open:text-white">
+                      <ChevronDown className="size-4" aria-hidden />
+                    </span>
+                  </summary>
+                  <p className="mt-3 max-w-[60ch] animate-[faq-in_0.4s_ease] text-[15.5px] leading-relaxed text-muted">{f.a}</p>
+                </details>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -255,22 +272,28 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
 
       {/* Final CTA */}
       <section className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
-        <div className="flex flex-col items-start gap-6 rounded-[32px] bg-ink p-8 text-white sm:p-12">
-          <H2 className="text-white">{d.final.title}</H2>
-          <p className="max-w-[46ch] text-[16px] text-white/65">{d.final.sub}</p>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href={`/${lang}/request`}
-              className="flex items-center gap-2 rounded-xl bg-green px-5 py-3 text-[15px] font-semibold transition-colors hover:bg-[#35b468]"
-            >
-              {d.final.cta}
-              <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
-            </Link>
-            <Link href={`/${lang}/demo`} className="rounded-xl border border-white/20 px-5 py-3 text-[15px] font-semibold transition-colors hover:border-white/60">
-              {d.final.demo}
-            </Link>
+        <Reveal>
+          <div className="relative flex flex-col items-start gap-6 overflow-hidden rounded-[32px] bg-ink p-8 text-white sm:p-12">
+            <div aria-hidden className="pointer-events-none absolute -end-24 -top-24 size-[380px] rounded-full bg-[radial-gradient(circle,rgba(46,158,91,0.35),transparent_65%)]" />
+            <WordReveal text={d.final.title} className={cn(h2, "relative text-white")} />
+            <p className="relative max-w-[46ch] text-[16px] text-white/65">{d.final.sub}</p>
+            <div className="relative flex flex-wrap items-center gap-3">
+              <PrimaryCta href={`/${lang}/request`} label={d.cursor.go} light>
+                {d.final.cta}
+              </PrimaryCta>
+              <Magnetic>
+                <Link
+                  href={`/${lang}/demo`}
+                  data-cursor="cta"
+                  data-cursor-label={d.cursor.open}
+                  className="block rounded-xl border border-white/20 px-5 py-3 text-[15px] font-semibold transition-colors hover:border-white/60"
+                >
+                  {d.final.demo}
+                </Link>
+              </Magnetic>
+            </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* Footer */}
@@ -294,5 +317,6 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
         </div>
       </footer>
     </div>
+    </MotionRoot>
   );
 }

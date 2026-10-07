@@ -20,6 +20,10 @@ const en = {
   hero: {
     eyebrow: "For vertical and indoor farms",
     title: "See your whole farm come alive",
+    titleA: "See your",
+    words: ["vertical farm", "container farm", "greenhouse", "research lab"],
+    titleB: "come alive",
+    scroll: "Scroll",
     sub: "A live 3D twin of your vertical farm. Follow every floor, every crop and every crate, from seed to delivery, in one view.",
     inputLabel: "Your farm's name",
     placeholder: "e.g. Green Valley Farms",
@@ -56,6 +60,8 @@ const en = {
   features: {
     eyebrow: "Features",
     title: "Everything about your farm, where it actually happens",
+    captions: ["Floor 3 · sensors live", "21:30 · grow lights on", "Harvest → pack → deliver", "Sunset · solar hands over to the LEDs"],
+    step: "{n} of {t}",
     items: [
       {
         t: "Floor-by-floor view",
@@ -136,6 +142,7 @@ const en = {
     cta: "Request a pilot",
     demo: "Open the demo",
   },
+  cursor: { open: "Open", explore: "Explore", go: "Go" },
   footer: {
     tagline: "A live 3D twin of your vertical farm.",
     contact: "Contact",

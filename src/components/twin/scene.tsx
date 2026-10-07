@@ -75,6 +75,8 @@ export default function FarmCanvas(props: Props) {
   return (
     <Canvas
       shadows="percentage"
+      // Measure layout size, not the transformed size, so scroll-linked scaling never shrinks the canvas.
+      resize={{ offsetSize: true, scroll: false }}
       dpr={[1, 2]}
       camera={{ fov: 26, near: 0.5, far: 240, position: [32, 24, 38] }}
       gl={{ antialias: true }}
@@ -168,7 +170,7 @@ function CameraRig({ sim, reduce, compact, hero, rtl }: Props) {
   useFrame((state, dt) => {
     const f = sim.focus;
     const zoom = compact ? 1.45 : 1.22;
-    if (hero) {
+    if (hero && f === null) {
       wantT.current.set(3.4, 3.2, 1.6);
       want.current.set(25, 17, 30).multiplyScalar(compact ? 1.25 : 1.05).add(wantT.current);
       if (!reduce) want.current.add(_v.set(state.pointer.x * 2, state.pointer.y * 1, -state.pointer.x * 1.2));
