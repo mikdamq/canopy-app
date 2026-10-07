@@ -6,6 +6,13 @@ const en = {
       "See every floor, crop and crate of your vertical farm in one live 3D view. Try the demo with your farm's name and request a free pilot.",
     demoTitle: "{farm} · Live farm demo",
     requestTitle: "Request a pilot",
+    privacyTitle: "Privacy policy",
+    privacyDescription: "What we collect when you try the demo or request a pilot, why, and how to have it deleted.",
+    ogAlt: "Canopy: a live 3D twin of your vertical farm",
+    ogDemoAlt: "{farm}: a live 3D twin, built with Canopy",
+    ogKicker: "For vertical and indoor farms",
+    ogDemoKicker: "Live 3D twin · sample data",
+    ogDemoLine: "Every floor, crop and crate, in one view.",
   },
   nav: {
     how: "How it works",
@@ -147,6 +154,80 @@ const en = {
     tagline: "A live 3D twin of your vertical farm.",
     contact: "Contact",
     rights: "All rights reserved.",
+    privacy: "Privacy",
+    cookies: "Cookie settings",
+  },
+  consent: {
+    text: "Can we record anonymous visits to see how people use the demo? It sets a cookie and helps us make it better.",
+    accept: "Allow",
+    decline: "No thanks",
+    more: "Privacy policy",
+  },
+  privacy: {
+    eyebrow: "Privacy",
+    title: "Privacy policy",
+    updated: "Last updated 7 October 2026",
+    intro:
+      "This page explains what we collect when you visit this site, try the demo or request a pilot, why we collect it, and what you can ask us to do with it. We keep it short and plain on purpose.",
+    sections: [
+      {
+        t: "Who we are",
+        p: [
+          "{brand} is run by Mikdam Qandil, an individual based in Amman, Jordan. He is responsible for your data (the \"data controller\").",
+          "For anything about your data, email {email}.",
+        ],
+      },
+      {
+        t: "What we collect",
+        p: [
+          "When you request a pilot: your name, email, phone or WhatsApp number, role, country, farm name, farm type and size, crops, how you track your farm today, your goals and any message you add. We also keep your browser's user agent, which helps us spot spam.",
+          "When you try the demo: the farm name you type. It stays in the page address. We don't save it in our database, and we leave it out of our visit counts.",
+          "When you browse: anonymous visit counts (which pages, which country, which device type, and steps like \"demo opened\" or \"request sent\"). These never include your name or contact details.",
+        ],
+      },
+      {
+        t: "Why we use it",
+        p: [
+          "To reply to your request, set up a call and, if you go ahead, set up a pilot for your farm. We rely on your consent, which you give with the checkbox on the form.",
+          "To understand which parts of the site work, so we can improve them. We rely on our legitimate interest for anonymous counts, and on your consent for session recordings.",
+          "We don't sell your data or share it for advertising.",
+        ],
+      },
+      {
+        t: "Cookies and analytics",
+        p: [
+          "We count visits with Umami, which uses no cookies and doesn't track you across sites.",
+          "If you click \"Allow\", we also use Microsoft Clarity. It sets cookies and records how the page is used (clicks, scrolling, mouse movement) so we can see where people get stuck. Text you type into forms is hidden from these recordings. If you click \"No thanks\", Clarity never loads.",
+          "You can change your choice at any time with \"Cookie settings\" at the bottom of the page.",
+        ],
+      },
+      {
+        t: "Who else handles it",
+        p: [
+          "We use a few trusted services to run the site: our hosting provider, Supabase (database), our email provider (to send you a copy of your request), Cal.com (if you book a call), Umami (visit counts) and Microsoft Clarity (only if you allow it). They only process your data to provide their service to us.",
+          "Some of these services store data outside Jordan, for example in the European Union or the United States.",
+        ],
+      },
+      {
+        t: "How long we keep it",
+        p: [
+          "We keep pilot requests for up to 12 months after our last contact with you, then delete them. If you become a pilot farm, we keep your details for as long as the pilot runs.",
+          "Anonymous visit counts are kept as totals and can't be linked back to you.",
+        ],
+      },
+      {
+        t: "Your rights",
+        p: [
+          "You can ask us to show you the data we hold about you, correct it, delete it, or stop contacting you. You can also withdraw your consent at any time. Email {email} and we'll act on it within 30 days.",
+          "If you're not happy with how we handle your data, you can also complain to the data protection authority where you live.",
+        ],
+      },
+      {
+        t: "Changes",
+        p: ["If we change this policy, we'll update the date at the top of this page. If the change is significant and we have your email, we'll let you know."],
+      },
+    ],
+    back: "Back to the homepage",
   },
   demo: {
     sample: "Sample data",
@@ -307,6 +388,7 @@ const en = {
       home: "Back to the homepage",
     },
     privacy: "We only use these details to reply to your request.",
+    privacyLink: "Privacy policy",
   },
   email: {
     ownerSubject: "New pilot request: {farm} ({country})",

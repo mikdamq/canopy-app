@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { fmt, type Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
+import { track } from "@/lib/analytics";
 import { cleanFarmName, MAX_FARM_NAME } from "@/lib/site";
 import { useMedia } from "@/lib/use-media";
 import { cn } from "@/lib/utils";
@@ -511,6 +512,7 @@ function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: str
   const icons = [MousePointerClick, SlidersHorizontal, Moon];
   return (
     <motion.div
+      data-consent-wait
       className="fixed inset-0 z-50 grid place-items-center bg-[#0b1222]/45 p-4 backdrop-blur-[2px]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -601,6 +603,18 @@ export default function TwinApp({
     if (reduce) sim.setPlaying(false);
   }, [reduce, sim]);
 
+  // Funnel: the demo opened, then the first real touch, click or key press inside it.
+  const interacted = useRef(false);
+  useEffect(() => {
+    track("demo_opened", { lang, named: Boolean(initialFarm) });
+  }, [lang, initialFarm]);
+  const onInteract = () => {
+    // Taps on the welcome card don't count: it's the gate, not the demo.
+    if (interacted.current || welcome) return;
+    interacted.current = true;
+    track("demo_interaction", { lang });
+  };
+
   const shown = farm || fallbackName;
   const q = farm ? `?farm=${encodeURIComponent(farm)}` : "";
   const ctaHref = `/${lang}/request${q}`;
@@ -616,7 +630,11 @@ export default function TwinApp({
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="relative w-full overflow-x-hidden bg-[#e8eef4] pb-20 sm:pb-0 lg:h-svh lg:min-h-[740px] lg:overflow-hidden">
+      <div
+        onPointerDownCapture={onInteract}
+        onKeyDownCapture={onInteract}
+        className="relative w-full overflow-x-hidden bg-[#e8eef4] pb-20 sm:pb-0 lg:h-svh lg:min-h-[740px] lg:overflow-hidden"
+      >
         <div className="relative h-[60svh] min-h-[360px] lg:absolute lg:inset-0 lg:h-auto">
           {wide !== null && <FarmCanvas sim={sim} reduce={reduce} compact={!wide} anchors={anchors} rtl={lang === "ar"} />}
           <TagLayer snap={snap} sim={sim} anchors={anchors} d={dict} rtl={lang === "ar"} />
@@ -667,7 +685,7 @@ export default function TwinApp({
         )}
 
         {/* Phone: the call to action is always one tap away. */}
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 p-3 backdrop-blur sm:hidden">
+        <div data-cta-bar className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 p-3 backdrop-blur sm:hidden">
           <Link
             href={ctaHref}
             className="flex items-center justify-center gap-1.5 rounded-xl bg-green px-4 py-3 text-[15px] font-semibold text-white"

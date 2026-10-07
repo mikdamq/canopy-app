@@ -1,0 +1,1 @@
+Fonts used to draw the share preview images (`src/app/api/og/route.tsx`). The renderer needs TTF files, so these are copies of the Google Fonts the site already uses: Bricolage Grotesque, IBM Plex Sans, IBM Plex Sans Arabic and IBM Plex Mono. All are under the SIL Open Font License 1.1 (https://openfontlicense.org).

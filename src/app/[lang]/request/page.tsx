@@ -4,13 +4,17 @@ import RequestFlow from "@/components/request/request-flow";
 import { SiteHeader } from "@/components/ui/site-header";
 import { hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { BOOKING_URL, CONTACT_EMAIL, cleanFarmName } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
+import { BOOKING_URL, BRAND, CONTACT_EMAIL, cleanFarmName } from "@/lib/site";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/request">): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const d = await getDictionary(lang);
-  return { title: d.meta.requestTitle };
+  return {
+    title: d.meta.requestTitle,
+    ...pageMeta({ lang, path: "/request", title: `${d.meta.requestTitle} · ${BRAND}`, description: d.meta.description, imageAlt: d.meta.ogAlt }),
+  };
 }
 
 export default async function RequestPage({ params, searchParams }: PageProps<"/[lang]/request">) {

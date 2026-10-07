@@ -104,3 +104,15 @@ html {
   from { opacity: 0; transform: translateY(-6px); }
   to { opacity: 1; transform: none; }
 }
+
+/* The consent card waits until the demo's welcome card is closed. */
+body:has([data-consent-wait]) .consent-card {
+  display: none;
+}
+
+/* On the phone demo, keep the consent card above the fixed "Get this" bar. */
+@media (max-width: 639.98px) {
+  body:has([data-cta-bar]) .consent-card {
+    bottom: 84px;
+  }
+}

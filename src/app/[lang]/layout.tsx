@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { notFound } from "next/navigation";
+import { Analytics } from "@/components/analytics";
 import { LOCALES, dirOf, hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { BRAND, baseUrl } from "@/lib/site";
 import "../globals.css";
 
 const latinDisplay = Bricolage_Grotesque({ subsets: ["latin"], weight: ["600", "700", "800"], variable: "--cf-latin-display" });
@@ -18,23 +20,29 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const d = await getDictionary(lang);
+  // Each page adds its own canonical link, language alternates and share image (see lib/seo.ts).
   return {
-    title: { default: d.meta.title, template: `%s · Canopy` },
+    metadataBase: baseUrl(),
+    title: { default: d.meta.title, template: `%s · ${BRAND}` },
     description: d.meta.description,
-    alternates: { languages: { en: "/en", ar: "/ar" } },
+    applicationName: BRAND,
   };
 }
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
+  const d = await getDictionary(lang);
   return (
     <html
       lang={lang}
       dir={dirOf(lang)}
       className={`${latinDisplay.variable} ${latin.variable} ${arabic.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="min-h-full font-sans">{children}</body>
+      <body className="min-h-full font-sans">
+        {children}
+        <Analytics lang={lang} d={d.consent} />
+      </body>
     </html>
   );
 }

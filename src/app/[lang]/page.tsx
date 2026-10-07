@@ -1,6 +1,7 @@
 import { ArrowRight, Check, ChevronDown, Moon, PackageCheck, Scissors, Sprout, Sun, Truck } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { FeatureTour } from "@/components/landing/feature-tour";
 import { Hero } from "@/components/landing/hero";
@@ -9,11 +10,11 @@ import { Steps } from "@/components/landing/steps";
 import { Cursor } from "@/components/motion/cursor";
 import { MotionRoot } from "@/components/motion/motion-root";
 import { Magnetic, Reveal, ScrollProgress, Spotlight, WordReveal } from "@/components/motion/kit";
-import { Logo } from "@/components/ui/logo";
+import { SiteFooter } from "@/components/ui/site-footer";
 import { SiteHeader } from "@/components/ui/site-header";
 import { hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { BRAND, CONTACT_EMAIL } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 function Eyebrow({ children, dark }: { children: ReactNode; dark?: boolean }) {
@@ -89,12 +90,18 @@ function PrimaryCta({ href, children, label, light }: { href: string; children: 
   );
 }
 
+export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  const d = await getDictionary(lang);
+  return pageMeta({ lang, path: "", title: d.meta.title, description: d.meta.description, imageAlt: d.meta.ogAlt });
+}
+
 export default async function Landing({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const d = await getDictionary(lang);
   const other = lang === "en" ? "ar" : "en";
-  const year = new Date().getFullYear();
   const marquee = [...d.built.items, ...d.built.items];
 
   return (
@@ -296,26 +303,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
         </Reveal>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-line">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <div className="flex flex-col gap-2">
-            <Logo />
-            <p className="text-[14px] text-muted">{d.footer.tagline}</p>
-          </div>
-          <div className="flex flex-col gap-1 text-[14px] text-muted sm:items-end">
-            <span>
-              {d.footer.contact}:{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-ink underline-offset-4 hover:underline" dir="ltr">
-                {CONTACT_EMAIL}
-              </a>
-            </span>
-            <span>
-              © {year} {BRAND}. {d.footer.rights}
-            </span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter lang={lang} d={d.footer} />
     </div>
     </MotionRoot>
   );
