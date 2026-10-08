@@ -68,11 +68,12 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
    - next: final name and domain; email deliverability (SPF, DKIM, DMARC at Namecheap);
    - next: founder photo, and the owner's edits to the founder copy;
    - next: an end-to-end test once Vercel, Supabase, SMTP and Cal.com are connected.
-2. **Validation (2–4 weeks):**
-   - call script (EN/AR);
-   - a list of about 20 target farms;
-   - LinkedIn and WhatsApp outreach messages with personalised demo links.
-   - Goal: about 10 calls, 5 who'd use it weekly, 2 pilots.
+2. **Validation (2–4 weeks):** the kit is in `docs/validation/`:
+   - done: call script (`call-script.en.md`, `call-script.ar.md`, Modern Standard Arabic) with a scorecard;
+   - done: 22 target farms in Jordan, the UAE and Saudi Arabia (`target-farms.md`, public sources; verify each is active), also prefilled in `docs/outreach-links.xlsx`;
+   - done: WhatsApp, LinkedIn and email messages, EN/AR (`outreach-messages.md`);
+   - pilot offer: setup in about two weeks, then 3 months free; in return a 20-minute feedback call every two weeks and permission to mention them (anonymously if they prefer);
+   - Goal: about 10 calls, 5 who'd use it weekly (score 4–5 on the scorecard), 2 pilots.
 3. **Customer app (only if validation says yes):**
    - auth and one tenant per farm;
    - a farm builder (draw layout, floors, racks, zones, sensors);
@@ -88,4 +89,5 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 - Contact email `info@mikdam.com`
 - Founder section copy (a draft written for him: "I'm building Canopy because farm teams track so much…", "During the pilot you talk to me, not a support queue")
 - Showing WhatsApp +962 78 7016 351 publicly (approved)
+- Pilot terms in the call script and messages: "3 months free", "20-minute feedback call every two weeks" (chosen by the owner)
 - Privacy policy: controller "Mikdam Qandil, an individual based in Amman, Jordan"; requests kept up to 12 months after last contact; data requests handled within 30 days (worth a quick review by a lawyer before launch)

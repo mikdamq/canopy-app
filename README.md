@@ -76,6 +76,8 @@ Create a 30-minute event in [Cal.com](https://cal.com) or [Calendly](https://cal
 
 The farm name in `?farm=` is removed before anything is sent to Umami (`stripFarm` in `src/lib/analytics.ts`), while campaign tags (`utm_source`, `utm_campaign`, `utm_content`) are kept. After connecting Umami, open one demo link and check in Umami that no farm name appears.
 
+**Validation kit:** `docs/validation/` has the call script (English and Arabic), outreach messages for WhatsApp, LinkedIn and email, and a researched list of 22 target farms.
+
 **Outreach links:** `docs/outreach-links.xlsx` builds a personalised demo link, a ready message (EN/AR) and a one-tap WhatsApp link for each farm you contact. Import it into Google Sheets (File → Import → Upload). Each link carries `utm_source` (channel), `utm_campaign` (round) and `utm_content` (row number, never the farm name).
 
 **Microsoft Clarity** (heatmaps and recordings) sets cookies, so it only loads after the visitor clicks **Allow** in a small prompt. Visitors can change their choice from **Cookie settings** in the footer.
