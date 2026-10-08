@@ -3,13 +3,11 @@
  * live object every frame, the HUD subscribes to a throttled snapshot.
  */
 
+import { LAYOUTS, LIFT_X, type FarmType, type Layout, type P3 } from "./layouts";
+
 /* ------------------------------ World layout ------------------------------ */
 
-export const FH = 2.2; // floor height
-export const NFLOORS = 4;
-export const TOWER = { x0: -5.5, x1: 5.5, z0: -2, z1: 2 };
-export const SLAB = 0.16;
-export const LIFT_X = 6.45;
+export { FH, NFLOORS, TOWER, SLAB, LIFT_X, PLANT_X, PLANT_Z, SENSOR_POS } from "./layouts";
 export const HOME = { x: -8.2, y: 0.45, z: 3.4 };
 export const CONVEYOR_Y = 0.55;
 export const PACKER = { x: 10.4, z: -1.15 };
@@ -17,18 +15,8 @@ export const SEEDER = { x: 8.3, z: -1.35 };
 export const DOCK = { x: 12.7, z: 3.9 };
 export const VAN_DOCK_X = 11.6;
 export const VAN_Z = 6.7;
-
-/** Plant grid for one floor: two trays, two rows each. */
-export const PLANT_X = Array.from({ length: 16 }, (_, i) => -4.85 + i * 0.647);
-export const PLANT_Z = [-1.1, -0.6, 0.6, 1.1];
-
-/** Sensor tag anchors on a floor, relative to its floor height. */
-export const SENSOR_POS: [number, number, number][] = [
-  [-3.4, 1.55, 1.9],
-  [3.6, 1.5, 1.9],
-  [-0.8, 0.55, 1.6],
-  [1.9, FH - 0.2, 0.9],
-];
+/** Where the lift or cart waits, at the start of the conveyor. */
+const BASE = { x: LIFT_X, y: 0, z: 0 };
 
 /* ------------------------------ Crops & light ----------------------------- */
 
@@ -191,6 +179,7 @@ export type LogEntry = {
 export type Tried = { zoom: boolean; recipe: boolean; clock: boolean };
 
 export type Snapshot = {
+  type: FarmType;
   hour: number;
   day: number;
   playing: boolean;
@@ -213,15 +202,8 @@ type VanMode = "docked" | "loading" | "leaving" | "away" | "arriving";
 
 /* -------------------------------- The sim --------------------------------- */
 
-export class FarmSim {
-  t = 0;
-  hour = 15.25;
-  playing = true;
-  sel = 1;
-  focus: number | null = null;
-  tried: Tried = { zoom: false, recipe: false, clock: false };
-
-  floors: Floor[] = CROPS.map((_, i) => ({
+const freshFloors = (): Floor[] =>
+  CROPS.map((_, i) => ({
     crop: i,
     g: [0.86, 0.5, 0.97, 0.22][i],
     state: "growing" as FloorState,
@@ -230,8 +212,20 @@ export class FarmSim {
     readyFor: 0,
   }));
 
+export class FarmSim {
+  t = 0;
+  hour = 15.25;
+  playing = true;
+  sel = 1;
+  focus: number | null = null;
+  tried: Tried = { zoom: false, recipe: false, clock: false };
+
+  layout: Layout;
+  floors: Floor[] = freshFloors();
+
   drone = { x: HOME.x, y: HOME.y, z: HOME.z, mode: "idle" as "idle" | "busy" | "home", sweepX: 0 };
-  lift = { y: 0, cargo: null as null | "crate" | "seed" };
+  /** The tower's lift, or the floor cart in the other layouts. */
+  carrier = { ...BASE, cargo: null as null | "crate" | "seed" };
   batch: null | { floor: number; stage: Stage; t: number; d: number; yieldKg: number } = null;
   crate = { x: 0, y: 0, z: 0, visible: false };
   tray = { x: 0, y: 0, z: 0, visible: false };
@@ -239,7 +233,7 @@ export class FarmSim {
   seederA = 0;
   stack = 2;
   van = { x: VAN_DOCK_X, mode: "docked" as VanMode, t: 0, v: 0 };
-  stats = { kg: 186, crates: 14, deliveries: 3, seeded: 17 };
+  stats = { kg: 0, crates: 14, deliveries: 3, seeded: 17 };
   log: LogEntry[] = [
     { id: 2, time: "14:52", key: "vanLeft" },
     { id: 1, time: "14:31", key: "reseeded", floor: 1, crop: 1 },
@@ -249,7 +243,9 @@ export class FarmSim {
   private snap: Snapshot;
   private snapAcc = 0;
 
-  constructor() {
+  constructor(type: FarmType = "tower") {
+    this.layout = LAYOUTS[type];
+    this.stats.kg = Math.round(186 * this.layout.yieldScale);
     this.snap = this.build();
   }
 
@@ -300,6 +296,20 @@ export class FarmSim {
     this.playing = p;
     this.emit();
   }
+  /** Switch farm type: the same four crops, rebuilt in a different kind of farm. */
+  setType(type: FarmType) {
+    if (type === this.layout.type) return;
+    this.layout = LAYOUTS[type];
+    this.batch = null;
+    this.focus = null;
+    this.floors = freshFloors();
+    Object.assign(this.drone, HOME, { mode: "idle" });
+    Object.assign(this.carrier, BASE, { cargo: null });
+    this.crate.visible = false;
+    this.tray.visible = false;
+    this.stats.kg = Math.round(186 * this.layout.yieldScale);
+    this.emit();
+  }
   canHarvest(k: number) {
     const f = this.floors[k];
     return !this.batch && (f.state === "growing" || f.state === "ready") && f.g >= 0.6;
@@ -323,7 +333,7 @@ export class FarmSim {
 
   private startHarvest(k: number) {
     const f = this.floors[k];
-    this.batch = { floor: k, stage: "drone-out", t: 0, d: 0, yieldKg: Math.round(CROPS[f.crop].kg * f.g) };
+    this.batch = { floor: k, stage: "drone-out", t: 0, d: 0, yieldKg: Math.max(1, Math.round(CROPS[f.crop].kg * f.g * this.layout.yieldScale)) };
     this.drone.mode = "busy";
     f.readyFor = 0;
   }
@@ -359,27 +369,25 @@ export class FarmSim {
     }
   }
 
-  private liftTo(y: number, dt: number) {
-    const d = y - this.lift.y;
-    const s = 2.4 * dt;
-    if (Math.abs(d) <= s) {
-      this.lift.y = y;
-      return true;
-    }
-    this.lift.y += Math.sign(d) * s;
-    return false;
+  private carrierTo(p: P3 | typeof BASE, dt: number) {
+    const t = Array.isArray(p) ? { x: p[0], y: p[1], z: p[2] } : p;
+    return approach(this.carrier, t, 2.4, dt);
   }
 
   private stepBatch(dt: number) {
     const b = this.batch;
     if (!b) {
-      this.liftTo(0, dt);
+      this.carrierTo(BASE, dt);
       this.packerA *= 0.92;
       this.seederA *= 0.92;
       return;
     }
+    const L = this.layout;
     const f = this.floors[b.floor];
-    const fy = b.floor * FH;
+    const [ux, uy, uz] = L.units[b.floor];
+    const dock = L.transfer(b.floor);
+    const sweepFrom = ux + L.size.w / 2 + 0.4;
+    const sweepTo = ux - L.size.w / 2 + 0.2;
     b.t += dt;
     const go = (stage: Stage) => {
       b.stage = stage;
@@ -389,19 +397,20 @@ export class FarmSim {
 
     switch (b.stage) {
       case "drone-out":
-        this.liftTo(fy + SLAB, dt);
-        if (approach(this.drone, { x: TOWER.x1 + 0.4, y: fy + 1.45, z: TOWER.z1 + 0.85 }, 6, dt)) {
+        this.carrierTo(dock, dt);
+        if (approach(this.drone, { x: sweepFrom, y: uy + L.sweep.y, z: uz + L.sweep.z }, 6, dt)) {
           f.state = "harvesting";
-          this.drone.sweepX = TOWER.x1 + 0.4;
+          this.drone.sweepX = sweepFrom;
           go("sweep");
         }
         break;
       case "sweep":
-        this.liftTo(fy + SLAB, dt);
-        this.drone.sweepX -= 2.8 * dt;
+        this.carrierTo(dock, dt);
+        // Small units are swept more slowly, so the harvest stays visible.
+        this.drone.sweepX -= Math.min(2.8, L.size.w / 4) * dt;
         this.drone.x = this.drone.sweepX;
-        this.drone.y = fy + 1.45 + Math.sin(this.t * 6) * 0.04;
-        if (this.drone.sweepX < TOWER.x0 + 0.2) {
+        this.drone.y = uy + L.sweep.y + Math.sin(this.t * 6) * 0.04;
+        if (this.drone.sweepX < sweepTo) {
           f.state = "empty";
           f.g = 0;
           this.stats.kg += b.yieldKg;
@@ -410,17 +419,17 @@ export class FarmSim {
         }
         break;
       case "drop": {
-        const lifted = this.liftTo(fy + SLAB, dt);
-        if (approach(this.drone, { x: LIFT_X, y: fy + 1.7, z: 1.5 }, 7, dt) && lifted) {
-          this.lift.cargo = "crate";
+        const there = this.carrierTo(dock, dt);
+        if (approach(this.drone, { x: dock[0], y: dock[1] + 1.55, z: dock[2] + 1.5 }, 7, dt) && there) {
+          this.carrier.cargo = "crate";
           this.drone.mode = "home";
           go("lift-down");
         }
         break;
       }
       case "lift-down":
-        if (this.liftTo(0, dt)) {
-          this.lift.cargo = null;
+        if (this.carrierTo(BASE, dt)) {
+          this.carrier.cargo = null;
           go("convey");
         }
         break;
@@ -452,18 +461,25 @@ export class FarmSim {
       case "seed":
         this.seederA = Math.sin(Math.min(1, b.t / 1.4) * Math.PI);
         if (b.t > 1.4) {
-          this.lift.cargo = "seed";
+          this.carrier.cargo = "seed";
           f.state = "seeding";
           go("lift-up");
         }
         break;
       case "lift-up":
-        if (this.liftTo(fy + SLAB, dt)) go("plant");
+        if (this.carrierTo(dock, dt)) go("plant");
         break;
       case "plant": {
+        // The seed tray slides from the lift or cart onto the unit's first bed.
         const p = Math.min(1, b.t / 1.1);
-        this.lift.cargo = null;
-        Object.assign(this.tray, { x: LIFT_X - p * 6, y: fy + SLAB + 0.32, z: 0, visible: p < 1 });
+        const lerp = (a: number, c: number) => a + (c - a) * p;
+        this.carrier.cargo = null;
+        Object.assign(this.tray, {
+          x: lerp(dock[0], ux + 0.45),
+          y: lerp(dock[1] + 0.32, uy + L.beds[0].top + 0.04),
+          z: lerp(dock[2], uz + L.beds[0].z),
+          visible: p < 1,
+        });
         if (p >= 1) {
           this.tray.visible = false;
           f.state = "growing";
@@ -570,6 +586,7 @@ export class FarmSim {
     const lit = this.floors.filter((f) => lightsOn(this.hour, f.hours));
     const loadKw = 18 + lit.reduce((s, f) => s + 42 * SPECTRA[f.spectrum].energy, 0);
     return {
+      type: this.layout.type,
       hour: this.hour,
       day,
       playing: this.playing,

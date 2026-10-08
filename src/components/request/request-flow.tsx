@@ -16,6 +16,7 @@ import {
   requestSchema,
   type FieldName,
 } from "@/lib/request-schema";
+import { isFarmType } from "@/components/twin/layouts";
 import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { COUNTRIES, countryByName, withCountryCode } from "@/lib/countries";
 import { WHATSAPP_NUMBER, whatsappUrl } from "@/lib/site";
@@ -169,6 +170,7 @@ export default function RequestFlow({
   r,
   wa,
   farm,
+  farmType = "",
   source,
   bookingUrl,
   contactEmail,
@@ -177,6 +179,8 @@ export default function RequestFlow({
   r: R;
   wa: Dict["whatsapp"];
   farm: string;
+  /** The farm type picked in the demo, to start the form with. */
+  farmType?: Form["farmType"];
   source: string;
   bookingUrl: string;
   contactEmail: string;
@@ -204,7 +208,7 @@ export default function RequestFlow({
     role: "",
     country: "",
     farmName: farm,
-    farmType: "",
+    farmType,
     areaM2: "",
     levels: "",
     crops: [],
@@ -332,7 +336,10 @@ export default function RequestFlow({
   const countryPick = otherCountry || (f.country && !countryByName(f.country)) ? "other" : f.country;
   const started = step > 0;
   const sent = status === "done";
-  const demoHref = `/${lang}/demo${f.farmName ? `?farm=${encodeURIComponent(f.farmName)}` : ""}`;
+  const demoQuery = new URLSearchParams();
+  if (f.farmName) demoQuery.set("farm", f.farmName);
+  if (f.farmType && isFarmType(f.farmType) && f.farmType !== "tower") demoQuery.set("type", f.farmType);
+  const demoHref = `/${lang}/demo${demoQuery.size ? `?${demoQuery}` : ""}`;
 
   return (
     <MotionConfig reducedMotion="user">

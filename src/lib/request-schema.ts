@@ -6,7 +6,7 @@ import { LOCALES } from "@/i18n/config";
  * Options are stored as stable ids; labels come from the dictionaries.
  */
 export const ROLES = ["owner", "grow", "ops", "investor", "other"] as const;
-export const FARM_TYPES = ["tower", "container", "indoor", "greenhouse", "other"] as const;
+export const FARM_TYPES = ["tower", "container", "indoor", "greenhouse", "lab", "other"] as const;
 export const CROPS = ["leafy", "herbs", "microgreens", "strawberries", "tomatoes", "mushrooms"] as const;
 export const MONITORING = ["software", "sheets", "paper", "none"] as const;
 export const GOALS = ["remote", "loss", "energy", "planning", "investors"] as const;

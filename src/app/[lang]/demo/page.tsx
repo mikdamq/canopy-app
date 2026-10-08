@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { isFarmType } from "@/components/twin/layouts";
 import TwinApp from "@/components/twin/twin-app";
 import { fmt, hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -40,6 +41,7 @@ export default async function DemoPage({ params, searchParams }: PageProps<"/[la
   const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
   const floor = Number(one(sp.f));
   const hour = Number(one(sp.t));
+  const type = one(sp.type);
   const resume = {
     floor: Number.isInteger(floor) && floor >= 0 && floor < 4 ? floor : undefined,
     hour: one(sp.t) !== undefined && hour >= 0 && hour < 24 ? hour : undefined,
@@ -52,6 +54,7 @@ export default async function DemoPage({ params, searchParams }: PageProps<"/[la
       wa={d.whatsapp}
       titleTemplate={d.meta.demoTitle}
       farm={farm}
+      type={isFarmType(type) ? type : "tower"}
       resume={resume}
       fallbackName={d.demo.fallbackName}
       langLabel={d.nav.switchLang}

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Check, Moon, MousePointerClick, PackageCheck, Pause, Play, Scissors, SlidersHorizontal, Sprout, Sun, Truck, ZoomIn } from "lucide-react";
+import { ArrowLeft, ArrowRight, Building2, Check, Container, Droplets, FlaskConical, Moon, MousePointerClick, PackageCheck, Pause, Play, Scissors, SlidersHorizontal, Sprout, Sun, Truck, ZoomIn } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "motion/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -14,6 +14,7 @@ import { useMedia } from "@/lib/use-media";
 import { cn } from "@/lib/utils";
 import { Mark } from "@/components/ui/logo";
 import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
+import { DEMO_TYPES, type FarmType } from "./layouts";
 import type { AnchorSink } from "./scene";
 import { FarmSim, JOURNEY, SPECTRA, fmtHour, type JourneyStep, type LogEntry, type Snapshot, type Spectrum } from "./sim";
 
@@ -72,10 +73,29 @@ function initials(name: string) {
   return (parts.length > 1 ? parts[0][0] + parts[1][0] : name.slice(0, 2)).toUpperCase() || "CF";
 }
 
-function logText(d: D, l: LogEntry) {
+/** "Floor 2", "Container 2", "Bay 2"… for unit index k. */
+const unitName = (d: D, type: FarmType, k: number) => fmt(d.types[type].unit, { n: k + 1 });
+
+function logText(d: D, type: FarmType, l: LogEntry) {
   const crop = l.crop !== undefined ? d.crops[l.crop] : "";
-  return fmt(d.log[l.key], { n: (l.floor ?? 0) + 1, crop, kg: l.kg ?? 0 });
+  return fmt(d.log[l.key], { unit: unitName(d, type, l.floor ?? 0), crop, kg: l.kg ?? 0 });
 }
+
+/** The demo's address for a farm name and type (tower is the default, so it's left out). */
+function demoQuery(farm: string, type: FarmType) {
+  const p = new URLSearchParams();
+  if (farm) p.set("farm", farm);
+  if (type !== "tower") p.set("type", type);
+  const q = p.toString();
+  return q ? `?${q}` : "";
+}
+
+const TYPE_ICON: Record<FarmType, typeof Building2> = {
+  tower: Building2,
+  container: Container,
+  greenhouse: Droplets,
+  lab: FlaskConical,
+};
 
 /* ------------------------------- Tag layer ------------------------------ */
 
@@ -89,7 +109,7 @@ function TagLayer({ snap, sim, anchors, d, rtl }: { snap: Snapshot; sim: FarmSim
             key={k}
             type="button"
             ref={anchors.bind(`f${k}`)}
-            data-align="left"
+            data-align={snap.type === "lab" ? "center" : "left"}
             dir={rtl ? "rtl" : "ltr"}
             style={hidden}
             onClick={() => sim.setFocus(k)}
@@ -98,7 +118,7 @@ function TagLayer({ snap, sim, anchors, d, rtl }: { snap: Snapshot; sim: FarmSim
               k === snap.sel ? "border-ink bg-ink text-white" : "border-line bg-white/95 hover:border-ink",
             )}
           >
-            <bdi>{fmt(d.floorTag, { n: k + 1 })}</bdi>
+            <bdi>{fmt(d.types[snap.type].tag, { n: k + 1 })}</bdi>
             <span className="hidden sm:inline"> · {d.crops[k]}</span> ·{" "}
             {fl.state === "growing" ? `${Math.round(fl.g * 100)}%` : d.states[fl.state]}
           </button>
@@ -235,14 +255,14 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
     canHarvest || snap.busyFloor === k
       ? ""
       : snap.busyFloor !== null
-        ? fmt(d.whyBusy, { n: snap.busyFloor + 1 })
+        ? fmt(d.whyBusy, { unit: unitName(d, snap.type, snap.busyFloor) })
         : f.g < 0.6
           ? d.whyEarly
           : "";
   const zoomed = snap.focus === k;
   return (
     <Card delay={0.1} className="flex min-w-0 flex-col gap-3.5 p-3.5">
-      <div className="flex flex-wrap gap-1.5" role="group" aria-label={fmt(d.floor, { n: "" }).trim()}>
+      <div className="flex flex-wrap gap-1.5" role="group" aria-label={d.types[snap.type].group}>
         {snap.floors.map((_, i) => (
           <button
             key={i}
@@ -254,7 +274,7 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
               i === k ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink",
             )}
           >
-            {fmt(d.floor, { n: i + 1 })}
+            {unitName(d, snap.type, i)}
           </button>
         ))}
       </div>
@@ -270,7 +290,7 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
         >
           <div className="flex items-start justify-between gap-3">
             <div>
-              <Kicker>{fmt(d.floor, { n: k + 1 })}</Kicker>
+              <Kicker>{unitName(d, snap.type, k)}</Kicker>
               <div className="font-display text-[22px] leading-tight font-bold">{d.crops[k]}</div>
             </div>
             <span className={cn("mt-1 rounded-full px-2 py-0.5 text-[11.5px] font-medium", PILL[f.state])}>{d.states[f.state]}</span>
@@ -360,7 +380,7 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
               className="flex items-center justify-center gap-1.5 rounded-xl border border-line bg-white px-3 py-2 text-[13px] font-semibold transition-colors hover:border-ink"
             >
               {zoomed ? <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden /> : <ZoomIn className="size-4" aria-hidden />}
-              {zoomed ? d.back : d.zoomIn}
+              {zoomed ? d.types[snap.type].back : d.zoomIn}
             </button>
             <button
               type="button"
@@ -397,7 +417,7 @@ const STEP_ICON: Record<JourneyStep, typeof Sprout> = {
 function Journey({ snap, d }: { snap: Snapshot; d: D }) {
   const counts: Record<JourneyStep, string> = {
     Seed: fmt(d.counts.trays, { n: snap.stats.seeded }),
-    Grow: fmt(d.counts.floors, { n: snap.floors.filter((f) => f.state === "growing" || f.state === "ready").length }),
+    Grow: fmt(d.types[snap.type].count, { n: snap.floors.filter((f) => f.state === "growing" || f.state === "ready").length }),
     Harvest: fmt(d.counts.kg, { n: snap.stats.kg }),
     Pack: fmt(d.counts.crates, { n: snap.stats.crates }),
     Deliver: fmt(d.counts.runs, { n: snap.stats.deliveries }),
@@ -407,7 +427,7 @@ function Journey({ snap, d }: { snap: Snapshot; d: D }) {
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <b className="text-[13.5px]">{d.journey}</b>
         <span className="font-mono text-[11px] text-muted">
-          {snap.busyFloor !== null ? fmt(d.inLine, { n: snap.busyFloor + 1 }) : fmt(d.atDock, { n: snap.stack })}
+          {snap.busyFloor !== null ? fmt(d.inLine, { unit: unitName(d, snap.type, snap.busyFloor) }) : fmt(d.atDock, { n: snap.stack })}
         </span>
       </div>
       <ol className="grid grid-cols-5 gap-1">
@@ -445,7 +465,7 @@ function Journey({ snap, d }: { snap: Snapshot; d: D }) {
               className="flex gap-2.5 text-[12px]"
             >
               <span className="font-mono text-muted">{l.time}</span>
-              <span className="min-w-0 truncate">{logText(d, l)}</span>
+              <span className="min-w-0 truncate">{logText(d, snap.type, l)}</span>
             </motion.li>
           ))}
         </AnimatePresence>
@@ -503,7 +523,7 @@ function Clock({ snap, sim, d }: { snap: Snapshot; sim: FarmSim; d: D }) {
         </div>
       </div>
       {/* Hidden on short laptop screens so the side panel fits without scrolling. */}
-      <p className="text-[11.5px] leading-snug text-muted lg:[@media(max-height:960px)]:hidden">{fmt(d.litNote, { n: lit })}</p>
+      <p className="text-[11.5px] leading-snug text-muted lg:[@media(max-height:960px)]:hidden">{fmt(d.types[snap.type].litNote, { n: lit })}</p>
     </Card>
   );
 }
@@ -550,9 +570,9 @@ function CtaCard({ d, wa, farm, named, href, pilotHref }: { d: D; wa: Dict["what
  */
 function TryThis({ snap, d, farm, href, compact }: { snap: Snapshot; d: D; farm: string; href: string; compact?: boolean }) {
   const items = [
-    ["zoom", d.tryThis.items[0]],
-    ["recipe", d.tryThis.items[1]],
-    ["clock", d.tryThis.items[2]],
+    ["zoom", d.types[snap.type].zoomTry],
+    ["recipe", d.tryThis.items[0]],
+    ["clock", d.tryThis.items[1]],
   ] as const;
   const done = items.filter(([k]) => snap.tried[k]).length;
   const ready = done >= 2;
@@ -603,7 +623,14 @@ function TryThis({ snap, d, farm, href, compact }: { snap: Snapshot; d: D; farm:
 
 /* ------------------------------- Welcome ------------------------------- */
 
-function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: string) => void }) {
+function Welcome({ d, farm, type, onType, onStart }: {
+  d: D;
+  farm: string;
+  type: FarmType;
+  /** Picking a type rebuilds the farm behind the card straight away, as a preview. */
+  onType: (t: FarmType) => void;
+  onStart: (name: string) => void;
+}) {
   const [name, setName] = useState(farm);
   const input = useRef<HTMLInputElement>(null);
   const startBtn = useRef<HTMLButtonElement>(null);
@@ -627,7 +654,7 @@ function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: str
         if (e.key === "Escape") onStart(name);
         if (e.key !== "Tab" || !form.current) return;
         // Keep Tab inside the card while it's open.
-        const items = form.current.querySelectorAll<HTMLElement>("input, button");
+        const items = form.current.querySelectorAll<HTMLElement>("input:not([type=radio]), input[type=radio]:checked, button");
         const first = items[0];
         const last = items[items.length - 1];
         if (e.shiftKey && document.activeElement === first) {
@@ -649,7 +676,7 @@ function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: str
           e.preventDefault();
           onStart(name);
         }}
-        className="flex w-full max-w-[440px] flex-col gap-4 rounded-3xl bg-white p-5 shadow-2xl sm:p-6"
+        className="flex max-h-[calc(100svh-2rem)] w-full max-w-[460px] flex-col gap-4 overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-6"
       >
         <Mark className="size-9 rounded-xl" />
         <div className="flex flex-col gap-1.5">
@@ -659,7 +686,7 @@ function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: str
           <p className="text-[14px] text-muted">{d.welcome.sub}</p>
         </div>
         <ul className="flex flex-col gap-2.5">
-          {d.welcome.tips.map((t, i) => {
+          {[d.types[type].tip, ...d.welcome.tips].map((t, i) => {
             const Icon = icons[i];
             return (
               <li key={i} className="flex items-start gap-3 text-[14px]">
@@ -671,6 +698,33 @@ function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: str
             );
           })}
         </ul>
+        <fieldset className="flex flex-col gap-1.5">
+          <legend className="mb-1.5 text-[13px] font-medium">{d.welcome.typeLabel}</legend>
+          <div className="grid grid-cols-2 gap-2">
+            {DEMO_TYPES.map((t) => {
+              const Icon = TYPE_ICON[t];
+              const on = t === type;
+              return (
+                <label
+                  key={t}
+                  className={cn(
+                    "flex cursor-pointer items-center gap-2.5 rounded-xl border px-2.5 py-2 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-green",
+                    on ? "border-green bg-[#eef6f1]" : "border-line hover:border-[#8c97ab]",
+                  )}
+                >
+                  <input type="radio" name="farm-type" value={t} checked={on} onChange={() => onType(t)} className="sr-only" />
+                  <span className={cn("grid size-8 shrink-0 place-items-center rounded-lg", on ? "bg-green text-white" : "bg-[#f1f4f8] text-ink")}>
+                    <Icon className="size-4" aria-hidden />
+                  </span>
+                  <span className="flex min-w-0 flex-col">
+                    <span className="text-[13px] leading-tight font-semibold">{d.types[t].label}</span>
+                    <span className="text-[11.5px] leading-tight text-muted">{d.types[t].hint}</span>
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+        </fieldset>
         <label className="flex flex-col gap-1.5 text-[13px] font-medium">
           {d.welcome.nameLabel}
           <input
@@ -697,6 +751,7 @@ export default function TwinApp({
   wa,
   titleTemplate,
   farm: initialFarm,
+  type: initialType = "tower",
   fallbackName,
   langLabel,
   langTitle,
@@ -708,6 +763,8 @@ export default function TwinApp({
   /** Browser tab title, e.g. "{farm} · Live farm demo". */
   titleTemplate: string;
   farm: string;
+  /** Farm type to open with (from ?type=). */
+  type?: FarmType;
   fallbackName: string;
   langLabel: string;
   langTitle: string;
@@ -717,7 +774,7 @@ export default function TwinApp({
   const reduce = useReducedMotion() ?? false;
   const router = useRouter();
   const [sim] = useState(() => {
-    const s = new FarmSim();
+    const s = new FarmSim(initialType);
     if (resume?.floor !== undefined) s.select(resume.floor);
     if (resume?.hour !== undefined) s.setHour(resume.hour);
     s.tried.clock = false; // restoring the time isn't the visitor trying the clock
@@ -745,13 +802,13 @@ export default function TwinApp({
   // Funnel: the demo opened, then the first real touch, click or key press inside it.
   const interacted = useRef(false);
   useEffect(() => {
-    track("demo_opened", { lang, named: Boolean(initialFarm) });
-  }, [lang, initialFarm]);
+    track("demo_opened", { lang, named: Boolean(initialFarm), type: initialType });
+  }, [lang, initialFarm, initialType]);
   const onInteract = () => {
     // Taps on the welcome card don't count: it's the gate, not the demo.
     if (interacted.current || welcome) return;
     interacted.current = true;
-    track("demo_interaction", { lang });
+    track("demo_interaction", { lang, type: sim.layout.type });
   };
 
   const shown = farm || fallbackName;
@@ -761,13 +818,14 @@ export default function TwinApp({
   useEffect(() => {
     document.title = fmt(titleTemplate, { farm: shown });
   }, [titleTemplate, shown]);
-  const q = farm ? `?farm=${encodeURIComponent(farm)}` : "";
+  const q = demoQuery(farm, snap.type);
   const ctaHref = `/${lang}/request${q}`;
   const langHref = `/${lang === "en" ? "ar" : "en"}/demo${q}`;
   const switchLang = () => {
     const s = sim.getSnapshot();
     const p = new URLSearchParams();
     if (farm) p.set("farm", farm);
+    if (s.type !== "tower") p.set("type", s.type);
     p.set("f", String(s.sel));
     p.set("t", s.hour.toFixed(2));
     if (!welcome) p.set("w", "0");
@@ -779,7 +837,8 @@ export default function TwinApp({
     const clean = cleanFarmName(name);
     setFarm(clean);
     setWelcome(false);
-    if (clean !== initialFarm) router.replace(`/${lang}/demo${clean ? `?farm=${encodeURIComponent(clean)}` : ""}`, { scroll: false });
+    const type = sim.layout.type;
+    if (clean !== initialFarm || type !== initialType) router.replace(`/${lang}/demo${demoQuery(clean, type)}`, { scroll: false });
   };
 
   return (
@@ -809,7 +868,7 @@ export default function TwinApp({
                 className="absolute start-3 bottom-3 z-30 flex items-center gap-1.5 rounded-full bg-ink px-3.5 py-2 text-[13px] font-semibold text-white shadow-lg lg:start-1/2 lg:top-[92px] lg:bottom-auto lg:-translate-x-1/2 rtl:lg:translate-x-1/2"
               >
                 <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
-                {dict.back}
+                {dict.types[snap.type].back}
               </motion.button>
             )}
           </AnimatePresence>
@@ -852,7 +911,7 @@ export default function TwinApp({
           </Link>
         </div>
 
-        <AnimatePresence>{welcome && <Welcome d={dict} farm={farm} onStart={start} />}</AnimatePresence>
+        <AnimatePresence>{welcome && <Welcome d={dict} farm={farm} type={snap.type} onType={(t) => sim.setType(t)} onStart={start} />}</AnimatePresence>
       </div>
     </MotionConfig>
   );

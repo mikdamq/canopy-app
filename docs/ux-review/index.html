@@ -501,7 +501,7 @@ const sprints = document.getElementById("sprints");
 sprints.innerHTML = SPRINTS.map(([t, w, ids], i) => `
   <div class="card sprint"><header><h3>${t}</h3><span class="when">${w}</span></header>
     <div class="progress" aria-hidden="true"><i id="pg${i}"></i></div>
-    ${ids.map((id) => `<div class="task"><input type="checkbox" id="task-${id}" data-id="${id}"${done[id] ? " checked" : ""}><label for="task-${id}"><span class="id">${id}</span>${esc(byId[id].t)}${id === "F13" ? " <em class=\"note\">(later)</em>" : ""}</label></div>`).join("")}
+    ${ids.map((id) => `<div class="task"><input type="checkbox" id="task-${id}" data-id="${id}"${done[id] ? " checked" : ""}><label for="task-${id}"><span class="id">${id}</span>${esc(byId[id].t)}</label></div>`).join("")}
   </div>`).join("");
 function progress() {
   SPRINTS.forEach(([, , ids], i) => {
