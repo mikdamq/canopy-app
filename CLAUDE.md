@@ -68,7 +68,7 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
    - next: final name and domain; email deliverability (SPF, DKIM, DMARC at Namecheap);
    - next: founder photo, and the owner's edits to the founder copy;
    - next: an end-to-end test once Vercel, Supabase, SMTP and Cal.com are connected.
-2. **Validation (2–4 weeks):** the kit is in `docs/validation/`:
+2. **Validation (2–4 weeks):** **decision (8 Oct 2026): no calls.** The owner won't run sales or feedback calls, so the site has to replace the call: see the "no-call path" in the UX review (`docs/ux-review/index.html`; live page https://claude.ai/artifact/SVX8YYtGad7CpwoeTs5EqN). The review lists 25 prioritised fixes (F1–F25) in three sprints. The call script stays as the source for 5 async questions. The kit is in `docs/validation/`:
    - done: call script (`call-script.en.md`, `call-script.ar.md`, Modern Standard Arabic) with a scorecard;
    - done: 22 target farms in Jordan, the UAE and Saudi Arabia (`target-farms.md`, public sources; verify each is active), also prefilled in `docs/outreach-links.xlsx`;
    - done: WhatsApp, LinkedIn and email messages, EN/AR (`outreach-messages.md`);
@@ -89,5 +89,5 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 - Contact email `info@mikdam.com`
 - Founder section copy (a draft written for him: "I'm building Canopy because farm teams track so much…", "During the pilot you talk to me, not a support queue")
 - Showing WhatsApp +962 78 7016 351 publicly (approved)
-- Pilot terms in the call script and messages: "3 months free", "20-minute feedback call every two weeks" (chosen by the owner)
+- Pilot terms: "3 months free" (chosen by the owner); the "20-minute feedback call every two weeks" is to become a 2-minute feedback form, since there are no calls
 - Privacy policy: controller "Mikdam Qandil, an individual based in Amman, Jordan"; requests kept up to 12 months after last contact; data requests handled within 30 days (worth a quick review by a lawyer before launch)
