@@ -12,12 +12,12 @@ Live preview: https://canopy-app-sand.vercel.app (no settings yet: requests go t
 
 Do these first. Most of the later steps need the domain.
 
-- [ ] **A1. Final name** (Both). "Canopy" is a working name. Check:
-  - that it is free as a domain and on Instagram and LinkedIn;
-  - that it reads well in Arabic;
-  - that no farm-tech company already uses it in the Gulf.
-  The name goes in `src/lib/site.ts`, the page titles, the share images and the emails.
-- [ ] **A2. Domain** (You). Buy it at Namecheap. Choose between:
+- [x] **A1. Final name** (Both). **Chosen: Thamra (ثمرة)**, "fruit, the result" (8 Oct 2026).
+  - "Canopy" was dropped: Canopii and Canobi are agtech companies with near-identical names, Canopy Tax owns the "CANOPY" software trademark, and Arabic has no "p".
+  - Also ruled out because they clash with regional companies: Nabta, Saqia, Sunbula, Mashtal and Namaa.
+  - Before renaming: run a quick trademark search for "Thamra" on WIPO (branddb.wipo.int, classes 9 and 42), and check that @thamra is free on Instagram and LinkedIn.
+  - The site gets renamed (in `src/lib/site.ts`, page titles, share images, emails and docs) once the domain is secured.
+- [ ] **A2. Domain** (You). Buy it at Namecheap. Check in this order: `thamra.com` (best, if free), `thamra.farm`, `thamra.app`, `getthamra.com`, `thamra.co`. Choose between:
   - a new domain (e.g. `name.farm`, `name.io` or `name.app`);
   - a subdomain of one you own (e.g. `canopy.mikdam.com`).
 - [ ] **A3. Mailbox on the domain** (You). Create e.g. `hello@domain` at Namecheap (Private Email or cPanel email). The site sends from it, and visitors' replies arrive in it.
@@ -57,7 +57,7 @@ Do these first. Most of the later steps need the domain.
 
 ## D. Outreach readiness
 
-- [ ] **D1. Check the 22 target farms** (Both). Confirm each is still active (website, recent posts) and find a contact name and channel (`docs/validation/target-farms.md`).
+- [x] **D1. Check the target farms** (Both). Done from search results on 8 Oct: see the "Verification" section in `target-farms.md`. There were 5 corrections, KACST was replaced with Estidamah and 5 new farms were added (27 in the sheet). Still to do: re-check the "Unclear" ones, and find a contact for each. Confirm each is still active (website, recent posts) and find a contact name and channel (`docs/validation/target-farms.md`).
 - [ ] **D2. Check each farm's type** in `docs/outreach-links.xlsx`, so its demo opens as the right kind of farm (my guesses are pre-filled).
 - [ ] **D3. Your LinkedIn profile** (You). Prospects will look you up. Add a line about the project and a link to the site.
 
