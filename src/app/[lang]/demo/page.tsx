@@ -34,7 +34,17 @@ export default async function DemoPage({ params, searchParams }: PageProps<"/[la
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const d = await getDictionary(lang);
-  const farm = cleanFarmName((await searchParams).farm);
+  const sp = await searchParams;
+  const farm = cleanFarmName(sp.farm);
+  // Set by the language switch so the demo picks up where the visitor was.
+  const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
+  const floor = Number(one(sp.f));
+  const hour = Number(one(sp.t));
+  const resume = {
+    floor: Number.isInteger(floor) && floor >= 0 && floor < 4 ? floor : undefined,
+    hour: one(sp.t) !== undefined && hour >= 0 && hour < 24 ? hour : undefined,
+    skipWelcome: one(sp.w) === "0",
+  };
   return (
     <TwinApp
       lang={lang}
@@ -42,6 +52,7 @@ export default async function DemoPage({ params, searchParams }: PageProps<"/[la
       wa={d.whatsapp}
       titleTemplate={d.meta.demoTitle}
       farm={farm}
+      resume={resume}
       fallbackName={d.demo.fallbackName}
       langLabel={d.nav.switchLang}
       langTitle={d.nav.switchLangLabel}

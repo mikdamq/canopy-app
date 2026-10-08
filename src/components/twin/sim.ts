@@ -188,12 +188,16 @@ export type LogEntry = {
   kg?: number;
 };
 
+export type Tried = { zoom: boolean; recipe: boolean; clock: boolean };
+
 export type Snapshot = {
   hour: number;
   day: number;
   playing: boolean;
   sel: number;
   focus: number | null;
+  /** Which of the welcome card's three suggestions the visitor has tried. */
+  tried: Tried;
   floors: FloorView[];
   step: JourneyStep;
   busyFloor: number | null;
@@ -215,6 +219,7 @@ export class FarmSim {
   playing = true;
   sel = 1;
   focus: number | null = null;
+  tried: Tried = { zoom: false, recipe: false, clock: false };
 
   floors: Floor[] = CROPS.map((_, i) => ({
     crop: i,
@@ -270,19 +275,25 @@ export class FarmSim {
   }
   setFocus(k: number | null) {
     this.focus = k;
-    if (k !== null) this.sel = k;
+    if (k !== null) {
+      this.sel = k;
+      this.tried.zoom = true;
+    }
     this.emit();
   }
   setSpectrum(k: number, s: Spectrum) {
     this.floors[k].spectrum = s;
+    this.tried.recipe = true;
     this.emit();
   }
   setHours(k: number, h: number) {
     this.floors[k].hours = h;
+    this.tried.recipe = true;
     this.emit();
   }
   setHour(h: number) {
     this.hour = clamp(h, 0, 23.99);
+    this.tried.clock = true;
     this.emit();
   }
   setPlaying(p: boolean) {
@@ -564,6 +575,7 @@ export class FarmSim {
       playing: this.playing,
       sel: this.sel,
       focus: this.focus,
+      tried: { ...this.tried },
       floors,
       step: this.batch ? STAGE_STEP[this.batch.stage] : this.van.mode === "loading" || this.van.mode === "leaving" ? "Deliver" : "Grow",
       busyFloor: this.batch?.floor ?? null,

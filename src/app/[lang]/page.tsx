@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { FeatureTour } from "@/components/landing/feature-tour";
 import { Hero } from "@/components/landing/hero";
+import { MobileMenu, StickyBar } from "@/components/landing/landing-nav";
 import { NameForm } from "@/components/landing/name-form";
 import { Steps } from "@/components/landing/steps";
 import { Cursor } from "@/components/motion/cursor";
@@ -107,11 +108,18 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
     <MotionRoot>
     <div className="bg-bg">
       <ScrollProgress />
+      <StickyBar lang={lang} nav={d.nav} wa={d.whatsapp} langHref={`/${other}`} />
       <Cursor />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[radial-gradient(120%_80%_at_70%_40%,#f7f9fb_0%,#e3e9f0_70%)]">
-        <SiteHeader lang={lang} nav={d.nav} langHref={`/${other}`} className="relative z-20" />
+        <SiteHeader
+          lang={lang}
+          nav={d.nav}
+          langHref={`/${other}`}
+          className="relative z-20"
+          menu={<MobileMenu lang={lang} nav={d.nav} wa={d.whatsapp} langHref={`/${other}`} />}
+        />
         <Hero lang={lang} d={d.hero} cursor={d.cursor} />
       </section>
 
@@ -183,7 +191,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
             </Reveal>
           </div>
           <Reveal delay={0.25}>
-            <NameForm lang={lang} tone="dark" label={d.hero.inputLabel} placeholder={d.hero.placeholder} button={d.hero.open} error={d.hero.nameError} />
+            <NameForm lang={lang} tone="dark" label={d.hero.inputLabel} placeholder={d.hero.placeholder} button={d.hero.open} error={d.hero.nameError} sample={d.hero.sample} />
           </Reveal>
         </div>
       </section>

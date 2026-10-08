@@ -42,7 +42,7 @@ export function Hero({ lang, d, cursor }: { lang: Locale; d: Dict["hero"]; curso
           {d.sub}
         </motion.p>
         <motion.div {...fade(0.9)}>
-          <NameForm lang={lang} label={d.inputLabel} placeholder={d.placeholder} button={d.open} error={d.nameError} note={d.note} />
+          <NameForm lang={lang} label={d.inputLabel} placeholder={d.placeholder} button={d.open} error={d.nameError} note={d.note} sample={d.sample} />
         </motion.div>
       </motion.div>
 

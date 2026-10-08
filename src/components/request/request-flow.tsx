@@ -186,6 +186,8 @@ export default function RequestFlow({
   const [status, setStatus] = useState<"idle" | "sending" | "error" | "done">("idle");
   const [emailed, setEmailed] = useState(false);
   // The Back/Forward handler reads these without re-subscribing.
+  const cardRef = useRef<HTMLElement>(null);
+  const stepChanged = useRef(false);
   const statusRef = useRef(status);
   const stepRef = useRef(step);
   useEffect(() => {
@@ -223,6 +225,17 @@ export default function RequestFlow({
     if (status !== "done") writeDraft(f);
   }, [f, status]);
 
+  // The browser's scroll anchoring fights the step swap (it pins the Next button while
+  // content above it changes), so switch it off on this page.
+  useEffect(() => {
+    const root = document.documentElement;
+    const prev = root.style.overflowAnchor;
+    root.style.overflowAnchor = "none";
+    return () => {
+      root.style.overflowAnchor = prev;
+    };
+  }, []);
+
   // Each step gets its own browser history entry, so Back and Forward (and the
   // phone's back gesture) move between steps instead of leaving the form.
   useEffect(() => {
@@ -230,6 +243,7 @@ export default function RequestFlow({
     const onPop = (e: PopStateEvent) => {
       const s = (e.state as { canopyStep?: unknown } | null)?.canopyStep;
       if (typeof s !== "number" || statusRef.current === "done") return;
+      stepChanged.current = true;
       setDir(s > stepRef.current ? 1 : -1);
       setStep(s);
     };
@@ -263,13 +277,24 @@ export default function RequestFlow({
   };
 
   const go = (to: number, history: "push" | "replace" = "push") => {
+    stepChanged.current = true;
     setDir(to > step ? 1 : -1);
     setStep(to);
     const state = { ...window.history.state, canopyStep: to };
     if (history === "push") window.history.pushState(state, "");
     else window.history.replaceState(state, "");
     if (to > step && to < 3) track("request_step", { step: to + 1, lang });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Bring the form card (not the page top) into view once the new step has
+  // appeared: during the swap the page is briefly shorter, which would cut the scroll short.
+  const scrollToCard = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    const top = card.getBoundingClientRect().top + window.scrollY - 16;
+    if (Math.abs(top - window.scrollY) < 8) return;
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, top), behavior: smooth ? "smooth" : "auto" });
   };
 
   const submit = async () => {
@@ -299,6 +324,8 @@ export default function RequestFlow({
     ? `${bookingUrl}${bookingUrl.includes("?") ? "&" : "?"}name=${encodeURIComponent(f.name)}&email=${encodeURIComponent(f.email)}`
     : "";
   const shownFarm = f.farmName.trim() || farm;
+  const started = step > 0;
+  const sent = status === "done";
   const demoHref = `/${lang}/demo${f.farmName ? `?farm=${encodeURIComponent(f.farmName)}` : ""}`;
 
   return (
@@ -308,12 +335,25 @@ export default function RequestFlow({
         <aside className="flex flex-col gap-6 lg:sticky lg:top-8 lg:self-start">
           <div className="flex flex-col gap-3">
             <p className="font-mono text-[12px] tracking-[0.1em] text-green uppercase">{r.eyebrow}</p>
-            <h1 className="font-display text-[34px] leading-[1.05] font-bold tracking-[-0.02em] text-balance sm:text-[44px]">{r.title}</h1>
-            <p className="max-w-[46ch] text-[16px] leading-relaxed text-muted">{r.sub}</p>
+            <h1 className="font-display text-[34px] leading-[1.05] font-bold tracking-[-0.02em] text-balance sm:text-[44px]">
+              {sent ? fmt(r.doneHeading, { name: firstName }) : r.title}
+            </h1>
+            <p className={cn("max-w-[46ch] text-[16px] leading-relaxed text-muted", started && !sent && "max-lg:hidden")}>
+              {sent ? r.doneSub : r.sub}
+            </p>
           </div>
-          <ol className="flex flex-col gap-1">
+          {/* Phones: once the form has started, a slim progress bar replaces the intro. */}
+          {started && !sent && (
+            <div className="flex flex-col gap-2 lg:hidden" aria-hidden>
+              <span className="font-mono text-[12px] text-muted">{fmt(r.progress, { n: step + 1, total: 3 })}</span>
+              <span className="h-1.5 overflow-hidden rounded-full bg-line">
+                <span className="block h-full rounded-full bg-green transition-[width]" style={{ width: `${((step + 1) / 3) * 100}%` }} />
+              </span>
+            </div>
+          )}
+          <ol className={cn("flex flex-col gap-1", started && "max-lg:hidden")}>
             {r.steps.map((s, i) => {
-              const done = i < step;
+              const done = i < step || sent;
               const active = i === step;
               return (
                 <li key={s} className="flex items-center gap-3 py-1.5">
@@ -330,7 +370,7 @@ export default function RequestFlow({
               );
             })}
           </ol>
-          <p className="text-[12.5px] text-muted">
+          <p className={cn("text-[12.5px] text-muted", started && "max-lg:hidden")}>
             {r.privacy}{" "}
             <Link href={`/${lang}/privacy`} className="text-ink underline underline-offset-4">
               {r.privacyLink}
@@ -340,7 +380,10 @@ export default function RequestFlow({
             d={wa}
             farm={farm}
             place="request"
-            className="inline-flex items-center gap-2 self-start rounded-full border border-line bg-white px-4 py-2 text-[13.5px] font-semibold transition-colors hover:border-ink"
+            className={cn(
+              "inline-flex items-center gap-2 self-start rounded-full border border-line bg-white px-4 py-2 text-[13.5px] font-semibold transition-colors hover:border-ink",
+              started && "max-lg:hidden",
+            )}
           >
             <WhatsAppIcon className="size-4 text-[#25d366]" />
             {wa.prefer} {wa.short}
@@ -348,7 +391,10 @@ export default function RequestFlow({
         </aside>
 
         {/* Form card */}
-        <section className="min-w-0 rounded-3xl border border-line bg-white p-5 shadow-[0_24px_60px_-40px_rgba(20,27,43,0.5)] sm:p-8">
+        <section
+          ref={cardRef}
+          className="min-w-0 rounded-3xl [overflow-anchor:none] border border-line bg-white p-5 shadow-[0_24px_60px_-40px_rgba(20,27,43,0.5)] sm:p-8"
+        >
           <form
             data-clarity-mask="true"
             noValidate
@@ -376,6 +422,12 @@ export default function RequestFlow({
                 custom={dir}
                 initial={{ opacity: 0, x: 24 * dir }}
                 animate={{ opacity: 1, x: 0 }}
+                onAnimationComplete={(def) => {
+                  // Also fires when the old step finishes leaving; act on the new step's arrival.
+                  if ((def as { opacity?: number }).opacity !== 1 || !stepChanged.current) return;
+                  stepChanged.current = false;
+                  scrollToCard();
+                }}
                 exit={{ opacity: 0, x: -24 * dir }}
                 transition={{ duration: 0.3, ease: EASE }}
                 className="flex flex-col gap-5"
@@ -526,15 +578,15 @@ export default function RequestFlow({
 
                 {step === 3 && (
                   <div className="flex flex-col gap-6">
-                    <div className="flex items-start gap-3">
-                      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#eaf6ef] text-green">
-                        <Check className="size-5" aria-hidden />
-                      </span>
-                      <div className="flex flex-col gap-1">
-                        <p className="font-display text-[20px] leading-snug font-bold">{fmt(r.done.title, { name: firstName })}</p>
-                        {emailed && <p className="text-[14.5px] text-muted">{r.done.emailed}</p>}
-                      </div>
-                    </div>
+                    {/* The page heading already says "You're in"; this line only adds real news. */}
+                    {emailed && (
+                      <p className="flex items-center gap-2.5 text-[14.5px] text-muted">
+                        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#eaf6ef] text-green">
+                          <Check className="size-4" aria-hidden />
+                        </span>
+                        {r.done.emailed}
+                      </p>
+                    )}
                     <div className="flex flex-col gap-3">
                       <p className="text-[14px] font-semibold">{r.done.nextTitle}</p>
                       <ol className="flex flex-col gap-4">
