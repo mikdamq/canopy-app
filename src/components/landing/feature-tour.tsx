@@ -79,7 +79,7 @@ function PinnedTour({ d }: { d: Dict["features"] }) {
   };
 
   return (
-    <section id="features" ref={ref} className="relative scroll-mt-0 bg-white" style={{ height: `${n * 90 + 60}svh` }}>
+    <section id="features" ref={ref} className="relative scroll-mt-0 bg-white" style={{ height: `${n * 60 + 60}svh` }}>
       <div className="sticky top-0 flex h-svh items-center overflow-hidden">
         <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
           <div className="flex flex-col gap-8">

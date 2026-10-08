@@ -48,7 +48,7 @@ export function StatusPage({ kind, onRetry }: { kind: "notFound" | "error"; onRe
           <Logo />
         </Link>
       </header>
-      <main className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-12 px-4 pb-20 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto]">
+      <main id="main" className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-12 px-4 pb-20 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto]">
         <div className="max-w-[34rem]">
           <h1 className="font-display text-[38px] leading-[1.05] font-bold tracking-[-0.02em] sm:text-[52px]">
             {kind === "notFound" ? t.notFoundTitle : t.errorTitle}

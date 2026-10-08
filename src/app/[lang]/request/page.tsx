@@ -31,7 +31,7 @@ export default async function RequestPage({ params, searchParams }: PageProps<"/
         sections={false}
         langHref={`/${other}/request${farm ? `?farm=${encodeURIComponent(farm)}` : ""}`}
       />
-      <main className="mx-auto w-full max-w-6xl px-4 pt-6 pb-20 sm:px-6 lg:pt-12">
+      <main id="main" className="mx-auto w-full max-w-6xl px-4 pt-6 pb-20 sm:px-6 lg:pt-12">
         <RequestFlow
           lang={lang}
           r={d.request}

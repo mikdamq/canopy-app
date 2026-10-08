@@ -55,7 +55,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
   return (
     <div className="flex min-h-svh flex-col bg-bg">
       <SiteHeader lang={lang} nav={d.nav} sections={false} langHref={`/${other}/privacy`} />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 pt-8 pb-20 sm:px-6 lg:pt-14">
+      <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 pt-8 pb-20 sm:px-6 lg:pt-14">
         <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
           {/* Contents, pinned on wide screens */}
           <nav aria-label={p.title} className="hidden lg:block">
@@ -107,7 +107,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
           </article>
         </div>
       </main>
-      <SiteFooter lang={lang} d={d.footer} wa={d.whatsapp} />
+      <SiteFooter lang={lang} d={d.footer} nav={d.nav} wa={d.whatsapp} />
     </div>
   );
 }
