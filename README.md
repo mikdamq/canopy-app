@@ -79,7 +79,7 @@ The farm name in `?farm=` is removed before anything is sent to Umami (`stripFar
 
 **Validation kit:** `docs/validation/` has the call script (English and Arabic), outreach messages for WhatsApp, LinkedIn and email, and a researched list of 22 target farms.
 
-**Outreach links:** `docs/outreach-links.xlsx` builds a personalised demo link, a ready message (EN/AR) and a one-tap WhatsApp link for each farm you contact. Import it into Google Sheets (File → Import → Upload). Each link carries `utm_source` (channel), `utm_campaign` (round) and `utm_content` (row number, never the farm name).
+**Outreach links:** `docs/outreach-links.xlsx` builds a personalised demo link, a ready message (EN/AR) and a one-tap WhatsApp link for each farm you contact. Its "Farm type" column opens the demo as that farm's kind of farm (tower, container, greenhouse or research lab). Import it into Google Sheets (File → Import → Upload). Each link carries `utm_source` (channel), `utm_campaign` (round) and `utm_content` (row number, never the farm name).
 
 **Microsoft Clarity** (heatmaps and recordings) sets cookies, so it only loads after the visitor clicks **Allow** in a small prompt. Visitors can change their choice from **Cookie settings** in the footer.
 
