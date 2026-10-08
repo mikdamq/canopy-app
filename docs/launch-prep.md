@@ -1,0 +1,77 @@
+# Launch prep
+
+Everything to get ready before the accounts and settings (environment variables) go in. Tick items as they're done.
+
+**Who:** **You** means Mikdam; **Claude** means I draft it and you approve; **Both** means we work on it together.
+
+Live preview: https://canopy-app-sand.vercel.app (no settings yet: requests go to the Vercel log only).
+
+---
+
+## A. Decisions that unlock the accounts
+
+Do these first. Most of the later steps need the domain.
+
+- [ ] **A1. Final name** (Both). "Canopy" is a working name. Check:
+  - that it is free as a domain and on Instagram and LinkedIn;
+  - that it reads well in Arabic;
+  - that no farm-tech company already uses it in the Gulf.
+  The name goes in `src/lib/site.ts`, the page titles, the share images and the emails.
+- [ ] **A2. Domain** (You). Buy it at Namecheap. Choose between:
+  - a new domain (e.g. `name.farm`, `name.io` or `name.app`);
+  - a subdomain of one you own (e.g. `canopy.mikdam.com`).
+- [ ] **A3. Mailbox on the domain** (You). Create e.g. `hello@domain` at Namecheap (Private Email or cPanel email). The site sends from it, and visitors' replies arrive in it.
+- [ ] **A4. Contact email shown on the site** (You). Keep `info@mikdam.com`, or switch to the new mailbox.
+
+## B. Content only you can give
+
+- [ ] **B1. Founder photo** (You). Square, at least 800 × 800 px, with a plain or soft background. A friendly, natural photo works better than a studio portrait.
+- [ ] **B2. Founder text** (You). Edit the draft on the landing page, in both English and Arabic. Change anything that doesn't sound like you.
+- [ ] **B3. Promises on the site** (You). Confirm each one, or tell me what to change:
+  - [ ] "We reply within one business day";
+  - [ ] "Your twin goes live in about two weeks";
+  - [ ] "Free for three months" for pilot farms;
+  - [ ] "Your data is never shared or sold";
+  - [ ] in return: a 2-minute feedback form every two weeks, and permission to mention the farm (anonymously if they prefer).
+- [ ] **B4. Privacy policy facts** (You, ideally with a lawyer for 30 minutes):
+  - controller: "Mikdam Qandil, an individual based in Amman, Jordan";
+  - requests kept for 12 months after last contact;
+  - data requests answered within 30 days.
+
+## C. Things the site already promises (they must exist on day one)
+
+- [ ] **C1. Setup checklist** (Claude). The thank-you screen promises "a setup checklist". It's a short EN/AR document you send to each farm: what we need from them (layout photos, floors and racks, crops, sensors if any), and what happens in the two weeks.
+- [ ] **C2. Demo video routine** (Claude drafts, You record). We promise "a short video of your farm's demo" within a business day. This needs:
+  - a 60–90 second script (EN and AR);
+  - the demo link with their farm name and type;
+  - a screen recorder (Loom, or macOS screen recording);
+  - where to send it (WhatsApp or email).
+- [ ] **C3. Feedback form** (Claude drafts the questions, You create it in Google Forms or Tally). It replaces the calls: 5 short questions every two weeks, in EN and AR, based on the call script's scorecard.
+- [ ] **C4. WhatsApp Business** on +962 78 7016 351 (Claude drafts, You set it up):
+  - business profile (name, short description, website, email);
+  - greeting message;
+  - away message (outside working hours);
+  - 4–5 quick replies: "send your layout", "your demo video", "how the pilot works", "pricing after the pilot", "thank you".
+- [ ] **C5. Working hours** (You). "One business day": which days and hours? For example, Sunday to Thursday, 9:00–17:00 Amman time. This goes in the away message and the FAQ.
+- [ ] **C6. Answer to "what does it cost after the pilot?"** (You). People will ask. Even a range or "we'll agree it together before the pilot ends" is fine; it just needs to be the same answer every time.
+
+## D. Outreach readiness
+
+- [ ] **D1. Check the 22 target farms** (Both). Confirm each is still active (website, recent posts) and find a contact name and channel (`docs/validation/target-farms.md`).
+- [ ] **D2. Check each farm's type** in `docs/outreach-links.xlsx`, so its demo opens as the right kind of farm (my guesses are pre-filled).
+- [ ] **D3. Your LinkedIn profile** (You). Prospects will look you up. Add a line about the project and a link to the site.
+
+## E. Then: accounts and settings
+
+Once A is done, in this order (details in `.env.example`):
+
+1. [ ] Vercel: connect the domain (Project → Settings → Domains), then set `NEXT_PUBLIC_SITE_URL`.
+2. [ ] Namecheap DNS: add the Vercel records, plus SPF, DKIM and DMARC for the mailbox (so emails don't land in spam).
+3. [ ] Supabase: create the project, run `supabase/schema.sql`, then set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`.
+4. [ ] SMTP: set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` and `REQUESTS_NOTIFY_EMAIL`.
+5. [ ] Umami: add the website, then set `NEXT_PUBLIC_UMAMI_WEBSITE_ID`.
+6. [ ] Clarity: create the project, then set `NEXT_PUBLIC_CLARITY_ID`.
+7. [ ] Redeploy, then run an end-to-end test (Claude):
+   - send a test request in EN and AR;
+   - check both emails and the Supabase row;
+   - check the events in Umami, and that no farm names appear there.
