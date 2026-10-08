@@ -40,20 +40,20 @@ Do these first. Most of the later steps need the domain.
 
 ## C. Things the site already promises (they must exist on day one)
 
-- [ ] **C1. Setup checklist** (Claude). The thank-you screen promises "a setup checklist". It's a short EN/AR document you send to each farm: what we need from them (layout photos, floors and racks, crops, sensors if any), and what happens in the two weeks.
-- [ ] **C2. Demo video routine** (Claude drafts, You record). We promise "a short video of your farm's demo" within a business day. This needs:
+- [ ] **C1. Setup checklist** (Claude; draft ready in [`launch-kit/setup-checklist.md`](launch-kit/setup-checklist.md), for you to review). The thank-you screen promises "a setup checklist". It's a short EN/AR document you send to each farm: what we need from them (layout photos, floors and racks, crops, sensors if any), and what happens in the two weeks.
+- [ ] **C2. Demo video routine** (Claude drafts, You record; routine and scripts in [`launch-kit/demo-video.md`](launch-kit/demo-video.md)). We promise "a short video of your farm's demo" within a business day. This needs:
   - a 60–90 second script (EN and AR);
   - the demo link with their farm name and type;
   - a screen recorder (Loom, or macOS screen recording);
   - where to send it (WhatsApp or email).
-- [ ] **C3. Feedback form** (Claude drafts the questions, You create it in Google Forms or Tally). It replaces the calls: 5 short questions every two weeks, in EN and AR, based on the call script's scorecard.
-- [ ] **C4. WhatsApp Business** on +962 78 7016 351 (Claude drafts, You set it up):
+- [ ] **C3. Feedback form** (Claude drafts the questions, You create it in Google Forms or Tally; questions in [`launch-kit/feedback-form.md`](launch-kit/feedback-form.md)). It replaces the calls: 5 short questions every two weeks, in EN and AR, based on the call script's scorecard.
+- [ ] **C4. WhatsApp Business** on +962 78 7016 351 (Claude drafts, You set it up; texts in [`launch-kit/whatsapp-business.md`](launch-kit/whatsapp-business.md)):
   - business profile (name, short description, website, email);
   - greeting message;
   - away message (outside working hours);
   - 4–5 quick replies: "send your layout", "your demo video", "how the pilot works", "pricing after the pilot", "thank you".
 - [ ] **C5. Working hours** (You). "One business day": which days and hours? For example, Sunday to Thursday, 9:00–17:00 Amman time. This goes in the away message and the FAQ.
-- [ ] **C6. Answer to "what does it cost after the pilot?"** (You). People will ask. Even a range or "we'll agree it together before the pilot ends" is fine; it just needs to be the same answer every time.
+- [ ] **C6. Answer to "what does it cost after the pilot?"** (You). The FAQ already says "we'll agree on pricing together before the pilot ends, and you can stop at any time", and the WhatsApp `/price` reply uses the same words. Confirm it, or give a range.
 
 ## D. Outreach readiness
 
