@@ -10,7 +10,7 @@ A live 3D "digital twin" for vertical and indoor farms (working name **Canopy**;
 
 **Visitor flow (built):**
 1. Landing page (`/en`, `/ar`) with a live 3D farm and a "Your farm's name" field.
-2. Personalised demo (`/[lang]/demo?farm=Name`): the full twin on sample data, carrying their farm name, with "Get this for my farm" calls to action everywhere.
+2. Personalised demo (`/[lang]/demo?farm=Name&type=container`): the full twin on sample data, carrying their farm name and farm type (vertical tower, container farm, hydroponic greenhouse or research lab, picked in the welcome card), with "Get this for my farm" calls to action everywhere.
 3. Pilot request form (`/[lang]/request`): 3 steps, saved to Supabase, emailed to the owner and the visitor, then a "What's next" screen (send layout photos on WhatsApp; reply within one business day with a short video of their demo). No calls. Back/Forward move between steps, and a draft is kept in sessionStorage.
 4. After the request (and layout photos on WhatsApp), we set up a tenant for the farm by hand (no customer app yet).
 
@@ -50,6 +50,9 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 - **Responsive:** down to 360px wide with no horizontal scroll.
 - **3D farm:** `src/components/twin/`:
   - `sim.ts` is the model (plain TS class; the HUD reads a throttled snapshot via `useSyncExternalStore`).
+  - `layouts.ts` describes the four farm types (`tower`, `container`, `greenhouse`, `lab`): where each of the 4 growing units sits, its beds, LEDs, sensors, where crates are handed over, and the camera framing. The sim and the scene both read it; `FarmSim.setType()` swaps it. The tower uses the lift; the others use a floor cart. Every unit's long side runs along x, so the drone always sweeps the same way.
+  - The landing page always shows the tower (the hero stills match it).
+  - `?type=` is carried by the language switch and into the request form, which pre-selects the farm type ("lab" is a request option too).
   - `scene.tsx` is R3F. Its Canvas uses `resize={{ offsetSize: true }}`, so CSS transforms never shrink it.
   - DOM labels are pinned to 3D points through `AnchorSink` (don't use drei `Html`; it broke under React 19).
 - **Landing navigation:** `components/landing/landing-nav.tsx` has the phone menu (sheet with focus trap) and a slim bar that slides in on scroll-up. The language switch (`components/ui/lang-switch.tsx`) keeps the visitor's section; in the demo it carries floor, time and "welcome seen" (`f`, `t`, `w`, removed from the address once used).
@@ -74,7 +77,7 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
    - next: final name and domain; email deliverability (SPF, DKIM, DMARC at Namecheap);
    - next: founder photo, and the owner's edits to the founder copy;
    - next: an end-to-end test once Vercel, Supabase and SMTP are connected (Cal.com is optional now).
-2. **Validation (2–4 weeks):** **decision (8 Oct 2026): no calls.** The owner won't run sales or feedback calls, so the site has to replace the call: see the "no-call path" in the UX review (`docs/ux-review/index.html`; live page https://claude.ai/artifact/SVX8YYtGad7CpwoeTs5EqN). The review lists 25 prioritised fixes (F1–F25) in three sprints. Sprints 1–3 are done (F1–F12, F14–F25). Left: F13, a farm-type choice in the demo (tower, container, greenhouse), which is a larger 3D job. The call script stays as the source for 5 async questions. The kit is in `docs/validation/`:
+2. **Validation (2–4 weeks):** **decision (8 Oct 2026): no calls.** The owner won't run sales or feedback calls, so the site has to replace the call: see the "no-call path" in the UX review (`docs/ux-review/index.html`; live page https://claude.ai/artifact/SVX8YYtGad7CpwoeTs5EqN). The review lists 25 prioritised fixes (F1–F25) in three sprints. All 25 are done (F13, the farm-type choice in the demo, came last). The call script stays as the source for 5 async questions. The kit is in `docs/validation/`:
    - done: call script (`call-script.en.md`, `call-script.ar.md`, Modern Standard Arabic) with a scorecard;
    - done: 22 target farms in Jordan, the UAE and Saudi Arabia (`target-farms.md`, public sources; verify each is active), also prefilled in `docs/outreach-links.xlsx`;
    - done: WhatsApp, LinkedIn and email messages, EN/AR (`outreach-messages.md`);
