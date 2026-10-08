@@ -40,6 +40,12 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       className={`${latinDisplay.variable} ${latin.variable} ${arabic.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="min-h-full font-sans">
+        <a
+          href="#main"
+          className="sr-only z-[80] rounded-full bg-ink px-4 py-2 text-[14px] font-semibold text-white focus:not-sr-only focus:fixed focus:start-4 focus:top-4"
+        >
+          {d.nav.skip}
+        </a>
         {children}
         <Analytics lang={lang} d={d.consent} />
       </body>

@@ -8,8 +8,15 @@ import { WhatsAppLink } from "./whatsapp-link";
 
 const link = "text-ink underline-offset-4 hover:underline";
 
-export function SiteFooter({ lang, d, wa }: { lang: Locale; d: Dict["footer"]; wa: Dict["whatsapp"] }) {
+export function SiteFooter({ lang, d, nav, wa }: { lang: Locale; d: Dict["footer"]; nav: Dict["nav"]; wa: Dict["whatsapp"] }) {
   const year = new Date().getFullYear();
+  const links = [
+    [`/${lang}/demo`, nav.demo],
+    [`/${lang}#how`, nav.how],
+    [`/${lang}#pilot`, nav.pilot],
+    [`/${lang}#faq`, nav.faq],
+    [`/${lang}/request`, nav.cta],
+  ] as const;
   return (
     <footer className="border-t border-line">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
@@ -17,6 +24,13 @@ export function SiteFooter({ lang, d, wa }: { lang: Locale; d: Dict["footer"]; w
           <Logo />
           <p className="text-[14px] text-muted">{d.tagline}</p>
         </div>
+        <nav aria-label={d.explore} className="flex flex-wrap gap-x-5 gap-y-2 text-[14px] font-medium sm:max-w-[380px]">
+          {links.map(([href, label]) => (
+            <Link key={href} href={href} className={link}>
+              {label}
+            </Link>
+          ))}
+        </nav>
         <div className="flex flex-col gap-1 text-[14px] text-muted sm:items-end">
           <span>
             {d.contact}:{" "}

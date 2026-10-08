@@ -1,4 +1,4 @@
-import { ArrowRight, Check, ChevronDown, Mail, Moon, PackageCheck, Scissors, Sprout, Sun, Truck } from "lucide-react";
+import { ArrowRight, Building2, Check, ChevronDown, Container, Droplets, FlaskConical, Mail, Moon, PackageCheck, Scissors, Sprout, Sun, Truck } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -120,6 +120,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
           className="relative z-20"
           menu={<MobileMenu lang={lang} nav={d.nav} wa={d.whatsapp} langHref={`/${other}`} />}
         />
+        <span id="main" tabIndex={-1} />
         <Hero lang={lang} d={d.hero} cursor={d.cursor} />
       </section>
 
@@ -215,6 +216,22 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
             </Reveal>
           ))}
         </div>
+        <Reveal className="mt-10 flex flex-col gap-4">
+          <p className="text-[15px] font-semibold">{d.who.types}</p>
+          <ul className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            {d.built.items.map((t, i) => {
+              const Icon = [Building2, Container, Droplets, FlaskConical][i];
+              return (
+                <li key={t} className="flex items-center gap-3 rounded-2xl border border-line bg-white px-4 py-3 text-[14.5px] font-medium">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[#eef6f1] text-green">
+                    <Icon className="size-[18px]" aria-hidden />
+                  </span>
+                  {t}
+                </li>
+              );
+            })}
+          </ul>
+        </Reveal>
       </section>
 
       {/* Pilot */}
@@ -364,7 +381,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
         </Reveal>
       </section>
 
-      <SiteFooter lang={lang} d={d.footer} wa={d.whatsapp} />
+      <SiteFooter lang={lang} d={d.footer} nav={d.nav} wa={d.whatsapp} />
     </div>
     </MotionRoot>
   );

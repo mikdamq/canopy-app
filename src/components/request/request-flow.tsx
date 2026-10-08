@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, CalendarCheck, Check, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarCheck, Check, ChevronDown, Loader2 } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
@@ -17,6 +17,7 @@ import {
   type FieldName,
 } from "@/lib/request-schema";
 import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
+import { COUNTRIES, countryByName, withCountryCode } from "@/lib/countries";
 import { WHATSAPP_NUMBER, whatsappUrl } from "@/lib/site";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
@@ -185,6 +186,7 @@ export default function RequestFlow({
   const [dir, setDir] = useState(1);
   const [status, setStatus] = useState<"idle" | "sending" | "error" | "done">("idle");
   const [emailed, setEmailed] = useState(false);
+  const [otherCountry, setOtherCountry] = useState(false);
   // The Back/Forward handler reads these without re-subscribing.
   const cardRef = useRef<HTMLElement>(null);
   const stepChanged = useRef(false);
@@ -256,7 +258,7 @@ export default function RequestFlow({
     if (k in ERROR_KEY) setErrors((e) => ({ ...e, [k]: undefined }));
   };
 
-  const payload = () => ({ ...f, locale: lang, source });
+  const payload = () => ({ ...f, phone: withCountryCode(f.phone, f.country), locale: lang, source });
 
   /** Validate the fields of one step; returns true when they're all fine. */
   const check = (s: number) => {
@@ -277,6 +279,8 @@ export default function RequestFlow({
   };
 
   const go = (to: number, history: "push" | "replace" = "push") => {
+    // Leaving step 1: add the country code to a local phone number (0791… → +962791…).
+    if (step === 0 && to > 0) setF((p) => ({ ...p, phone: withCountryCode(p.phone, p.country) }));
     stepChanged.current = true;
     setDir(to > step ? 1 : -1);
     setStep(to);
@@ -324,6 +328,8 @@ export default function RequestFlow({
     ? `${bookingUrl}${bookingUrl.includes("?") ? "&" : "?"}name=${encodeURIComponent(f.name)}&email=${encodeURIComponent(f.email)}`
     : "";
   const shownFarm = f.farmName.trim() || farm;
+  // The country list shows a known country, "other" (with a text box), or nothing yet.
+  const countryPick = otherCountry || (f.country && !countryByName(f.country)) ? "other" : f.country;
   const started = step > 0;
   const sent = status === "done";
   const demoHref = `/${lang}/demo${f.farmName ? `?farm=${encodeURIComponent(f.farmName)}` : ""}`;
@@ -467,13 +473,43 @@ export default function RequestFlow({
                       <Chips label={r.fields.role} options={ROLES} labels={r.roles} value={f.role} onChange={(v) => set("role", v as Form["role"])} />
                     </Field>
                     <Field label={r.fields.country} error={errors.country} htmlFor={id("country")}>
-                      <input
-                        id={id("country")}
-                        autoComplete="country-name"
-                        value={f.country}
-                        onChange={(e) => set("country", e.target.value)}
-                        className={inputCls(!!errors.country)}
-                      />
+                      <div className="flex flex-col gap-2">
+                        <div className="relative">
+                          <select
+                            id={id("country")}
+                            autoComplete="country-name"
+                            value={countryPick}
+                            onChange={(e) => {
+                              const v = e.target.value;
+                              setOtherCountry(v === "other");
+                              set("country", v === "other" || v === "" ? "" : v);
+                            }}
+                            className={cn(inputCls(!!errors.country), "appearance-none pe-10", !countryPick && "text-[#9aa6ba]")}
+                          >
+                            <option value="" disabled>
+                              {r.countryChoose}
+                            </option>
+                            {COUNTRIES.map((c) => (
+                              <option key={c.code} value={c.name} className="text-ink">
+                                {r.countries[c.code]}
+                              </option>
+                            ))}
+                            <option value="other" className="text-ink">
+                              {r.countries.other}
+                            </option>
+                          </select>
+                          <ChevronDown className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-muted" aria-hidden />
+                        </div>
+                        {countryPick === "other" && (
+                          <input
+                            aria-label={r.countryOther}
+                            placeholder={r.countryOther}
+                            value={f.country}
+                            onChange={(e) => set("country", e.target.value)}
+                            className={inputCls(!!errors.country)}
+                          />
+                        )}
+                      </div>
                     </Field>
                   </>
                 )}

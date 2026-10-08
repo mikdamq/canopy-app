@@ -230,6 +230,15 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
   const k = snap.sel;
   const f = snap.floors[k];
   const canHarvest = snap.busyFloor === null && (f.state === "growing" || f.state === "ready") && f.g >= 0.6;
+  // Why the harvest button is greyed out, in one line (nothing while this floor is being harvested).
+  const reason =
+    canHarvest || snap.busyFloor === k
+      ? ""
+      : snap.busyFloor !== null
+        ? fmt(d.whyBusy, { n: snap.busyFloor + 1 })
+        : f.g < 0.6
+          ? d.whyEarly
+          : "";
   const zoomed = snap.focus === k;
   return (
     <Card delay={0.1} className="flex min-w-0 flex-col gap-3.5 p-3.5">
@@ -356,6 +365,7 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
             <button
               type="button"
               disabled={!canHarvest}
+              aria-describedby={reason ? `harvest-why-${k}` : undefined}
               onClick={() => sim.harvest(k)}
               className="flex items-center justify-center gap-1.5 rounded-xl bg-ink px-3 py-2 text-[13px] font-semibold text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
             >
@@ -363,6 +373,11 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
               {snap.busyFloor === k ? d.harvesting : snap.busyFloor !== null ? d.lineBusy : f.g < 0.6 ? d.tooEarly : d.harvestNow}
             </button>
           </div>
+          {reason && (
+            <p id={`harvest-why-${k}`} className="-mt-1 text-end text-[11.5px] leading-snug text-muted">
+              {reason}
+            </p>
+          )}
         </motion.div>
       </AnimatePresence>
     </Card>
@@ -475,6 +490,7 @@ function Clock({ snap, sim, d }: { snap: Snapshot; sim: FarmSim; d: D }) {
           step={0.25}
           value={snap.hour}
           aria-label={d.timeOfDay}
+          aria-valuetext={fmtHour(snap.hour)}
           onChange={(e) => sim.setHour(Number(e.target.value))}
           className="w-full accent-green"
         />
@@ -486,7 +502,8 @@ function Clock({ snap, sim, d }: { snap: Snapshot; sim: FarmSim; d: D }) {
           <span>24:00</span>
         </div>
       </div>
-      <p className="text-[11.5px] leading-snug text-muted">{fmt(d.litNote, { n: lit })}</p>
+      {/* Hidden on short laptop screens so the side panel fits without scrolling. */}
+      <p className="text-[11.5px] leading-snug text-muted lg:[@media(max-height:960px)]:hidden">{fmt(d.litNote, { n: lit })}</p>
     </Card>
   );
 }
@@ -589,8 +606,11 @@ function TryThis({ snap, d, farm, href, compact }: { snap: Snapshot; d: D; farm:
 function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: string) => void }) {
   const [name, setName] = useState(farm);
   const input = useRef<HTMLInputElement>(null);
+  const startBtn = useRef<HTMLButtonElement>(null);
+  const form = useRef<HTMLFormElement>(null);
+  // Take keyboard focus as the card opens: the name field when it's empty, otherwise the start button.
   useEffect(() => {
-    if (!farm) input.current?.focus();
+    (farm ? startBtn.current : input.current)?.focus();
   }, [farm]);
   const icons = [MousePointerClick, SlidersHorizontal, Moon];
   return (
@@ -605,9 +625,22 @@ function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: str
       exit={{ opacity: 0 }}
       onKeyDown={(e) => {
         if (e.key === "Escape") onStart(name);
+        if (e.key !== "Tab" || !form.current) return;
+        // Keep Tab inside the card while it's open.
+        const items = form.current.querySelectorAll<HTMLElement>("input, button");
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }}
     >
       <motion.form
+        ref={form}
         initial={{ opacity: 0, y: 16, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 8 }}
@@ -648,7 +681,7 @@ function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: str
             className="rounded-xl border border-line px-3 py-2.5 text-[15px] font-normal outline-none focus:border-green"
           />
         </label>
-        <button type="submit" className="rounded-xl bg-green px-4 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-green-ink">
+        <button ref={startBtn} type="submit" className="rounded-xl bg-green px-4 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-green-ink">
           {d.welcome.start}
         </button>
       </motion.form>
@@ -752,6 +785,7 @@ export default function TwinApp({
   return (
     <MotionConfig reducedMotion="user">
       <div
+        id="main"
         onPointerDownCapture={onInteract}
         onKeyDownCapture={onInteract}
         className="relative w-full overflow-x-hidden bg-[#e8eef4] pb-20 sm:pb-0 lg:h-svh lg:min-h-[740px] lg:overflow-hidden"
@@ -787,7 +821,7 @@ export default function TwinApp({
               <Stats snap={snap} d={dict} />
               {!welcome && <TryThis snap={snap} d={dict} farm={shown} href={ctaHref} />}
             </div>
-            <div className="absolute end-4 top-[84px] bottom-4 z-30 flex w-[340px] flex-col gap-3 overflow-y-auto pb-1">
+            <div className="absolute end-4 top-[84px] bottom-4 z-30 flex w-[340px] flex-col gap-3 overflow-y-auto pb-1 [@media(max-height:960px)]:gap-2.5">
               <FloorPanel snap={snap} sim={sim} reduce={reduce} d={dict} />
               <Clock snap={snap} sim={sim} d={dict} />
               <CtaCard d={dict} wa={wa} farm={shown} named={farm} href={ctaHref} pilotHref={`/${lang}#pilot`} />
