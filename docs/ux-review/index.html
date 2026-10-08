@@ -1,0 +1,519 @@
+<title>Canopy UX Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one reading column (max 980px) with a journey strip, filterable finding cards and a sprint checklist. Canopy's own palette: ink, deep green, LED pink. */
+:root {
+  --bg: #eef2f5;
+  --paper: #ffffff;
+  --ink: #141b2b;
+  --muted: #5b677d;
+  --line: #dce2ec;
+  --green: #1f7a45;
+  --green-soft: #e6f2ea;
+  --led: #d6249f;
+  --p0: #c4321c;
+  --p0-soft: #fbe9e5;
+  --p1: #a35c00;
+  --p1-soft: #fbf0df;
+  --p2: #3c5a9a;
+  --p2-soft: #e8edf8;
+  --shadow: 0 18px 44px -30px rgba(20, 27, 43, 0.45);
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1422; --paper: #161e30; --ink: #e8edf6; --muted: #9aa6bd; --line: #2a3550;
+    --green: #5fc98a; --green-soft: #17322a; --led: #ff6fe0;
+    --p0: #ff8a73; --p0-soft: #3a1e1a; --p1: #f0b35a; --p1-soft: #3a2c16; --p2: #93aef0; --p2-soft: #1d2843;
+    --shadow: 0 18px 44px -30px rgba(0, 0, 0, 0.8); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1422; --paper: #161e30; --ink: #e8edf6; --muted: #9aa6bd; --line: #2a3550;
+  --green: #5fc98a; --green-soft: #17322a; --led: #ff6fe0;
+  --p0: #ff8a73; --p0-soft: #3a1e1a; --p1: #f0b35a; --p1-soft: #3a2c16; --p2: #93aef0; --p2-soft: #1d2843;
+  --shadow: 0 18px 44px -30px rgba(0, 0, 0, 0.8); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.6 var(--body); padding-inline: 16px; padding-block: 0 64px; }
+.wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.08; text-wrap: balance; margin: 0; letter-spacing: -0.015em; }
+h1 { font-size: clamp(36px, 6vw, 56px); font-weight: 800; }
+h2 { font-size: clamp(26px, 3.6vw, 34px); font-weight: 800; }
+h3 { font-size: 19px; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--green); }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); }
+.lede { font-size: 18px; color: var(--muted); max-width: 62ch; }
+section { display: flex; flex-direction: column; gap: 20px; }
+.section-head { display: flex; flex-direction: column; gap: 10px; }
+
+/* Header */
+header.top { padding-top: 40px; display: flex; flex-direction: column; gap: 18px; }
+.brand { display: flex; align-items: center; gap: 10px; font: 600 15px var(--display); }
+.mark { width: 28px; height: 28px; border-radius: 8px; background: #2e9e5b; display: grid; place-items: center; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.meta span { font: 500 12.5px var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; background: var(--paper); }
+
+/* Verdict */
+.verdict { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 22px; padding: 24px; box-shadow: var(--shadow); min-width: 0; }
+.verdict .card p + p { margin-top: 12px; }
+.counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.count { border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+.count b { font: 800 34px/1 var(--display); font-variant-numeric: tabular-nums; }
+.count span { font-size: 13px; line-height: 1.35; }
+.c0 { background: var(--p0-soft); color: var(--p0); } .c1 { background: var(--p1-soft); color: var(--p1); } .c2 { background: var(--p2-soft); color: var(--p2); }
+.wins { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 9px; font-size: 14.5px; }
+.wins li { display: flex; gap: 10px; }
+.wins li::before { content: ""; flex: none; width: 8px; height: 8px; margin-top: 8px; border-radius: 50%; background: var(--green); }
+
+/* Journey strip */
+.journey { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.stage { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px; min-width: 0; cursor: pointer; text-align: start; font: inherit; color: inherit; }
+.stage:hover, .stage[aria-pressed="true"] { border-color: var(--ink); }
+.stage .n { font: 500 11px var(--mono); color: var(--muted); }
+.stage strong { font: 600 16px var(--display); }
+.stage .dots { display: flex; flex-wrap: wrap; gap: 4px; }
+.dot { width: 10px; height: 10px; border-radius: 3px; }
+.d0 { background: var(--p0); } .d1 { background: var(--p1); } .d2 { background: var(--p2); }
+.stage small { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+
+/* Filters */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip { font: 500 13.5px var(--body); border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip:focus-visible, .stage:focus-visible, .shot:focus-visible, .task input:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.filters .shown { margin-inline-start: auto; font: 500 12.5px var(--mono); color: var(--muted); }
+
+/* Findings */
+.findings { display: flex; flex-direction: column; gap: 14px; }
+.f { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 22px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 22px; }
+.f.noimg { grid-template-columns: minmax(0, 1fr); }
+.f-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.tag { font: 500 11.5px/1 var(--mono); border-radius: 6px; padding: 5px 8px; letter-spacing: 0.02em; }
+.t0 { background: var(--p0-soft); color: var(--p0); } .t1 { background: var(--p1-soft); color: var(--p1); } .t2 { background: var(--p2-soft); color: var(--p2); }
+.tg { background: var(--bg); color: var(--muted); }
+.id { font: 500 12px var(--mono); color: var(--muted); }
+.f h3 { margin-bottom: 12px; }
+.f dl { margin: 0; display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px 14px; font-size: 14.5px; }
+.f dt { font: 500 11.5px/1.9 var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.f dd { margin: 0; }
+.f dd.fix { color: var(--ink); font-weight: 500; }
+.shot { display: block; padding: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--bg); cursor: zoom-in; align-self: start; width: 100%; }
+.shot img { display: block; width: 100%; height: auto; }
+.shot.tall img { max-height: 340px; object-fit: cover; object-position: top; }
+.f[hidden] { display: none; }
+
+/* No-call path */
+.flows { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.flow ol { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; counter-reset: s; }
+.flow li { counter-increment: s; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; font-size: 14.5px; }
+.flow li::before { content: counter(s); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font: 500 12px var(--mono); background: var(--bg); color: var(--muted); }
+.flow.new li::before { background: var(--green); color: #fff; }
+.flow li b { display: block; }
+.flow li s { color: var(--muted); }
+.flow.old { opacity: 0.85; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 640px; }
+th, td { text-align: start; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 11.5px var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td code, dd code, p code { font: 12.5px var(--mono); background: var(--bg); padding: 1px 5px; border-radius: 4px; }
+td.old { color: var(--muted); }
+.metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.metric { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.metric b { font: 800 26px/1 var(--display); font-variant-numeric: tabular-nums; }
+.metric span { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+/* Plan */
+.sprints { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.sprint { display: flex; flex-direction: column; gap: 12px; }
+.sprint header { display: flex; flex-direction: column; gap: 4px; }
+.sprint .when { font: 500 12px var(--mono); color: var(--muted); }
+.task { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 10px; font-size: 14px; align-items: start; }
+.task input { margin: 3px 0 0; accent-color: var(--green); width: 16px; height: 16px; }
+.task label { cursor: pointer; }
+.task .id { margin-inline-end: 6px; }
+.progress { height: 6px; border-radius: 6px; background: var(--bg); overflow: hidden; }
+.progress i { display: block; height: 100%; width: 0; background: var(--green); transition: width 0.3s; }
+.coverage td:not(:first-child) { font-family: var(--mono); font-size: 13px; }
+.note { font-size: 13.5px; color: var(--muted); }
+
+dialog { border: 0; padding: 0; background: transparent; max-width: min(1200px, 96vw); max-height: 92vh; }
+dialog::backdrop { background: rgba(10, 14, 24, 0.82); }
+dialog img { display: block; max-width: 100%; max-height: 88vh; border-radius: 12px; }
+dialog form { text-align: end; margin-bottom: 8px; }
+dialog button { font: 600 14px var(--body); border: 0; border-radius: 999px; padding: 8px 16px; background: #fff; color: #141b2b; cursor: pointer; }
+
+@media (max-width: 860px) {
+  .f { grid-template-columns: minmax(0, 1fr); }
+  .shot { max-width: 420px; }
+  .verdict, .flows, .sprints { grid-template-columns: minmax(0, 1fr); }
+  .journey { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  .f dl { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .f dd { margin-bottom: 8px; }
+  .counts { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { .progress i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="mark" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9.536V7a4 4 0 0 1 4-4h1.5a.5.5 0 0 1 .5.5V5a4 4 0 0 1-4 4 4 4 0 0 0-4 4c0 2 1 3 1 5a5 5 0 0 1-1 3"/><path d="M4 9a5 5 0 0 1 8 4 5 5 0 0 1-8-4"/><path d="M5 21h14"/></svg></span>Canopy</div>
+    <p class="eyebrow">UX review · 8 October 2026</p>
+    <h1>Canopy UX Review</h1>
+    <p class="lede">I used the site the way a farm owner would: from a shared link to the landing page, into the personalised demo, through every control, and on to sending a pilot request. Then I did it all again in Arabic and on a phone. This page lists what to fix, in the order I'd fix it, and how the flow changes now that there are no calls.</p>
+    <div class="meta">
+      <span>Production build</span><span>Desktop 1440 × 900</span><span>Phone 390 × 844</span><span>English + Arabic</span><span>~130 screenshots</span><span>Keyboard + reduced motion</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="verdict-h">
+    <div class="section-head">
+      <p class="eyebrow">Summary</p>
+      <h2 id="verdict-h">A strong demo inside a flow that still expects a phone call</h2>
+    </div>
+    <div class="verdict">
+      <div class="card">
+        <p>The personalised demo is the best part of the product. The farm's name is everywhere, every control changes something real, and the Arabic version feels native rather than translated. Nothing crashed in more than 40 screens, and accessibility scores 100 on every page.</p>
+        <p>The weak spots are at the edges of the demo. Getting in requires typing a name, and getting out leads nowhere except the request form. On phones, the request form loses everything on Back and makes you scroll before every step. Most importantly, the whole story still ends in "book a 30-minute call", which no longer matches how you want to run this.</p>
+        <ul class="wins" aria-label="What works well">
+          <li>Light recipes change the numbers: Blue heavy drops growth speed from 88% to 67% and raises energy from 9.4 to 10.7 kWh/kg.</li>
+          <li>Harvesting writes to the seed-to-plate log, and night mode lights the tower pink.</li>
+          <li>The form explains every error in both languages and moves focus to the first problem. "1,200 m²" is understood.</li>
+          <li>Odd input is safe: HTML and emoji in a farm name are shown as plain text.</li>
+        </ul>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;gap:14px">
+        <div class="counts">
+          <div class="count c0"><b>5</b><span>Fix before launch</span></div>
+          <div class="count c1"><b>10</b><span>High impact on requests</span></div>
+          <div class="count c2"><b>10</b><span>Polish and accessibility</span></div>
+        </div>
+        <p class="note">About 7 to 8 working days in total, in three sprints (see the plan at the end). Sprint 1 alone (about 2 days) makes the site safe to share.</p>
+        <p class="note">Effort: <b>S</b> under 2 hours · <b>M</b> half a day to a day · <b>L</b> several days.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="journey-h">
+    <div class="section-head">
+      <p class="eyebrow">Journey</p>
+      <h2 id="journey-h">Where the problems sit</h2>
+      <p class="note">Each square is one finding, coloured by priority. Tap a stage to show only its findings.</p>
+    </div>
+    <div class="journey" id="journey"></div>
+  </section>
+
+  <section aria-labelledby="findings-h">
+    <div class="section-head">
+      <p class="eyebrow">Findings</p>
+      <h2 id="findings-h">25 things to fix, most important first</h2>
+    </div>
+    <div class="filters" role="group" aria-label="Filter findings by priority">
+      <button class="chip" data-p="all" aria-pressed="true">All</button>
+      <button class="chip" data-p="0" aria-pressed="false">Fix before launch</button>
+      <button class="chip" data-p="1" aria-pressed="false">High impact</button>
+      <button class="chip" data-p="2" aria-pressed="false">Polish</button>
+      <span class="shown" id="shown" aria-live="polite"></span>
+    </div>
+    <div class="findings" id="findings"></div>
+  </section>
+
+  <section aria-labelledby="nocall-h" id="no-call">
+    <div class="section-head">
+      <p class="eyebrow">No-call path</p>
+      <h2 id="nocall-h">From demo to pilot without a single call</h2>
+      <p class="lede">Today every route ends in a 30-minute call. Without calls, the site has to do three jobs the call used to do: answer questions, collect what you need to build the twin, and tell you whether the farm would really use it. Here's how each step changes.</p>
+    </div>
+    <div class="flows">
+      <div class="card flow old">
+        <h3>Today</h3>
+        <ol>
+          <li><span><b>Landing</b>Type a farm name to open the demo.</span></li>
+          <li><span><b>Demo</b>Explore, then "Get this for my farm".</span></li>
+          <li><span><b>Request</b>3 steps: you, your farm, your goals.</span></li>
+          <li><span><b>Book a call</b>Cal.com calendar, or "we'll email you to set a time".</span></li>
+          <li><span><b>30-minute call</b>Questions, demo walkthrough, pilot offer.</span></li>
+          <li><span><b>Setup</b>Twin built in about two weeks.</span></li>
+        </ol>
+      </div>
+      <div class="card flow new">
+        <h3>Proposed</h3>
+        <ol>
+          <li><span><b>Landing</b>Name optional: "or explore a sample farm".</span></li>
+          <li><span><b>Demo</b>Pick your farm type (tower, container, greenhouse). A "try this" checklist leads to "Get this for my farm".</span></li>
+          <li><span><b>Request</b>Same 3 steps. The last one adds an optional upload: a photo or sketch of your layout.</span></li>
+          <li><span><b>What's next</b>"Send us photos on WhatsApp" (message ready to send), plus 5 optional questions taken from the call script.</span></li>
+          <li><span><b>Your reply, within one business day</b>A 2–3 minute screen recording of their demo, set to their farm type, and a setup checklist on WhatsApp.</span></li>
+          <li><span><b>Setup, then pilot</b>Twin live in about two weeks. Feedback through a 2-minute form or a WhatsApp voice note every two weeks.</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <h3 style="margin-top:8px">Copy to change (English; Arabic follows the same keys)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Where</th><th>Now</th><th>Change to</th></tr></thead>
+        <tbody>
+          <tr><td>How it works, title</td><td class="old">From a call to a live farm in about two weeks</td><td>From a 2-minute form to a live farm in about two weeks</td></tr>
+          <tr><td>How it works, step 1</td><td class="old">A 30-minute call about your space, your crops and the data you already collect…</td><td>Answer a few questions about your space and crops, or send us photos on WhatsApp. A spreadsheet is enough.</td></tr>
+          <tr><td>Request intro</td><td class="old">…and you can book a call right after.</td><td>No calls needed: we reply on WhatsApp or email within one business day.</td></tr>
+          <tr><td>Request, step 4</td><td class="old">Book a call</td><td>What's next</td></tr>
+          <tr><td>Thank-you text</td><td class="old">Pick a time for a 30-minute call below…</td><td>Send us a photo or sketch of your layout on WhatsApp, and we'll reply with a short video of your farm's demo.</td></tr>
+          <tr><td>Final call to action</td><td class="old">Tell us about it and book a call.</td><td>Tell us about it in 2 minutes. We reply within one business day.</td></tr>
+          <tr><td>FAQ: setup time</td><td class="old">About two weeks after our first call…</td><td>About two weeks after you send your layout…</td></tr>
+          <tr><td>Pilot: included</td><td class="old">Direct line to our team</td><td>A direct line on WhatsApp</td></tr>
+          <tr><td>Confirmation email</td><td class="old">…get back to you within one business day to set up a call.</td><td>…get back to you within one business day with next steps.</td></tr>
+          <tr><td>Outreach messages</td><td class="old">Would you be open to a 30-minute call this week?</td><td>Have a look, and reply here with what you'd change for your farm.</td></tr>
+          <tr><td>Pilot terms</td><td class="old">20-minute feedback call every two weeks</td><td>2-minute feedback form every two weeks</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Cal.com then becomes optional. Keep the call script as the source for the 5 async questions; the "weekly use" question becomes "How often would you open this?" with five choices.</p>
+
+    <h3 style="margin-top:8px">How you'll know it works without calls</h3>
+    <div class="metrics">
+      <div class="metric"><b>40%</b><span>of farms you message open their demo (<code>demo_opened</code> with UTM tags)</span></div>
+      <div class="metric"><b>50%</b><span>of those touch it (<code>demo_interaction</code>)</span></div>
+      <div class="metric"><b>5</b><span>requests from about 22 farms (<code>request_sent</code>, plus the new <code>request_step</code>)</span></div>
+      <div class="metric"><b>2</b><span>pilots: the same goal as before, now reached through WhatsApp</span></div>
+    </div>
+    <p class="note">These are starting targets for the first round, not benchmarks. Adjust them after the first 10 messages.</p>
+  </section>
+
+  <section aria-labelledby="plan-h" id="plan">
+    <div class="section-head">
+      <p class="eyebrow">Plan</p>
+      <h2 id="plan-h">Three sprints</h2>
+      <p class="note">Ticks are saved in this browser only, so you can use the list as your own checklist.</p>
+    </div>
+    <div class="sprints" id="sprints"></div>
+  </section>
+
+  <section aria-labelledby="cov-h">
+    <div class="section-head">
+      <p class="eyebrow">Coverage</p>
+      <h2 id="cov-h">What I tested</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="coverage">
+        <thead><tr><th>Area</th><th>Desktop EN</th><th>Desktop AR</th><th>Phone EN</th><th>Phone AR</th><th>Also checked</th></tr></thead>
+        <tbody>
+          <tr><td>Share preview, redirect from /</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td style="font-family:var(--body)">Personalised preview images, browser-language redirect</td></tr>
+          <tr><td>Landing, scrolled end to end</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td style="font-family:var(--body)">Empty and odd names, keyboard tab order, FAQ, reduced motion</td></tr>
+          <tr><td>Demo: welcome and every control</td><td>✓</td><td>✓</td><td>✓</td><td>–</td><td style="font-family:var(--body)">Floors, recipes, zoom, harvest, clock, 3D labels, language switch, no-name demo</td></tr>
+          <tr><td>Request: errors, steps, submit</td><td>✓</td><td>–</td><td>✓</td><td>✓</td><td style="font-family:var(--body)">Bad email, phone without country code, "1,200", Back and Forward</td></tr>
+          <tr><td>Privacy, 404, consent, WhatsApp</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td style="font-family:var(--body)">Lighthouse accessibility 100 on all pages</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Not tested yet, because they need live accounts: real email delivery, the Cal.com embed, Supabase storage, Umami and Clarity dashboards, and 3D speed on a real mid-range phone. These belong in the end-to-end test after connecting the services.</p>
+  </section>
+</div>
+
+<dialog id="lightbox" aria-label="Screenshot">
+  <form method="dialog"><button>Close</button></form>
+  <img id="lightbox-img" alt="">
+</dialog>
+
+<script>
+const STAGES = [
+  ["discover", "Landing", "First look, hero, navigation"],
+  ["demo", "Demo", "Welcome, controls, exits"],
+  ["request", "Request", "Form, Back, thank-you"],
+  ["all", "Everywhere", "Copy and flow"],
+  ["ops", "Measuring", "Analytics and data"],
+];
+const F = [
+  // Fix before launch
+  { id: "F1", p: 0, s: "demo", e: "S–M", t: "The demo's search bar does nothing",
+    saw: "\"Search floors, crops, sensors\" looks like a real field at the top of the demo, but it can't be clicked into or typed in.",
+    why: "It's one of the first things people try. A control that does nothing makes the whole \"live\" product feel fake.",
+    fix: "Remove it for launch (S). Later, make it a real quick-jump to floors and crops (M).", img: "demo-search" },
+  { id: "F2", p: 0, s: "request", e: "S–M", t: "Back on a phone wipes the request form",
+    saw: "On step 2, the browser's Back button leaves the form for the demo. Forward brings back an empty step 1.",
+    why: "On Android, the Back gesture is how people go back a step. Losing two minutes of typing is the surest way to lose a request.",
+    fix: "Give each step its own browser history entry, and keep a draft in this tab until the request is sent.", img: null },
+  { id: "F3", p: 0, s: "request", e: "S", t: "The thank-you screen promises an email that may never arrive",
+    saw: "\"We've emailed you a copy\" appears even when no email was sent (no mailbox connected, or sending failed).",
+    why: "The visitor waits for an email that never comes and starts to doubt the request went through.",
+    fix: "Have the server report what actually happened, and say \"we've emailed you\" only when an email was sent.", img: "done" },
+  { id: "F4", p: 0, s: "all", e: "M", t: "The whole flow is built around a call you won't make",
+    saw: "How it works opens with \"a 30-minute call\". The form ends in \"Book a call\". The FAQ, confirmation email, pilot terms and outreach messages all mention calls.",
+    why: "Visitors are promised something that won't happen, and the last step leads to a calendar you won't use.",
+    fix: "Switch to the no-call path below: a \"What's next\" step, WhatsApp photos and a short video reply. The copy table lists every line to change.", img: "how-call" },
+  { id: "F5", p: 0, s: "demo", e: "S", t: "The demo is a dead end",
+    saw: "Inside the demo, the logo isn't a link and there's no way to the main site. The only way out is \"Get this for my farm\".",
+    why: "Farms you message land straight in the demo. They can't read the pilot terms, the FAQ, your note or the privacy policy before deciding.",
+    fix: "Make the logo go to the landing page, and add a small \"How the pilot works\" link to the demo's call-to-action card.", img: "demo-start" },
+  // High impact
+  { id: "F6", p: 1, s: "discover", e: "S", t: "You have to type a name to see the demo",
+    saw: "\"Open my farm\" with an empty field shows an error. The top menu has no \"Demo\" link.",
+    why: "Curious visitors who don't want to type anything leave before seeing the best part.",
+    fix: "Add \"or explore a sample farm →\" under the field, and a \"Live demo\" link in the menu.", img: "hero" },
+  { id: "F7", p: 1, s: "discover", e: "M", t: "The hero shows an empty card while the 3D loads",
+    saw: "For the first moments, a blank grey card sits where the farm should be, beside a half-faded headline. On mid-range phones this lasts longer.",
+    why: "The first frame is the first impression, and it's also what slow phones show the longest.",
+    fix: "Show a still image of the farm as a placeholder, then fade into the live 3D once it's ready.", img: "hero-first" },
+  { id: "F8", p: 1, s: "discover", e: "M", t: "No menu and no lasting call-to-action on phones",
+    saw: "On a phone, the header shows only the logo and the language switch. \"Request a pilot\" is hidden, and the header scrolls away. The page is about 9 screens long.",
+    why: "Phone visitors (most of the people you'll reach on WhatsApp) can only act at the few section buttons, and can't jump to the FAQ or pilot details.",
+    fix: "A slim header that reappears when scrolling up, with \"Try the demo\" and a menu (How it works, Pilot, FAQ, WhatsApp).", img: "phone-hero", tall: true },
+  { id: "F9", p: 1, s: "request", e: "S", t: "On phones, every form step starts above the form",
+    saw: "After \"Next\", the page jumps to the top. The title, four steps, privacy note and WhatsApp button fill the screen, and the form starts about 620px down.",
+    why: "People have to scroll down at every step, and may think the button did nothing.",
+    fix: "On phones, shrink the intro to a slim \"Step 2 of 3\" bar and scroll to the form, not the top of the page.", img: "req-phone-top", tall: true },
+  { id: "F10", p: 1, s: "demo", e: "S–M", t: "Switching language restarts the demo",
+    saw: "Switching the demo to Arabic shows the welcome card again and resets the floor, light recipe and clock. On the landing page, switching jumps back to the top.",
+    why: "Bilingual teams switch language to show a colleague. Losing their place feels broken.",
+    fix: "Skip the welcome card after a language switch, and keep the chosen floor and time in the link.", img: "demo-ar-reset" },
+  { id: "F11", p: 1, s: "demo", e: "M", t: "The guidance disappears with the welcome card",
+    saw: "The welcome card lists three things to try. Once it closes, there are no more hints.",
+    why: "Zooming in, changing the light and going to night are the moments that sell the product. Many visitors won't find them on their own.",
+    fix: "A small \"Try this\" checklist that ticks off each step, then suggests \"Want this for Green Valley?\" after two of three.", img: "demo-zoom" },
+  { id: "F12", p: 1, s: "request", e: "S–M", t: "The thank-you screen feels unfinished",
+    saw: "The left side still says \"Tell us about your farm. Takes about 2 minutes\", step 4 never gets a tick, and nothing explains what happens next.",
+    why: "This is the moment the visitor commits. It should reassure them and give them one useful next action.",
+    fix: "Change the heading to \"You're in, Omar\", show a three-step \"what happens next\" timeline, and offer \"Send us photos on WhatsApp\".", img: null },
+  { id: "F13", p: 1, s: "demo", e: "L", t: "The demo only shows a tower farm",
+    saw: "The landing page cycles through \"container farm\", \"greenhouse\" and \"research lab\", but the demo is always a four-floor tower.",
+    why: "A greenhouse owner doesn't see their own farm, so the \"this is mine\" moment is weaker.",
+    fix: "Ask \"What kind of farm?\" on the welcome card and switch the scene. Start with greenhouse and container.", img: "demo-night" },
+  { id: "F14", p: 1, s: "ops", e: "S", t: "You can't see where people give up on the form",
+    saw: "Only the final \"request sent\" is tracked, not each step or error.",
+    why: "Without calls, analytics is your main feedback. You need to know whether, say, the farm-size step scares people off.",
+    fix: "Track request_step (1, 2, 3) and the field that showed an error.", img: null },
+  { id: "F15", p: 1, s: "demo", e: "S", t: "The demo tab says \"Your farm\" after typing a name",
+    saw: "After typing \"Green Valley\" on the landing page, the browser tab reads \"Your farm · Live farm demo\" until the page is reloaded.",
+    why: "Tabs and screenshots people share with partners lose the personal touch.",
+    fix: "Update the tab title when the demo opens, or load the demo as a full page.", img: null },
+  // Polish
+  { id: "F16", p: 2, s: "demo", e: "S", t: "The welcome card doesn't take keyboard focus",
+    saw: "When the demo opens with a farm name, focus stays on the page behind, so Escape and Tab don't work on the card.",
+    why: "Keyboard and screen-reader users start behind a dialog they can't reach.",
+    fix: "Move focus to \"Start exploring\" and keep it inside the card until it closes.", img: "welcome" },
+  { id: "F17", p: 2, s: "demo", e: "S", t: "The clock slider reads as a number to screen readers",
+    saw: "Screen readers announce \"15.25\" rather than \"15:15\".",
+    why: "A small detail, but the clock is one of the three demo highlights.",
+    fix: "Give the slider a spoken value in hh:mm.", img: null },
+  { id: "F18", p: 2, s: "request", e: "S", t: "A phone number without a country code is accepted",
+    saw: "\"0791234567\" passes, although the hint asks for +962.",
+    why: "You'll get numbers you can't open in WhatsApp from abroad, or can't place in a country.",
+    fix: "Turn 07… into +962 7… for Jordan, or show a gentle note.", img: "req-errors" },
+  { id: "F19", p: 2, s: "request", e: "S", t: "Country is a free-text field",
+    saw: "People type \"Jordan\", \"KSA\", \"الأردن\" or \"UAE \".",
+    why: "Messy data makes it harder to sort leads, and typing on a phone is slower than picking.",
+    fix: "A list with Jordan, UAE and Saudi Arabia first, with names in both languages.", img: null },
+  { id: "F20", p: 2, s: "discover", e: "S", t: "No \"skip to content\" link",
+    saw: "Keyboard users tab through 7 header links before reaching the farm-name field.",
+    why: "It's a standard accessibility expectation, and cheap to add.",
+    fix: "Add a skip link that appears on focus.", img: null },
+  { id: "F21", p: 2, s: "discover", e: "S", t: "The feature tour takes a long scroll on desktop",
+    saw: "Four features take about 4.5 screens of scrolling with the same heading pinned.",
+    why: "Some visitors will think the page is stuck and leave before \"Try it with your farm's name\".",
+    fix: "Cut the scroll per feature by about a third.", img: "tour" },
+  { id: "F22", p: 2, s: "discover", e: "S", t: "\"Who it's for\" lists roles but not farm types",
+    saw: "Cards cover owners, grow managers and operations, but not container farms, greenhouses or labs, which the hero promises.",
+    why: "Visitors look for their kind of farm and don't find it.",
+    fix: "Add a row of farm types with small icons.", img: null },
+  { id: "F23", p: 2, s: "discover", e: "S", t: "The footer is very thin",
+    saw: "Only email, WhatsApp, Privacy and copyright. No links to the demo, the request form or the FAQ.",
+    why: "People who reach the bottom are often ready to act.",
+    fix: "Add a short link column: Demo, Request a pilot, FAQ.", img: "footer" },
+  { id: "F24", p: 2, s: "demo", e: "S", t: "Greyed-out demo buttons don't say why",
+    saw: "\"Too early\" and \"Line busy\" appear disabled with no explanation.",
+    why: "It reads as broken rather than realistic.",
+    fix: "Add one line of reason, such as \"Basil is ready in 12 days\".", img: "demo-recipe", tall: true },
+  { id: "F25", p: 2, s: "demo", e: "S", t: "The desktop demo's right panel is cut off on 900px-tall screens",
+    saw: "The panel scrolls, and the bottom of the \"Want this for…\" card is clipped on common laptop screens.",
+    why: "The main call-to-action looks cut off.",
+    fix: "Tighten the spacing, or fold the light-recipe details until a floor is selected.", img: null },
+];
+const P = ["Fix before launch", "High impact", "Polish"];
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const stageName = Object.fromEntries(STAGES.map(([k, n]) => [k, n]));
+
+const list = document.getElementById("findings");
+list.innerHTML = F.map((f) => `
+  <article class="f${f.img ? "" : " noimg"}" data-p="${f.p}" data-s="${f.s}" id="${f.id}">
+    <div style="min-width:0">
+      <div class="f-head"><span class="id">${f.id}</span><span class="tag t${f.p}">${P[f.p]}</span><span class="tag tg">${stageName[f.s]}</span><span class="tag tg">Effort ${f.e}</span></div>
+      <h3>${esc(f.t)}</h3>
+      <dl><dt>What I saw</dt><dd>${esc(f.saw)}</dd><dt>Why it matters</dt><dd>${esc(f.why)}</dd><dt>Fix</dt><dd class="fix">${esc(f.fix)}</dd></dl>
+    </div>
+    ${f.img ? `<button class="shot${f.tall ? " tall" : ""}" data-src="shots/${f.img}.jpg" aria-label="Enlarge screenshot for ${f.id}"><img src="shots/${f.img}.jpg" alt="Screenshot: ${esc(f.t)}" loading="lazy"></button>` : ""}
+  </article>`).join("");
+
+const journey = document.getElementById("journey");
+journey.innerHTML = STAGES.map(([k, n, d], i) => {
+  const items = F.filter((f) => f.s === k);
+  return `<button class="stage" data-stage="${k}" aria-pressed="false"><span class="n">${String(i + 1).padStart(2, "0")} · ${items.length} findings</span><strong>${n}</strong><span class="dots" aria-hidden="true">${items.map((f) => `<i class="dot d${f.p}"></i>`).join("")}</span><small>${d}</small></button>`;
+}).join("");
+
+let pFilter = "all", sFilter = null;
+function apply() {
+  let n = 0;
+  list.querySelectorAll(".f").forEach((el) => {
+    const ok = (pFilter === "all" || el.dataset.p === pFilter) && (!sFilter || el.dataset.s === sFilter);
+    el.hidden = !ok; if (ok) n++;
+  });
+  document.getElementById("shown").textContent = `${n} of ${F.length} shown`;
+}
+document.querySelectorAll(".chip").forEach((b) => b.addEventListener("click", () => {
+  pFilter = b.dataset.p;
+  document.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
+  apply();
+}));
+journey.querySelectorAll(".stage").forEach((b) => b.addEventListener("click", () => {
+  sFilter = sFilter === b.dataset.stage ? null : b.dataset.stage;
+  journey.querySelectorAll(".stage").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.stage === sFilter)));
+  apply();
+  document.getElementById("findings-h").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+}));
+apply();
+
+const box = document.getElementById("lightbox"), boxImg = document.getElementById("lightbox-img");
+list.addEventListener("click", (e) => {
+  const b = e.target.closest(".shot"); if (!b) return;
+  boxImg.src = b.dataset.src; boxImg.alt = b.querySelector("img").alt; box.showModal();
+});
+box.addEventListener("click", (e) => { if (e.target === box) box.close(); });
+
+const SPRINTS = [
+  ["Sprint 1 · Safe to share", "About 2 days", ["F1", "F2", "F3", "F5", "F15", "F14", "F4"]],
+  ["Sprint 2 · More requests", "About 3–4 days", ["F6", "F9", "F12", "F10", "F8", "F11", "F7"]],
+  ["Sprint 3 · Polish", "About 2 days, then later", ["F16", "F17", "F18", "F19", "F20", "F21", "F22", "F23", "F24", "F25", "F13"]],
+];
+const KEY = "canopy-ux-review-done";
+let done = {};
+try { done = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch { done = {}; }
+const byId = Object.fromEntries(F.map((f) => [f.id, f]));
+const sprints = document.getElementById("sprints");
+sprints.innerHTML = SPRINTS.map(([t, w, ids], i) => `
+  <div class="card sprint"><header><h3>${t}</h3><span class="when">${w}</span></header>
+    <div class="progress" aria-hidden="true"><i id="pg${i}"></i></div>
+    ${ids.map((id) => `<div class="task"><input type="checkbox" id="task-${id}" data-id="${id}"${done[id] ? " checked" : ""}><label for="task-${id}"><span class="id">${id}</span>${esc(byId[id].t)}${id === "F13" ? " <em class=\"note\">(later)</em>" : ""}</label></div>`).join("")}
+  </div>`).join("");
+function progress() {
+  SPRINTS.forEach(([, , ids], i) => {
+    const n = ids.filter((id) => done[id]).length;
+    document.getElementById("pg" + i).style.width = (100 * n / ids.length) + "%";
+  });
+}
+sprints.addEventListener("change", (e) => {
+  const id = e.target.dataset.id; if (!id) return;
+  done[id] = e.target.checked;
+  try { localStorage.setItem(KEY, JSON.stringify(done)); } catch {}
+  progress();
+});
+progress();
+</script>

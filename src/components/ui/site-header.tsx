@@ -26,7 +26,7 @@ export function SiteHeader({
   ] as const;
   return (
     <header className={cn("mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-4 sm:px-6", className)}>
-      <Link href={`/${lang}`} aria-label="Home">
+      <Link href={`/${lang}`}>
         <Logo />
       </Link>
       {sections && (

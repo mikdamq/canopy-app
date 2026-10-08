@@ -40,7 +40,7 @@ function StepBar({ progress, i, n }: { progress: MotionValue<number>; i: number;
   const w = useTransform(progress, [i / n, (i + 1) / n], ["0%", "100%"]);
   return (
     <span className="absolute inset-x-0 bottom-0 h-0.5 bg-line">
-      <motion.span style={{ width: w }} className="absolute inset-y-0 start-0 bg-green" />
+      <motion.span style={{ width: w }} className="absolute inset-y-0 start-0 bg-leaf" />
     </span>
   );
 }

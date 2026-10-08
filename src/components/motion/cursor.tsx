@@ -113,12 +113,12 @@ export function Cursor() {
               </motion.span>
             )}
           </AnimatePresence>
-          {mode === "cta" && <ArrowUpRight className="absolute -end-1 -top-1 size-4 rounded-full bg-green p-0.5 text-white rtl:-scale-x-100" />}
+          {mode === "cta" && <ArrowUpRight className="absolute -end-1 -top-1 size-4 rounded-full bg-leaf p-0.5 text-white rtl:-scale-x-100" />}
         </motion.div>
       </motion.div>
       <motion.div style={{ x, y }} className="absolute top-0 left-0">
         <motion.div
-          className="-translate-x-1/2 -translate-y-1/2 rounded-full bg-green"
+          className="-translate-x-1/2 -translate-y-1/2 rounded-full bg-leaf"
           animate={{ width: big || mode === "hidden" ? 0 : mode === "text" ? 3 : 7, height: big || mode === "hidden" ? 0 : mode === "text" ? 22 : 7, borderRadius: mode === "text" ? 2 : 999 }}
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
         />

@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import * as THREE from "three";
 import {
   CONVEYOR_Y,
@@ -84,6 +84,7 @@ export default function FarmCanvas(props: Props) {
         document.body.style.cursor = "";
       }}
     >
+      {props.hero && <PauseOffscreen />}
       <Ticker sim={props.sim} />
       <Sky sim={props.sim} />
       <CameraRig {...props} />
@@ -97,6 +98,21 @@ export default function FarmCanvas(props: Props) {
       {props.anchors && <Projector sim={props.sim} anchors={props.anchors} />}
     </Canvas>
   );
+}
+
+/**
+ * The landing page's farms are decoration: stop drawing them while they're scrolled out of
+ * view, to save battery and keep scrolling smooth. (The demo keeps running: its HUD needs it.)
+ */
+function PauseOffscreen() {
+  const gl = useThree((s) => s.gl);
+  const setFrameloop = useThree((s) => s.setFrameloop);
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => setFrameloop(e.isIntersecting ? "always" : "never"), { rootMargin: "120px" });
+    io.observe(gl.domElement);
+    return () => io.disconnect();
+  }, [gl, setFrameloop]);
+  return null;
 }
 
 function Ticker({ sim }: SimProp) {

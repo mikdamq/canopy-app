@@ -16,6 +16,8 @@ import {
   requestSchema,
   type FieldName,
 } from "@/lib/request-schema";
+import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
+import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 type R = Dict["request"];
@@ -133,6 +135,7 @@ function Chips<T extends string>({
 export default function RequestFlow({
   lang,
   r,
+  wa,
   farm,
   source,
   bookingUrl,
@@ -140,6 +143,7 @@ export default function RequestFlow({
 }: {
   lang: Locale;
   r: R;
+  wa: Dict["whatsapp"];
   farm: string;
   source: string;
   bookingUrl: string;
@@ -210,6 +214,7 @@ export default function RequestFlow({
         body: JSON.stringify(payload()),
       });
       if (!res.ok) throw new Error(String(res.status));
+      track("request_sent", { source, lang });
       setStatus("done");
       go(3);
     } catch {
@@ -253,12 +258,27 @@ export default function RequestFlow({
               );
             })}
           </ol>
-          <p className="text-[12.5px] text-muted">{r.privacy}</p>
+          <p className="text-[12.5px] text-muted">
+            {r.privacy}{" "}
+            <Link href={`/${lang}/privacy`} className="text-ink underline underline-offset-4">
+              {r.privacyLink}
+            </Link>
+          </p>
+          <WhatsAppLink
+            d={wa}
+            farm={farm}
+            place="request"
+            className="inline-flex items-center gap-2 self-start rounded-full border border-line bg-white px-4 py-2 text-[13.5px] font-semibold transition-colors hover:border-ink"
+          >
+            <WhatsAppIcon className="size-4 text-[#25d366]" />
+            {wa.prefer} {wa.short}
+          </WhatsAppLink>
         </aside>
 
         {/* Form card */}
         <section className="min-w-0 rounded-3xl border border-line bg-white p-5 shadow-[0_24px_60px_-40px_rgba(20,27,43,0.5)] sm:p-8">
           <form
+            data-clarity-mask="true"
             noValidate
             onSubmit={(e) => {
               e.preventDefault();
