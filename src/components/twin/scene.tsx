@@ -37,6 +37,8 @@ type Props = {
   /** Right-to-left page: the side panel is on the left, so frame the farm further right. */
   rtl?: boolean;
   anchors?: AnchorSink;
+  /** Called once, after the first frame has been drawn. */
+  onReady?: () => void;
 };
 type SimProp = { sim: FarmSim };
 
@@ -85,6 +87,7 @@ export default function FarmCanvas(props: Props) {
       }}
     >
       {props.hero && <PauseOffscreen />}
+      {props.onReady && <FirstFrame onReady={props.onReady} />}
       <Ticker sim={props.sim} />
       <Sky sim={props.sim} />
       <CameraRig {...props} />
@@ -112,6 +115,17 @@ function PauseOffscreen() {
     io.observe(gl.domElement);
     return () => io.disconnect();
   }, [gl, setFrameloop]);
+  return null;
+}
+
+function FirstFrame({ onReady }: { onReady: () => void }) {
+  const done = useRef(false);
+  useFrame(() => {
+    if (done.current) return;
+    done.current = true;
+    // Wait one more frame so the drawn image is actually on screen.
+    requestAnimationFrame(onReady);
+  });
   return null;
 }
 

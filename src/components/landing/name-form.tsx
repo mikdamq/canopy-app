@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
 import type { Locale } from "@/i18n/config";
@@ -15,6 +16,7 @@ export function NameForm({
   button,
   error,
   note,
+  sample,
   tone = "light",
 }: {
   lang: Locale;
@@ -22,6 +24,8 @@ export function NameForm({
   placeholder: string;
   button: string;
   error: string;
+  /** Link text for opening the demo without a name. */
+  sample: string;
   note?: string;
   tone?: "light" | "dark";
 }) {
@@ -74,13 +78,26 @@ export function NameForm({
           <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
         </button>
       </div>
-      {bad ? (
-        <p id={`${id}-err`} className="text-[13px] font-medium text-[#e5484d]" role="alert">
-          {error}
-        </p>
-      ) : (
-        note && <p className={cn("text-[13px]", dark ? "text-white/55" : "text-muted")}>{note}</p>
-      )}
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        {bad ? (
+          <p id={`${id}-err`} className="text-[13px] font-medium text-[#e5484d]" role="alert">
+            {error}
+          </p>
+        ) : (
+          note && <p className={cn("text-[13px]", dark ? "text-white/55" : "text-muted")}>{note}</p>
+        )}
+        <Link
+          href={`/${lang}/demo`}
+          data-cursor="cta"
+          className={cn(
+            "inline-flex items-center gap-1 text-[13px] font-semibold underline-offset-4 hover:underline",
+            dark ? "text-[#7fe0a6]" : "text-green",
+          )}
+        >
+          {sample}
+          <ArrowRight className="size-3.5 rtl:rotate-180" aria-hidden />
+        </Link>
+      </div>
     </form>
   );
 }

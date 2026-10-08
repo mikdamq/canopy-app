@@ -52,6 +52,10 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
   - `sim.ts` is the model (plain TS class; the HUD reads a throttled snapshot via `useSyncExternalStore`).
   - `scene.tsx` is R3F. Its Canvas uses `resize={{ offsetSize: true }}`, so CSS transforms never shrink it.
   - DOM labels are pinned to 3D points through `AnchorSink` (don't use drei `Html`; it broke under React 19).
+- **Landing navigation:** `components/landing/landing-nav.tsx` has the phone menu (sheet with focus trap) and a slim bar that slides in on scroll-up. The language switch (`components/ui/lang-switch.tsx`) keeps the visitor's section; in the demo it carries floor, time and "welcome seen" (`f`, `t`, `w`, removed from the address once used).
+- **Hero still:** `public/hero/farm-wide.webp` and `farm-compact.webp` show before the 3D loads (re-capture them if the hero scene or camera changes). The scene calls `onReady` after its first frame.
+- **Demo checklist:** `FarmSim.tried` records zoom, light recipe and clock; the "Try this" card reads it.
+- **Request form scrolling:** steps scroll to the form card after the new step has appeared, and scroll anchoring is off on that page (it fought the step swap).
 - **Share images:** `app/api/og/route.tsx` (`next/og`). Its renderer, Satori, can't lay out Arabic by itself, so the `Words` helper places each word right to left at its measured width (`opentype.js`). Fonts are TTF files in `assets/fonts/`.
 - **404 and error pages:** `[lang]/not-found.tsx` (reached through the `[lang]/[...missing]` catch-all) and `[lang]/error.tsx` share `components/ui/status-page.tsx`. They run in the browser, so their copy is in `src/i18n/status.ts`, not the main dictionaries. Next 16's error component gets `retry`, not `reset`.
 - **Element ids:** don't give an element an id that matches a global the page uses (e.g. `id="clarity"`): browsers expose ids as `window` properties.
@@ -68,7 +72,7 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
    - next: final name and domain; email deliverability (SPF, DKIM, DMARC at Namecheap);
    - next: founder photo, and the owner's edits to the founder copy;
    - next: an end-to-end test once Vercel, Supabase, SMTP and Cal.com are connected.
-2. **Validation (2–4 weeks):** **decision (8 Oct 2026): no calls.** The owner won't run sales or feedback calls, so the site has to replace the call: see the "no-call path" in the UX review (`docs/ux-review/index.html`; live page https://claude.ai/artifact/SVX8YYtGad7CpwoeTs5EqN). The review lists 25 prioritised fixes (F1–F25) in three sprints. The call script stays as the source for 5 async questions. The kit is in `docs/validation/`:
+2. **Validation (2–4 weeks):** **decision (8 Oct 2026): no calls.** The owner won't run sales or feedback calls, so the site has to replace the call: see the "no-call path" in the UX review (`docs/ux-review/index.html`; live page https://claude.ai/artifact/SVX8YYtGad7CpwoeTs5EqN). The review lists 25 prioritised fixes (F1–F25) in three sprints. Sprint 1 (F1–F5, F14, F15) and Sprint 2 (F6–F12) are done; Sprint 3 (F13, F16–F25) is next. The call script stays as the source for 5 async questions. The kit is in `docs/validation/`:
    - done: call script (`call-script.en.md`, `call-script.ar.md`, Modern Standard Arabic) with a scorecard;
    - done: 22 target farms in Jordan, the UAE and Saudi Arabia (`target-farms.md`, public sources; verify each is active), also prefilled in `docs/outreach-links.xlsx`;
    - done: WhatsApp, LinkedIn and email messages, EN/AR (`outreach-messages.md`);

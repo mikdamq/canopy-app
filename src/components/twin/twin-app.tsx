@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Moon, MousePointerClick, PackageCheck, Pause, Play, Scissors, SlidersHorizontal, Sprout, Sun, Truck, ZoomIn } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Moon, MousePointerClick, PackageCheck, Pause, Play, Scissors, SlidersHorizontal, Sprout, Sun, Truck, ZoomIn } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "motion/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -133,16 +133,19 @@ function TagLayer({ snap, sim, anchors, d, rtl }: { snap: Snapshot; sim: FarmSim
 
 /* -------------------------------- Top bar ------------------------------- */
 
-function TopBar({ snap, d, farm, homeHref, ctaHref, langHref, langLabel, langTitle }: {
+function TopBar({ snap, d, farm, homeHref, ctaHref, langHref, onSwitchLang, langLabel, langTitle }: {
   snap: Snapshot;
   d: D;
   farm: string;
   homeHref: string;
   ctaHref: string;
   langHref: string;
+  /** Builds the other language's link at click time, carrying the current floor and time. */
+  onSwitchLang: () => string;
   langLabel: string;
   langTitle: string;
 }) {
+  const router = useRouter();
   const night = snap.day < 0.35;
   return (
     <Card className="flex min-w-0 items-center gap-2.5 px-2.5 py-2 sm:gap-3 sm:px-3">
@@ -161,6 +164,11 @@ function TopBar({ snap, d, farm, homeHref, ctaHref, langHref, langLabel, langTit
       </div>
       <Link
         href={langHref}
+        prefetch={false}
+        onClick={(e) => {
+          e.preventDefault();
+          router.push(onSwitchLang());
+        }}
         title={langTitle}
         className="rounded-full border border-line px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap hover:border-ink"
       >
@@ -517,6 +525,65 @@ function CtaCard({ d, wa, farm, named, href, pilotHref }: { d: D; wa: Dict["what
   );
 }
 
+/* ------------------------------ Try this ------------------------------- */
+
+/**
+ * The welcome card's three suggestions, kept on screen as a checklist that ticks
+ * itself off. After two of three, it points to the request form.
+ */
+function TryThis({ snap, d, farm, href, compact }: { snap: Snapshot; d: D; farm: string; href: string; compact?: boolean }) {
+  const items = [
+    ["zoom", d.tryThis.items[0]],
+    ["recipe", d.tryThis.items[1]],
+    ["clock", d.tryThis.items[2]],
+  ] as const;
+  const done = items.filter(([k]) => snap.tried[k]).length;
+  const ready = done >= 2;
+  return (
+    <Card delay={0.15} className={cn("flex flex-col gap-2 p-3", !compact && "w-[250px]")}>
+      <div className="flex items-center justify-between gap-2">
+        <span className="font-mono text-[10.5px] tracking-[0.08em] text-muted uppercase">{d.tryThis.title}</span>
+        <span className="font-mono text-[11px] text-muted" dir="ltr">
+          {done}/3
+        </span>
+      </div>
+      <ul className={cn("flex gap-1.5", compact ? "flex-wrap" : "flex-col")}>
+        {items.map(([k, label]) => {
+          const ok = snap.tried[k];
+          return (
+            <li
+              key={k}
+              className={cn(
+                "flex items-center gap-2 text-[12.5px] leading-snug",
+                compact && "rounded-full border px-2.5 py-1",
+                compact && (ok ? "border-transparent bg-[#eaf6ef]" : "border-line"),
+              )}
+            >
+              <span
+                aria-hidden
+                className={cn(
+                  "grid size-4 shrink-0 place-items-center rounded-full transition-colors",
+                  ok ? "bg-green text-white" : "ring-1 ring-line",
+                )}
+              >
+                {ok && <Check className="size-3" strokeWidth={3} />}
+              </span>
+              <span className={cn(ok ? "text-muted line-through decoration-[#9aa6ba]" : "text-ink")}>{label}</span>
+              <span className="sr-only">{ok ? d.tryThis.doneLabel : ""}</span>
+            </li>
+          );
+        })}
+      </ul>
+      {ready && (
+        <Link href={href} className="mt-1 flex items-center gap-1 text-[12.5px] font-semibold text-green hover:underline">
+          {fmt(d.tryThis.next, { farm })}
+          <ArrowRight className="size-3.5 rtl:rotate-180" aria-hidden />
+        </Link>
+      )}
+    </Card>
+  );
+}
+
 /* ------------------------------- Welcome ------------------------------- */
 
 function Welcome({ d, farm, onStart }: { d: D; farm: string; onStart: (name: string) => void }) {
@@ -600,6 +667,7 @@ export default function TwinApp({
   fallbackName,
   langLabel,
   langTitle,
+  resume,
 }: {
   lang: Locale;
   dict: D;
@@ -610,19 +678,36 @@ export default function TwinApp({
   fallbackName: string;
   langLabel: string;
   langTitle: string;
+  /** Where to pick up after a language switch: selected floor, time of day, welcome already seen. */
+  resume?: { floor?: number; hour?: number; skipWelcome?: boolean };
 }) {
   const reduce = useReducedMotion() ?? false;
   const router = useRouter();
-  const [sim] = useState(() => new FarmSim());
+  const [sim] = useState(() => {
+    const s = new FarmSim();
+    if (resume?.floor !== undefined) s.select(resume.floor);
+    if (resume?.hour !== undefined) s.setHour(resume.hour);
+    s.tried.clock = false; // restoring the time isn't the visitor trying the clock
+    return s;
+  });
   const [anchors] = useState(() => new Anchors());
   const snap = useSyncExternalStore(sim.subscribe, sim.getSnapshot, sim.getSnapshot);
   const wide = useMedia("(min-width: 1024px)");
   const [farm, setFarm] = useState(initialFarm);
-  const [welcome, setWelcome] = useState(true);
+  const [welcome, setWelcome] = useState(!resume?.skipWelcome);
 
   useEffect(() => {
     if (reduce) sim.setPlaying(false);
   }, [reduce, sim]);
+
+  // The language switch adds f, t and w to the address; drop them once used, so a
+  // link copied from here opens the normal demo (with its welcome card).
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (!["f", "t", "w"].some((k) => url.searchParams.has(k))) return;
+    ["f", "t", "w"].forEach((k) => url.searchParams.delete(k));
+    window.history.replaceState(window.history.state, "", url.pathname + url.search);
+  }, []);
 
   // Funnel: the demo opened, then the first real touch, click or key press inside it.
   const interacted = useRef(false);
@@ -646,6 +731,15 @@ export default function TwinApp({
   const q = farm ? `?farm=${encodeURIComponent(farm)}` : "";
   const ctaHref = `/${lang}/request${q}`;
   const langHref = `/${lang === "en" ? "ar" : "en"}/demo${q}`;
+  const switchLang = () => {
+    const s = sim.getSnapshot();
+    const p = new URLSearchParams();
+    if (farm) p.set("farm", farm);
+    p.set("f", String(s.sel));
+    p.set("t", s.hour.toFixed(2));
+    if (!welcome) p.set("w", "0");
+    return `/${lang === "en" ? "ar" : "en"}/demo?${p}`;
+  };
   const zoomed = snap.focus !== null;
 
   const start = (name: string) => {
@@ -667,7 +761,7 @@ export default function TwinApp({
           <TagLayer snap={snap} sim={sim} anchors={anchors} d={dict} rtl={lang === "ar"} />
 
           <div className="pointer-events-none absolute inset-x-3 top-3 z-30 lg:inset-x-4 lg:top-4 [&>*]:pointer-events-auto">
-            <TopBar snap={snap} d={dict} farm={shown} homeHref={`/${lang}`} ctaHref={ctaHref} langHref={langHref} langLabel={langLabel} langTitle={langTitle} />
+            <TopBar snap={snap} d={dict} farm={shown} homeHref={`/${lang}`} ctaHref={ctaHref} langHref={langHref} onSwitchLang={switchLang} langLabel={langLabel} langTitle={langTitle} />
           </div>
 
           <AnimatePresence>
@@ -689,8 +783,9 @@ export default function TwinApp({
 
         {wide ? (
           <>
-            <div className="absolute start-4 top-[84px] z-30">
+            <div className="absolute start-4 top-[84px] z-30 flex flex-col items-start gap-3">
               <Stats snap={snap} d={dict} />
+              {!welcome && <TryThis snap={snap} d={dict} farm={shown} href={ctaHref} />}
             </div>
             <div className="absolute end-4 top-[84px] bottom-4 z-30 flex w-[340px] flex-col gap-3 overflow-y-auto pb-1">
               <FloorPanel snap={snap} sim={sim} reduce={reduce} d={dict} />
@@ -704,6 +799,7 @@ export default function TwinApp({
         ) : (
           <div className="flex flex-col gap-3 border-t border-line bg-[#f1f4f8] p-3">
             <Stats snap={snap} d={dict} />
+            {!welcome && <TryThis snap={snap} d={dict} farm={shown} href={ctaHref} compact />}
             <FloorPanel snap={snap} sim={sim} reduce={reduce} d={dict} />
             <CtaCard d={dict} wa={wa} farm={shown} named={farm} href={ctaHref} pilotHref={`/${lang}#pilot`} />
             <Journey snap={snap} d={dict} />

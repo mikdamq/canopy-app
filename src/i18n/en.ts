@@ -15,6 +15,7 @@ const en = {
     ogDemoLine: "Every floor, crop and crate, in one view.",
   },
   nav: {
+    demo: "Live demo",
     how: "How it works",
     features: "Features",
     who: "Who it's for",
@@ -23,6 +24,8 @@ const en = {
     switchLang: "عربي",
     switchLangLabel: "Switch to Arabic",
     menu: "Menu",
+    close: "Close menu",
+    pilot: "Pilot",
   },
   hero: {
     eyebrow: "For vertical and indoor farms",
@@ -36,6 +39,7 @@ const en = {
     placeholder: "e.g. Green Valley Farms",
     open: "Open my farm",
     note: "Free demo with sample data. No sign-up.",
+    sample: "Or explore a sample farm",
     nameError: "Enter your farm's name to open the demo",
     stat1: "Floor 3 · Strawberries",
     stat1v: "Ready to harvest",
@@ -257,6 +261,12 @@ const en = {
     getThisShort: "Get this",
     site: "Tower 2",
     role: "Farm owner",
+    tryThis: {
+      title: "Try this",
+      items: ["Zoom into a floor", "Change a light recipe", "Move the clock"],
+      doneLabel: "done",
+      next: "Want this for {farm}?",
+    },
     welcome: {
       title: "Welcome to {farm}",
       titleNoName: "Welcome to your farm",
@@ -346,6 +356,9 @@ const en = {
     title: "Tell us about your farm",
     sub: "Takes about 2 minutes. No calls needed: we reply on WhatsApp or email within one business day.",
     steps: ["About you", "Your farm", "Your goals", "What's next"],
+    progress: "Step {n} of {total}",
+    doneHeading: "You're in, {name}",
+    doneSub: "Your request is with us. Here's what happens next.",
     fields: {
       name: "Full name",
       email: "Work email",
@@ -401,7 +414,6 @@ const en = {
       server: "We couldn't send your request. Please try again, or email us at {email}.",
     },
     done: {
-      title: "Thanks, {name}. Your request is in.",
       emailed: "We've emailed you a copy.",
       nextTitle: "What happens next",
       next: [

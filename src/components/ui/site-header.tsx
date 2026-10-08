@@ -1,7 +1,9 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
 import { cn } from "@/lib/utils";
+import { LangSwitch } from "./lang-switch";
 import { Logo } from "./logo";
 
 /** Top navigation used on the landing and request pages. */
@@ -11,12 +13,15 @@ export function SiteHeader({
   langHref,
   sections = true,
   className,
+  menu,
 }: {
   lang: Locale;
   nav: Dict["nav"];
   langHref: string;
   sections?: boolean;
   className?: string;
+  /** Extra control at the end, e.g. the phone menu on the landing page. */
+  menu?: ReactNode;
 }) {
   const links = [
     ["#how", nav.how],
@@ -31,6 +36,9 @@ export function SiteHeader({
       </Link>
       {sections && (
         <nav className="ms-6 hidden items-center gap-6 text-[14px] text-muted md:flex">
+          <Link href={`/${lang}/demo`} className="font-semibold text-ink transition-colors hover:text-green">
+            {nav.demo}
+          </Link>
           {links.map(([href, label]) => (
             <a key={href} href={href} className="transition-colors hover:text-ink">
               {label}
@@ -39,13 +47,12 @@ export function SiteHeader({
         </nav>
       )}
       <div className="ms-auto flex items-center gap-2">
-        <Link
+        <LangSwitch
           href={langHref}
           title={nav.switchLangLabel}
+          label={nav.switchLang}
           className="rounded-full border border-line bg-white/70 px-3 py-1.5 text-[13px] font-semibold transition-colors hover:border-ink"
-        >
-          {nav.switchLang}
-        </Link>
+        />
         {sections && (
           <Link
             href={`/${lang}/request`}
@@ -54,6 +61,7 @@ export function SiteHeader({
             {nav.cta}
           </Link>
         )}
+        {menu}
       </div>
     </header>
   );
