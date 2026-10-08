@@ -11,7 +11,7 @@ A live 3D "digital twin" for vertical and indoor farms (working name **Canopy**;
 **Visitor flow (built):**
 1. Landing page (`/en`, `/ar`) with a live 3D farm and a "Your farm's name" field.
 2. Personalised demo (`/[lang]/demo?farm=Name`): the full twin on sample data, carrying their farm name, with "Get this for my farm" calls to action everywhere.
-3. Pilot request form (`/[lang]/request`): 3 steps, saved to Supabase, emailed to the owner and the visitor, then a Cal.com booking embed.
+3. Pilot request form (`/[lang]/request`): 3 steps, saved to Supabase, emailed to the owner and the visitor, then a "What's next" screen (send layout photos on WhatsApp; reply within one business day with a short video of their demo). No calls. Back/Forward move between steps, and a draft is kept in sessionStorage.
 4. After the call, we set up a tenant for the farm by hand (no customer app yet).
 
 **Target users:** farm owners, grow managers and operations teams. Start with Jordan and the Gulf; also container farms, hydroponic greenhouses and research labs, not only tower farms.
@@ -28,8 +28,8 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 - **Hosting:** Vercel for the app. The domain and mailbox stay at Namecheap/cPanel. Vercel Pro once commercial. The owner would eventually like to host the app on his own cPanel too; that's an open question to discuss with him (it needs "Setup Node.js App" and is usually slower). Until then, keep the code host-neutral: no Vercel-only APIs.
 - **Data:** Supabase (`supabase/schema.sql`, table `pilot_requests`) via REST with the service role key, server only.
 - **Email:** SMTP (works with the cPanel mailbox); Resend can replace it later via the same env vars.
-- **Booking:** Cal.com or Calendly link in `NEXT_PUBLIC_BOOKING_URL`.
-- **Analytics:** Umami (cookie-free, no banner) for visit counts and the funnel; Microsoft Clarity (heatmaps, recordings) loads only after the visitor clicks "Allow" in the consent prompt (`components/analytics.tsx`). Fire funnel events with `track()` from `lib/analytics.ts`: `demo_opened`, `demo_interaction`, `request_sent`. Any new tracking tool must be added to the privacy policy.
+- **Booking:** optional. If `NEXT_PUBLIC_BOOKING_URL` is set, the thank-you screen shows a small "Prefer to talk? Pick a time" link; there is no booking embed, since there are no calls.
+- **Analytics:** Umami (cookie-free, no banner) for visit counts and the funnel; Microsoft Clarity (heatmaps, recordings) loads only after the visitor clicks "Allow" in the consent prompt (`components/analytics.tsx`). Fire funnel events with `track()` from `lib/analytics.ts`: `demo_opened`, `demo_interaction`, `request_step`, `request_error`, `request_sent`, `whatsapp_click`. Any new tracking tool must be added to the privacy policy.
 - **SEO:** `NEXT_PUBLIC_SITE_URL` is the live address (falls back to the Vercel URL). Every page sets its canonical link, language alternates and share image with `pageMeta()` from `lib/seo.ts`. The demo is `noindex`.
 - **WhatsApp:** `WhatsAppLink` (`components/ui/whatsapp-link.tsx`) opens a chat with a ready message (farm name included when known) and fires `whatsapp_click`. Number in `NEXT_PUBLIC_WHATSAPP_NUMBER`, default +962 78 7016 351.
 - **Outreach:** `docs/outreach-links.xlsx` builds personalised demo links with UTM tags. Umami strips `?farm=` but keeps `utm_*` (`stripFarm` in `lib/analytics.ts`).

@@ -40,6 +40,7 @@ export default async function DemoPage({ params, searchParams }: PageProps<"/[la
       lang={lang}
       dict={d.demo}
       wa={d.whatsapp}
+      titleTemplate={d.meta.demoTitle}
       farm={farm}
       fallbackName={d.demo.fallbackName}
       langLabel={d.nav.switchLang}

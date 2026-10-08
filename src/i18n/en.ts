@@ -48,11 +48,11 @@ const en = {
   },
   how: {
     eyebrow: "How it works",
-    title: "From a call to a live farm in about two weeks",
+    title: "From a 2-minute form to a live farm in about two weeks",
     steps: [
       {
         t: "Tell us about your farm",
-        d: "A 30-minute call about your space, your crops and the data you already collect, even if it's a spreadsheet.",
+        d: "Answer a few questions about your space and crops, or send us photos on WhatsApp. A spreadsheet of the data you collect is enough.",
       },
       {
         t: "We build your twin",
@@ -111,7 +111,7 @@ const en = {
       "Floor, crop and light recipe views",
       "Manual and spreadsheet data",
       "Seed-to-plate tracking",
-      "Direct line to our team",
+      "A direct line on WhatsApp",
     ],
     laterTitle: "Coming after the pilot",
     later: ["Live sensor connections", "Alerts and reports", "Several sites and team seats", "Yield and energy forecasts"],
@@ -143,7 +143,7 @@ const en = {
       },
       {
         q: "How long does setup take?",
-        a: "About two weeks after our first call, depending on the size of the farm and the data you have.",
+        a: "About two weeks after you send us your layout, depending on the size of the farm and the data you have.",
       },
       {
         q: "Is it really free?",
@@ -157,7 +157,7 @@ const en = {
   },
   final: {
     title: "Ready to see your own farm?",
-    sub: "Tell us about it and book a call. We reply within one business day.",
+    sub: "Tell us about it in 2 minutes. We reply within one business day.",
     cta: "Request a pilot",
     demo: "Open the demo",
   },
@@ -207,7 +207,7 @@ const en = {
       {
         t: "Why we use it",
         p: [
-          "To reply to your request, set up a call and, if you go ahead, set up a pilot for your farm. We rely on your consent, which you give with the checkbox on the form.",
+          "To reply to your request and, if you go ahead, set up a pilot for your farm. We rely on your consent, which you give with the checkbox on the form.",
           "To understand which parts of the site work, so we can improve them. We rely on our legitimate interest for anonymous counts, and on your consent for session recordings.",
           "We don't sell your data or share it for advertising.",
         ],
@@ -223,7 +223,7 @@ const en = {
       {
         t: "Who else handles it",
         p: [
-          "We use a few trusted services to run the site: our hosting provider, Supabase (database), our email provider (to send you a copy of your request), Cal.com (if you book a call), Umami (visit counts) and Microsoft Clarity (only if you allow it). They only process your data to provide their service to us.",
+          "We use a few trusted services to run the site: our hosting provider, Supabase (database), our email provider (to send you a copy of your request), Cal.com (if you choose to book a time with us), Umami (visit counts) and Microsoft Clarity (only if you allow it). They only process your data to provide their service to us.",
           "If you message us on WhatsApp, that conversation is handled by WhatsApp (Meta) under its own privacy policy, and we see your name and number there.",
           "Some of these services store data outside Jordan, for example in the European Union or the United States.",
         ],
@@ -251,10 +251,10 @@ const en = {
   },
   demo: {
     sample: "Sample data",
+    home: "Go to the {brand} homepage",
     fallbackName: "Your farm",
     getThis: "Get this for my farm",
     getThisShort: "Get this",
-    search: "Search floors, crops, sensors",
     site: "Tower 2",
     role: "Farm owner",
     welcome: {
@@ -273,6 +273,7 @@ const en = {
       title: "Want this for {farm}?",
       sub: "We'll model your real farm and connect your data. Free for pilot farms.",
       button: "Request a pilot",
+      how: "How the pilot works",
     },
     stats: {
       harvested: "Harvested today",
@@ -343,8 +344,8 @@ const en = {
   request: {
     eyebrow: "Pilot request",
     title: "Tell us about your farm",
-    sub: "Takes about 2 minutes. We reply within one business day, and you can book a call right after.",
-    steps: ["About you", "Your farm", "Your goals", "Book a call"],
+    sub: "Takes about 2 minutes. No calls needed: we reply on WhatsApp or email within one business day.",
+    steps: ["About you", "Your farm", "Your goals", "What's next"],
     fields: {
       name: "Full name",
       email: "Work email",
@@ -401,9 +402,16 @@ const en = {
     },
     done: {
       title: "Thanks, {name}. Your request is in.",
-      sub: "We've emailed you a copy. Pick a time for a 30-minute call below, or we'll email you within one business day.",
-      bookingTitle: "Book your call",
-      fallback: "Our booking calendar isn't connected yet. We'll email you within one business day to set a time.",
+      emailed: "We've emailed you a copy.",
+      nextTitle: "What happens next",
+      next: [
+        { t: "Send us your layout", d: "A photo, a sketch or a floor plan of {farm} helps us start. WhatsApp is easiest." },
+        { t: "We reply within one business day", d: "You'll get a short video of your farm's demo and a setup checklist, on WhatsApp or email." },
+        { t: "Your twin goes live in about two weeks", d: "Then you use it free for three months." },
+      ],
+      photos: "Send photos on WhatsApp",
+      photosMessage: "Hi! I just requested a pilot for {farm}. Here's our layout:",
+      talk: "Prefer to talk? Pick a time",
       demo: "Back to the demo",
       home: "Back to the homepage",
     },
@@ -415,7 +423,7 @@ const en = {
     userSubject: "We received your request, {name}",
     userHello: "Hi {name},",
     userBody:
-      "Thanks for telling us about {farm}. We'll review your details and get back to you within one business day to set up a call.",
+      "Thanks for telling us about {farm}. We'll review your details and get back to you within one business day with next steps. To help us start, reply with a photo or sketch of your layout.",
     userSummary: "Here's what you sent us:",
     userSign: "The {brand} team",
   },
