@@ -3,7 +3,7 @@
 import { ArrowLeft, ArrowRight, CalendarCheck, Check, Loader2 } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import Link from "next/link";
-import { useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { fmt, type Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
 import {
@@ -17,6 +17,7 @@ import {
   type FieldName,
 } from "@/lib/request-schema";
 import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
+import { WHATSAPP_NUMBER, whatsappUrl } from "@/lib/site";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -132,6 +133,36 @@ function Chips<T extends string>({
 
 /* --------------------------------- Flow --------------------------------- */
 
+const DRAFT_KEY = "canopy-request-draft";
+type Draft = Partial<Form>;
+
+function readDraft(): Draft | null {
+  try {
+    const raw = sessionStorage.getItem(DRAFT_KEY);
+    return raw ? (JSON.parse(raw) as Draft) : null;
+  } catch {
+    return null;
+  }
+}
+function writeDraft(f: Form) {
+  try {
+    // Consent and the spam trap are never restored.
+    const { consent: _c, website: _w, ...rest } = f;
+    void _c;
+    void _w;
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify(rest));
+  } catch {
+    /* storage blocked: the draft just isn't kept */
+  }
+}
+function clearDraft() {
+  try {
+    sessionStorage.removeItem(DRAFT_KEY);
+  } catch {
+    /* nothing to clear */
+  }
+}
+
 export default function RequestFlow({
   lang,
   r,
@@ -153,6 +184,14 @@ export default function RequestFlow({
   const [step, setStep] = useState(0);
   const [dir, setDir] = useState(1);
   const [status, setStatus] = useState<"idle" | "sending" | "error" | "done">("idle");
+  const [emailed, setEmailed] = useState(false);
+  // The Back/Forward handler reads these without re-subscribing.
+  const statusRef = useRef(status);
+  const stepRef = useRef(step);
+  useEffect(() => {
+    statusRef.current = status;
+    stepRef.current = step;
+  }, [status, step]);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [f, setF] = useState<Form>({
     name: "",
@@ -174,6 +213,30 @@ export default function RequestFlow({
     website: "",
   });
 
+  // Keep a draft in this tab, so leaving the page by accident doesn't lose what was typed.
+  useEffect(() => {
+    const draft = readDraft();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time restore from sessionStorage after hydration
+    if (draft) setF((p) => ({ ...p, ...draft, farmName: draft.farmName || p.farmName, consent: false, website: "" }));
+  }, []);
+  useEffect(() => {
+    if (status !== "done") writeDraft(f);
+  }, [f, status]);
+
+  // Each step gets its own browser history entry, so Back and Forward (and the
+  // phone's back gesture) move between steps instead of leaving the form.
+  useEffect(() => {
+    window.history.replaceState({ ...window.history.state, canopyStep: 0 }, "");
+    const onPop = (e: PopStateEvent) => {
+      const s = (e.state as { canopyStep?: unknown } | null)?.canopyStep;
+      if (typeof s !== "number" || statusRef.current === "done") return;
+      setDir(s > stepRef.current ? 1 : -1);
+      setStep(s);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
   const set = <K extends keyof Form>(k: K, v: Form[K]) => {
     setF((p) => ({ ...p, [k]: v }));
     if (k in ERROR_KEY) setErrors((e) => ({ ...e, [k]: undefined }));
@@ -194,13 +257,18 @@ export default function RequestFlow({
     }
     setErrors(next);
     const first = fields.find((k) => next[k]);
+    if (first) track("request_error", { step: s + 1, field: first, lang });
     if (first) document.getElementById(`${uid}-${first}`)?.focus();
     return false;
   };
 
-  const go = (to: number) => {
+  const go = (to: number, history: "push" | "replace" = "push") => {
     setDir(to > step ? 1 : -1);
     setStep(to);
+    const state = { ...window.history.state, canopyStep: to };
+    if (history === "push") window.history.pushState(state, "");
+    else window.history.replaceState(state, "");
+    if (to > step && to < 3) track("request_step", { step: to + 1, lang });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -214,9 +282,12 @@ export default function RequestFlow({
         body: JSON.stringify(payload()),
       });
       if (!res.ok) throw new Error(String(res.status));
+      const out = (await res.json().catch(() => ({}))) as { emailed?: boolean };
+      setEmailed(out.emailed === true);
       track("request_sent", { source, lang });
+      clearDraft();
       setStatus("done");
-      go(3);
+      go(3, "replace");
     } catch {
       setStatus("error");
     }
@@ -224,9 +295,10 @@ export default function RequestFlow({
 
   const id = (k: FieldName) => `${uid}-${k}`;
   const firstName = f.name.trim().split(/\s+/)[0] ?? "";
-  const bookingSrc = bookingUrl
+  const bookingHref = bookingUrl
     ? `${bookingUrl}${bookingUrl.includes("?") ? "&" : "?"}name=${encodeURIComponent(f.name)}&email=${encodeURIComponent(f.email)}`
     : "";
+  const shownFarm = f.farmName.trim() || farm;
   const demoHref = `/${lang}/demo${f.farmName ? `?farm=${encodeURIComponent(f.farmName)}` : ""}`;
 
   return (
@@ -453,39 +525,62 @@ export default function RequestFlow({
                 )}
 
                 {step === 3 && (
-                  <div className="flex flex-col gap-5">
+                  <div className="flex flex-col gap-6">
                     <div className="flex items-start gap-3">
                       <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#eaf6ef] text-green">
                         <Check className="size-5" aria-hidden />
                       </span>
                       <div className="flex flex-col gap-1">
                         <p className="font-display text-[20px] leading-snug font-bold">{fmt(r.done.title, { name: firstName })}</p>
-                        <p className="text-[14.5px] text-muted">{r.done.sub}</p>
+                        {emailed && <p className="text-[14.5px] text-muted">{r.done.emailed}</p>}
                       </div>
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <p className="flex items-center gap-2 text-[14px] font-semibold">
-                        <CalendarCheck className="size-4 text-green" aria-hidden />
-                        {r.done.bookingTitle}
-                      </p>
-                      {bookingSrc ? (
-                        <iframe
-                          title={r.done.bookingTitle}
-                          src={bookingSrc}
-                          className="h-[640px] w-full rounded-2xl border border-line"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <p className="rounded-xl bg-[#f4f6fa] px-4 py-3 text-[14px] text-muted">{r.done.fallback}</p>
-                      )}
+                    <div className="flex flex-col gap-3">
+                      <p className="text-[14px] font-semibold">{r.done.nextTitle}</p>
+                      <ol className="flex flex-col gap-4">
+                        {r.done.next.map((n, i) => (
+                          <li key={n.t} className="grid grid-cols-[28px_minmax(0,1fr)] gap-3">
+                            <span className="grid size-7 place-items-center rounded-full bg-[#eef1f6] font-mono text-[12px] text-muted" dir="ltr">
+                              {i + 1}
+                            </span>
+                            <div className="flex flex-col gap-0.5">
+                              <span className="text-[15px] font-semibold">{n.t}</span>
+                              <span className="text-[14px] leading-relaxed text-muted">{fmt(n.d, { farm: shownFarm })}</span>
+                              {i === 0 && WHATSAPP_NUMBER && (
+                                <a
+                                  href={whatsappUrl(fmt(r.done.photosMessage, { farm: shownFarm }))}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={() => track("whatsapp_click", { place: "done" })}
+                                  className="mt-2 inline-flex items-center gap-2 self-start rounded-xl bg-green px-4 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-green-ink"
+                                >
+                                  <WhatsAppIcon className="size-4" />
+                                  {r.done.photos}
+                                </a>
+                              )}
+                            </div>
+                          </li>
+                        ))}
+                      </ol>
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap items-center gap-2 border-t border-line pt-5">
                       <Link href={demoHref} className="rounded-xl bg-ink px-4 py-2.5 text-[14px] font-semibold text-white">
                         {r.done.demo}
                       </Link>
                       <Link href={`/${lang}`} className="rounded-xl border border-line px-4 py-2.5 text-[14px] font-semibold hover:border-ink">
                         {r.done.home}
                       </Link>
+                      {bookingHref && (
+                        <a
+                          href={bookingHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-2 py-2.5 text-[14px] font-semibold text-muted underline-offset-4 hover:text-ink hover:underline"
+                        >
+                          <CalendarCheck className="size-4" aria-hidden />
+                          {r.done.talk}
+                        </a>
+                      )}
                     </div>
                   </div>
                 )}

@@ -1,6 +1,6 @@
 # Outreach messages (English and Arabic)
 
-Short messages for WhatsApp, LinkedIn and email. `{name}`, `{farm}` and `{link}` match the placeholders in [`docs/outreach-links.xlsx`](../outreach-links.xlsx), which fills them in for each farm. The first WhatsApp message is already the sheet's default.
+Short messages for WhatsApp, LinkedIn and email. There are no calls: every message asks for a look at the demo and a reply in writing (or a voice note). `{name}`, `{farm}` and `{link}` match the placeholders in [`docs/outreach-links.xlsx`](../outreach-links.xlsx), which fills them in for each farm. The first WhatsApp message is already the sheet's default.
 
 ## How to use them
 
@@ -16,7 +16,7 @@ Short messages for WhatsApp, LinkedIn and email. `{name}`, `{farm}` and `{link}`
 
 ### WhatsApp: first message
 
-> Hi {name}, I made a live 3D demo of {farm} so you can see how it would look: {link}  Would you be open to a 30-minute call this week?
+> Hi {name}, I made a live 3D demo of {farm} so you can see how it would look: {link}  Have a look, and reply here with what you'd change for your farm.
 
 Longer version, if you have a warm intro or a specific hook:
 
@@ -24,11 +24,11 @@ Longer version, if you have a warm intro or a specific hook:
 >
 > I set up a demo with {farm}'s name on it (sample data): {link}
 >
-> I'm looking for a few farms to run a free pilot with. Would you have 30 minutes this week to tell me how you run the farm today?
+> I'm looking for a few farms to run a free pilot with. If it looks useful, reply here (a voice note is fine): how do you keep track of the farm today?
 
 ### WhatsApp: follow-up (after 4 days)
 
-> Hi {name}, just bringing this back up in case it got buried. Even 15 minutes would help me a lot: I'd love to hear how you keep track of {farm} today. Does Wednesday or Thursday work?
+> Hi {name}, just bringing this back up in case it got buried. One question would help me a lot: what's the hardest thing to keep an eye on at {farm} when you're not there? A one-line reply is plenty.
 
 ### WhatsApp: last note (after 10 days)
 
@@ -42,11 +42,11 @@ Longer version, if you have a warm intro or a specific hook:
 
 > Thanks for connecting, {name}. Here's the demo I mentioned, with {farm}'s name on it (sample data): {link}
 >
-> I'm running free 3-month pilots with a few farms in Jordan and the Gulf. Before that, I mostly want to learn: would you have 30 minutes for a call about how you track the farm today?
+> I'm running free 3-month pilots with a few farms in Jordan and the Gulf. Before that, I mostly want to learn: how do you track the farm today? A short reply here is perfect.
 
 ### LinkedIn: follow-up
 
-> Hi {name}, following up on the demo for {farm}. If a call is too much right now, one question would already help: what's the hardest thing to keep an eye on when you're not at the farm?
+> Hi {name}, following up on the demo for {farm}. One question would already help: what's the hardest thing to keep an eye on when you're not at the farm?
 
 ### Email (research centres, programmes, larger companies)
 
@@ -58,7 +58,7 @@ Longer version, if you have a warm intro or a specific hook:
 >
 > I prepared a demo carrying {farm}'s name, running on sample data: {link}
 >
-> We're offering a small number of farms and research teams a free three-month pilot. In return, we ask for short feedback calls every two weeks. Would you be open to a 30-minute call to see whether it fits your work?
+> We're offering a small number of farms and research teams a free three-month pilot. In return, we ask for a 2-minute feedback form every two weeks. If it fits your work, you can request a pilot from the demo, or simply reply to this email.
 >
 > Kind regards,
 > Mikdam Qandil
@@ -66,7 +66,7 @@ Longer version, if you have a warm intro or a specific hook:
 
 ### Partners and channels (suppliers, programmes, integrators)
 
-> Hi {name}, I'm building a live 3D twin for indoor farms. Your clients' farms could get a single view of floors, crops and deliveries on top of the sensors they already have. Here's a demo: {link}. Would you be open to a short call to see whether it could add value for the farms you work with?
+> Hi {name}, I'm building a live 3D twin for indoor farms. Your clients' farms could get a single view of floors, crops and deliveries on top of the sensors they already have. Here's a demo: {link}. Would it add value for the farms you work with? I'd be glad to hear your view by reply.
 
 ### Quick replies
 
@@ -75,7 +75,7 @@ Longer version, if you have a warm intro or a specific hook:
 | "Send more info." | "Sure. Rather than a brochure: the demo link shows most of it. What would you most want it to do for {farm}? I'll tell you honestly whether it does that yet." |
 | "How much is it?" | "Pilots are free for three months, with no commitment after. We'll set prices with the pilot farms. Can I ask what you use today, so I understand what it would replace?" |
 | "Not now." | "No problem, thanks for letting me know. Is it OK if I check back in two or three months?" |
-| "Yes, let's talk." | "Great! Here's my calendar: [booking link]. Or tell me a day and time that suits you and I'll send an invite." |
+| "Interested." | "Great! The quickest start is the 2-minute form on the demo ("Get this for my farm"). Or send me a photo or sketch of your layout here, and I'll reply with a short video of your farm's demo." |
 
 ---
 
@@ -85,7 +85,7 @@ Longer version, if you have a warm intro or a specific hook:
 
 ### واتساب: الرسالة الأولى
 
-> مرحبًا {name}، جهّزت عرضًا حيًّا ثلاثي الأبعاد لـ {farm} لترى كيف ستبدو مزرعتك: {link}  هل يناسبك اتصال لمدة 30 دقيقة هذا الأسبوع؟
+> مرحبًا {name}، جهّزت عرضًا حيًّا ثلاثي الأبعاد لـ {farm} لترى كيف ستبدو مزرعتك: {link}  ألقِ نظرة، وأخبرني هنا بما تودّ تغييره ليناسب مزرعتك.
 
 نسخة أطول، إن كان هناك تعارف سابق أو سبب محدد للتواصل:
 
@@ -93,11 +93,11 @@ Longer version, if you have a warm intro or a specific hook:
 >
 > جهّزت عرضًا يحمل اسم {farm} (ببيانات تجريبية): {link}
 >
-> أبحث عن عدد قليل من المزارع لنبدأ معها تجربة مجانية. هل لديك 30 دقيقة هذا الأسبوع لتخبرني كيف تديرون المزرعة اليوم؟
+> أبحث عن عدد قليل من المزارع لنبدأ معها تجربة مجانية. إن بدا لك مفيدًا، أخبرني هنا (ولو برسالة صوتية): كيف تتابعون المزرعة اليوم؟
 
 ### واتساب: المتابعة (بعد 4 أيام)
 
-> مرحبًا {name}، أعيد التذكير برسالتي في حال لم تصلك وسط الرسائل. حتى 15 دقيقة ستفيدني كثيرًا، فأنا مهتم بمعرفة كيف تتابعون {farm} اليوم. هل يناسبك يوم الأربعاء أو الخميس؟
+> مرحبًا {name}، أعيد التذكير برسالتي في حال لم تصلك وسط الرسائل. سؤال واحد سيفيدني كثيرًا: ما أصعب شيء تتابعه في {farm} حين لا تكون فيها؟ يكفيني سطر واحد.
 
 ### واتساب: الرسالة الأخيرة (بعد 10 أيام)
 
@@ -111,11 +111,11 @@ Longer version, if you have a warm intro or a specific hook:
 
 > شكرًا على قبول التواصل يا {name}. هذا العرض الذي ذكرته، ويحمل اسم {farm} (ببيانات تجريبية): {link}
 >
-> نقدّم تجربة مجانية لمدة ثلاثة أشهر لعدد قليل من المزارع في الأردن والخليج. لكن قبل ذلك أودّ أن أتعلم منكم: هل لديك 30 دقيقة لمكالمة عن طريقة متابعتكم للمزرعة اليوم؟
+> نقدّم تجربة مجانية لمدة ثلاثة أشهر لعدد قليل من المزارع في الأردن والخليج. لكن قبل ذلك أودّ أن أتعلم منكم: كيف تتابعون المزرعة اليوم؟ يكفيني ردّ قصير هنا.
 
 ### لينكدإن: المتابعة
 
-> مرحبًا {name}، أتابع بخصوص العرض الذي أعددته لـ {farm}. إن كانت المكالمة صعبة الآن، فسؤال واحد سيفيدني: ما أصعب شيء تتابعه في المزرعة حين لا تكون فيها؟
+> مرحبًا {name}، أتابع بخصوص العرض الذي أعددته لـ {farm}. سؤال واحد سيفيدني: ما أصعب شيء تتابعه في المزرعة حين لا تكون فيها؟
 
 ### البريد الإلكتروني (مراكز البحث، والبرامج، والشركات الكبيرة)
 
@@ -127,7 +127,7 @@ Longer version, if you have a warm intro or a specific hook:
 >
 > أعددت عرضًا يحمل اسم {farm} ويعمل ببيانات تجريبية: {link}
 >
-> نقدّم لعدد محدود من المزارع وفرق البحث تجربة مجانية لمدة ثلاثة أشهر، مقابل مكالمات قصيرة لتبادل الملاحظات كل أسبوعين. هل تسمحون بمكالمة مدتها 30 دقيقة لنرى إن كان يناسب عملكم؟
+> نقدّم لعدد محدود من المزارع وفرق البحث تجربة مجانية لمدة ثلاثة أشهر، مقابل نموذج ملاحظات قصير (دقيقتان) كل أسبوعين. إن كان يناسب عملكم، يمكنكم طلب التجربة من صفحة العرض، أو الرد على هذه الرسالة ببساطة.
 >
 > مع خالص التحية،
 > مقدام قنديل
@@ -135,7 +135,7 @@ Longer version, if you have a warm intro or a specific hook:
 
 ### الشركاء والجهات الوسيطة (الموردون، والبرامج، والمنفّذون)
 
-> مرحبًا {name}، أعمل على نسخة رقمية حيّة ثلاثية الأبعاد للمزارع الداخلية. يمكن لمزارع عملائكم أن تحصل على عرض واحد يجمع الطوابق والمحاصيل والتوصيل، فوق الحساسات الموجودة لديهم أصلًا. هذا عرض توضيحي: {link}. هل تسمحون بمكالمة قصيرة لنرى إن كان يضيف قيمة للمزارع التي تعملون معها؟
+> مرحبًا {name}، أعمل على نسخة رقمية حيّة ثلاثية الأبعاد للمزارع الداخلية. يمكن لمزارع عملائكم أن تحصل على عرض واحد يجمع الطوابق والمحاصيل والتوصيل، فوق الحساسات الموجودة لديهم أصلًا. هذا عرض توضيحي: {link}. هل ترون أنه يضيف قيمة للمزارع التي تعملون معها؟ يسعدني سماع رأيكم بالرد على هذه الرسالة.
 
 ### ردود سريعة
 
@@ -144,6 +144,6 @@ Longer version, if you have a warm intro or a specific hook:
 | «أرسل مزيدًا من المعلومات.» | «بكل سرور. بدلًا من كتيّب: رابط العرض يوضح معظم الفكرة. ما أهم شيء تريده أن يفعله لـ {farm}؟ وسأخبرك بصراحة هل يفعله الآن أم لا.» |
 | «كم السعر؟» | «التجربة مجانية لثلاثة أشهر ولا التزام بعدها، وسنحدّد الأسعار مع مزارع التجربة. هل لي أن أسأل ماذا تستخدمون اليوم، لأفهم ما الذي سيحلّ محله؟» |
 | «ليس الآن.» | «لا بأس، وشكرًا على ردّك. هل تمانع أن أتواصل معك مجددًا بعد شهرين أو ثلاثة؟» |
-| «نعم، لنتحدث.» | «رائع! هذا رابط تقويمي: [رابط الحجز]. أو أخبرني باليوم والوقت المناسبين وسأرسل لك دعوة.» |
+| «مهتم.» | «رائع! أسرع بداية هي النموذج القصير في صفحة العرض («أريد هذا لمزرعتي»). أو أرسل لي هنا صورة أو رسمًا لمخطط مزرعتك، وسأرد بفيديو قصير لعرض مزرعتك.» |
 
 </div>

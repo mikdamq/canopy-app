@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Moon, MousePointerClick, PackageCheck, Pause, Play, Scissors, Search, SlidersHorizontal, Sprout, Sun, Truck, ZoomIn } from "lucide-react";
+import { ArrowLeft, ArrowRight, Moon, MousePointerClick, PackageCheck, Pause, Play, Scissors, SlidersHorizontal, Sprout, Sun, Truck, ZoomIn } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "motion/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } fro
 import { fmt, type Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
 import { track } from "@/lib/analytics";
-import { cleanFarmName, MAX_FARM_NAME } from "@/lib/site";
+import { BRAND, cleanFarmName, MAX_FARM_NAME } from "@/lib/site";
 import { useMedia } from "@/lib/use-media";
 import { cn } from "@/lib/utils";
 import { Mark } from "@/components/ui/logo";
@@ -133,10 +133,11 @@ function TagLayer({ snap, sim, anchors, d, rtl }: { snap: Snapshot; sim: FarmSim
 
 /* -------------------------------- Top bar ------------------------------- */
 
-function TopBar({ snap, d, farm, ctaHref, langHref, langLabel, langTitle }: {
+function TopBar({ snap, d, farm, homeHref, ctaHref, langHref, langLabel, langTitle }: {
   snap: Snapshot;
   d: D;
   farm: string;
+  homeHref: string;
   ctaHref: string;
   langHref: string;
   langLabel: string;
@@ -146,17 +147,15 @@ function TopBar({ snap, d, farm, ctaHref, langHref, langLabel, langTitle }: {
   return (
     <Card className="flex min-w-0 items-center gap-2.5 px-2.5 py-2 sm:gap-3 sm:px-3">
       <div className="flex min-w-0 items-center gap-2">
-        <Mark />
+        <Link href={homeHref} aria-label={fmt(d.home, { brand: BRAND })} title={fmt(d.home, { brand: BRAND })} className="shrink-0 rounded-lg">
+          <Mark />
+        </Link>
         <div className="min-w-0">
           <div className="truncate font-display text-[15px] leading-tight font-bold sm:text-[16px]">{farm}</div>
           <div className="font-mono text-[10px] tracking-[0.06em] text-[#b76e00] uppercase">{d.sample}</div>
         </div>
       </div>
-      <div className="hidden min-w-0 flex-1 items-center gap-2 truncate rounded-lg border border-line bg-[#f8fafc] px-2.5 py-1.5 text-[13px] text-muted xl:flex">
-        <Search className="size-3.5 shrink-0" aria-hidden />
-        <span className="truncate">{d.search}</span>
-      </div>
-      <div className="ms-auto flex items-center gap-1.5 font-mono text-[12px] whitespace-nowrap text-green xl:ms-0" dir="ltr">
+      <div className="ms-auto flex items-center gap-1.5 font-mono text-[12px] whitespace-nowrap text-green" dir="ltr">
         {night ? <Moon className="size-3.5 text-[#5b6fa8]" aria-hidden /> : <Sun className="size-3.5 text-[#f5a524]" aria-hidden />}
         {fmtHour(snap.hour)}
       </div>
@@ -486,11 +485,16 @@ function Clock({ snap, sim, d }: { snap: Snapshot; sim: FarmSim; d: D }) {
 
 /* ------------------------------- CTA card ------------------------------- */
 
-function CtaCard({ d, wa, farm, named, href }: { d: D; wa: Dict["whatsapp"]; farm: string; named: string; href: string }) {
+function CtaCard({ d, wa, farm, named, href, pilotHref }: { d: D; wa: Dict["whatsapp"]; farm: string; named: string; href: string; pilotHref: string }) {
   return (
     <Card delay={0.25} className="flex flex-col gap-2.5 border-transparent bg-ink p-4 text-white">
       <div className="font-display text-[18px] leading-snug font-bold">{fmt(d.cta.title, { farm })}</div>
-      <p className="text-[12.5px] leading-snug text-white/70">{d.cta.sub}</p>
+      <p className="text-[12.5px] leading-snug text-white/70">
+        {d.cta.sub}{" "}
+        <Link href={pilotHref} className="font-semibold text-white underline underline-offset-4 hover:text-[#7fe0a6]">
+          {d.cta.how}
+        </Link>
+      </p>
       <div className="mt-1 flex gap-2">
         <Link
           href={href}
@@ -591,6 +595,7 @@ export default function TwinApp({
   lang,
   dict,
   wa,
+  titleTemplate,
   farm: initialFarm,
   fallbackName,
   langLabel,
@@ -599,6 +604,8 @@ export default function TwinApp({
   lang: Locale;
   dict: D;
   wa: Dict["whatsapp"];
+  /** Browser tab title, e.g. "{farm} · Live farm demo". */
+  titleTemplate: string;
   farm: string;
   fallbackName: string;
   langLabel: string;
@@ -630,6 +637,12 @@ export default function TwinApp({
   };
 
   const shown = farm || fallbackName;
+
+  // Arriving from the landing page's form is a client-side navigation, which can keep a
+  // stale title; set it here so the tab always names the farm.
+  useEffect(() => {
+    document.title = fmt(titleTemplate, { farm: shown });
+  }, [titleTemplate, shown]);
   const q = farm ? `?farm=${encodeURIComponent(farm)}` : "";
   const ctaHref = `/${lang}/request${q}`;
   const langHref = `/${lang === "en" ? "ar" : "en"}/demo${q}`;
@@ -654,7 +667,7 @@ export default function TwinApp({
           <TagLayer snap={snap} sim={sim} anchors={anchors} d={dict} rtl={lang === "ar"} />
 
           <div className="pointer-events-none absolute inset-x-3 top-3 z-30 lg:inset-x-4 lg:top-4 [&>*]:pointer-events-auto">
-            <TopBar snap={snap} d={dict} farm={shown} ctaHref={ctaHref} langHref={langHref} langLabel={langLabel} langTitle={langTitle} />
+            <TopBar snap={snap} d={dict} farm={shown} homeHref={`/${lang}`} ctaHref={ctaHref} langHref={langHref} langLabel={langLabel} langTitle={langTitle} />
           </div>
 
           <AnimatePresence>
@@ -682,7 +695,7 @@ export default function TwinApp({
             <div className="absolute end-4 top-[84px] bottom-4 z-30 flex w-[340px] flex-col gap-3 overflow-y-auto pb-1">
               <FloorPanel snap={snap} sim={sim} reduce={reduce} d={dict} />
               <Clock snap={snap} sim={sim} d={dict} />
-              <CtaCard d={dict} wa={wa} farm={shown} named={farm} href={ctaHref} />
+              <CtaCard d={dict} wa={wa} farm={shown} named={farm} href={ctaHref} pilotHref={`/${lang}#pilot`} />
             </div>
             <div className="absolute start-4 bottom-4 z-30 w-[min(560px,calc(100%-388px))]">
               <Journey snap={snap} d={dict} />
@@ -692,7 +705,7 @@ export default function TwinApp({
           <div className="flex flex-col gap-3 border-t border-line bg-[#f1f4f8] p-3">
             <Stats snap={snap} d={dict} />
             <FloorPanel snap={snap} sim={sim} reduce={reduce} d={dict} />
-            <CtaCard d={dict} wa={wa} farm={shown} named={farm} href={ctaHref} />
+            <CtaCard d={dict} wa={wa} farm={shown} named={farm} href={ctaHref} pilotHref={`/${lang}#pilot`} />
             <Journey snap={snap} d={dict} />
             <Clock snap={snap} sim={sim} d={dict} />
           </div>

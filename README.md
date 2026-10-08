@@ -6,7 +6,7 @@ A live 3D twin of a vertical farm, built to test the product with real farm owne
 
 1. **Landing page** (`/en`, `/ar`): explains the product, runs the 3D farm live, and asks for the visitor's farm name.
 2. **Personalised demo** (`/en/demo?farm=Green%20Valley`): the full interactive twin, carrying their farm name, on sample data. A "Get this for my farm" button is always visible.
-3. **Pilot request** (`/en/request`): a 3-step form (about you, your farm, your goals). Each request is **saved to the database** and **emailed** to you, the visitor gets a confirmation email in their language, and then they can **book a call** in your calendar.
+3. **Pilot request** (`/en/request`): a 3-step form (about you, your farm, your goals). Each request is **saved to the database** and **emailed** to you, the visitor gets a confirmation email in their language, and then a **What's next** screen asks for layout photos on WhatsApp. There are no calls.
 
 English and Arabic (right-to-left) are both supported. Visitors to `/` are sent to the language their browser prefers.
 
@@ -35,7 +35,7 @@ All settings are environment variables (see `.env.example`).
 | `NEXT_PUBLIC_SITE_URL` | The live address. Used for share previews, canonical links and the sitemap. |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | Shown in the footer and error messages. |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | Number for the WhatsApp buttons (defaults to +962 78 7016 351; empty hides them). |
-| `NEXT_PUBLIC_BOOKING_URL` | Your Cal.com or Calendly link. Shown as an embedded calendar after the form. |
+| `NEXT_PUBLIC_BOOKING_URL` | Optional Cal.com or Calendly link. If set, the thank-you screen shows a small "Prefer to talk? Pick a time" link. |
 | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | Where requests are saved. |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` | Email sending. Your cPanel mailbox works. |
 | `REQUESTS_NOTIFY_EMAIL` | Who receives new requests (defaults to the contact email). |
@@ -57,9 +57,9 @@ All settings are environment variables (see `.env.example`).
 
 You can switch to a service like Resend later by changing these values (Resend also offers SMTP).
 
-### 3. Booking calls
+### 3. Booking (optional)
 
-Create a 30-minute event in [Cal.com](https://cal.com) or [Calendly](https://calendly.com) and put the link in `NEXT_PUBLIC_BOOKING_URL`. The visitor's name and email are passed along so they don't type them twice.
+There are no calls in the flow. If you ever want to offer one, put a Cal.com or Calendly link in `NEXT_PUBLIC_BOOKING_URL`: the thank-you screen then shows a small "Prefer to talk? Pick a time" link. Leave it empty otherwise.
 
 ### 4. Analytics
 
@@ -70,6 +70,7 @@ Create a 30-minute event in [Cal.com](https://cal.com) or [Calendly](https://cal
 3. The funnel is tracked for you. Page views on `/en` or `/ar` are the landing step, then these events:
    - `demo_opened`: the demo loaded (`named` says whether a farm name was given);
    - `demo_interaction`: the first click, tap or key press inside the demo after the welcome card;
+   - `request_step` (`step` 2 or 3) and `request_error` (`step`, `field`): progress and problems in the request form;
    - `request_sent`: a pilot request went through (`source` is `landing` or `demo`);
    - `whatsapp_click`: someone opened WhatsApp (`place` says which button: `landing`, `founder`, `footer`, `request` or `demo`).
 4. In Umami, open **Reports → Funnel** and add the steps: page `/en` (or `/ar`), then `demo_opened`, `demo_interaction`, `request_sent`.

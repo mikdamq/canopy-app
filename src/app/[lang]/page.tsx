@@ -210,7 +210,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
       </section>
 
       {/* Pilot */}
-      <section className="mx-auto w-full max-w-6xl px-4 pb-20 sm:px-6 lg:pb-28">
+      <section id="pilot" className="mx-auto w-full max-w-6xl scroll-mt-6 px-4 pb-20 sm:px-6 lg:pb-28">
         <Reveal>
           <div className="grid gap-8 rounded-[32px] border border-line bg-white p-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
             <div className="flex flex-col gap-4">

@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   const body = (await req.json().catch(() => null)) as Record<string, unknown> | null;
   if (!body) return Response.json({ ok: false, error: "bad_json" }, { status: 400 });
   // Honeypot: real people never fill the hidden "website" field.
-  if (typeof body.website === "string" && body.website.length > 0) return Response.json({ ok: true });
+  if (typeof body.website === "string" && body.website.length > 0) return Response.json({ ok: true, emailed: false });
 
   const parsed = requestSchema.safeParse(body);
   if (!parsed.success) {
@@ -41,5 +41,6 @@ export async function POST(req: Request) {
   const noneConfigured = stored.status === "skipped" && mailed.status === "skipped";
   if (!anyOk && !noneConfigured) return Response.json({ ok: false, error: "delivery_failed" }, { status: 502 });
 
-  return Response.json({ ok: true, id: stored.status === "ok" ? stored.id : undefined });
+  // `emailed` tells the thank-you screen whether a confirmation email really went out.
+  return Response.json({ ok: true, id: stored.status === "ok" ? stored.id : undefined, emailed: mailed.status === "ok" });
 }

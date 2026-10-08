@@ -1,5 +1,7 @@
 # Call script (English)
 
+> **Not used for calls (decision, 8 October 2026).** The questions in section 2 and the scorecard are the source for the short written questionnaire in the no-call flow. Keep this page as a reference for what to learn from each farm.
+
 A 30-minute call. The goal is not to sell. It's to learn whether this farm would open Canopy **every week**, and if so, to offer a free pilot.
 
 **The one rule:** ask about what they did last week, not what they would do. "Would you use this?" always gets a polite yes. "How did you find out about the last crop problem?" gets the truth.
