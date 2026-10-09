@@ -2,13 +2,13 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 9 Oct 2026 (hosting moved to Netlify).
+Last updated: 9 Oct 2026 (PR #6 merged; email and DNS steps set for your cPanel hosting).
 
 **The minimum for a safe launch is sections 1–4.** Sections 5–7 can follow.
 
 ## 1. Right now
 
-- [ ] **Merge PR #6** (Lamina rename, navigation, marketing kit, Netlify switch): https://github.com/mikdamq/canopy-app/pull/6.
+- [x] **Merge PR #6** (Lamina rename, navigation, marketing kit, Netlify switch): merged 9 Oct 2026.
 - [x] Review the navigation fix plan: approved ("go"), and built in PR #6.
 - [ ] **Try the new navigation on your phone** (the Netlify "Deploy Preview" link on PR #6): the header stays while you scroll, and the demo has a "Lamina" home link and a ☰ menu. Tell me anything that feels off.
 - [x] Hosting decision: **Netlify**, no Vercel (9 Oct 2026)
@@ -19,9 +19,9 @@ Last updated: 9 Oct 2026 (hosting moved to Netlify).
 
 - [x] Buy the domain: **laminafarm.app**
 - [ ] Turn on **Withheld for Privacy** and **Auto-renew** for laminafarm.app in Namecheap
-- [ ] Create the mailbox **hello@laminafarm.app** (Namecheap Private Email or cPanel)
-- [ ] Add the email trust records: **SPF, DKIM, DMARC** (Namecheap → Advanced DNS)
-- [ ] Connect **laminafarm.app to Netlify** (Domain management → Add a domain), then copy its records into Namecheap (guide step 4)
+- [ ] Create the mailbox **hello@laminafarm.app** in **cPanel → Email Accounts** (included in your hosting), and note the outgoing server from **Connect Devices**
+- [ ] Add the email trust records: **SPF and DKIM** via cPanel → Email Deliverability → Repair, and **DMARC** in cPanel → Zone Editor
+- [ ] Connect **laminafarm.app to Netlify** (Domain management → Add a domain), then change the `@` A record and the `www` CNAME in **cPanel → Zone Editor** (guide step 4). Your DNS lives in cPanel, not Namecheap's Advanced DNS
 
 ## 3. Accounts (guide: `docs/accounts-setup.md`, phase 2)
 

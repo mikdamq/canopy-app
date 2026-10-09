@@ -69,7 +69,7 @@ Step-by-step guide, with every click and the exact values: [`accounts-setup.md`]
 Once A is done, in this order (details in `.env.example`):
 
 1. [ ] Netlify: connect the domain (Domain management → Add a domain), then set `NEXT_PUBLIC_SITE_URL`.
-2. [ ] Namecheap DNS: add the Netlify records, plus SPF, DKIM and DMARC for the mailbox (so emails don't land in spam).
+2. [ ] DNS in cPanel → Zone Editor (the domain uses Namecheap Web Hosting DNS): point `@` and `www` to Netlify, plus SPF, DKIM and DMARC for the mailbox (so emails don't land in spam).
 3. [ ] Supabase: create the project, run `supabase/schema.sql`, then set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`.
 4. [ ] SMTP: set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` and `REQUESTS_NOTIFY_EMAIL`.
 5. [ ] Umami: add the website, then set `NEXT_PUBLIC_UMAMI_WEBSITE_ID`.

@@ -14,29 +14,30 @@ Total time: about 2 hours, spread over a day (DNS changes can take up to a few h
 - [x] Bought **laminafarm.app** (9 Oct 2026).
 - [ ] In Namecheap, check that **Withheld for Privacy** (free WHOIS privacy) and **Auto-renew** are on.
 
-### 2. Create the mailbox (Namecheap, 15 min)
-Choose **one** of these:
-- **Namecheap Private Email** (simplest; about $1–2 a month). Domain List → your domain → **Private Email** → Starter plan. It sets up the email DNS records for you.
-- **cPanel email**, if you already have a Namecheap hosting plan: cPanel → Email Accounts → Create. Then add the domain's MX records as cPanel shows them.
+Your setup (confirmed 9 Oct 2026): **Namecheap hosting with cPanel**, and the domain uses **Namecheap Web Hosting DNS**. So every DNS record is edited in **cPanel → Zone Editor**, not in Namecheap's "Advanced DNS" page. The website itself runs on Netlify; cPanel only keeps the email and the DNS.
 
-Then:
-- [ ] Create `hello@laminafarm.app`. This is the address the site sends from, and where replies arrive.
-- [ ] This is also the public contact address shown on the site (decided).
-- [ ] Note the email server settings (Private Email: `mail.privateemail.com`, port `465`; cPanel: `mail.laminafarm.app`, port `465`).
-- [ ] Log in to webmail once and send yourself a test email.
+### 2. Create the mailbox (cPanel, 10 min, included in your hosting)
+- [ ] Namecheap → **Hosting List → Go to cPanel** → **Email Accounts → Create**.
+- [ ] Address: `hello@laminafarm.app`. Generate a strong password and save it in your password manager. **Secret.**
+- [ ] This is the address the site sends from, where replies arrive, and the public contact shown on the site (decided).
+- [ ] Next to the new mailbox, click **Connect Devices**. Under **Secure SSL/TLS Settings**, note the **Outgoing Server** name and the **SMTP port** (usually `465`). The server is often your hosting server's name (like `server123.web-hosting.com`) rather than `mail.laminafarm.app`; use exactly what cPanel shows. You'll need it in phase 3.
+- [ ] Open **Webmail** once and send yourself a test email.
 
-### 3. Email trust records (Namecheap → Domain List → Manage → Advanced DNS, 15 min)
+### 3. Email trust records (cPanel, 10 min)
 These stop your emails landing in spam.
-- [ ] **SPF:** Private Email adds it automatically. Check that a TXT record on `@` contains `v=spf1 include:spf.privateemail.com ~all`. For cPanel, use the value cPanel → Email Deliverability shows.
-- [ ] **DKIM:** Private Email → your mailbox dashboard → **DKIM** → copy the TXT record into Advanced DNS (host `default._domainkey`). For cPanel: Email Deliverability → DKIM → copy the record.
-- [ ] **DMARC:** add a TXT record. Host: `_dmarc`. Value: `v=DMARC1; p=none; rua=mailto:hello@laminafarm.app`.
-- [ ] Test: send an email from `hello@` to a Gmail address. In Gmail, open "Show original": SPF, DKIM and DMARC should all say **PASS**. (It can take 1–2 hours after adding the records.)
+- [ ] cPanel → **Email Deliverability** → find `laminafarm.app` → if it shows problems, click **Repair** (or **Manage**, then install the suggested **SPF** and **DKIM** records). Because your DNS is on the hosting, cPanel adds them for you.
+- [ ] **DMARC:** cPanel → **Zone Editor** → `laminafarm.app` → **Manage → Add Record → TXT**. Name: `_dmarc.laminafarm.app.` Value: `v=DMARC1; p=none; rua=mailto:hello@laminafarm.app`.
+- [ ] Test: send an email from `hello@` to a Gmail address. In Gmail, open **Show original**: SPF, DKIM and DMARC should all say **PASS** (it can take 1–2 hours after adding the records).
 
-### 4. Connect the domain to Netlify (15 min)
+### 4. Point the domain to Netlify (cPanel Zone Editor, 15 min)
 We host on **Netlify** (decided 9 Oct 2026; no Vercel).
-- [ ] Netlify → your site → **Domain management → Add a domain** → `laminafarm.app`. Choose to keep DNS at Namecheap (don't move the nameservers, so email stays as it is). Add `www.laminafarm.app` too; Netlify redirects it to the main address.
-- [ ] Netlify shows the DNS records to add, usually an **A** record for `@` pointing to Netlify's load balancer (`75.2.60.5`) and a **CNAME** for `www` pointing to your `….netlify.app` address. Add them exactly as Netlify shows them, in Namecheap → Advanced DNS. Remove any old "parking page" or "URL redirect" records on `@` and `www`. Don't touch the email records.
-- [ ] Wait until Netlify shows the domain as verified, then click **Verify DNS / Provision certificate** under **HTTPS** if it hasn't started by itself (Let's Encrypt, free). `.app` domains only open over HTTPS, so the site appears once the certificate is issued. Then `https://laminafarm.app` opens the site, with the padlock.
+- [ ] Netlify → your site → **Domain management → Add a domain** → `laminafarm.app` → **Verify → Add domain**. When it offers **Netlify DNS**, don't use it: keep DNS where it is, so email keeps working. Netlify then shows "Awaiting External DNS" and the records it wants.
+- [ ] cPanel → **Zone Editor** → `laminafarm.app` → **Manage**. Change only these two records:
+  - the **A** record named `laminafarm.app.` → **Edit** → set it to Netlify's load balancer, `75.2.60.5` (use the address Netlify shows, if it differs);
+  - the **www** record (`www.laminafarm.app.`) → make it a **CNAME** pointing to your Netlify address (`your-site-name.netlify.app`, shown in Netlify). If `www` is an A record now, delete it and add the CNAME.
+- [ ] **Don't touch** the email records: `MX`, `mail`, `webmail`, `autodiscover`, `_dmarc`, `default._domainkey`, and the SPF TXT record. They keep pointing at your hosting, so email keeps working.
+- [ ] Back in Netlify, wait until the domain shows as verified, then under **HTTPS** click **Verify DNS configuration / Provision certificate** if it hasn't started by itself (free, Let's Encrypt). `.app` domains only open over HTTPS, so the site appears once the certificate is issued (a few minutes to a few hours).
+- [ ] Check: `https://laminafarm.app` opens Lamina with the padlock, and `https://www.laminafarm.app` jumps to it.
 
 ---
 
@@ -80,7 +81,7 @@ Netlify → your site → **Site configuration → Environment variables → Add
 | `NEXT_PUBLIC_CLARITY_ID` | the Clarity Project ID (step 7) | no |
 | `SUPABASE_URL` | the Supabase Project URL (step 5) | no |
 | `SUPABASE_SERVICE_ROLE_KEY` | the service_role key (step 5) | **yes** |
-| `SMTP_HOST` | `mail.privateemail.com` (or `mail.laminafarm.app` for cPanel) | no |
+| `SMTP_HOST` | the **Outgoing Server** from cPanel → Email Accounts → Connect Devices (step 2) | no |
 | `SMTP_PORT` | `465` | no |
 | `SMTP_USER` | `hello@laminafarm.app` | no |
 | `SMTP_PASS` | the mailbox password | **yes** |
