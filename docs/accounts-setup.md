@@ -11,7 +11,7 @@ Total time: about 2 hours, spread over a day (DNS changes can take up to a few h
 ## Phase 1: domain and email (do first)
 
 ### 1. Buy the domain (Namecheap, 10 min)
-- [ ] Search on namecheap.com, in this order: `thamra.com`, `thamra.farm`, `thamra.app`, `getthamra.com`, `thamra.co`.
+- [ ] Search on namecheap.com, in this order: `lamina.farm`, `getlamina.com`, `laminafarm.com`, `lamina.app`, `laminatwin.com`.
 - [ ] Buy the first one that's free. Tick **free WHOIS privacy (Withheld for Privacy)**. Auto-renew: on.
 - [ ] *Share:* the domain you bought.
 
@@ -44,7 +44,7 @@ These stop your emails landing in spam.
 
 ### 5. Supabase: stores the form requests (15 min)
 - [ ] Sign up at supabase.com (free plan).
-- [ ] **New project.** Name: `thamra`. Database password: generate one and save it in your password manager. Region: **Central EU (Frankfurt)**, the closest to Jordan and the Gulf.
+- [ ] **New project.** Name: `lamina`. Database password: generate one and save it in your password manager. Region: **Central EU (Frankfurt)**, the closest to Jordan and the Gulf.
 - [ ] When it's ready: **SQL Editor → New query**. Paste the whole of `supabase/schema.sql` from the repo, then click **Run**. It should say "Success".
 - [ ] **Project Settings → API Keys:**
   - copy the **Project URL** (looks like `https://abcd.supabase.co`). *Share* it if you like; it isn't secret;
@@ -53,12 +53,12 @@ These stop your emails landing in spam.
 
 ### 6. Umami: visit counts and the funnel (10 min)
 - [ ] Sign up at cloud.umami.is (the free Hobby plan is enough to start).
-- [ ] **Settings → Websites → Add website.** Name: Thamra. Domain: `<domain>` (without https).
+- [ ] **Settings → Websites → Add website.** Name: Lamina. Domain: `<domain>` (without https).
 - [ ] Open the website → **Edit → Tracking code**. Copy the **Website ID** (looks like `a1b2c3d4-…`). *Share:* it isn't secret.
 
 ### 7. Microsoft Clarity: heatmaps and recordings, only for visitors who click "Allow" (10 min)
 - [ ] Sign in at clarity.microsoft.com (a Microsoft or Google account).
-- [ ] **New project.** Name: Thamra. Website: `https://<domain>`.
+- [ ] **New project.** Name: Lamina. Website: `https://<domain>`.
 - [ ] When it offers to install, choose **"Install manually"**, then copy only the **Project ID** (about 10 characters; also under Settings → Overview). *Share:* it isn't secret. Don't paste Clarity's code anywhere: the site already loads it, and only after consent.
 - [ ] Settings → **Masking: Strict** (hides form text in recordings).
 
@@ -84,7 +84,7 @@ Vercel → canopy-app → **Settings → Environment Variables**. Add each one w
 | `SMTP_PORT` | `465` | no |
 | `SMTP_USER` | `hello@<domain>` | no |
 | `SMTP_PASS` | the mailbox password | **yes** |
-| `MAIL_FROM` | `Thamra <hello@<domain>>` | no |
+| `MAIL_FROM` | `Lamina <hello@<domain>>` | no |
 | `REQUESTS_NOTIFY_EMAIL` | where you want new requests: `info@mikdam.com` or your Gmail | no |
 
 Leave out `NEXT_PUBLIC_WHATSAPP_NUMBER` (it already defaults to your number) and `NEXT_PUBLIC_BOOKING_URL` (no calls).
@@ -96,7 +96,7 @@ Leave out `NEXT_PUBLIC_WHATSAPP_NUMBER` (it already defaults to your number) and
 ## Phase 4: tell me, and I'll finish
 
 Send me the domain, the Umami ID and the Clarity ID, and say "settings are in". Then I'll:
-1. Rename the site from Canopy to **Thamra**: logo text, titles, share images, emails and docs.
+1. Rename the site from Canopy to **Lamina**: logo text, titles, share images, emails and docs.
 2. Run the end-to-end test:
    - a request in English and in Arabic, on desktop and phone;
    - check both emails arrive (not in spam), and that the row appears in Supabase;

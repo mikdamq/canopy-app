@@ -4,7 +4,7 @@ Read this first. It explains what we're building, what's decided, and what's nex
 
 ## The product
 
-A live 3D "digital twin" for vertical and indoor farms (working name **Canopy**; the final name is **Thamra (ثمرة)**, chosen 8 Oct 2026; the site is renamed once the domain is secured). Farm owners see every floor, crop, light recipe and crate, from seed to delivery, in one view.
+A live 3D "digital twin" for vertical and indoor farms (working name **Canopy**; the final name is **Lamina (لامينا)**, chosen 9 Oct 2026 (Latin for "layer"; the blade of a leaf); the site is renamed once the domain is secured). Farm owners see every floor, crop, light recipe and crate, from seed to delivery, in one view.
 
 **Business model:** free pilot now, paid later. No calls: the site, WhatsApp and short screen-recorded videos do the selling; we don't sell self-serve yet.
 

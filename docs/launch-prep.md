@@ -12,12 +12,15 @@ Live preview: https://canopy-app-sand.vercel.app (no settings yet: requests go t
 
 Do these first. Most of the later steps need the domain.
 
-- [x] **A1. Final name** (Both). **Chosen: Thamra (ثمرة)**, "fruit, the result" (8 Oct 2026).
-  - "Canopy" was dropped: Canopii and Canobi are agtech companies with near-identical names, Canopy Tax owns the "CANOPY" software trademark, and Arabic has no "p".
-  - Also ruled out because they clash with regional companies: Nabta, Saqia, Sunbula, Mashtal and Namaa.
-  - Before renaming: run a quick trademark search for "Thamra" on WIPO (branddb.wipo.int, classes 9 and 42), and check that @thamra is free on Instagram and LinkedIn.
+- [x] **A1. Final name** (Both). **Chosen: Lamina (لامينا)** (9 Oct 2026). It's Latin for "layer", and in botany the lamina is the blade of a leaf: stacked growing layers, and the leaf itself.
+  - Earlier picks: "Canopy" was dropped (Canopii and Canobi are near-identical agtech names, Canopy Tax owns the software trademark, and Arabic has no "p"). "Thamra" was dropped too: English speakers misspell it, and it's a common word that's hard to own.
+  - Known overlaps to check: Lamina Co. (a Saudi packaging company) and Lamina (a US LED maker). Neither is in farm software, but the LED one is close to grow lights.
+  - Before renaming:
+    - run a WIPO trademark search for "Lamina" (branddb.wipo.int, classes 9 and 42), and in Saudi Arabia (SAIP) and the UAE;
+    - check that @lamina or a close handle is free on Instagram and LinkedIn.
+  - If the plain name is crowded, use a short qualifier consistently (e.g. "Lamina Farm" or "Lamina Twin"), with the logo still showing "Lamina / لامينا".
   - The site gets renamed (in `src/lib/site.ts`, page titles, share images, emails and docs) once the domain is secured.
-- [ ] **A2. Domain** (You). Buy it at Namecheap. Check in this order: `thamra.com` (best, if free), `thamra.farm`, `thamra.app`, `getthamra.com`, `thamra.co`. Choose between:
+- [ ] **A2. Domain** (You). Buy it at Namecheap. Check in this order: `lamina.farm`, `getlamina.com`, `laminafarm.com`, `lamina.app`, `laminatwin.com`. `lamina.com` is almost certainly taken (common word). Choose between:
   - a new domain (e.g. `name.farm`, `name.io` or `name.app`);
   - a subdomain of one you own (e.g. `canopy.mikdam.com`).
 - [ ] **A3. Mailbox on the domain** (You). Create e.g. `hello@domain` at Namecheap (Private Email or cPanel email). The site sends from it, and visitors' replies arrive in it.
