@@ -54,12 +54,12 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
 
   return (
     <div className="flex min-h-svh flex-col bg-bg">
-      <SiteHeader lang={lang} nav={d.nav} sections={false} langHref={`/${other}/privacy`} />
+      <SiteHeader lang={lang} nav={d.nav} wa={d.whatsapp} langHref={`/${other}/privacy`} />
       <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 pt-8 pb-20 sm:px-6 lg:pt-14">
         <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
           {/* Contents, pinned on wide screens */}
           <nav aria-label={p.title} className="hidden lg:block">
-            <ol className="sticky top-8 flex flex-col gap-2 text-[14px] text-muted">
+            <ol className="sticky top-24 flex flex-col gap-2 text-[14px] text-muted">
               {p.sections.map((s, i) => (
                 <li key={s.t}>
                   <a href={`#s${i + 1}`} className="flex gap-3 transition-colors hover:text-ink">

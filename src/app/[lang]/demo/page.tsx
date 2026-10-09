@@ -51,6 +51,7 @@ export default async function DemoPage({ params, searchParams }: PageProps<"/[la
     <TwinApp
       lang={lang}
       dict={d.demo}
+      nav={d.nav}
       wa={d.whatsapp}
       titleTemplate={d.meta.demoTitle}
       farm={farm}

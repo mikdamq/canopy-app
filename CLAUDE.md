@@ -59,7 +59,13 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
   - `?type=` is carried by the language switch and into the request form, which pre-selects the farm type ("lab" is a request option too).
   - `scene.tsx` is R3F. Its Canvas uses `resize={{ offsetSize: true }}`, so CSS transforms never shrink it.
   - DOM labels are pinned to 3D points through `AnchorSink` (don't use drei `Html`; it broke under React 19).
-- **Landing navigation:** `components/landing/landing-nav.tsx` has the phone menu (sheet with focus trap) and a slim bar that slides in on scroll-up. The language switch (`components/ui/lang-switch.tsx`) keeps the visitor's section; in the demo it carries floor, time and "welcome seen" (`f`, `t`, `w`, removed from the address once used).
+- **Site navigation:**
+  - `components/ui/site-header.tsx` is the one header on every page (landing, privacy, request).
+    - It's fixed and always visible: clear at the top, a compact frosted bar after 40 px. Never hide it on scroll; the owner asked for it to stay.
+    - It renders its own spacer (`HEADER_H`). `html` has `scroll-padding-top: 80px`, so section links land below it.
+    - `variant="request"` drops the section links and the call to action.
+  - `components/ui/site-menu.tsx` is the ☰ sheet (focus trap, Escape). It's portalled to `<body>`, so the frosted bars don't clip it. The demo's top bar uses it too (`always`).
+  - The language switch (`components/ui/lang-switch.tsx`) keeps the visitor's section; in the demo it carries floor, time and "welcome seen" (`f`, `t`, `w`, removed from the address once used).
 - **Hero still:** `public/hero/farm-wide.webp` and `farm-compact.webp` show before the 3D loads (re-capture them if the hero scene or camera changes). The scene calls `onReady` after its first frame.
 - **Demo checklist:** `FarmSim.tried` records zoom, light recipe and clock; the "Try this" card reads it.
 - **Request form fields:** the country is a list (`lib/countries.ts`, names saved in English, shown from `request.countries`); leaving step 1 adds the country code to a local phone number (`withCountryCode`).
@@ -69,6 +75,7 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 - **404 and error pages:** `[lang]/not-found.tsx` (reached through the `[lang]/[...missing]` catch-all) and `[lang]/error.tsx` share `components/ui/status-page.tsx`. They run in the browser, so their copy is in `src/i18n/status.ts`, not the main dictionaries. Next 16's error component gets `retry`, not `reset`.
 - **Element ids:** don't give an element an id that matches a global the page uses (e.g. `id="clarity"`): browsers expose ids as `window` properties.
 - **Launch prep:** `docs/launch-prep.md` is the checklist of decisions, content and accounts to finish before launch.
+- **After the request is sent,** `<html data-request-sent>` makes the language switch open the other homepage instead of an empty form.
 - **Before committing:** run `pnpm lint` and `pnpm build`, and check desktop and phone, in English and Arabic.
 
 ## Roadmap

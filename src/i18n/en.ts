@@ -27,6 +27,10 @@ const en = {
     skip: "Skip to content",
     close: "Close menu",
     pilot: "Pilot",
+    ctaShort: "Request",
+    home: "Home",
+    backToSite: "Back to site",
+    privacy: "Privacy",
   },
   hero: {
     eyebrow: "For vertical and indoor farms",

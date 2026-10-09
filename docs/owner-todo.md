@@ -7,7 +7,8 @@ Last updated: 9 Oct 2026.
 ## 1. Right now
 
 - [ ] **Merge PR #6** (Lamina rename + launch docs): https://github.com/mikdamq/canopy-app/pull/6. Then Lamina goes live on your Vercel address.
-- [ ] **Review the navigation fix plan** in `docs/ux-review-2.md`, then say "go" (or tell me what to change).
+- [x] Review the navigation fix plan: approved ("go"), and built in PR #6.
+- [ ] **Try the new navigation on your phone** (Vercel preview of PR #6): the header stays while you scroll, and the demo has a "Lamina" home link and a ☰ menu. Tell me anything that feels off.
 
 ## 2. Domain and email (guide: `docs/accounts-setup.md`, phase 1)
 

@@ -9,10 +9,11 @@ import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } fro
 import { fmt, type Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
 import { track } from "@/lib/analytics";
-import { brandName, cleanFarmName, MAX_FARM_NAME } from "@/lib/site";
+import { BRAND, brandName, cleanFarmName, MAX_FARM_NAME } from "@/lib/site";
 import { useMedia } from "@/lib/use-media";
 import { cn } from "@/lib/utils";
 import { Mark } from "@/components/ui/logo";
+import { SiteMenu } from "@/components/ui/site-menu";
 import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { DEMO_TYPES, type FarmType } from "./layouts";
 import type { AnchorSink } from "./scene";
@@ -153,9 +154,12 @@ function TagLayer({ snap, sim, anchors, d, rtl }: { snap: Snapshot; sim: FarmSim
 
 /* -------------------------------- Top bar ------------------------------- */
 
-function TopBar({ snap, d, brand, farm, homeHref, ctaHref, langHref, onSwitchLang, langLabel, langTitle }: {
+function TopBar({ snap, d, lang, nav, wa, brand, farm, homeHref, ctaHref, langHref, onSwitchLang, langLabel, langTitle }: {
   snap: Snapshot;
   d: D;
+  lang: Locale;
+  nav: Dict["nav"];
+  wa: Dict["whatsapp"];
   brand: string;
   farm: string;
   homeHref: string;
@@ -170,16 +174,23 @@ function TopBar({ snap, d, brand, farm, homeHref, ctaHref, langHref, onSwitchLan
   const night = snap.day < 0.35;
   return (
     <Card className="flex min-w-0 items-center gap-2.5 px-2.5 py-2 sm:gap-3 sm:px-3">
-      <div className="flex min-w-0 items-center gap-2">
-        <Link href={homeHref} aria-label={fmt(d.home, { brand })} title={fmt(d.home, { brand })} className="shrink-0 rounded-lg">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
+        {/* Home: the brand mark, with its name on wider screens. */}
+        <Link
+          href={homeHref}
+          aria-label={fmt(d.home, { brand })}
+          title={fmt(d.home, { brand })}
+          className="flex shrink-0 items-center gap-1.5 rounded-lg sm:border-e sm:border-line sm:pe-3"
+        >
           <Mark />
+          <span className="hidden font-display text-[15px] font-bold sm:inline">{BRAND}</span>
         </Link>
         <div className="min-w-0">
           <div className="truncate font-display text-[15px] leading-tight font-bold sm:text-[16px]">{farm}</div>
           <div className="font-mono text-[10px] tracking-[0.06em] text-[#b76e00] uppercase">{d.sample}</div>
         </div>
       </div>
-      <div className="ms-auto flex items-center gap-1.5 font-mono text-[12px] whitespace-nowrap text-green" dir="ltr">
+      <div className="ms-auto hidden items-center gap-1.5 font-mono text-[12px] whitespace-nowrap text-green min-[400px]:flex" dir="ltr">
         {night ? <Moon className="size-3.5 text-[#5b6fa8]" aria-hidden /> : <Sun className="size-3.5 text-[#f5a524]" aria-hidden />}
         {fmtHour(snap.hour)}
       </div>
@@ -191,7 +202,7 @@ function TopBar({ snap, d, brand, farm, homeHref, ctaHref, langHref, onSwitchLan
           router.push(onSwitchLang());
         }}
         title={langTitle}
-        className="rounded-full border border-line px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap hover:border-ink"
+        className="ms-auto rounded-full border border-line px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap hover:border-ink min-[400px]:ms-0"
       >
         {langLabel}
       </Link>
@@ -206,6 +217,7 @@ function TopBar({ snap, d, brand, farm, homeHref, ctaHref, langHref, onSwitchLan
         <span className="grid size-[30px] place-items-center rounded-full bg-ink font-mono text-[11px] text-white">{initials(farm)}</span>
         <span className="text-[11px] leading-tight text-muted">{d.role}</span>
       </div>
+      <SiteMenu lang={lang} nav={nav} wa={wa} always className="size-8" />
     </Card>
   );
 }
@@ -749,6 +761,7 @@ function Welcome({ d, farm, type, onType, onStart }: {
 export default function TwinApp({
   lang,
   dict,
+  nav,
   wa,
   titleTemplate,
   farm: initialFarm,
@@ -760,6 +773,7 @@ export default function TwinApp({
 }: {
   lang: Locale;
   dict: D;
+  nav: Dict["nav"];
   wa: Dict["whatsapp"];
   /** Browser tab title, e.g. "{farm} · Live farm demo". */
   titleTemplate: string;
@@ -854,8 +868,8 @@ export default function TwinApp({
           {wide !== null && <FarmCanvas sim={sim} reduce={reduce} compact={!wide} anchors={anchors} rtl={lang === "ar"} />}
           <TagLayer snap={snap} sim={sim} anchors={anchors} d={dict} rtl={lang === "ar"} />
 
-          <div className="pointer-events-none absolute inset-x-3 top-3 z-30 lg:inset-x-4 lg:top-4 [&>*]:pointer-events-auto">
-            <TopBar snap={snap} d={dict} brand={brandName(lang)} farm={shown} homeHref={`/${lang}`} ctaHref={ctaHref} langHref={langHref} onSwitchLang={switchLang} langLabel={langLabel} langTitle={langTitle} />
+          <div className="pointer-events-none fixed inset-x-3 top-3 z-40 lg:absolute lg:inset-x-4 lg:top-4 lg:z-30 [&>*]:pointer-events-auto">
+            <TopBar snap={snap} d={dict} lang={lang} nav={nav} wa={wa} brand={brandName(lang)} farm={shown} homeHref={`/${lang}`} ctaHref={ctaHref} langHref={langHref} onSwitchLang={switchLang} langLabel={langLabel} langTitle={langTitle} />
           </div>
 
           <AnimatePresence>

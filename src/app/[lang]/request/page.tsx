@@ -36,7 +36,8 @@ export default async function RequestPage({ params, searchParams }: PageProps<"/
       <SiteHeader
         lang={lang}
         nav={d.nav}
-        sections={false}
+        wa={d.whatsapp}
+        variant="request"
         langHref={`/${other}/request${q.size ? `?${q}` : ""}`}
       />
       <main id="main" className="mx-auto w-full max-w-6xl px-4 pt-6 pb-20 sm:px-6 lg:pt-12">

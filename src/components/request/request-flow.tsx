@@ -299,7 +299,9 @@ export default function RequestFlow({
   const scrollToCard = () => {
     const card = cardRef.current;
     if (!card) return;
-    const top = card.getBoundingClientRect().top + window.scrollY - 16;
+    // Land just below the fixed site header.
+    const header = document.querySelector("header")?.getBoundingClientRect().bottom ?? 0;
+    const top = card.getBoundingClientRect().top + window.scrollY - header - 16;
     if (Math.abs(top - window.scrollY) < 8) return;
     const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({ top: Math.max(0, top), behavior: smooth ? "smooth" : "auto" });
@@ -336,6 +338,15 @@ export default function RequestFlow({
   const countryPick = otherCountry || (f.country && !countryByName(f.country)) ? "other" : f.country;
   const started = step > 0;
   const sent = status === "done";
+  // Once sent, the language switch leads to the homepage, not back to an empty form.
+  useEffect(() => {
+    if (!sent) return;
+    const root = document.documentElement;
+    root.dataset.requestSent = "1";
+    return () => {
+      delete root.dataset.requestSent;
+    };
+  }, [sent]);
   const demoQuery = new URLSearchParams();
   if (f.farmName) demoQuery.set("farm", f.farmName);
   if (f.farmType && isFarmType(f.farmType) && f.farmType !== "tower") demoQuery.set("type", f.farmType);

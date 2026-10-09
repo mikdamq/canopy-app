@@ -22,8 +22,8 @@ export function Steps({ steps }: { steps: { t: string; d: string }[] }) {
           key={i}
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "0px 0px -15% 0px" }}
-          transition={{ duration: 0.8, ease: EASE, delay: i * 0.15 }}
+          viewport={{ once: true, margin: "0px 0px 8% 0px" }}
+          transition={{ duration: 0.5, ease: EASE, delay: i * 0.1 }}
           className="relative flex flex-col gap-3 border-t-2 border-ink pt-6 md:border-t-0"
         >
           <span className="absolute -top-[7px] start-0 hidden size-3.5 rounded-full border-2 border-ink bg-bg md:block" aria-hidden />
