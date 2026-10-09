@@ -29,8 +29,9 @@ These stop your emails landing in spam.
 - [ ] **DMARC:** cPanel → **Zone Editor** → `laminafarm.app` → **Manage → Add Record → TXT**. Name: `_dmarc.laminafarm.app.` Value: `v=DMARC1; p=none; rua=mailto:hello@laminafarm.app`.
 - [ ] Test: send an email from `hello@` to a Gmail address. In Gmail, open **Show original**: SPF, DKIM and DMARC should all say **PASS** (it can take 1–2 hours after adding the records).
 
-### 4. Point the domain to Netlify (cPanel Zone Editor, 15 min)
-We host on **Netlify** (decided 9 Oct 2026; no Vercel).
+### 4. Point the domain to the live host (on hold)
+> **On hold (9 Oct 2026):** Netlify is only for **staging and quick previews**, not the live site. Don't point `laminafarm.app` to Netlify. Where the live site runs is still to be decided (most likely your Namecheap hosting). This step will be rewritten then. The Netlify steps below are kept only in case you ever want a staging subdomain such as `staging.laminafarm.app`.
+
 - [ ] Netlify → your site → **Domain management → Add a domain** → `laminafarm.app` → **Verify → Add domain**. When it offers **Netlify DNS**, don't use it: keep DNS where it is, so email keeps working. Netlify then shows "Awaiting External DNS" and the records it wants.
 - [ ] cPanel → **Zone Editor** → `laminafarm.app` → **Manage**. Change only these two records:
   - the **A** record named `laminafarm.app.` → **Edit** → set it to Netlify's load balancer, `75.2.60.5` (use the address Netlify shows, if it differs);

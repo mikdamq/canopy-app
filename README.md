@@ -96,9 +96,11 @@ If you add or swap an analytics tool, update the privacy policy (`privacy` in `s
 - Set `NEXT_PUBLIC_SITE_URL` once you have the domain, so previews and links point to it.
 - To check a preview before sharing, paste a link into [opengraph.xyz](https://www.opengraph.xyz) or LinkedIn's [Post Inspector](https://www.linkedin.com/post-inspector/).
 
-## Deploy (Netlify + Namecheap domain)
+## Deploy
 
-We host on **Netlify** (decided 9 Oct 2026). cPanel shared hosting is built for PHP sites and can't run this app reliably, so the domain and mailbox stay at Namecheap and the app runs on Netlify. Keep the code host-neutral: no host-only APIs.
+**Netlify is for staging and quick previews only** (9 Oct 2026): every pull request gets a Netlify preview link. The production host is still to be decided (most likely the owner's Namecheap hosting); don't point the domain at Netlify. Keep the code host-neutral: no host-only APIs.
+
+Setting up a Netlify staging site:
 
 1. On [netlify.com](https://www.netlify.com) choose **Add new site → Import an existing project**, and pick this GitHub repo. `netlify.toml` already sets the build (`pnpm build`, Node 22), and Netlify adds its Next.js runtime by itself.
 2. Add the environment variables from `.env.example` under **Site configuration → Environment variables**, then **Deploys → Trigger deploy**.

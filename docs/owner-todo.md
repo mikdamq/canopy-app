@@ -21,7 +21,7 @@ Last updated: 9 Oct 2026 (PR #6 merged; email and DNS steps set for your cPanel 
 - [ ] Turn on **Withheld for Privacy** and **Auto-renew** for laminafarm.app in Namecheap
 - [ ] Create the mailbox **hello@laminafarm.app** in **cPanel → Email Accounts** (included in your hosting), and note the outgoing server from **Connect Devices**
 - [ ] Add the email trust records: **SPF and DKIM** via cPanel → Email Deliverability → Repair, and **DMARC** in cPanel → Zone Editor
-- [ ] Connect **laminafarm.app to Netlify** (Domain management → Add a domain), then change the `@` A record and the `www` CNAME in **cPanel → Zone Editor** (guide step 4). Your DNS lives in cPanel, not Namecheap's Advanced DNS
+- [ ] **On hold:** pointing laminafarm.app to the live host. Netlify is staging only, so **don't point the domain to Netlify**. Waiting on the production hosting decision (see section 4)
 
 ## 3. Accounts (guide: `docs/accounts-setup.md`, phase 2)
 
@@ -34,6 +34,8 @@ Last updated: 9 Oct 2026 (PR #6 merged; email and DNS steps set for your cPanel 
 - [ ] Once laminafarm.app is live, open **https://pagespeed.web.dev**, test `laminafarm.app/en` and `laminafarm.app/en/demo`, and **send me the two result links**. My test machine can't measure real phone speed for the 3D pages
 
 ## 4. Decisions and answers
+
+- [ ] **Production hosting:** where the live site runs (Netlify is staging only). Likely your Namecheap hosting; Claude needs your plan name and whether cPanel shows **Setup Node.js App**
 
 - [ ] **Working hours** for "one business day" (e.g. Sun–Thu, 9:00–17:00 Amman). Used in the WhatsApp away message and the FAQ
 - [ ] **Pricing answer:** is "we'll agree on pricing together before the pilot ends" right? Or give a range
