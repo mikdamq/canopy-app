@@ -75,6 +75,7 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 - **404 and error pages:** `[lang]/not-found.tsx` (reached through the `[lang]/[...missing]` catch-all) and `[lang]/error.tsx` share `components/ui/status-page.tsx`. They run in the browser, so their copy is in `src/i18n/status.ts`, not the main dictionaries. Next 16's error component gets `retry`, not `reset`.
 - **Element ids:** don't give an element an id that matches a global the page uses (e.g. `id="clarity"`): browsers expose ids as `window` properties.
 - **Launch prep:** `docs/launch-prep.md` is the checklist of decisions, content and accounts to finish before launch.
+- **Marketing kit:** `docs/marketing/` (one-pager PDF, LinkedIn banners, 5 posts, demo clips; EN/AR, LinkedIn first, bold tone). It's rendered from the live site by the scripts in `docs/marketing/source/`; re-run them if the brand or the 3D scene changes.
 - **After the request is sent,** `<html data-request-sent>` makes the language switch open the other homepage instead of an empty form.
 - **Before committing:** run `pnpm lint` and `pnpm build`, and check desktop and phone, in English and Arabic.
 
@@ -88,7 +89,8 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
    - next: set `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` and `NEXT_PUBLIC_CLARITY_ID`, then confirm no farm names appear in Umami;
    - next: final name and domain; email deliverability (SPF, DKIM, DMARC at Namecheap);
    - next: founder photo, and the owner's edits to the founder copy;
-   - next: an end-to-end test once Vercel, Supabase and SMTP are connected (Cal.com is optional now).
+   - next: an end-to-end test once Vercel, Supabase and SMTP are connected (Cal.com is optional now);
+   - done: marketing kit in `docs/marketing/` (waiting on the owner's review and the live domain).
 2. **Validation (2–4 weeks):** **decision (8 Oct 2026): no calls.** The owner won't run sales or feedback calls, so the site has to replace the call: see the "no-call path" in the UX review (`docs/ux-review/index.html`; live page https://claude.ai/artifact/SVX8YYtGad7CpwoeTs5EqN). The review lists 25 prioritised fixes (F1–F25) in three sprints. All 25 are done (F13, the farm-type choice in the demo, came last). The call script stays as the source for 5 async questions. The kit is in `docs/validation/`:
    - done: call script (`call-script.en.md`, `call-script.ar.md`, Modern Standard Arabic) with a scorecard;
    - done: 22 target farms in Jordan, the UAE and Saudi Arabia (`target-farms.md`, public sources; verify each is active), also prefilled in `docs/outreach-links.xlsx`;

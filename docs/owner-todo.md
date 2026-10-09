@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 9 Oct 2026.
+Last updated: 9 Oct 2026 (marketing kit added).
 
 ## 1. Right now
 
@@ -50,7 +50,16 @@ Last updated: 9 Oct 2026.
 - [ ] **Feedback form:** create it in Google Forms or Tally from `docs/launch-kit/feedback-form.md`, and send me the link
 - [ ] **LinkedIn profile:** add a line about Lamina and the site link (prospects will look you up)
 
-## 6. Outreach (when the site is live)
+## 6. Marketing kit (guide: `docs/marketing/README.md`)
+
+- [ ] **Look through the kit:** one-pager, banners, 5 posts and clips in `docs/marketing/`. Tell me what to change: wording, images, colours
+- [ ] Ask a native speaker to read the **Arabic** of posts 1 and 5 and the Arabic one-pager
+- [ ] **Your LinkedIn profile:** new banner, headline and Featured link (texts in `docs/marketing/profiles.md`)
+- [ ] **Create the Lamina company page** on LinkedIn: logo, cover, tagline and About (all in `profiles.md`)
+- [ ] **Post 1** once laminafarm.app is live and the promises are confirmed, then one post every 2–3 days (`posts.md`)
+- [ ] Instagram @laminafarm later, with the same images and bio
+
+## 7. Outreach (when the site is live)
 
 - [ ] Re-check the "Unclear" farms in `docs/validation/target-farms.md` (iPlant, Emirates Hydroponics, VeggiTech, Bather, Mojan, Desert Agriculture)
 - [ ] Find a contact name and channel for each farm, and check each farm's type in `docs/outreach-links.xlsx`
