@@ -53,7 +53,7 @@ We host on **Netlify** (decided 9 Oct 2026; no Vercel).
 - [ ] Optionally, if your Netlify plan offers it: **Site configuration → Build & deploy → Functions region**, choose **Frankfurt (eu-central-1)**, so the site's server code and the database sit close together.
 
 ### 6. Umami: visit counts and the funnel (10 min)
-- [ ] Sign up at cloud.umami.is (the free Hobby plan is enough to start).
+- [ ] Sign up at cloud.umami.is (the free Hobby plan is enough to start). When asked for a data region, choose **Europe (EU)**, the same region as Supabase.
 - [ ] **Settings → Websites → Add website.** Name: Lamina. Domain: `laminafarm.app` (without https).
 - [ ] Open the website → **Edit → Tracking code**. Copy the **Website ID** (looks like `a1b2c3d4-…`). *Share:* it isn't secret.
 
@@ -78,7 +78,7 @@ Netlify → your site → **Site configuration → Environment variables → Add
 | `NEXT_PUBLIC_SITE_URL` | `https://laminafarm.app` (no slash at the end) | no |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | `hello@laminafarm.app` (also the default, so this one is optional) | no |
 | `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | the Umami Website ID (step 6) | no |
-| `NEXT_PUBLIC_CLARITY_ID` | the Clarity Project ID (step 7) | no |
+| `NEXT_PUBLIC_CLARITY_ID` | `yv5sglt7cp` (your Clarity Project ID) | no |
 | `SUPABASE_URL` | the Supabase Project URL (step 5) | no |
 | `SUPABASE_SERVICE_ROLE_KEY` | the service_role key (step 5) | **yes** |
 | `SMTP_HOST` | the **Outgoing Server** from cPanel → Email Accounts → Connect Devices (step 2) | no |

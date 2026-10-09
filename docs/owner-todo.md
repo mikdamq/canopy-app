@@ -26,8 +26,8 @@ Last updated: 9 Oct 2026 (PR #6 merged; email and DNS steps set for your cPanel 
 ## 3. Accounts (guide: `docs/accounts-setup.md`, phase 2)
 
 - [ ] **Supabase:** create the project (Frankfurt) and run `supabase/schema.sql`
-- [ ] **Umami:** add the website. *Send me the Website ID*
-- [ ] **Clarity:** create the project and set masking to Strict. *Send me the Project ID*
+- [ ] **Umami:** sign up and choose the **Europe (EU)** region (same region as Supabase), add the website. *Send me the Website ID*
+- [x] **Clarity:** project created, Project ID `yv5sglt7cp` (not secret). Still to do: set **Masking: Strict** in Clarity, and add `NEXT_PUBLIC_CLARITY_ID` = `yv5sglt7cp` in Netlify. Don't paste Clarity's script anywhere: the site already has it, behind the "Allow" prompt
 - [ ] **WhatsApp Business** on +962 78 7016 351, using the texts in `docs/launch-kit/whatsapp-business.md`
 - [ ] **Netlify settings:** add the 12 values in phase 3 of the guide (Site configuration → Environment variables), then **Trigger deploy**. Never paste the 2 secret ones into chat.
 - [ ] Then tell me **"settings are in"**, and I'll run the end-to-end test
