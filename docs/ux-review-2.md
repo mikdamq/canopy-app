@@ -110,6 +110,25 @@ This was on a slow test browser, so **check it on a real phone**. Either way, it
   - no sideways scroll at 360 px;
   - all round-1 checks still pass, with no page errors.
 
+## Launch-readiness check (9 Oct 2026, PR #6)
+
+A final pass on a production build, before the accounts are connected.
+
+- **L1 ☑ Placeholder text was too faint.**
+  - The request form's country list showed "Choose…" at 2.5:1 contrast (it needs 4.5:1), and the form and hero placeholders used the same grey.
+  - They now use `#6b7689` (4.6:1).
+  - Lighthouse accessibility for `/en/request` and `/ar/request` went from 96 to 100.
+- **L2 ☑ Lighthouse scores** (phone settings):
+  - Accessibility: 100 on every page except the demo, whose 3D view can't be fully graded.
+  - Best practices: 100 everywhere except the demo (96).
+  - SEO: 100 everywhere except the demo (63), which is expected: the demo is deliberately hidden from Google (`noindex`), and its small labels on the 3D view count against it.
+- **L3 ☑ 404 page:** Lighthouse won't grade a page that answers "not found", so it was checked with axe instead: no issues in English (desktop) or Arabic (phone), and no sideways scroll.
+- **L4 ☑ Links:** all 20 internal links on the landing, privacy and request pages (both languages) open, and so do `robots.txt`, `sitemap.xml` and the share images.
+- **L5 ☑ Copy:** the English and Arabic texts have the same keys and the same `{placeholders}`. No "Canopy" is left in anything a visitor sees; it remains only in internal names.
+- **L6 ☑ Supabase keys:** the form now saves with either kind of Supabase server key (the older `service_role` key or the newer `sb_secret_…` key), tested against a stand-in server.
+- **L7 ☐ Speed on a real phone:** this test machine draws the 3D in software, so its speed scores for the 3D pages (35–37) mean nothing. Run PageSpeed Insights on the live site instead (see the owner to-do list).
+- **L8 ☐ (minor) Back/forward cache:** pages are sent with `no-store`, so the browser's instant back button can't keep them. Worth a look after launch; not a blocker.
+
 ## Fix order (one PR)
 
 1. **N1 + N2 + N5:** a single sticky `SiteHeader` used on every page (the landing variant has section links; the request variant is calmer). Remove the separate slide-in `StickyBar`.

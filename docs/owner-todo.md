@@ -26,6 +26,7 @@ Last updated: 9 Oct 2026.
 - [ ] **WhatsApp Business** on +962 78 7016 351, using the texts in `docs/launch-kit/whatsapp-business.md`
 - [ ] **Vercel settings:** add the 12 values in phase 3 of the guide, then **Redeploy**. Never paste the 2 secret ones into chat.
 - [ ] Then tell me **"settings are in"**, and I'll run the end-to-end test
+- [ ] Once laminafarm.app is live, open **https://pagespeed.web.dev**, test `laminafarm.app/en` and `laminafarm.app/en/demo`, and **send me the two result links**. My test machine can't measure real phone speed for the 3D pages
 
 ## 4. Decisions and answers
 

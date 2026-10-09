@@ -87,7 +87,7 @@ function Field({ label, error, hint, children, htmlFor }: { label: string; error
 
 const inputCls = (bad?: boolean) =>
   cn(
-    "w-full rounded-xl border bg-white px-3.5 py-2.5 text-[15px] outline-none transition-colors placeholder:text-[#9aa6ba] focus:border-green",
+    "w-full rounded-xl border bg-white px-3.5 py-2.5 text-[15px] outline-none transition-colors placeholder:text-[#6b7689] focus:border-green",
     bad ? "border-[#e5484d]" : "border-line",
   );
 
@@ -502,7 +502,7 @@ export default function RequestFlow({
                               setOtherCountry(v === "other");
                               set("country", v === "other" || v === "" ? "" : v);
                             }}
-                            className={cn(inputCls(!!errors.country), "appearance-none pe-10", !countryPick && "text-[#9aa6ba]")}
+                            className={cn(inputCls(!!errors.country), "appearance-none pe-10", !countryPick && "text-[#6b7689]")}
                           >
                             <option value="" disabled>
                               {r.countryChoose}
