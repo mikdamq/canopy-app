@@ -4,7 +4,7 @@ Everything to get ready before the accounts and settings (environment variables)
 
 **Who:** **You** means Mikdam; **Claude** means I draft it and you approve; **Both** means we work on it together.
 
-Live preview: https://canopy-app-sand.vercel.app (no settings yet: requests go to the Vercel log only).
+Hosting: **Netlify** (decided 9 Oct 2026; we no longer use Vercel). Previews appear on each pull request as `deploy-preview-…netlify.app` links. Until the settings are in, requests go to the Netlify function log only.
 
 ---
 
@@ -20,7 +20,7 @@ Do these first. Most of the later steps need the domain.
     - check that @lamina or a close handle is free on Instagram and LinkedIn.
   - If the plain name is crowded, use a short qualifier consistently (e.g. "Lamina Farm" or "Lamina Twin"), with the logo still showing "Lamina / لامينا".
   - The site gets renamed (in `src/lib/site.ts`, page titles, share images, emails and docs) once the domain is secured.
-- [x] **A2. Domain** (You). **Bought: `laminafarm.app`** (9 Oct 2026). `.app` domains only work over HTTPS, which Vercel handles automatically.
+- [x] **A2. Domain** (You). **Bought: `laminafarm.app`** (9 Oct 2026). `.app` domains only work over HTTPS, which Netlify handles automatically (free Let's Encrypt certificate).
 - [ ] **A3. Mailbox on the domain** (You). Create `hello@laminafarm.app` at Namecheap (Private Email or cPanel email). The site sends from it, and visitors' replies arrive in it.
 - [x] **A4. Contact email shown on the site** (You). Decided: `hello@laminafarm.app` everywhere (the site already uses it as the default).
 
@@ -68,8 +68,8 @@ Step-by-step guide, with every click and the exact values: [`accounts-setup.md`]
 
 Once A is done, in this order (details in `.env.example`):
 
-1. [ ] Vercel: connect the domain (Project → Settings → Domains), then set `NEXT_PUBLIC_SITE_URL`.
-2. [ ] Namecheap DNS: add the Vercel records, plus SPF, DKIM and DMARC for the mailbox (so emails don't land in spam).
+1. [ ] Netlify: connect the domain (Domain management → Add a domain), then set `NEXT_PUBLIC_SITE_URL`.
+2. [ ] Namecheap DNS: add the Netlify records, plus SPF, DKIM and DMARC for the mailbox (so emails don't land in spam).
 3. [ ] Supabase: create the project, run `supabase/schema.sql`, then set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`.
 4. [ ] SMTP: set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` and `REQUESTS_NOTIFY_EMAIL`.
 5. [ ] Umami: add the website, then set `NEXT_PUBLIC_UMAMI_WEBSITE_ID`.

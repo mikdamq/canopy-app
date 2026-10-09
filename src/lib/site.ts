@@ -26,12 +26,13 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "").replace(/\/+$/,
 
 /**
  * Base for absolute links (share images, canonical links, sitemap). Falls back to the
- * Vercel production address, then to localhost, so links still work before a domain is set.
+ * site's main address on Netlify (`URL`, set by Netlify itself), then to localhost, so
+ * links still work before a domain is set.
  */
 export function baseUrl() {
   if (SITE_URL) return new URL(SITE_URL);
-  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  if (vercel) return new URL(`https://${vercel}`);
+  const netlify = process.env.URL;
+  if (netlify?.startsWith("http")) return new URL(netlify);
   return new URL(`http://localhost:${process.env.PORT || 3000}`);
 }
 

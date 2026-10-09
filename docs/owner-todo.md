@@ -2,13 +2,18 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 9 Oct 2026 (marketing kit added).
+Last updated: 9 Oct 2026 (hosting moved to Netlify).
+
+**The minimum for a safe launch is sections 1–4.** Sections 5–7 can follow.
 
 ## 1. Right now
 
-- [ ] **Merge PR #6** (Lamina rename + launch docs): https://github.com/mikdamq/canopy-app/pull/6. Then Lamina goes live on your Vercel address.
+- [ ] **Merge PR #6** (Lamina rename, navigation, marketing kit, Netlify switch): https://github.com/mikdamq/canopy-app/pull/6.
 - [x] Review the navigation fix plan: approved ("go"), and built in PR #6.
-- [ ] **Try the new navigation on your phone** (Vercel preview of PR #6): the header stays while you scroll, and the demo has a "Lamina" home link and a ☰ menu. Tell me anything that feels off.
+- [ ] **Try the new navigation on your phone** (the Netlify "Deploy Preview" link on PR #6): the header stays while you scroll, and the demo has a "Lamina" home link and a ☰ menu. Tell me anything that feels off.
+- [x] Hosting decision: **Netlify**, no Vercel (9 Oct 2026)
+- [ ] **Netlify:** check that the site deploys from `main` (Site configuration → Build & deploy → Branches: production branch `main`). It picks up `netlify.toml` from the repo
+- [ ] **Leave Vercel** once Netlify is live with your domain: delete the Vercel project (Settings → Advanced → Delete), remove the Vercel app from GitHub (GitHub → Settings → Applications → Vercel → Uninstall), then delete your Vercel account if you like
 
 ## 2. Domain and email (guide: `docs/accounts-setup.md`, phase 1)
 
@@ -16,7 +21,7 @@ Last updated: 9 Oct 2026 (marketing kit added).
 - [ ] Turn on **Withheld for Privacy** and **Auto-renew** for laminafarm.app in Namecheap
 - [ ] Create the mailbox **hello@laminafarm.app** (Namecheap Private Email or cPanel)
 - [ ] Add the email trust records: **SPF, DKIM, DMARC** (Namecheap → Advanced DNS)
-- [ ] Connect **laminafarm.app to Vercel** (Settings → Domains), then copy its records into Namecheap
+- [ ] Connect **laminafarm.app to Netlify** (Domain management → Add a domain), then copy its records into Namecheap (guide step 4)
 
 ## 3. Accounts (guide: `docs/accounts-setup.md`, phase 2)
 
@@ -24,7 +29,7 @@ Last updated: 9 Oct 2026 (marketing kit added).
 - [ ] **Umami:** add the website. *Send me the Website ID*
 - [ ] **Clarity:** create the project and set masking to Strict. *Send me the Project ID*
 - [ ] **WhatsApp Business** on +962 78 7016 351, using the texts in `docs/launch-kit/whatsapp-business.md`
-- [ ] **Vercel settings:** add the 12 values in phase 3 of the guide, then **Redeploy**. Never paste the 2 secret ones into chat.
+- [ ] **Netlify settings:** add the 12 values in phase 3 of the guide (Site configuration → Environment variables), then **Trigger deploy**. Never paste the 2 secret ones into chat.
 - [ ] Then tell me **"settings are in"**, and I'll run the end-to-end test
 - [ ] Once laminafarm.app is live, open **https://pagespeed.web.dev**, test `laminafarm.app/en` and `laminafarm.app/en/demo`, and **send me the two result links**. My test machine can't measure real phone speed for the 3D pages
 
@@ -67,4 +72,4 @@ Last updated: 9 Oct 2026 (marketing kit added).
 
 ## Optional: let me test the live site myself
 
-My cloud workspace can't open `laminafarm.app` or `*.vercel.app` (blocked by its network settings). To let me test the live site directly, open this cloud environment's settings (the environment menu in the session's title bar → Edit → Network access), then either add `laminafarm.app` and `vercel.app` to the allowed domains, or choose a broader access level. Without this, I test a local copy of the site, which is identical to the code you deploy.
+My cloud workspace can't open `laminafarm.app` or `*.netlify.app` (blocked by its network settings). To let me test the live site directly, open this cloud environment's settings (the environment menu in the session's title bar → Edit → Network access), then either add `laminafarm.app` and `netlify.app` to the allowed domains, or choose a broader access level. Without this, I test a local copy of the site, which is identical to the code you deploy.

@@ -2,7 +2,7 @@
 
 Do these in order: each phase needs the one before it. Tick items as you go.
 
-**Keep secrets safe.** Passwords and secret keys go straight into Vercel (and a password manager such as 1Password or Bitwarden). Never paste them into chat, email or WhatsApp. Only send me the non-secret values (marked *share* below).
+**Keep secrets safe.** Passwords and secret keys go straight into Netlify (and a password manager such as 1Password or Bitwarden). Never paste them into chat, email or WhatsApp. Only send me the non-secret values (marked *share* below).
 
 Total time: about 2 hours, spread over a day (DNS changes can take up to a few hours to spread).
 
@@ -32,10 +32,11 @@ These stop your emails landing in spam.
 - [ ] **DMARC:** add a TXT record. Host: `_dmarc`. Value: `v=DMARC1; p=none; rua=mailto:hello@laminafarm.app`.
 - [ ] Test: send an email from `hello@` to a Gmail address. In Gmail, open "Show original": SPF, DKIM and DMARC should all say **PASS**. (It can take 1–2 hours after adding the records.)
 
-### 4. Connect the domain to Vercel (15 min)
-- [ ] Vercel → project **canopy-app** → **Settings → Domains** → Add the domain (and `www.laminafarm.app`, set to redirect to the main one).
-- [ ] Vercel shows the DNS records to add, usually an **A** record for `@` and a **CNAME** for `www`. Add them exactly as shown in Namecheap → Advanced DNS. Remove any old "parking page" or "URL redirect" records on `@` and `www`. Don't touch the email records.
-- [ ] Wait until Vercel shows **Valid configuration** (a few minutes to a few hours). Then `https://laminafarm.app` opens the site, with the padlock.
+### 4. Connect the domain to Netlify (15 min)
+We host on **Netlify** (decided 9 Oct 2026; no Vercel).
+- [ ] Netlify → your site → **Domain management → Add a domain** → `laminafarm.app`. Choose to keep DNS at Namecheap (don't move the nameservers, so email stays as it is). Add `www.laminafarm.app` too; Netlify redirects it to the main address.
+- [ ] Netlify shows the DNS records to add, usually an **A** record for `@` pointing to Netlify's load balancer (`75.2.60.5`) and a **CNAME** for `www` pointing to your `….netlify.app` address. Add them exactly as Netlify shows them, in Namecheap → Advanced DNS. Remove any old "parking page" or "URL redirect" records on `@` and `www`. Don't touch the email records.
+- [ ] Wait until Netlify shows the domain as verified, then click **Verify DNS / Provision certificate** under **HTTPS** if it hasn't started by itself (Let's Encrypt, free). `.app` domains only open over HTTPS, so the site appears once the certificate is issued. Then `https://laminafarm.app` opens the site, with the padlock.
 
 ---
 
@@ -47,8 +48,8 @@ These stop your emails landing in spam.
 - [ ] When it's ready: **SQL Editor → New query**. Paste the whole of `supabase/schema.sql` from the repo, then click **Run**. It should say "Success".
 - [ ] **Project Settings → API Keys:**
   - copy the **Project URL** (looks like `https://abcd.supabase.co`). *Share* it if you like; it isn't secret;
-  - copy a **server key**: either a **Secret key** (starts with `sb_secret_`) from the API Keys tab, or the **service_role** key from the "Legacy API keys" tab (a long key starting with `eyJ`). Both work. **Secret:** it goes only into Vercel.
-- [ ] Optionally, in Vercel → Settings → Functions → Region, choose **Frankfurt (fra1)**, so the site and the database sit close together.
+  - copy a **server key**: either a **Secret key** (starts with `sb_secret_`) from the API Keys tab, or the **service_role** key from the "Legacy API keys" tab (a long key starting with `eyJ`). Both work. **Secret:** it goes only into Netlify.
+- [ ] Optionally, if your Netlify plan offers it: **Site configuration → Build & deploy → Functions region**, choose **Frankfurt (eu-central-1)**, so the site's server code and the database sit close together.
 
 ### 6. Umami: visit counts and the funnel (10 min)
 - [ ] Sign up at cloud.umami.is (the free Hobby plan is enough to start).
@@ -61,15 +62,15 @@ These stop your emails landing in spam.
 - [ ] When it offers to install, choose **"Install manually"**, then copy only the **Project ID** (about 10 characters; also under Settings → Overview). *Share:* it isn't secret. Don't paste Clarity's code anywhere: the site already loads it, and only after consent.
 - [ ] Settings → **Masking: Strict** (hides form text in recordings).
 
-### 8. WhatsApp Business (20 min, no Vercel setting)
+### 8. WhatsApp Business (20 min, no Netlify setting)
 - [ ] Install **WhatsApp Business** on the phone with +962 78 7016 351. Your chats move over.
 - [ ] Set up the profile, greeting, away message, quick replies and labels from `docs/launch-kit/whatsapp-business.md` (needs your working hours, launch prep C5).
 
 ---
 
-## Phase 3: settings in Vercel
+## Phase 3: settings in Netlify
 
-Vercel → canopy-app → **Settings → Environment Variables**. Add each one with **Production** and **Preview** ticked:
+Netlify → your site → **Site configuration → Environment variables → Add a variable**. For each one, keep **All scopes** and the **same value for all deploy contexts**. For the two secret ones, tick **Contains secret values** if Netlify offers it:
 
 | Name | Value | Secret? |
 |---|---|---|
@@ -88,17 +89,16 @@ Vercel → canopy-app → **Settings → Environment Variables**. Add each one w
 
 Leave out `NEXT_PUBLIC_WHATSAPP_NUMBER` (it already defaults to your number) and `NEXT_PUBLIC_BOOKING_URL` (no calls).
 
-- [ ] Then **Deployments → the latest one → ⋯ → Redeploy**. Settings only take effect after a redeploy.
+- [ ] Then **Deploys → Trigger deploy → Deploy site**. Settings only take effect after a new deploy.
 
 ---
 
 ## Phase 4: tell me, and I'll finish
 
-Send me the domain, the Umami ID and the Clarity ID, and say "settings are in". Then I'll:
-1. Rename the site from Canopy to **Lamina**: logo text, titles, share images, emails and docs.
-2. Run the end-to-end test:
+Send me the Umami ID and the Clarity ID, and say "settings are in". (The rename to Lamina is already done.) Then I'll:
+1. Run the end-to-end test:
    - a request in English and in Arabic, on desktop and phone;
    - check both emails arrive (not in spam), and that the row appears in Supabase;
    - check the events in Umami, and that **no farm names** show there;
    - check that Clarity loads only after "Allow".
-3. Fix anything that comes up, and mark launch prep section E as done.
+2. Fix anything that comes up, and mark launch prep section E as done.

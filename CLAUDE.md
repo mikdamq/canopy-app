@@ -29,12 +29,12 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 ## Decisions so far
 
 - **Stack:** Next.js 16 (App Router), React 19, Tailwind 4, React Three Fiber, `motion/react`, Zod, Nodemailer. No GSAP in this repo.
-- **Hosting:** Vercel for the app. The domain and mailbox stay at Namecheap/cPanel. Vercel Pro once commercial. The owner would eventually like to host the app on his own cPanel too; that's an open question to discuss with him (it needs "Setup Node.js App" and is usually slower). Until then, keep the code host-neutral: no Vercel-only APIs.
+- **Hosting:** **Netlify** for the app (owner's decision, 9 Oct 2026: **no Vercel, and no products from Israeli companies**; check any new tool or service against this before suggesting it). `netlify.toml` pins the build; security headers live in `next.config.ts`. The domain and mailbox stay at Namecheap/cPanel. The owner would eventually like to host the app on his own cPanel too; that's an open question (it needs "Setup Node.js App" and is usually slower). Keep the code host-neutral: no host-only APIs.
 - **Data:** Supabase (`supabase/schema.sql`, table `pilot_requests`) via REST with the service role key, server only.
 - **Email:** SMTP (works with the cPanel mailbox); Resend can replace it later via the same env vars.
 - **Booking:** optional. If `NEXT_PUBLIC_BOOKING_URL` is set, the thank-you screen shows a small "Prefer to talk? Pick a time" link; there is no booking embed, since there are no calls.
 - **Analytics:** Umami (cookie-free, no banner) for visit counts and the funnel; Microsoft Clarity (heatmaps, recordings) loads only after the visitor clicks "Allow" in the consent prompt (`components/analytics.tsx`). Fire funnel events with `track()` from `lib/analytics.ts`: `demo_opened`, `demo_interaction`, `request_step`, `request_error`, `request_sent`, `whatsapp_click`. Any new tracking tool must be added to the privacy policy.
-- **SEO:** `NEXT_PUBLIC_SITE_URL` is the live address (falls back to the Vercel URL). Every page sets its canonical link, language alternates and share image with `pageMeta()` from `lib/seo.ts`. The demo is `noindex`.
+- **SEO:** `NEXT_PUBLIC_SITE_URL` is the live address (falls back to Netlify's `URL`, the site's main address). Every page sets its canonical link, language alternates and share image with `pageMeta()` from `lib/seo.ts`. The demo is `noindex`.
 - **WhatsApp:** `WhatsAppLink` (`components/ui/whatsapp-link.tsx`) opens a chat with a ready message (farm name included when known) and fires `whatsapp_click`. Number in `NEXT_PUBLIC_WHATSAPP_NUMBER`, default +962 78 7016 351.
 - **Outreach:** `docs/outreach-links.xlsx` builds personalised demo links with UTM tags; its "Farm type" column adds `&type=` so each farm sees its own kind of farm. Umami strips `?farm=` but keeps `utm_*` (`stripFarm` in `lib/analytics.ts`).
 - Everything degrades gracefully: with no env vars, form requests are logged to the server console.
@@ -89,7 +89,7 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
    - next: set `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` and `NEXT_PUBLIC_CLARITY_ID`, then confirm no farm names appear in Umami;
    - next: final name and domain; email deliverability (SPF, DKIM, DMARC at Namecheap);
    - next: founder photo, and the owner's edits to the founder copy;
-   - next: an end-to-end test once Vercel, Supabase and SMTP are connected (Cal.com is optional now);
+   - next: an end-to-end test once Netlify, Supabase and SMTP are connected (Cal.com is optional now);
    - done: marketing kit in `docs/marketing/` (waiting on the owner's review and the live domain).
 2. **Validation (2–4 weeks):** **decision (8 Oct 2026): no calls.** The owner won't run sales or feedback calls, so the site has to replace the call: see the "no-call path" in the UX review (`docs/ux-review/index.html`; live page https://claude.ai/artifact/SVX8YYtGad7CpwoeTs5EqN). The review lists 25 prioritised fixes (F1–F25) in three sprints. All 25 are done (F13, the farm-type choice in the demo, came last). The call script stays as the source for 5 async questions. The kit is in `docs/validation/`:
    - done: call script (`call-script.en.md`, `call-script.ar.md`, Modern Standard Arabic) with a scorecard;
