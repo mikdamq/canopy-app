@@ -4,7 +4,7 @@ Everything to get ready before the accounts and settings (environment variables)
 
 **Who:** **You** means Mikdam; **Claude** means I draft it and you approve; **Both** means we work on it together.
 
-Hosting: **Netlify for staging and previews only** (9 Oct 2026; no Vercel). The production host is still to be decided. Previews appear on each pull request as `deploy-preview-…netlify.app` links. Until the settings are in, requests go to the Netlify function log only.
+Hosting: the live site runs on **your Namecheap hosting** (cPanel → Setup Node.js App; guide `hosting-cpanel.md`). **Netlify is for staging and previews only**; no Vercel (9 Oct 2026). Previews appear on each pull request as `deploy-preview-…netlify.app` links. Until the settings are in, requests go to the Netlify function log only.
 
 ---
 
@@ -68,8 +68,8 @@ Step-by-step guide, with every click and the exact values: [`accounts-setup.md`]
 
 Once A is done, in this order (details in `.env.example`):
 
-1. [ ] Production host (to be decided; Netlify is staging only): connect the domain, then set `NEXT_PUBLIC_SITE_URL`.
-2. [ ] DNS in cPanel → Zone Editor (the domain uses Namecheap Web Hosting DNS): point `@` and `www` to the live host once chosen, plus SPF, DKIM and DMARC for the mailbox (so emails don't land in spam).
+1. [ ] Live site on your Namecheap hosting (`hosting-cpanel.md` Part 1), then Run AutoSSL. `NEXT_PUBLIC_SITE_URL` is already `https://laminafarm.app` in the build.
+2. [ ] DNS in cPanel → Zone Editor (the domain uses Namecheap Web Hosting DNS): the domain already points at your hosting, so only SPF, DKIM and DMARC for the mailbox (so emails don't land in spam).
 3. [ ] Supabase: create the project, run `supabase/schema.sql`, then set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`.
 4. [ ] SMTP: set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` and `REQUESTS_NOTIFY_EMAIL`.
 5. [ ] Umami: add the website, then set `NEXT_PUBLIC_UMAMI_WEBSITE_ID`.

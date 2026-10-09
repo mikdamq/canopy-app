@@ -98,7 +98,11 @@ If you add or swap an analytics tool, update the privacy policy (`privacy` in `s
 
 ## Deploy
 
-**Netlify is for staging and quick previews only** (9 Oct 2026): every pull request gets a Netlify preview link. The production host is still to be decided (most likely the owner's Namecheap hosting); don't point the domain at Netlify. Keep the code host-neutral: no host-only APIs.
+**Live site:** the owner's Namecheap hosting, through cPanel → **Setup Node.js App**. Step by step: [`docs/hosting-cpanel.md`](docs/hosting-cpanel.md).
+- `STANDALONE=1 pnpm build`, then `bash deploy/cpanel/package.sh`, makes `dist/lamina-cpanel.zip`: the standalone server with its static files and the `app.js` startup file. It has no `node_modules`; cPanel's "Run NPM Install" adds `next`, `react` and `react-dom`.
+- The GitHub workflow **cPanel package** (`.github/workflows/cpanel-package.yml`) builds this zip on every merge to `main`. Public `NEXT_PUBLIC_*` values come from GitHub Actions variables; server secrets live in the cPanel app's environment variables.
+
+**Staging:** Netlify (decided 9 Oct 2026; no Vercel). Every pull request gets a Netlify preview link. Don't point the domain at Netlify, and keep the Supabase and email settings off it. Keep the code host-neutral: no host-only APIs.
 
 Setting up a Netlify staging site:
 

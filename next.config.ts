@@ -9,6 +9,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // The live site runs as a Node.js app on cPanel: `STANDALONE=1 pnpm build` makes a
+  // self-contained server (.next/standalone) to upload. Netlify staging builds normally.
+  output: process.env.STANDALONE === "1" ? "standalone" : undefined,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
