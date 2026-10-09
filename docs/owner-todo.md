@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 9 Oct 2026 (live site on your Namecheap hosting; guide: `docs/hosting-cpanel.md`).
+Last updated: 9 Oct 2026 (automatic publishing to your cPanel over FTPS).
 
 **The minimum for a safe launch is sections 1–4.** Sections 5–7 can follow.
 
@@ -21,7 +21,10 @@ Last updated: 9 Oct 2026 (live site on your Namecheap hosting; guide: `docs/host
 - [ ] Turn on **Withheld for Privacy** and **Auto-renew** for laminafarm.app in Namecheap
 - [ ] Create the mailbox **hello@laminafarm.app** in **cPanel → Email Accounts** (included in your hosting), and note the outgoing server from **Connect Devices**
 - [ ] Add the email trust records: **SPF and DKIM** via cPanel → Email Deliverability → Repair, and **DMARC** in cPanel → Zone Editor
-- [ ] **Put the site live on your hosting:** follow `docs/hosting-cpanel.md` Part 1 (Setup Node.js App, upload the package from GitHub, Run NPM Install, Restart), then **Run AutoSSL**. No DNS changes needed. Netlify stays staging only
+- [ ] **Put the site live on your hosting:** follow `docs/hosting-cpanel.md` Part 1. No DNS changes needed; Netlify stays staging only
+  - [ ] Create the Node.js app (steps 1–2)
+  - [ ] Create the FTP account `deploy@laminafarm.app`, limited to the `lamina` folder, and add the 3 GitHub secrets `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` (step 3). After that, every merge publishes itself
+  - [ ] Run the workflow once, then **Run NPM Install** → **Restart** (steps 3c and 5), then **Run AutoSSL** (step 6)
 
 ## 3. Accounts (guide: `docs/accounts-setup.md`, phase 2)
 
