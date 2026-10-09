@@ -7,7 +7,9 @@ const SECTIONS = ["how", "features", "who", "pilot", "faq"];
 
 /**
  * Language switch that keeps the visitor's place: it links to the same section of
- * the other language's page (the section nearest the top of the screen).
+ * the other language's page (the section nearest the top of the screen). After a
+ * request is sent (`data-request-sent` on <html>), it opens the other language's
+ * homepage instead of an empty form.
  */
 export function LangSwitch({ href, label, title, className }: { href: string; label: string; title: string; className?: string }) {
   const router = useRouter();
@@ -17,6 +19,11 @@ export function LangSwitch({ href, label, title, className }: { href: string; la
       title={title}
       className={className}
       onClick={(e) => {
+        if (document.documentElement.dataset.requestSent) {
+          e.preventDefault();
+          router.push(`/${href.split(/[/?#]/)[1]}`);
+          return;
+        }
         let current = "";
         for (const id of SECTIONS) {
           const el = document.getElementById(id);

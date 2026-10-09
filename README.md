@@ -1,4 +1,4 @@
-# Canopy (working name)
+# Lamina (لامينا)
 
 A live 3D twin of a vertical farm, built to test the product with real farm owners.
 
@@ -79,7 +79,7 @@ The farm name in `?farm=` is removed before anything is sent to Umami (`stripFar
 
 **Validation kit:** `docs/validation/` has the call script (English and Arabic), outreach messages for WhatsApp, LinkedIn and email, and a researched list of 22 target farms.
 
-**Outreach links:** `docs/outreach-links.xlsx` builds a personalised demo link, a ready message (EN/AR) and a one-tap WhatsApp link for each farm you contact. Import it into Google Sheets (File → Import → Upload). Each link carries `utm_source` (channel), `utm_campaign` (round) and `utm_content` (row number, never the farm name).
+**Outreach links:** `docs/outreach-links.xlsx` builds a personalised demo link, a ready message (EN/AR) and a one-tap WhatsApp link for each farm you contact. Its "Farm type" column opens the demo as that farm's kind of farm (tower, container, greenhouse or research lab). Import it into Google Sheets (File → Import → Upload). Each link carries `utm_source` (channel), `utm_campaign` (round) and `utm_content` (row number, never the farm name).
 
 **Microsoft Clarity** (heatmaps and recordings) sets cookies, so it only loads after the visitor clicks **Allow** in a small prompt. Visitors can change their choice from **Cookie settings** in the footer.
 
@@ -96,17 +96,17 @@ If you add or swap an analytics tool, update the privacy policy (`privacy` in `s
 - Set `NEXT_PUBLIC_SITE_URL` once you have the domain, so previews and links point to it.
 - To check a preview before sharing, paste a link into [opengraph.xyz](https://www.opengraph.xyz) or LinkedIn's [Post Inspector](https://www.linkedin.com/post-inspector/).
 
-## Deploy (Vercel + Namecheap domain)
+## Deploy (Netlify + Namecheap domain)
 
-cPanel shared hosting is built for PHP sites and can't run this app reliably. Keep the domain and mailbox at Namecheap and host the app on Vercel:
+We host on **Netlify** (decided 9 Oct 2026). cPanel shared hosting is built for PHP sites and can't run this app reliably, so the domain and mailbox stay at Namecheap and the app runs on Netlify. Keep the code host-neutral: no host-only APIs.
 
-1. Push this repo to GitHub, then on [vercel.com](https://vercel.com) choose **Add New → Project** and import it. The defaults are correct.
-2. Add the environment variables from `.env.example` under **Settings → Environment Variables**, then redeploy.
-3. In Vercel, open **Settings → Domains** and add `yourdomain.com` and `www.yourdomain.com`. Vercel shows the DNS records to create.
-4. In Namecheap, open **Domain List → Manage → Advanced DNS** and add those records (usually an **A record** for `@` pointing to Vercel's IP and a **CNAME** for `www` pointing to `cname.vercel-dns.com`). **Don't touch the MX records**, so your cPanel email keeps working.
-5. Wait for DNS to update (minutes to a few hours). Vercel issues the HTTPS certificate automatically.
+1. On [netlify.com](https://www.netlify.com) choose **Add new site → Import an existing project**, and pick this GitHub repo. `netlify.toml` already sets the build (`pnpm build`, Node 22), and Netlify adds its Next.js runtime by itself.
+2. Add the environment variables from `.env.example` under **Site configuration → Environment variables**, then **Deploys → Trigger deploy**.
+3. In **Domain management → Add a domain**, add `yourdomain.com` (and `www`). Keep DNS at Namecheap; Netlify shows the records to create.
+4. In Namecheap, open **Domain List → Manage → Advanced DNS** and add those records (usually an **A record** for `@` pointing to Netlify's load balancer and a **CNAME** for `www` pointing to your `….netlify.app` address). **Don't touch the MX records**, so your email keeps working.
+5. Wait for DNS to update (minutes to a few hours). Netlify issues the HTTPS certificate automatically.
 
-Note: Vercel's free Hobby plan is for non-commercial use. Once this is a business, use the Pro plan.
+Security headers (`nosniff`, referrer policy, frame and permissions policy) are set in `next.config.ts`, so they apply on any host.
 
 ## Project structure
 

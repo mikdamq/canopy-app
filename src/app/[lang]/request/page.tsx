@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/ui/site-header";
 import { hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageMeta } from "@/lib/seo";
-import { BOOKING_URL, BRAND, CONTACT_EMAIL, cleanFarmName } from "@/lib/site";
+import { BOOKING_URL, brandName, CONTACT_EMAIL, cleanFarmName } from "@/lib/site";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/request">): Promise<Metadata> {
   const { lang } = await params;
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/request">)
   const d = await getDictionary(lang);
   return {
     title: d.meta.requestTitle,
-    ...pageMeta({ lang, path: "/request", title: `${d.meta.requestTitle} · ${BRAND}`, description: d.meta.description, imageAlt: d.meta.ogAlt }),
+    ...pageMeta({ lang, path: "/request", title: `${d.meta.requestTitle} · ${brandName(lang)}`, description: d.meta.description, imageAlt: d.meta.ogAlt }),
   };
 }
 
@@ -36,7 +36,8 @@ export default async function RequestPage({ params, searchParams }: PageProps<"/
       <SiteHeader
         lang={lang}
         nav={d.nav}
-        sections={false}
+        wa={d.whatsapp}
+        variant="request"
         langHref={`/${other}/request${q.size ? `?${q}` : ""}`}
       />
       <main id="main" className="mx-auto w-full max-w-6xl px-4 pt-6 pb-20 sm:px-6 lg:pt-12">

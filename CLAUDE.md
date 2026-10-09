@@ -1,10 +1,10 @@
-# Canopy: project context
+# Lamina: project context
 
 Read this first. It explains what we're building, what's decided, and what's next.
 
 ## The product
 
-A live 3D "digital twin" for vertical and indoor farms (working name **Canopy**; the final name is not chosen yet). Farm owners see every floor, crop, light recipe and crate, from seed to delivery, in one view.
+A live 3D "digital twin" for vertical and indoor farms, called **Lamina (لامينا)**: Latin for "layer", and the blade of a leaf. It was chosen on 9 Oct 2026, replacing the working name "Canopy". The domain is **laminafarm.app** and the mailbox is **hello@laminafarm.app**. Repo and internal keys still say `canopy`. Farm owners see every floor, crop, light recipe and crate, from seed to delivery, in one view.
 
 **Business model:** free pilot now, paid later. No calls: the site, WhatsApp and short screen-recorded videos do the selling; we don't sell self-serve yet.
 
@@ -22,20 +22,24 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 
 **Working preferences:** ask before proceeding on anything unclear or outward-facing, and keep a to-do list. Explain plainly; he's a designer, not an engineer.
 
+**Always keep these two files current (owner's request, 9 Oct 2026):**
+- `docs/owner-todo.md`: **everything needed from the owner**, in one list. Add items the moment a need comes up, tick them when done, and point him to it at the end of each piece of work.
+- `docs/ux-review-2.md`: the current UX fix plan (round 2: navigation). Work through it step by step, and mark each item ◐ in progress or ☑ done (with the PR) as it lands. Round 1 (F1–F25) is in `docs/ux-review/index.html`, all done.
+
 ## Decisions so far
 
 - **Stack:** Next.js 16 (App Router), React 19, Tailwind 4, React Three Fiber, `motion/react`, Zod, Nodemailer. No GSAP in this repo.
-- **Hosting:** Vercel for the app. The domain and mailbox stay at Namecheap/cPanel. Vercel Pro once commercial. The owner would eventually like to host the app on his own cPanel too; that's an open question to discuss with him (it needs "Setup Node.js App" and is usually slower). Until then, keep the code host-neutral: no Vercel-only APIs.
+- **Hosting:** **Netlify** for the app (owner's decision, 9 Oct 2026: **no Vercel, and no products from Israeli companies**; check any new tool or service against this before suggesting it). `netlify.toml` pins the build; security headers live in `next.config.ts`. The domain and mailbox stay at Namecheap/cPanel. The owner would eventually like to host the app on his own cPanel too; that's an open question (it needs "Setup Node.js App" and is usually slower). Keep the code host-neutral: no host-only APIs.
 - **Data:** Supabase (`supabase/schema.sql`, table `pilot_requests`) via REST with the service role key, server only.
 - **Email:** SMTP (works with the cPanel mailbox); Resend can replace it later via the same env vars.
 - **Booking:** optional. If `NEXT_PUBLIC_BOOKING_URL` is set, the thank-you screen shows a small "Prefer to talk? Pick a time" link; there is no booking embed, since there are no calls.
 - **Analytics:** Umami (cookie-free, no banner) for visit counts and the funnel; Microsoft Clarity (heatmaps, recordings) loads only after the visitor clicks "Allow" in the consent prompt (`components/analytics.tsx`). Fire funnel events with `track()` from `lib/analytics.ts`: `demo_opened`, `demo_interaction`, `request_step`, `request_error`, `request_sent`, `whatsapp_click`. Any new tracking tool must be added to the privacy policy.
-- **SEO:** `NEXT_PUBLIC_SITE_URL` is the live address (falls back to the Vercel URL). Every page sets its canonical link, language alternates and share image with `pageMeta()` from `lib/seo.ts`. The demo is `noindex`.
+- **SEO:** `NEXT_PUBLIC_SITE_URL` is the live address (falls back to Netlify's `URL`, the site's main address). Every page sets its canonical link, language alternates and share image with `pageMeta()` from `lib/seo.ts`. The demo is `noindex`.
 - **WhatsApp:** `WhatsAppLink` (`components/ui/whatsapp-link.tsx`) opens a chat with a ready message (farm name included when known) and fires `whatsapp_click`. Number in `NEXT_PUBLIC_WHATSAPP_NUMBER`, default +962 78 7016 351.
-- **Outreach:** `docs/outreach-links.xlsx` builds personalised demo links with UTM tags. Umami strips `?farm=` but keeps `utm_*` (`stripFarm` in `lib/analytics.ts`).
+- **Outreach:** `docs/outreach-links.xlsx` builds personalised demo links with UTM tags; its "Farm type" column adds `&type=` so each farm sees its own kind of farm. Umami strips `?farm=` but keeps `utm_*` (`stripFarm` in `lib/analytics.ts`).
 - Everything degrades gracefully: with no env vars, form requests are logged to the server console.
 - **Languages:** English and Arabic (RTL). All copy lives in `src/i18n/en.ts` and `src/i18n/ar.ts` (same shape, `{placeholder}` syntax, `fmt()` helper). `src/proxy.ts` (Next 16's renamed middleware) redirects `/` by browser language.
-- **Brand name:** in `src/lib/site.ts` (`BRAND`) plus page titles in the dictionaries.
+- **Brand name:** `BRAND` ("Lamina") and `BRAND_AR` ("لامينا") in `src/lib/site.ts`. Use `brandName(lang)` in running text and titles; the logo, share images and email sender use the Latin `BRAND`. The meta titles and WhatsApp messages in the dictionaries spell it out directly.
 
 ## Design and code rules
 
@@ -55,7 +59,13 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
   - `?type=` is carried by the language switch and into the request form, which pre-selects the farm type ("lab" is a request option too).
   - `scene.tsx` is R3F. Its Canvas uses `resize={{ offsetSize: true }}`, so CSS transforms never shrink it.
   - DOM labels are pinned to 3D points through `AnchorSink` (don't use drei `Html`; it broke under React 19).
-- **Landing navigation:** `components/landing/landing-nav.tsx` has the phone menu (sheet with focus trap) and a slim bar that slides in on scroll-up. The language switch (`components/ui/lang-switch.tsx`) keeps the visitor's section; in the demo it carries floor, time and "welcome seen" (`f`, `t`, `w`, removed from the address once used).
+- **Site navigation:**
+  - `components/ui/site-header.tsx` is the one header on every page (landing, privacy, request).
+    - It's fixed and always visible: clear at the top, a compact frosted bar after 40 px. Never hide it on scroll; the owner asked for it to stay.
+    - It renders its own spacer (`HEADER_H`). `html` has `scroll-padding-top: 80px`, so section links land below it.
+    - `variant="request"` drops the section links and the call to action.
+  - `components/ui/site-menu.tsx` is the ☰ sheet (focus trap, Escape). It's portalled to `<body>`, so the frosted bars don't clip it. The demo's top bar uses it too (`always`).
+  - The language switch (`components/ui/lang-switch.tsx`) keeps the visitor's section; in the demo it carries floor, time and "welcome seen" (`f`, `t`, `w`, removed from the address once used).
 - **Hero still:** `public/hero/farm-wide.webp` and `farm-compact.webp` show before the 3D loads (re-capture them if the hero scene or camera changes). The scene calls `onReady` after its first frame.
 - **Demo checklist:** `FarmSim.tried` records zoom, light recipe and clock; the "Try this" card reads it.
 - **Request form fields:** the country is a list (`lib/countries.ts`, names saved in English, shown from `request.countries`); leaving step 1 adds the country code to a local phone number (`withCountryCode`).
@@ -64,6 +74,9 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 - **Share images:** `app/api/og/route.tsx` (`next/og`). Its renderer, Satori, can't lay out Arabic by itself, so the `Words` helper places each word right to left at its measured width (`opentype.js`). Fonts are TTF files in `assets/fonts/`.
 - **404 and error pages:** `[lang]/not-found.tsx` (reached through the `[lang]/[...missing]` catch-all) and `[lang]/error.tsx` share `components/ui/status-page.tsx`. They run in the browser, so their copy is in `src/i18n/status.ts`, not the main dictionaries. Next 16's error component gets `retry`, not `reset`.
 - **Element ids:** don't give an element an id that matches a global the page uses (e.g. `id="clarity"`): browsers expose ids as `window` properties.
+- **Launch prep:** `docs/launch-prep.md` is the checklist of decisions, content and accounts to finish before launch.
+- **Marketing kit:** `docs/marketing/` (one-pager PDF, LinkedIn banners, 5 posts, demo clips; EN/AR, LinkedIn first, bold tone). It's rendered from the live site by the scripts in `docs/marketing/source/`; re-run them if the brand or the 3D scene changes.
+- **After the request is sent,** `<html data-request-sent>` makes the language switch open the other homepage instead of an empty form.
 - **Before committing:** run `pnpm lint` and `pnpm build`, and check desktop and phone, in English and Arabic.
 
 ## Roadmap
@@ -76,7 +89,8 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
    - next: set `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` and `NEXT_PUBLIC_CLARITY_ID`, then confirm no farm names appear in Umami;
    - next: final name and domain; email deliverability (SPF, DKIM, DMARC at Namecheap);
    - next: founder photo, and the owner's edits to the founder copy;
-   - next: an end-to-end test once Vercel, Supabase and SMTP are connected (Cal.com is optional now).
+   - next: an end-to-end test once Netlify, Supabase and SMTP are connected (Cal.com is optional now);
+   - done: marketing kit in `docs/marketing/` (waiting on the owner's review and the live domain).
 2. **Validation (2–4 weeks):** **decision (8 Oct 2026): no calls.** The owner won't run sales or feedback calls, so the site has to replace the call: see the "no-call path" in the UX review (`docs/ux-review/index.html`; live page https://claude.ai/artifact/SVX8YYtGad7CpwoeTs5EqN). The review lists 25 prioritised fixes (F1–F25) in three sprints. All 25 are done (F13, the farm-type choice in the demo, came last). The call script stays as the source for 5 async questions. The kit is in `docs/validation/`:
    - done: call script (`call-script.en.md`, `call-script.ar.md`, Modern Standard Arabic) with a scorecard;
    - done: 22 target farms in Jordan, the UAE and Saudi Arabia (`target-farms.md`, public sources; verify each is active), also prefilled in `docs/outreach-links.xlsx`;
@@ -95,8 +109,8 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 - "About two weeks" to set up
 - "Free for pilot farms"
 - "Your data is never shared or sold"
-- Contact email `info@mikdam.com`
-- Founder section copy (a draft written for him: "I'm building Canopy because farm teams track so much…", "During the pilot you talk to me, not a support queue")
+- Contact email `hello@laminafarm.app` (was `info@mikdam.com`)
+- Founder section copy (a draft written for him: "I'm building Lamina because farm teams track so much…", "During the pilot you talk to me, not a support queue")
 - Showing WhatsApp +962 78 7016 351 publicly (approved)
 - Pilot terms: "3 months free" (chosen by the owner); the "20-minute feedback call every two weeks" is to become a 2-minute feedback form, since there are no calls
 - Privacy policy: controller "Mikdam Qandil, an individual based in Amman, Jordan"; requests kept up to 12 months after last contact; data requests handled within 30 days (worth a quick review by a lawyer before launch)

@@ -87,7 +87,7 @@ function Field({ label, error, hint, children, htmlFor }: { label: string; error
 
 const inputCls = (bad?: boolean) =>
   cn(
-    "w-full rounded-xl border bg-white px-3.5 py-2.5 text-[15px] outline-none transition-colors placeholder:text-[#9aa6ba] focus:border-green",
+    "w-full rounded-xl border bg-white px-3.5 py-2.5 text-[15px] outline-none transition-colors placeholder:text-[#6b7689] focus:border-green",
     bad ? "border-[#e5484d]" : "border-line",
   );
 
@@ -299,7 +299,9 @@ export default function RequestFlow({
   const scrollToCard = () => {
     const card = cardRef.current;
     if (!card) return;
-    const top = card.getBoundingClientRect().top + window.scrollY - 16;
+    // Land just below the fixed site header.
+    const header = document.querySelector("header")?.getBoundingClientRect().bottom ?? 0;
+    const top = card.getBoundingClientRect().top + window.scrollY - header - 16;
     if (Math.abs(top - window.scrollY) < 8) return;
     const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({ top: Math.max(0, top), behavior: smooth ? "smooth" : "auto" });
@@ -336,6 +338,15 @@ export default function RequestFlow({
   const countryPick = otherCountry || (f.country && !countryByName(f.country)) ? "other" : f.country;
   const started = step > 0;
   const sent = status === "done";
+  // Once sent, the language switch leads to the homepage, not back to an empty form.
+  useEffect(() => {
+    if (!sent) return;
+    const root = document.documentElement;
+    root.dataset.requestSent = "1";
+    return () => {
+      delete root.dataset.requestSent;
+    };
+  }, [sent]);
   const demoQuery = new URLSearchParams();
   if (f.farmName) demoQuery.set("farm", f.farmName);
   if (f.farmType && isFarmType(f.farmType) && f.farmType !== "tower") demoQuery.set("type", f.farmType);
@@ -491,7 +502,7 @@ export default function RequestFlow({
                               setOtherCountry(v === "other");
                               set("country", v === "other" || v === "" ? "" : v);
                             }}
-                            className={cn(inputCls(!!errors.country), "appearance-none pe-10", !countryPick && "text-[#9aa6ba]")}
+                            className={cn(inputCls(!!errors.country), "appearance-none pe-10", !countryPick && "text-[#6b7689]")}
                           >
                             <option value="" disabled>
                               {r.countryChoose}

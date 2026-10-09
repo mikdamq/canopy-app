@@ -65,23 +65,39 @@ function Tower() {
 
 /**
  * Satori (the image renderer) shapes Arabic letters but lays words out left to right,
- * so for Arabic we place each word ourselves, right to left.
+ * so for Arabic we place each word ourselves, right to left. A run of Latin words (a farm
+ * name like "Green Valley") keeps its own left-to-right order inside that.
  */
 function Words({ text, style, measure }: { text: string; style: CSSProperties & { fontSize: number }; measure?: Font }) {
   if (!measure) return <div style={style}>{text}</div>;
   const { fontSize } = style;
+  const gap = fontSize * 0.26;
+  // It also sizes each word from its unjoined letters, so we measure the joined word.
+  const word = (w: string, key: number) => (
+    <div key={key} style={{ display: "flex", whiteSpace: "nowrap", width: Math.ceil(measure.getAdvanceWidth(w, fontSize)) }}>
+      {w}
+    </div>
+  );
+  // Group the words into Arabic words and runs of non-Arabic words.
+  const groups: string[][] = [];
+  for (const w of text.split(/\s+/).filter(Boolean)) {
+    const latin = !/[\u0600-\u06FF]/.test(w);
+    const last = groups[groups.length - 1];
+    if (latin && last && !/[\u0600-\u06FF]/.test(last.join(""))) last.push(w);
+    else groups.push([w]);
+  }
   return (
-    <div style={{ ...style, display: "flex", flexDirection: "row-reverse", flexWrap: "wrap", columnGap: fontSize * 0.26 }}>
-      {text.split(/\s+/).map((word, i) => {
-        // Latin punctuation at the end of a word belongs on its left in Arabic.
-        const w = word.replace(/^(.*?)([.!?:]+)$/u, "$2$1");
-        return (
-        // It also sizes each word from its unjoined letters, so we measure the joined word.
-        <div key={i} style={{ display: "flex", whiteSpace: "nowrap", width: Math.ceil(measure.getAdvanceWidth(w, fontSize)) }}>
-          {w}
-        </div>
-        );
-      })}
+    <div style={{ ...style, display: "flex", flexDirection: "row-reverse", flexWrap: "wrap", columnGap: gap }}>
+      {groups.map((g, i) =>
+        /[\u0600-\u06FF]/.test(g[0]) ? (
+          // Latin punctuation at the end of a word belongs on its left in Arabic.
+          word(g[0].replace(/^(.*?)([.!?:]+)$/u, "$2$1"), i)
+        ) : (
+          <div key={i} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", columnGap: gap }}>
+            {g.map((w, j) => word(w, j))}
+          </div>
+        ),
+      )}
     </div>
   );
 }

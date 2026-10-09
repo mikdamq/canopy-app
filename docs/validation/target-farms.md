@@ -1,6 +1,6 @@
 # Target farms: Jordan, UAE, Saudi Arabia
 
-A starting list of 22 organisations for validation calls, researched from public sources in October 2026. It only holds public business information: no personal names or private contacts. Find the right person on LinkedIn or the company site before reaching out.
+A starting list of 22 organisations for validation calls, researched from public sources in October 2026. It only holds public business information: no private contacts. The verification section below names decision-makers only where a company or press source lists them publicly. Confirm the right person on LinkedIn or the company site before reaching out.
 
 **Treat this as leads, not facts.** Several sources are directories or older news, so check each company is still active before you contact it.
 
@@ -49,10 +49,65 @@ Suggested language: **ar** for Jordanian and Saudi-owned businesses, **en** for 
 | 21 | KACST Center of Excellence for Green CEA Technologies | Riyadh | National research centre for indoor farming technologies | C | Research segment; links to national programmes. | Official contact | ar | [ensun.io directory](https://ensun.io/search/vertical-farming/saudi-arabia) |
 | 22 | Desert Agriculture | Dammam | Hydroponic systems for desert climates | B | Thin source; verify it's active before contacting. | LinkedIn | ar | [ensun.io directory](https://ensun.io/search/hydroponic/saudi-arabia) |
 
+## Verification (8 October 2026)
+
+This was checked from search results only, since the farms' own websites couldn't be opened from the research environment. Re-check any "Unclear" entry before contacting it.
+
+**Corrections to the table above:**
+- **#2 Hypo-Farm:** an aeroponic indoor farm; the contact page gives Umm Al-Amad, near Queen Alia Airport. The demo type changes to **Vertical tower**.
+- **#3 Smart Green, #4 ECO Consult, #5 HAED-Jo, #14 iFarm, #19 RedSea:** partners, not farms.
+  - ECO Consult's hydroponics programme ended in 2020.
+  - HAED-Jo looks inactive since 2020.
+  - RedSea sold its Riyadh farm to Pure Harvest (Dec 2023) and now sells technology only.
+  - iFarm (HQ now Abu Dhabi) sells farm software, "Growtune", that overlaps with ours: a possible competitor or integration.
+- **#7 Habak:** based in Dhiban (Madaba), south of Amman.
+- **#11 VeggiTech:** based in Sharjah (Al Zubair) and owned by Saudi SNASCO since 2021.
+- **#16 Bather:** a 1,250 m² growing area (iFarm, 2024).
+- **#17 Mojan Farms:** the farm is in Khulais, about 100 km north of Jeddah (5 greenhouses).
+- **#18 Vertical Farms Company:** **now open** in Riyadh (Jan 2026): 20,000 m² over 19 layers.
+- **#21 KACST centre:** no evidence found that it exists. Replace it with Estidamah (the National Research and Development Center for Sustainable Agriculture, Riyadh), after checking.
+
+| # | Status (latest evidence) | Decision-maker (public source) |
+|---|---|---|
+| 1 iPlant | Unclear (Feb 2025) | Omar Bawab, CEO and co-founder (weak source) |
+| 2 Hypo-Farm | Likely active | Al-Muthanna Al-Muhaisen, founder ([profile](https://www.enghibamohammad.com/cultivating-change-muthannas-sustainable-farming-transformation-with-hypofarm/)) |
+| 3 Smart Green | Likely active | Mohammad Zeinati, founder and CEO |
+| 4 ECO Consult | Active (company) | Ra'ed Daoud, Managing Director ([HortiDaily](https://www.hortidaily.com/article/9120265/)) |
+| 5 HAED-Jo | Likely inactive (2020) | — |
+| 6 NARC | Active (Jun 2026) | Prof. Ibrahim Al-Rawashdeh, Director General ([Petra](https://www.petra.gov.jo/en/news/narc-launches-39-pioneering-agricultural-research-projects-for-2026-focus-on-agtech-and-sustainability)) |
+| 7 Habak | Active (2025) | Aisha Al-Hawatmeh, founder ([The New Arab](https://www.newarab.com/features/habak-jordans-first-women-led-hydroponics-cooperative)) |
+| 8 Badia Farms | Active (Oct 2024) | Omar Al Jundi, founder and CEO ([Dubai Media Office](https://mediaoffice.ae/en/news/2024/october/27-10/food-tech-valley-and-badia-farms)) |
+| 9 Madar Farms | Likely active (Aug 2025); site is madarfarms.co | Abdulaziz AlMulla, CEO and co-founder |
+| 10 Emirates Hydroponics Farms | Unclear (about 2022) | Older press only |
+| 11 VeggiTech | Unclear (2022–23) | Ravindra Shrotriya, founder and CEO |
+| 12 Emirates Bustanica | Active (2025) | Not public |
+| 13 Pure Harvest | Active (Nov 2024) | Sky Kurtz, founder and CEO |
+| 14 iFarm | Unclear (Apr 2024) | Not confirmed |
+| 15 ICBA | Active (Nov 2024) | Dr Tarifa Al Zaabi, Director General |
+| 16 Bather Smart Farm | Unclear (Apr 2024) | Khalid Shokair, founder ([Agritecture](https://agritecture.com/blog/2023/3/29/bringing-the-freshest-salad-greens-to-saudi-arabia-with-bather-smart-farm)) |
+| 17 Mojan Farms | Unclear (Jun 2022) | Sofian Al-Bishri, CEO |
+| 18 Vertical Farms Company | Active (Jan 2026) | Not named ([AgTechNavigator](https://www.agtechnavigator.com/Article/2026/01/06/sauditaiwan-vertical-farm-jv-eyes-next-phase-of-growth-after-riyadh-launch)) |
+| 19 RedSea | Active (technology only) | Ryan Lefers, co-founder and CEO |
+| 20 KAUST CDA | Active (Mar 2025) | Mark Tester, Associate Director |
+| 21 KACST centre | Not found | — |
+| 22 Desert Agriculture | Unclear (directories only) | — |
+
+**Five more candidates:**
+
+| Name | Where | Type | Why | Source |
+|---|---|---|---|---|
+| Mama Natura Greens | Dubai | Vertical tower | 712 m² vertical farm (opened Oct 2023), sells to Spinneys, Carrefour and hotels | [iFarm](https://ifarm.fi/blog/the-uaes-first-farm-in-dubai) |
+| Arable | Riyadh | Hydroponic greenhouse | Builds and runs hydroponic farms for hotels and restaurants; $2.55M seed round (Jan 2025) | [Wamda](https://www.wamda.com/en/2025/01/saudi-agritech-arable-closes-2-55-million-seed-round) |
+| Janafarm (Mowreq) | Jeddah | Vertical tower | Smaller sister farm of #18, about 15 staff | [VerticalFarmDaily](https://www.verticalfarmdaily.com/article/9483239/) |
+| Dava | Al Kharj | Hydroponic greenhouse | Hydroponic nurseries (Aug 2026 coverage) | [CS Monitor](https://csmonitor.com/World/Middle-East/2026/0817/saudi-arabia-hydroponic-farms-food-security) |
+| Smart Acres | Abu Dhabi | Container farm | Container farm; last coverage 2020–21, so verify first | [HortiDaily](https://www.hortidaily.com/article/9237952/) |
+
+Also a Jordanian lead: the UNICEF/DAA "Bab Amman" hydroponic farm in Jerash, opened May 2023 ([UNICEF](https://www.unicef.org/jordan/press-releases/unicef-and-daa-bring-economic-empowerment-opportunities-vulnerable-youth-jordan-0)).
+
 ## Suggested order
 
-1. **First 5 calls (practice, close to home):** Hypo-Farm, iPlant, Mojan Farms, Badia Farms, Bather Smart Farm.
-2. **Next:** Madar Farms, Emirates Hydroponics Farms, Habak, VeggiTech, Vertical Farms Company.
+1. **First 5 contacts (closest fit, confirmed active):** Hypo-Farm, Habak, Badia Farms, Madar Farms, Mama Natura Greens.
+2. **Next:** Arable, Janafarm, Vertical Farms Company, Bather Smart Farm, iPlant, then the "Unclear" ones once checked (Mojan, Emirates Hydroponics, VeggiTech).
 3. **For introductions and credibility (in parallel):** ECO Consult, HAED-Jo, NARC, iFarm, ICBA, KAUST.
 4. **Later, once you have one pilot to show:** Pure Harvest, Bustanica.
 

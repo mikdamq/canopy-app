@@ -31,8 +31,8 @@ export function Reveal({
     <Comp
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration: 0.8, ease: EASE, delay }}
+      viewport={{ once: true, margin: "0px 0px 8% 0px" }}
+      transition={{ duration: 0.5, ease: EASE, delay }}
       className={className}
       {...rest}
     >
@@ -65,7 +65,7 @@ export function WordReveal({
 }) {
   const Tag = as as "h2";
   const words = text.split(" ");
-  const trigger = immediate ? { animate: "show" } : { whileInView: "show", viewport: { once: true, margin: "0px 0px -10% 0px" } };
+  const trigger = immediate ? { animate: "show" } : { whileInView: "show", viewport: { once: true, margin: "0px 0px 8% 0px" } };
   return (
     <Tag className={className}>
       <span className="sr-only">{text}</span>
@@ -75,7 +75,7 @@ export function WordReveal({
             <motion.span
               className="inline-block"
               variants={{ hide: { y: "105%" }, show: { y: "0%" } }}
-              transition={{ duration: 0.9, ease: EASE }}
+              transition={{ duration: 0.6, ease: EASE }}
             >
               {w}
             </motion.span>
@@ -160,7 +160,7 @@ export function Typewriter({
 /** Counts from 0 to `to` the first time it becomes visible. */
 export function CountUp({ to, suffix = "", decimals = 0, className }: { to: number; suffix?: string; decimals?: number; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
+  const inView = useInView(ref, { once: true, margin: "0px 0px 8% 0px" });
   const reduce = useReducedMotion();
   useEffect(() => {
     const el = ref.current;

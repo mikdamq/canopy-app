@@ -2,7 +2,7 @@
 
 > **Not used for calls (decision, 8 October 2026).** The questions in section 2 and the scorecard are the source for the short written questionnaire in the no-call flow. Keep this page as a reference for what to learn from each farm.
 
-A 30-minute call. The goal is not to sell. It's to learn whether this farm would open Canopy **every week**, and if so, to offer a free pilot.
+A 30-minute call. The goal is not to sell. It's to learn whether this farm would open Lamina **every week**, and if so, to offer a free pilot.
 
 **The one rule:** ask about what they did last week, not what they would do. "Would you use this?" always gets a polite yes. "How did you find out about the last crop problem?" gets the truth.
 
@@ -88,7 +88,7 @@ Always end with: "Can I message you on WhatsApp if I have one more question?"
 
 | They say | You say |
 |---|---|
-| "We already have software for the sensors." | "Great, that helps. Which one? Canopy sits on top of what you have and puts it in one view with the crops and deliveries. What's hard to see in your current tool?" |
+| "We already have software for the sensors." | "Great, that helps. Which one? Lamina sits on top of what you have and puts it in one view with the crops and deliveries. What's hard to see in your current tool?" |
 | "We're too small for this." | "Small farms are who I'm building it for first. What takes you the most time each week?" |
 | "Our data is private." | "Understood. It's your data. It's never shared or sold, and you can ask us to delete it any time." |
 | "What will it cost after the pilot?" | "We'll set the price with pilot farms, based on what it's worth to you. The pilot is free and there's no commitment after it. What would it need to save you to be worth paying for?" |
@@ -105,7 +105,7 @@ Always end with: "Can I message you on WhatsApp if I have one more question?"
 | What they track today, and where | |
 | Last crop problem, and how they found out | |
 | Cost of that problem (time, money, customer) | |
-| How often they'd open Canopy (their words) | |
+| How often they'd open Lamina (their words) | |
 | **Weekly-use signal** (1 = never, 5 = would check daily) | |
 | What's missing for them | |
 | Pilot answer (yes / maybe / no) and next step with date | |

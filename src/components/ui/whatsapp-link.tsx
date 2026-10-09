@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { fmt } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
 import { track } from "@/lib/analytics";
-import { BRAND, whatsappUrl } from "@/lib/site";
+import { whatsappUrl } from "@/lib/site";
 
 /** The WhatsApp glyph (simple-icons), sized and coloured by the caller. */
 export function WhatsAppIcon({ className }: { className?: string }) {
@@ -33,7 +33,7 @@ export function WhatsAppLink({
   className?: string;
   children?: ReactNode;
 }) {
-  const href = whatsappUrl(farm ? fmt(d.messageFarm, { brand: BRAND, farm }) : fmt(d.message, { brand: BRAND }));
+  const href = whatsappUrl(farm ? fmt(d.messageFarm, { farm }) : d.message);
   if (!href) return null;
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" className={className} onClick={() => track("whatsapp_click", { place })}>
