@@ -63,6 +63,8 @@ Do these first. Most of the later steps need the domain.
 
 ## E. Then: accounts and settings
 
+Step-by-step guide, with every click and the exact values: [`accounts-setup.md`](accounts-setup.md).
+
 Once A is done, in this order (details in `.env.example`):
 
 1. [ ] Vercel: connect the domain (Project → Settings → Domains), then set `NEXT_PUBLIC_SITE_URL`.
