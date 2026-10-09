@@ -96,14 +96,20 @@ If you add or swap an analytics tool, update the privacy policy (`privacy` in `s
 - Set `NEXT_PUBLIC_SITE_URL` once you have the domain, so previews and links point to it.
 - To check a preview before sharing, paste a link into [opengraph.xyz](https://www.opengraph.xyz) or LinkedIn's [Post Inspector](https://www.linkedin.com/post-inspector/).
 
-## Deploy (Netlify + Namecheap domain)
+## Deploy
 
-We host on **Netlify** (decided 9 Oct 2026). cPanel shared hosting is built for PHP sites and can't run this app reliably, so the domain and mailbox stay at Namecheap and the app runs on Netlify. Keep the code host-neutral: no host-only APIs.
+**Live site:** the owner's Namecheap hosting, through cPanel → **Setup Node.js App**. Step by step: [`docs/hosting-cpanel.md`](docs/hosting-cpanel.md).
+- `STANDALONE=1 pnpm build`, then `bash deploy/cpanel/package.sh`, makes `dist/lamina-cpanel.zip`: the standalone server with its static files and the `app.js` startup file. It has no `node_modules`; cPanel's "Run NPM Install" adds `next`, `react` and `react-dom`.
+- The GitHub workflow **cPanel package** (`.github/workflows/cpanel-package.yml`) builds this zip on every merge to `main`. Public `NEXT_PUBLIC_*` values come from GitHub Actions variables; server secrets live in the cPanel app's environment variables.
+
+**Staging:** Netlify (decided 9 Oct 2026; no Vercel). Every pull request gets a Netlify preview link. Don't point the domain at Netlify, and keep the Supabase and email settings off it. Keep the code host-neutral: no host-only APIs.
+
+Setting up a Netlify staging site:
 
 1. On [netlify.com](https://www.netlify.com) choose **Add new site → Import an existing project**, and pick this GitHub repo. `netlify.toml` already sets the build (`pnpm build`, Node 22), and Netlify adds its Next.js runtime by itself.
 2. Add the environment variables from `.env.example` under **Site configuration → Environment variables**, then **Deploys → Trigger deploy**.
 3. In **Domain management → Add a domain**, add `yourdomain.com` (and `www`). Keep DNS at Namecheap; Netlify shows the records to create.
-4. In Namecheap, open **Domain List → Manage → Advanced DNS** and add those records (usually an **A record** for `@` pointing to Netlify's load balancer and a **CNAME** for `www` pointing to your `….netlify.app` address). **Don't touch the MX records**, so your email keeps working.
+4. Add those records where the domain's DNS lives. With Namecheap Web Hosting DNS (our setup) that's **cPanel → Zone Editor**; with Namecheap BasicDNS it's **Domain List → Manage → Advanced DNS**. Usually an **A record** for `@` pointing to Netlify's load balancer and a **CNAME** for `www` pointing to your `….netlify.app` address. **Don't touch the MX or mail records**, so your email keeps working.
 5. Wait for DNS to update (minutes to a few hours). Netlify issues the HTTPS certificate automatically.
 
 Security headers (`nosniff`, referrer policy, frame and permissions policy) are set in `next.config.ts`, so they apply on any host.

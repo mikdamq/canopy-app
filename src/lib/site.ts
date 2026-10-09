@@ -11,8 +11,8 @@ export const brandName = (lang: string) => (lang === "ar" ? BRAND_AR : BRAND);
 /** Shown in the footer and used as the reply-to on confirmation emails. */
 export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@laminafarm.app";
 
-/** WhatsApp number in international format, digits only. Empty = hide the WhatsApp buttons. */
-export const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "962787016351").replace(/\D/g, "");
+/** WhatsApp number in international format, digits only. Unset or empty = the default number; "none" hides the WhatsApp buttons. */
+export const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "962787016351").replace(/\D/g, "");
 
 export function whatsappUrl(text: string) {
   return WHATSAPP_NUMBER ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}` : "";

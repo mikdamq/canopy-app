@@ -14,29 +14,25 @@ Total time: about 2 hours, spread over a day (DNS changes can take up to a few h
 - [x] Bought **laminafarm.app** (9 Oct 2026).
 - [ ] In Namecheap, check that **Withheld for Privacy** (free WHOIS privacy) and **Auto-renew** are on.
 
-### 2. Create the mailbox (Namecheap, 15 min)
-Choose **one** of these:
-- **Namecheap Private Email** (simplest; about $1–2 a month). Domain List → your domain → **Private Email** → Starter plan. It sets up the email DNS records for you.
-- **cPanel email**, if you already have a Namecheap hosting plan: cPanel → Email Accounts → Create. Then add the domain's MX records as cPanel shows them.
+Your setup (confirmed 9 Oct 2026): **Namecheap hosting with cPanel**, and the domain uses **Namecheap Web Hosting DNS**. So every DNS record is edited in **cPanel → Zone Editor**, not in Namecheap's "Advanced DNS" page. The website itself runs on Netlify; cPanel only keeps the email and the DNS.
 
-Then:
-- [ ] Create `hello@laminafarm.app`. This is the address the site sends from, and where replies arrive.
-- [ ] This is also the public contact address shown on the site (decided).
-- [ ] Note the email server settings (Private Email: `mail.privateemail.com`, port `465`; cPanel: `mail.laminafarm.app`, port `465`).
-- [ ] Log in to webmail once and send yourself a test email.
+### 2. Create the mailbox (cPanel, 10 min, included in your hosting)
+- [ ] Namecheap → **Hosting List → Go to cPanel** → **Email Accounts → Create**.
+- [ ] Address: `hello@laminafarm.app`. Generate a strong password and save it in your password manager. **Secret.**
+- [ ] This is the address the site sends from, where replies arrive, and the public contact shown on the site (decided).
+- [ ] Next to the new mailbox, click **Connect Devices**. Under **Secure SSL/TLS Settings**, note the **Outgoing Server** name and the **SMTP port** (usually `465`). The server is often your hosting server's name (like `server123.web-hosting.com`) rather than `mail.laminafarm.app`; use exactly what cPanel shows. You'll need it in phase 3.
+- [ ] Open **Webmail** once and send yourself a test email.
 
-### 3. Email trust records (Namecheap → Domain List → Manage → Advanced DNS, 15 min)
+### 3. Email trust records (cPanel, 10 min)
 These stop your emails landing in spam.
-- [ ] **SPF:** Private Email adds it automatically. Check that a TXT record on `@` contains `v=spf1 include:spf.privateemail.com ~all`. For cPanel, use the value cPanel → Email Deliverability shows.
-- [ ] **DKIM:** Private Email → your mailbox dashboard → **DKIM** → copy the TXT record into Advanced DNS (host `default._domainkey`). For cPanel: Email Deliverability → DKIM → copy the record.
-- [ ] **DMARC:** add a TXT record. Host: `_dmarc`. Value: `v=DMARC1; p=none; rua=mailto:hello@laminafarm.app`.
-- [ ] Test: send an email from `hello@` to a Gmail address. In Gmail, open "Show original": SPF, DKIM and DMARC should all say **PASS**. (It can take 1–2 hours after adding the records.)
+- [ ] cPanel → **Email Deliverability** → find `laminafarm.app` → if it shows problems, click **Repair** (or **Manage**, then install the suggested **SPF** and **DKIM** records). Because your DNS is on the hosting, cPanel adds them for you.
+- [ ] **DMARC:** cPanel → **Zone Editor** → `laminafarm.app` → **Manage → Add Record → TXT**. Name: `_dmarc.laminafarm.app.` Value: `v=DMARC1; p=none; rua=mailto:hello@laminafarm.app`.
+- [ ] Test: send an email from `hello@` to a Gmail address. In Gmail, open **Show original**: SPF, DKIM and DMARC should all say **PASS** (it can take 1–2 hours after adding the records).
 
-### 4. Connect the domain to Netlify (15 min)
-We host on **Netlify** (decided 9 Oct 2026; no Vercel).
-- [ ] Netlify → your site → **Domain management → Add a domain** → `laminafarm.app`. Choose to keep DNS at Namecheap (don't move the nameservers, so email stays as it is). Add `www.laminafarm.app` too; Netlify redirects it to the main address.
-- [ ] Netlify shows the DNS records to add, usually an **A** record for `@` pointing to Netlify's load balancer (`75.2.60.5`) and a **CNAME** for `www` pointing to your `….netlify.app` address. Add them exactly as Netlify shows them, in Namecheap → Advanced DNS. Remove any old "parking page" or "URL redirect" records on `@` and `www`. Don't touch the email records.
-- [ ] Wait until Netlify shows the domain as verified, then click **Verify DNS / Provision certificate** under **HTTPS** if it hasn't started by itself (Let's Encrypt, free). `.app` domains only open over HTTPS, so the site appears once the certificate is issued. Then `https://laminafarm.app` opens the site, with the padlock.
+### 4. Put the site live on your hosting (30 min)
+The live site runs on your **Namecheap hosting** (cPanel → Setup Node.js App). Netlify is only for staging and previews. The domain already points at your hosting, so **no DNS changes are needed**.
+- [ ] Follow **[`hosting-cpanel.md`](hosting-cpanel.md), Part 1**: create the Node.js app, upload the package GitHub builds, then Run NPM Install and Restart.
+- [ ] cPanel → **SSL/TLS Status** → **Run AutoSSL** for `laminafarm.app` and `www`. This is the padlock; `.app` domains only open over HTTPS.
 
 ---
 
@@ -52,7 +48,7 @@ We host on **Netlify** (decided 9 Oct 2026; no Vercel).
 - [ ] Optionally, if your Netlify plan offers it: **Site configuration → Build & deploy → Functions region**, choose **Frankfurt (eu-central-1)**, so the site's server code and the database sit close together.
 
 ### 6. Umami: visit counts and the funnel (10 min)
-- [ ] Sign up at cloud.umami.is (the free Hobby plan is enough to start).
+- [ ] Sign up at cloud.umami.is (the free Hobby plan is enough to start). When asked for a data region, choose **Europe (EU)**, the same region as Supabase.
 - [ ] **Settings → Websites → Add website.** Name: Lamina. Domain: `laminafarm.app` (without https).
 - [ ] Open the website → **Edit → Tracking code**. Copy the **Website ID** (looks like `a1b2c3d4-…`). *Share:* it isn't secret.
 
@@ -68,28 +64,18 @@ We host on **Netlify** (decided 9 Oct 2026; no Vercel).
 
 ---
 
-## Phase 3: settings in Netlify
+## Phase 3: settings
 
-Netlify → your site → **Site configuration → Environment variables → Add a variable**. For each one, keep **All scopes** and the **same value for all deploy contexts**. For the two secret ones, tick **Contains secret values** if Netlify offers it:
+Settings live in two places. The full table is in [`hosting-cpanel.md`](hosting-cpanel.md), Part 3.
+- **Server settings, including the 2 secrets** (Supabase key, mailbox password): cPanel → **Setup Node.js App** → pencil → **Environment variables**. Then **Restart**.
+  - `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` (step 5);
+  - `SMTP_HOST`, `SMTP_PORT` (`465`), `SMTP_USER` (`hello@laminafarm.app`), `SMTP_PASS`, `MAIL_FROM` (`Lamina <hello@laminafarm.app>`) and `REQUESTS_NOTIFY_EMAIL` (step 2).
+- **Public settings** (built into the pages): GitHub → repo **Settings → Secrets and variables → Actions → Variables**. Then rebuild (**Actions → cPanel package → Run workflow**) and publish.
+  - `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (step 6), plus `NEXT_PUBLIC_UMAMI_SRC` only if Umami's tracking code shows a different script address.
+  - The Clarity ID (`yv5sglt7cp`) and the site address are already built in.
+- **Netlify (staging):** leave out the Supabase and email settings, so test requests from previews never reach your real database or inbox.
 
-| Name | Value | Secret? |
-|---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | `https://laminafarm.app` (no slash at the end) | no |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | `hello@laminafarm.app` (also the default, so this one is optional) | no |
-| `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | the Umami Website ID (step 6) | no |
-| `NEXT_PUBLIC_CLARITY_ID` | the Clarity Project ID (step 7) | no |
-| `SUPABASE_URL` | the Supabase Project URL (step 5) | no |
-| `SUPABASE_SERVICE_ROLE_KEY` | the service_role key (step 5) | **yes** |
-| `SMTP_HOST` | `mail.privateemail.com` (or `mail.laminafarm.app` for cPanel) | no |
-| `SMTP_PORT` | `465` | no |
-| `SMTP_USER` | `hello@laminafarm.app` | no |
-| `SMTP_PASS` | the mailbox password | **yes** |
-| `MAIL_FROM` | `Lamina <hello@laminafarm.app>` | no |
-| `REQUESTS_NOTIFY_EMAIL` | where you want new requests: `hello@laminafarm.app` (the default), or your Gmail | no |
-
-Leave out `NEXT_PUBLIC_WHATSAPP_NUMBER` (it already defaults to your number) and `NEXT_PUBLIC_BOOKING_URL` (no calls).
-
-- [ ] Then **Deploys → Trigger deploy → Deploy site**. Settings only take effect after a new deploy.
+Never paste the 2 secret values into chat, GitHub or WhatsApp.
 
 ---
 

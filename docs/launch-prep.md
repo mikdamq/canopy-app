@@ -4,7 +4,7 @@ Everything to get ready before the accounts and settings (environment variables)
 
 **Who:** **You** means Mikdam; **Claude** means I draft it and you approve; **Both** means we work on it together.
 
-Hosting: **Netlify** (decided 9 Oct 2026; we no longer use Vercel). Previews appear on each pull request as `deploy-preview-…netlify.app` links. Until the settings are in, requests go to the Netlify function log only.
+Hosting: the live site runs on **your Namecheap hosting** (cPanel → Setup Node.js App; guide `hosting-cpanel.md`). **Netlify is for staging and previews only**; no Vercel (9 Oct 2026). Previews appear on each pull request as `deploy-preview-…netlify.app` links. Until the settings are in, requests go to the Netlify function log only.
 
 ---
 
@@ -20,7 +20,7 @@ Do these first. Most of the later steps need the domain.
     - check that @lamina or a close handle is free on Instagram and LinkedIn.
   - If the plain name is crowded, use a short qualifier consistently (e.g. "Lamina Farm" or "Lamina Twin"), with the logo still showing "Lamina / لامينا".
   - The site gets renamed (in `src/lib/site.ts`, page titles, share images, emails and docs) once the domain is secured.
-- [x] **A2. Domain** (You). **Bought: `laminafarm.app`** (9 Oct 2026). `.app` domains only work over HTTPS, which Netlify handles automatically (free Let's Encrypt certificate).
+- [x] **A2. Domain** (You). **Bought: `laminafarm.app`** (9 Oct 2026). `.app` domains only work over HTTPS, so the live host must provide a certificate (free with Let's Encrypt / AutoSSL).
 - [ ] **A3. Mailbox on the domain** (You). Create `hello@laminafarm.app` at Namecheap (Private Email or cPanel email). The site sends from it, and visitors' replies arrive in it.
 - [x] **A4. Contact email shown on the site** (You). Decided: `hello@laminafarm.app` everywhere (the site already uses it as the default).
 
@@ -68,8 +68,8 @@ Step-by-step guide, with every click and the exact values: [`accounts-setup.md`]
 
 Once A is done, in this order (details in `.env.example`):
 
-1. [ ] Netlify: connect the domain (Domain management → Add a domain), then set `NEXT_PUBLIC_SITE_URL`.
-2. [ ] Namecheap DNS: add the Netlify records, plus SPF, DKIM and DMARC for the mailbox (so emails don't land in spam).
+1. [ ] Live site on your Namecheap hosting (`hosting-cpanel.md` Part 1), then Run AutoSSL. `NEXT_PUBLIC_SITE_URL` is already `https://laminafarm.app` in the build.
+2. [ ] DNS in cPanel → Zone Editor (the domain uses Namecheap Web Hosting DNS): the domain already points at your hosting, so only SPF, DKIM and DMARC for the mailbox (so emails don't land in spam).
 3. [ ] Supabase: create the project, run `supabase/schema.sql`, then set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`.
 4. [ ] SMTP: set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` and `REQUESTS_NOTIFY_EMAIL`.
 5. [ ] Umami: add the website, then set `NEXT_PUBLIC_UMAMI_WEBSITE_ID`.

@@ -1,0 +1,47 @@
+# Builds the package for the live site (cPanel "Setup Node.js App") on every merge to main.
+# Download it from the run's "Artifacts" section; docs/hosting-cpanel.md has the steps.
+# Public settings (NEXT_PUBLIC_*) are baked in at build time, so they come from
+# GitHub → Settings → Secrets and variables → Actions → Variables. Secrets (Supabase key,
+# mailbox password) never go here: they live in cPanel's Node.js app settings.
+name: cPanel package
+
+on:
+  push:
+    branches: [main]
+  # Also on pull requests, as a build check (use the package from main for the live site).
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - name: Build (standalone server)
+        run: pnpm build
+        env:
+          STANDALONE: "1"
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://laminafarm.app' }}
+          NEXT_PUBLIC_CLARITY_ID: ${{ vars.NEXT_PUBLIC_CLARITY_ID || 'yv5sglt7cp' }}
+          NEXT_PUBLIC_UMAMI_WEBSITE_ID: ${{ vars.NEXT_PUBLIC_UMAMI_WEBSITE_ID }}
+          NEXT_PUBLIC_UMAMI_SRC: ${{ vars.NEXT_PUBLIC_UMAMI_SRC }}
+          NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.NEXT_PUBLIC_CONTACT_EMAIL }}
+          NEXT_PUBLIC_WHATSAPP_NUMBER: ${{ vars.NEXT_PUBLIC_WHATSAPP_NUMBER }}
+          NEXT_PUBLIC_BOOKING_URL: ${{ vars.NEXT_PUBLIC_BOOKING_URL }}
+      - run: bash deploy/cpanel/package.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lamina-cpanel
+          path: dist/lamina-cpanel.zip
+          retention-days: 30
