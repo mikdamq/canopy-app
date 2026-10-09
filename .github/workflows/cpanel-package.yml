@@ -8,6 +8,9 @@ name: cPanel package
 on:
   push:
     branches: [main]
+  # Also on pull requests, as a build check (use the package from main for the live site).
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
