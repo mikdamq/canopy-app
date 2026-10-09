@@ -22,6 +22,10 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 
 **Working preferences:** ask before proceeding on anything unclear or outward-facing, and keep a to-do list. Explain plainly; he's a designer, not an engineer.
 
+**Always keep these two files current (owner's request, 9 Oct 2026):**
+- `docs/owner-todo.md`: **everything needed from the owner**, in one list. Add items the moment a need comes up, tick them when done, and point him to it at the end of each piece of work.
+- `docs/ux-review-2.md`: the current UX fix plan (round 2: navigation). Work through it step by step, and mark each item ◐ in progress or ☑ done (with the PR) as it lands. Round 1 (F1–F25) is in `docs/ux-review/index.html`, all done.
+
 ## Decisions so far
 
 - **Stack:** Next.js 16 (App Router), React 19, Tailwind 4, React Three Fiber, `motion/react`, Zod, Nodemailer. No GSAP in this repo.
