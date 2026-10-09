@@ -20,11 +20,9 @@ Do these first. Most of the later steps need the domain.
     - check that @lamina or a close handle is free on Instagram and LinkedIn.
   - If the plain name is crowded, use a short qualifier consistently (e.g. "Lamina Farm" or "Lamina Twin"), with the logo still showing "Lamina / لامينا".
   - The site gets renamed (in `src/lib/site.ts`, page titles, share images, emails and docs) once the domain is secured.
-- [ ] **A2. Domain** (You). Buy it at Namecheap. Check in this order: `lamina.farm`, `getlamina.com`, `laminafarm.com`, `lamina.app`, `laminatwin.com`. `lamina.com` is almost certainly taken (common word). Choose between:
-  - a new domain (e.g. `name.farm`, `name.io` or `name.app`);
-  - a subdomain of one you own (e.g. `canopy.mikdam.com`).
-- [ ] **A3. Mailbox on the domain** (You). Create e.g. `hello@domain` at Namecheap (Private Email or cPanel email). The site sends from it, and visitors' replies arrive in it.
-- [ ] **A4. Contact email shown on the site** (You). Keep `info@mikdam.com`, or switch to the new mailbox.
+- [x] **A2. Domain** (You). **Bought: `laminafarm.app`** (9 Oct 2026). `.app` domains only work over HTTPS, which Vercel handles automatically.
+- [ ] **A3. Mailbox on the domain** (You). Create `hello@laminafarm.app` at Namecheap (Private Email or cPanel email). The site sends from it, and visitors' replies arrive in it.
+- [x] **A4. Contact email shown on the site** (You). Decided: `hello@laminafarm.app` everywhere (the site already uses it as the default).
 
 ## B. Content only you can give
 

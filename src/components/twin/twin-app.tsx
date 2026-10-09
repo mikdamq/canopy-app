@@ -9,7 +9,7 @@ import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } fro
 import { fmt, type Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
 import { track } from "@/lib/analytics";
-import { BRAND, cleanFarmName, MAX_FARM_NAME } from "@/lib/site";
+import { brandName, cleanFarmName, MAX_FARM_NAME } from "@/lib/site";
 import { useMedia } from "@/lib/use-media";
 import { cn } from "@/lib/utils";
 import { Mark } from "@/components/ui/logo";
@@ -153,9 +153,10 @@ function TagLayer({ snap, sim, anchors, d, rtl }: { snap: Snapshot; sim: FarmSim
 
 /* -------------------------------- Top bar ------------------------------- */
 
-function TopBar({ snap, d, farm, homeHref, ctaHref, langHref, onSwitchLang, langLabel, langTitle }: {
+function TopBar({ snap, d, brand, farm, homeHref, ctaHref, langHref, onSwitchLang, langLabel, langTitle }: {
   snap: Snapshot;
   d: D;
+  brand: string;
   farm: string;
   homeHref: string;
   ctaHref: string;
@@ -170,7 +171,7 @@ function TopBar({ snap, d, farm, homeHref, ctaHref, langHref, onSwitchLang, lang
   return (
     <Card className="flex min-w-0 items-center gap-2.5 px-2.5 py-2 sm:gap-3 sm:px-3">
       <div className="flex min-w-0 items-center gap-2">
-        <Link href={homeHref} aria-label={fmt(d.home, { brand: BRAND })} title={fmt(d.home, { brand: BRAND })} className="shrink-0 rounded-lg">
+        <Link href={homeHref} aria-label={fmt(d.home, { brand })} title={fmt(d.home, { brand })} className="shrink-0 rounded-lg">
           <Mark />
         </Link>
         <div className="min-w-0">
@@ -854,7 +855,7 @@ export default function TwinApp({
           <TagLayer snap={snap} sim={sim} anchors={anchors} d={dict} rtl={lang === "ar"} />
 
           <div className="pointer-events-none absolute inset-x-3 top-3 z-30 lg:inset-x-4 lg:top-4 [&>*]:pointer-events-auto">
-            <TopBar snap={snap} d={dict} farm={shown} homeHref={`/${lang}`} ctaHref={ctaHref} langHref={langHref} onSwitchLang={switchLang} langLabel={langLabel} langTitle={langTitle} />
+            <TopBar snap={snap} d={dict} brand={brandName(lang)} farm={shown} homeHref={`/${lang}`} ctaHref={ctaHref} langHref={langHref} onSwitchLang={switchLang} langLabel={langLabel} langTitle={langTitle} />
           </div>
 
           <AnimatePresence>

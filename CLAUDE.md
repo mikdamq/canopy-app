@@ -1,10 +1,10 @@
-# Canopy: project context
+# Lamina: project context
 
 Read this first. It explains what we're building, what's decided, and what's next.
 
 ## The product
 
-A live 3D "digital twin" for vertical and indoor farms (working name **Canopy**; the final name is **Lamina (لامينا)**, chosen 9 Oct 2026 (Latin for "layer"; the blade of a leaf); the site is renamed once the domain is secured). Farm owners see every floor, crop, light recipe and crate, from seed to delivery, in one view.
+A live 3D "digital twin" for vertical and indoor farms, called **Lamina (لامينا)**: Latin for "layer", and the blade of a leaf. It was chosen on 9 Oct 2026, replacing the working name "Canopy". The domain is **laminafarm.app** and the mailbox is **hello@laminafarm.app**. Repo and internal keys still say `canopy`. Farm owners see every floor, crop, light recipe and crate, from seed to delivery, in one view.
 
 **Business model:** free pilot now, paid later. No calls: the site, WhatsApp and short screen-recorded videos do the selling; we don't sell self-serve yet.
 
@@ -35,7 +35,7 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 - **Outreach:** `docs/outreach-links.xlsx` builds personalised demo links with UTM tags; its "Farm type" column adds `&type=` so each farm sees its own kind of farm. Umami strips `?farm=` but keeps `utm_*` (`stripFarm` in `lib/analytics.ts`).
 - Everything degrades gracefully: with no env vars, form requests are logged to the server console.
 - **Languages:** English and Arabic (RTL). All copy lives in `src/i18n/en.ts` and `src/i18n/ar.ts` (same shape, `{placeholder}` syntax, `fmt()` helper). `src/proxy.ts` (Next 16's renamed middleware) redirects `/` by browser language.
-- **Brand name:** in `src/lib/site.ts` (`BRAND`) plus page titles in the dictionaries.
+- **Brand name:** `BRAND` ("Lamina") and `BRAND_AR` ("لامينا") in `src/lib/site.ts`. Use `brandName(lang)` in running text and titles; the logo, share images and email sender use the Latin `BRAND`. The meta titles and WhatsApp messages in the dictionaries spell it out directly.
 
 ## Design and code rules
 
@@ -96,8 +96,8 @@ Mikdam Qandil, Sr. UX/UI Designer. The site doubles as a showcase of design and 
 - "About two weeks" to set up
 - "Free for pilot farms"
 - "Your data is never shared or sold"
-- Contact email `info@mikdam.com`
-- Founder section copy (a draft written for him: "I'm building Canopy because farm teams track so much…", "During the pilot you talk to me, not a support queue")
+- Contact email `hello@laminafarm.app` (was `info@mikdam.com`)
+- Founder section copy (a draft written for him: "I'm building Lamina because farm teams track so much…", "During the pilot you talk to me, not a support queue")
 - Showing WhatsApp +962 78 7016 351 publicly (approved)
 - Pilot terms: "3 months free" (chosen by the owner); the "20-minute feedback call every two weeks" is to become a 2-minute feedback form, since there are no calls
 - Privacy policy: controller "Mikdam Qandil, an individual based in Amman, Jordan"; requests kept up to 12 months after last contact; data requests handled within 30 days (worth a quick review by a lawyer before launch)

@@ -2,21 +2,21 @@
 
 Set this up in the WhatsApp Business app: Settings → Business tools. Use one language per message where possible, with English first and Arabic second, since visitors write in either.
 
-Replace `[hours]` with your working hours (launch prep C5, e.g. "Sunday to Thursday, 9:00–17:00 Amman time") and `<site>` with the final address.
+Replace `[hours]` with your working hours (launch prep C5, e.g. "Sunday to Thursday, 9:00–17:00 Amman time").
 
 ## Business profile
 
-- **Name:** Canopy (the working name; update it once the final name is chosen)
+- **Name:** Lamina
 - **Category:** Software company (or Agricultural service)
 - **Description (max 512 characters):** Live 3D twins of vertical farms, container farms, greenhouses and research labs. See every crop, light recipe and crate in one view. Free pilot for farms in Jordan and the Gulf. | نسخ رقمية حيّة ثلاثية الأبعاد للمزارع العمودية ومزارع الحاويات والبيوت المحمية ومختبرات الأبحاث. برنامج تجريبي مجاني للمزارع في الأردن والخليج.
-- **Website:** `<site>`
-- **Email:** info@mikdam.com (or the new mailbox)
+- **Website:** `https://laminafarm.app`
+- **Email:** hello@laminafarm.app
 - **Hours:** [hours]
 
 ## Greeting message (first message from a new contact)
 
-> Hi, thanks for reaching out to Canopy. If you've requested a pilot, send photos of your farm layout here and I'll reply within one business day.
-> مرحبًا، شكرًا لتواصلك مع Canopy. إن كنت قد طلبت تجربة، أرسل صور مخطط مزرعتك هنا وسأرد خلال يوم عمل واحد.
+> Hi, thanks for reaching out to Lamina. If you've requested a pilot, send photos of your farm layout here and I'll reply within one business day.
+> مرحبًا، شكرًا لتواصلك مع لامينا. إن كنت قد طلبت تجربة، أرسل صور مخطط مزرعتك هنا وسأرد خلال يوم عمل واحد.
 
 ## Away message (outside working hours)
 
@@ -36,16 +36,16 @@ In the app, type `/` plus the shortcut to insert a reply.
 > هذا الفيديو القصير لعرض مزرعتك: {video}. وأرفقت لك قائمة التجهيز.
 
 **`/pilot`: how the pilot works**
-> The pilot: we build your farm's twin from your photos in about two weeks, then you use it free for three months. In return, a 2-minute feedback form every two weeks. Details: <site>/en#pilot
-> التجربة: نبني النسخة الرقمية لمزرعتك من صورك خلال أسبوعين تقريبًا، ثم تستخدمها مجانًا لثلاثة أشهر، مقابل استبيان قصير مدته دقيقتان كل أسبوعين. التفاصيل: <site>/ar#pilot
+> The pilot: we build your farm's twin from your photos in about two weeks, then you use it free for three months. In return, a 2-minute feedback form every two weeks. Details: https://laminafarm.app/en#pilot
+> التجربة: نبني النسخة الرقمية لمزرعتك من صورك خلال أسبوعين تقريبًا، ثم تستخدمها مجانًا لثلاثة أشهر، مقابل استبيان قصير مدته دقيقتان كل أسبوعين. التفاصيل: https://laminafarm.app/ar#pilot
 
 **`/price`: pricing after the pilot**
 > The pilot is free for three months. Before it ends, we'll agree on pricing together based on your farm's size, and you can stop at any time.
 > التجربة مجانية لمدة ثلاثة أشهر. وقبل انتهائها نتفق معًا على السعر بحسب حجم مزرعتك، ويمكنك التوقف في أي وقت.
 
 **`/demo`: someone who hasn't tried the demo yet**
-> You can try a live demo with your farm's name here: <site>/en/demo (Arabic: <site>/ar/demo). It takes two minutes.
-> يمكنك تجربة عرض حيّ باسم مزرعتك من هنا: <site>/ar/demo. ويستغرق دقيقتين.
+> You can try a live demo with your farm's name here: https://laminafarm.app/en/demo (Arabic: https://laminafarm.app/ar/demo). It takes two minutes.
+> يمكنك تجربة عرض حيّ باسم مزرعتك من هنا: https://laminafarm.app/ar/demo. ويستغرق دقيقتين.
 
 **`/thanks`: closing**
 > Thank you! I'll be in touch soon.

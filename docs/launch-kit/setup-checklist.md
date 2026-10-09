@@ -2,13 +2,13 @@
 
 The thank-you screen promises "a setup checklist". Send it with the demo video, on WhatsApp or by email (as a message or a PDF).
 
-`{name}`, `{farm}` and `{date}` are filled in by hand. "Canopy" is the working name: swap it once the final name is chosen.
+`{name}`, `{farm}` and `{date}` are filled in by hand.
 
 ---
 
 ## English
 
-**Your Canopy pilot: setup checklist for {farm}**
+**Your Lamina pilot: setup checklist for {farm}**
 
 Hi {name}, here's everything we need to build {farm}'s live twin. Most of it takes 10 minutes. Send what you have; we'll ask about anything missing.
 
@@ -47,7 +47,7 @@ Your data is only used to build your twin. It is never shared or sold.
 
 ## العربية
 
-**تجربة Canopy: قائمة التجهيز لـ {farm}**
+**تجربة لامينا: قائمة التجهيز لـ {farm}**
 
 مرحبًا {name}، هذه كل المعلومات التي نحتاجها لبناء النسخة الحيّة من {farm}. معظمها يستغرق عشر دقائق. أرسل ما هو متاح لديك، وسنسألك عن أي شيء ناقص.
 

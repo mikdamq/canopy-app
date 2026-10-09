@@ -1,5 +1,5 @@
 /**
- * Canopy farm simulation. Plain TypeScript, no React: the 3D scene reads the
+ * Lamina farm simulation. Plain TypeScript, no React: the 3D scene reads the
  * live object every frame, the HUD subscribes to a throttled snapshot.
  */
 

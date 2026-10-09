@@ -8,7 +8,7 @@ import { SiteHeader } from "@/components/ui/site-header";
 import { fmt, hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageMeta } from "@/lib/seo";
-import { BRAND, CONTACT_EMAIL } from "@/lib/site";
+import { brandName, CONTACT_EMAIL } from "@/lib/site";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/privacy">): Promise<Metadata> {
   const { lang } = await params;
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/privacy">)
     ...pageMeta({
       lang,
       path: "/privacy",
-      title: `${d.meta.privacyTitle} · ${BRAND}`,
+      title: `${d.meta.privacyTitle} · ${brandName(lang)}`,
       description: d.meta.privacyDescription,
       imageAlt: d.meta.ogAlt,
     }),
@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/privacy">)
 }
 
 /** Fill {brand} and turn {email} into a mail link. */
-function Para({ text }: { text: string }) {
-  const parts = fmt(text, { brand: BRAND }).split("{email}");
+function Para({ text, brand }: { text: string; brand: string }) {
+  const parts = fmt(text, { brand }).split("{email}");
   return (
     <p>
       {parts.map((part, i) => (
@@ -77,7 +77,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
             <p className="font-mono text-[12px] tracking-[0.12em] text-green uppercase">{p.eyebrow}</p>
             <h1 className="mt-3 font-display text-[36px] leading-[1.05] font-bold tracking-[-0.02em] sm:text-[48px]">{p.title}</h1>
             <p className="mt-3 text-[13px] text-muted">{p.updated}</p>
-            <p className="mt-6 text-[17px] leading-relaxed">{fmt(p.intro, { brand: BRAND })}</p>
+            <p className="mt-6 text-[17px] leading-relaxed">{fmt(p.intro, { brand: brandName(lang) })}</p>
 
             <div className="mt-10 flex flex-col gap-10">
               {p.sections.map((s, i) => (
@@ -90,7 +90,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
                   </h2>
                   <div className="mt-3 flex flex-col gap-3 text-[15.5px] leading-relaxed text-[#2b3447]">
                     {s.p.map((t) => (
-                      <Para key={t} text={t} />
+                      <Para key={t} text={t} brand={brandName(lang)} />
                     ))}
                   </div>
                 </section>

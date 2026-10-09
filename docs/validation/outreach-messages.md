@@ -54,7 +54,7 @@ Longer version, if you have a warm intro or a specific hook:
 
 > Dear {name},
 >
-> I'm Mikdam Qandil, a designer based in Amman. I'm building Canopy, a live 3D "digital twin" for indoor and controlled-environment farms. It shows every floor, crop, light recipe and delivery in one view.
+> I'm Mikdam Qandil, a designer based in Amman. I'm building Lamina, a live 3D "digital twin" for indoor and controlled-environment farms. It shows every floor, crop, light recipe and delivery in one view.
 >
 > I prepared a demo carrying {farm}'s name, running on sample data: {link}
 >
@@ -123,7 +123,7 @@ Longer version, if you have a warm intro or a specific hook:
 
 > السيد/السيدة {name} المحترم/ة،
 >
-> أنا مقدام قنديل، مصمم مقيم في عمّان. أعمل على Canopy، وهو «نسخة رقمية» حيّة ثلاثية الأبعاد للمزارع الداخلية والمزارع ذات البيئة المتحكَّم بها، تعرض كل طابق ومحصول ووصفة إضاءة وعملية توصيل في مكان واحد.
+> أنا مقدام قنديل، مصمم مقيم في عمّان. أعمل على لامينا، وهو «نسخة رقمية» حيّة ثلاثية الأبعاد للمزارع الداخلية والمزارع ذات البيئة المتحكَّم بها، تعرض كل طابق ومحصول ووصفة إضاءة وعملية توصيل في مكان واحد.
 >
 > أعددت عرضًا يحمل اسم {farm} ويعمل ببيانات تجريبية: {link}
 >

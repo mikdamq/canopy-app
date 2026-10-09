@@ -6,7 +6,7 @@ The site promises each visitor "a short video of your farm's demo" within one bu
 
 1. **Open their demo:**
    - Copy the farm name and type from the request email.
-   - Open `https://<site>/<en|ar>/demo?farm=<Farm name>&type=<tower|container|greenhouse|lab>`.
+   - Open `https://laminafarm.app/<en|ar>/demo?farm=<Farm name>&type=<tower|container|greenhouse|lab>`.
    - Use their language: Arabic if they wrote in Arabic.
 2. **Set the scene:**
    - Close the welcome card.

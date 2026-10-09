@@ -1,4 +1,4 @@
-# Canopy (working name)
+# Lamina (لامينا)
 
 A live 3D twin of a vertical farm, built to test the product with real farm owners.
 

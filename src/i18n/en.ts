@@ -1,15 +1,15 @@
 /** English copy. `ar.ts` must have exactly the same shape. Placeholders look like {name}. */
 const en = {
   meta: {
-    title: "Canopy · A live 3D twin of your vertical farm",
+    title: "Lamina · A live 3D twin of your vertical farm",
     description:
       "See every floor, crop and crate of your vertical farm in one live 3D view. Try the demo with your farm's name and request a free pilot.",
     demoTitle: "{farm} · Live farm demo",
     requestTitle: "Request a pilot",
     privacyTitle: "Privacy policy",
     privacyDescription: "What we collect when you try the demo or request a pilot, why, and how to have it deleted.",
-    ogAlt: "Canopy: a live 3D twin of your vertical farm",
-    ogDemoAlt: "{farm}: a live 3D twin, built with Canopy",
+    ogAlt: "Lamina: a live 3D twin of your vertical farm",
+    ogDemoAlt: "{farm}: a live 3D twin, built with Lamina",
     ogKicker: "For vertical and indoor farms",
     ogDemoKicker: "Live 3D twin · sample data",
     ogDemoLine: "Every floor, crop and crate, in one view.",
@@ -179,8 +179,8 @@ const en = {
   whatsapp: {
     label: "Chat on WhatsApp",
     short: "WhatsApp",
-    message: "Hi! I'd like to see {brand} for my farm.",
-    messageFarm: "Hi! I'd like to see {brand} for {farm}.",
+    message: "Hi! I'd like to see Lamina for my farm.",
+    messageFarm: "Hi! I'd like to see Lamina for {farm}.",
     prefer: "Prefer to chat?",
   },
   consent: {

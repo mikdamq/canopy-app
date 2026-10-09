@@ -17,7 +17,7 @@ import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { fmt, hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageMeta } from "@/lib/seo";
-import { BRAND, CONTACT_EMAIL } from "@/lib/site";
+import { brandName, CONTACT_EMAIL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 function Eyebrow({ children, dark }: { children: ReactNode; dark?: boolean }) {
@@ -287,7 +287,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
             <figure className="relative rounded-[32px] border border-line bg-white p-6 sm:p-10">
               <div className="flex flex-col gap-4 text-[17px] leading-relaxed">
                 {d.founder.note.map((p) => (
-                  <p key={p}>{fmt(p, { brand: BRAND })}</p>
+                  <p key={p}>{fmt(p, { brand: brandName(lang) })}</p>
                 ))}
               </div>
               <figcaption className="mt-8 flex flex-wrap items-center gap-4 border-t border-line pt-6">

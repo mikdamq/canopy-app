@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 import { fmt } from "@/i18n/config";
 import ar from "@/i18n/ar";
 import en from "@/i18n/en";
-import { BRAND, CONTACT_EMAIL } from "@/lib/site";
+import { BRAND, brandName, CONTACT_EMAIL } from "@/lib/site";
 import { CROPS, GOALS, ROLES, type PilotRequest } from "@/lib/request-schema";
 import type { ChannelResult } from "./store";
 
@@ -76,7 +76,7 @@ export async function sendRequestEmails(r: PilotRequest, id?: string): Promise<C
 <p>${esc(fmt(d.email.userHello, { name: r.name.split(" ")[0] }))}</p>
 <p>${esc(fmt(d.email.userBody, { farm: r.farmName }))}</p>
 <p style="color:#5b677d">${esc(d.email.userSummary)}</p>${table(rows(r, d), rtl)}
-<p>${esc(fmt(d.email.userSign, { brand: BRAND }))}</p></div>`,
+<p>${esc(fmt(d.email.userSign, { brand: brandName(r.locale) }))}</p></div>`,
     });
     return { status: "ok" };
   } catch (e) {
