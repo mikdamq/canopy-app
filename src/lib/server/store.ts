@@ -6,6 +6,8 @@ export type ChannelResult = { status: "ok"; id?: string } | { status: "skipped" 
 /**
  * Save a pilot request in Supabase (table `pilot_requests`, see supabase/schema.sql).
  * Uses the REST API with the service role key, so no client library is needed.
+ * Works with either kind of server key: the legacy `service_role` key (a JWT, also sent
+ * as a Bearer token) or a newer secret key (`sb_secret_…`, sent only as `apikey`).
  */
 export async function saveRequest(r: PilotRequest, meta: { userAgent: string }): Promise<ChannelResult> {
   const url = process.env.SUPABASE_URL;
@@ -17,7 +19,7 @@ export async function saveRequest(r: PilotRequest, meta: { userAgent: string }):
       method: "POST",
       headers: {
         apikey: key,
-        Authorization: `Bearer ${key}`,
+        ...(key.startsWith("eyJ") ? { Authorization: `Bearer ${key}` } : {}),
         "Content-Type": "application/json",
         Prefer: "return=representation",
       },

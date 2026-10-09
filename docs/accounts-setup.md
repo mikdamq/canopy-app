@@ -47,7 +47,7 @@ These stop your emails landing in spam.
 - [ ] When it's ready: **SQL Editor → New query**. Paste the whole of `supabase/schema.sql` from the repo, then click **Run**. It should say "Success".
 - [ ] **Project Settings → API Keys:**
   - copy the **Project URL** (looks like `https://abcd.supabase.co`). *Share* it if you like; it isn't secret;
-  - copy the **service_role** key from the **"Legacy API keys"** tab (a long key starting with `eyJ`). **Secret:** it goes only into Vercel.
+  - copy a **server key**: either a **Secret key** (starts with `sb_secret_`) from the API Keys tab, or the **service_role** key from the "Legacy API keys" tab (a long key starting with `eyJ`). Both work. **Secret:** it goes only into Vercel.
 - [ ] Optionally, in Vercel → Settings → Functions → Region, choose **Frankfurt (fra1)**, so the site and the database sit close together.
 
 ### 6. Umami: visit counts and the funnel (10 min)
