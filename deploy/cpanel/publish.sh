@@ -41,7 +41,19 @@ fi
 
 # Upload everything (hidden .next folder and .npmrc included). Files that only exist on
 # the server, like node_modules and logs, are left alone.
-ftp "mirror --reverse --parallel=4 --verbose=1 $SRC/ /"
+ftp "mirror --reverse --parallel=4 --verbose=1 $SRC/ /" || {
+  # The usual first-time problem: FTP_SERVER isn't the name on the server's certificate
+  # (on shared hosting, ftp.yourdomain often isn't). Show the names it is valid for.
+  hostport=${FTP_SERVER#ftp://}; hostport=${hostport%%/*}; host=${hostport%%:*}
+  port=21; [ "$hostport" != "$host" ] && port=${hostport##*:}
+  names=$(timeout 20 openssl s_client -starttls ftp -connect "$host:$port" -servername "$host" </dev/null 2>/dev/null \
+    | openssl x509 -noout -subject -ext subjectAltName 2>/dev/null \
+    | grep -oE '(CN ?= ?|DNS:)[^,/ ]+' | sed -E 's/^(CN ?= ?|DNS:)//' | sort -u | tr '\n' ' ' || true)
+  if [ -n "$names" ]; then
+    echo "::error::Upload failed. If the error above mentions the certificate, set the FTP_SERVER secret to one of the names the server's certificate is for: ${names}"
+  fi
+  exit 1
+}
 # Restart last, once every file is in place.
 ftp "mkdir -p -f tmp; put -O tmp dist/restart.txt"
 

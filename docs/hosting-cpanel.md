@@ -18,14 +18,14 @@ No DNS changes are needed: `laminafarm.app` already points at your hosting.
 
 ### 1. Check the Node.js version
 - [ ] cPanel → **Setup Node.js App** → **Create Application** → open the **Node.js version** list.
-- [ ] Pick the highest **22.x** (or at least **20.9**). If the highest on offer is below 20.9, stop and tell me; the site needs 20.9 or newer.
+- [ ] Pick **22.x** if it's listed (GitHub builds the site with Node 22); otherwise the highest version from **20.9** up, e.g. **24.21.0** (your plan offers it). If nothing is 20.9 or newer, stop and tell me.
 
 ### 2. Create the application
 Fill in the form:
 
 | Field | Value |
 |---|---|
-| Node.js version | the highest 22.x |
+| Node.js version | 22.x if listed, otherwise 24.x |
 | Application mode | **Production** |
 | Application root | `lamina` (a folder in your home directory, **not** inside `public_html`) |
 | Application URL | `laminafarm.app` (leave the path after it empty) |
@@ -33,6 +33,7 @@ Fill in the form:
 
 - [ ] Under **Environment variables**, click **Add Variable** for each of the server settings in Part 3 (you can add them later too).
 - [ ] Click **Create**. cPanel makes the `lamina` folder with a sample `app.js`, which the next step replaces.
+- [ ] Your domain also has its own folder, `/home/chefxmkt/laminafarm.app` (cPanel made it when the domain was added). Leave it where it is: on **Create**, cPanel puts a small `.htaccess` file in it that hands visitors to the app. Open it in File Manager (with hidden files shown) and delete any placeholder page such as `index.html`, `index.php` or `default.html`, which could show instead of Lamina. **Keep** `.htaccess` and `.well-known` (AutoSSL needs it).
 
 ### 3. Let GitHub publish for you (recommended, 10 min)
 **a. An FTP account that can only see the site's folder**
@@ -68,6 +69,7 @@ Fill in the form:
 ### 5. Install and start
 - [ ] cPanel → **Setup Node.js App** → click the pencil next to `laminafarm.app`.
 - [ ] Click **Run NPM Install**. It downloads the three packages the site needs; this takes a minute or two.
+  - cPanel may then say *"An error occured… content type … doesn't equal…"*. That's harmless: it only means the page changed from cPanel's placeholder to Lamina. Carry on.
 - [ ] Click **Restart**.
 - [ ] Open **https://laminafarm.app**. You should see Lamina. The first visit after a restart can take a few seconds.
 
