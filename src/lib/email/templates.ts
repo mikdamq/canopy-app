@@ -1,6 +1,7 @@
 /**
- * The two emails sent for each pilot request: the visitor's confirmation (in their
- * language) and the owner's new-request notice (in English). Plain functions with no
+ * The emails sent for each pilot request: the visitor's confirmation (in their
+ * language), the owner's new-request notice (in English), and, when the visitor answers
+ * the optional "Tell us more" questions, a details notice that only the owner gets. Plain functions with no
  * server imports, so they can be rendered on their own for a preview.
  *
  * Email HTML is its own world: tables for layout, inline styles, no SVG, images by
@@ -10,7 +11,7 @@ import { fmt } from "@/i18n/config";
 import ar from "@/i18n/ar";
 import en from "@/i18n/en";
 import { countryByName } from "@/lib/countries";
-import { CROPS, GOALS, ROLES, type PilotRequest } from "@/lib/request-schema";
+import { CROPS, GOALS, ROLES, type PilotDetails, type RequestBasics } from "@/lib/request-schema";
 import { BRAND, brandName, CONTACT_EMAIL, whatsappUrl } from "@/lib/site";
 
 export type Email = { subject: string; html: string; text: string };
@@ -51,9 +52,9 @@ const firstName = (name: string) => name.trim().split(/\s+/)[0];
 
 /** The demo shows four farm types; the request form has two more, shown as the tower. */
 const DEMO_TYPES = ["tower", "container", "greenhouse", "lab"] as const;
-const demoType = (t: PilotRequest["farmType"]) => (DEMO_TYPES as readonly string[]).includes(t) ? t : "tower";
+const demoType = (t: RequestBasics["farmType"]) => (DEMO_TYPES as readonly string[]).includes(t) ? t : "tower";
 
-function demoUrl(r: PilotRequest, base: string, utm: string) {
+function demoUrl(r: RequestBasics, base: string, utm: string) {
   const q = new URLSearchParams({ farm: r.farmName });
   if (demoType(r.farmType) !== "tower") q.set("type", r.farmType);
   q.set("utm_source", "email");
@@ -62,29 +63,39 @@ function demoUrl(r: PilotRequest, base: string, utm: string) {
   return `${base}/${r.locale}/demo?${q}`;
 }
 
-/** Human-readable rows for a request, in the given language. */
-export function requestRows(r: PilotRequest, d: typeof en): [string, string][] {
+const listIn = (d: typeof en) => (items: string[]) => items.join(d === ar ? "، " : ", ");
+const labelOf = <T extends readonly string[]>(ids: T, labels: readonly string[], id: T[number]) => labels[ids.indexOf(id)] ?? id;
+
+/** Human-readable rows for the short form, in the given language. */
+export function requestRows(r: RequestBasics, d: typeof en): [string, string][] {
   const q = d.request;
-  const label = <T extends readonly string[]>(ids: T, labels: readonly string[], id: T[number]) =>
-    labels[ids.indexOf(id)] ?? id;
   const code = countryByName(r.country)?.code;
-  const list = (items: string[]) => items.join(d === ar ? "، " : ", ");
   return [
+    [q.fields.farmName, r.farmName],
+    [q.fields.farmType, q.farmTypes[r.farmType]],
     [q.fields.name, r.name],
     [q.fields.email, r.email],
     [q.fields.phone, r.phone],
-    [q.fields.role, label(ROLES, q.roles, r.role)],
     [q.fields.country, code ? q.countries[code] : r.country],
-    [q.fields.farmName, r.farmName],
-    [q.fields.farmType, q.farmTypes[r.farmType]],
-    [q.fields.area, String(r.areaM2)],
-    [q.fields.levels, String(r.levels)],
-    [q.fields.crops, list([...r.crops.map((c) => label(CROPS, q.crops, c)), r.cropsOther].filter(Boolean)) || "—"],
-    [q.fields.monitoring, q.monitoring[r.monitoring]],
-    [q.fields.sensorBrand, r.sensorBrand || "—"],
-    [q.fields.goals, list(r.goals.map((g) => label(GOALS, q.goals, g)))],
-    [q.fields.message, r.message || "—"],
   ];
+}
+
+/** Rows for the optional answers; only the ones that were given. */
+export function detailRows(x: PilotDetails, d: typeof en): [string, string][] {
+  const q = d.request;
+  const list = listIn(d);
+  const crops = list([...x.crops.map((c) => labelOf(CROPS, q.crops, c)), x.cropsOther].filter(Boolean));
+  const rows: [string, string | undefined][] = [
+    [q.fields.role, x.role && labelOf(ROLES, q.roles, x.role)],
+    [q.fields.area, x.areaM2 ? `${x.areaM2.toLocaleString("en")} m²` : undefined],
+    [q.fields.levels, x.levels ? String(x.levels) : undefined],
+    [q.fields.crops, crops],
+    [q.fields.monitoring, x.monitoring && q.monitoring[x.monitoring]],
+    [q.fields.sensorBrand, x.sensorBrand],
+    [q.fields.goals, list(x.goals.map((g) => labelOf(GOALS, q.goals, g)))],
+    [q.fields.message, x.message],
+  ];
+  return rows.filter((r): r is [string, string] => Boolean(r[1]));
 }
 
 /* ---------- building blocks ---------- */
@@ -158,7 +169,7 @@ ${list
 
 /* ---------- the visitor's confirmation ---------- */
 
-export function visitorEmail(r: PilotRequest, ctx: EmailContext): Email {
+export function visitorEmail(r: RequestBasics, ctx: EmailContext): Email {
   const d = r.locale === "ar" ? ar : en;
   const e = d.email;
   const rtl = r.locale === "ar";
@@ -274,16 +285,20 @@ const stamp = (d: Date) =>
 /** wa.me wants digits only, with the country code and no leading zeros. */
 const waDigits = (phone: string) => phone.replace(/\D/g, "").replace(/^00/, "");
 
-export function ownerEmail(r: PilotRequest, ctx: EmailContext): Email {
+/** The new-request notice, or (with `details`) the notice that they answered "Tell us more". */
+export function ownerEmail(r: RequestBasics, ctx: EmailContext, details?: PilotDetails): Email {
   const q = en.request;
   const received = ctx.receivedAt ?? new Date();
   const name = firstName(r.name);
   const visitorDict = r.locale === "ar" ? ar : en;
   const lang = r.locale === "ar" ? "Arabic" : "English";
   const country = r.country;
-  const subject = fmt(en.email.ownerSubject, { farm: r.farmName, country });
+  const subject = details
+    ? `More details: ${r.farmName} (${country})`
+    : fmt(en.email.ownerSubject, { farm: r.farmName, country });
   const rows = requestRows(r, en);
-  const get = (field: string) => rows.find(([k]) => k === field)?.[1] ?? "";
+  const extra = details ? detailRows(details, en) : [];
+  const get = (field: string) => extra.find(([k]) => k === field)?.[1] ?? "";
 
   const wa = waDigits(r.phone);
   const waLink = wa
@@ -297,7 +312,9 @@ export function ownerEmail(r: PilotRequest, ctx: EmailContext): Email {
 
   const fact = (label: string, value: string) => `<td class="stack" valign="top" width="25%" style="padding:0 8px 0 0">
 <div style="font-size:12px;line-height:16px;color:${C.onGreen}">${esc(label)}</div>
-<div style="font:700 17px/24px ${DISPLAY};color:#ffffff">${esc(value)}</div></td>`;
+<div style="font:700 17px/24px ${DISPLAY};color:#ffffff">${esc(value || "—")}</div></td>`;
+  const label = (t: string) =>
+    `<div style="font-size:12px;line-height:16px;font-weight:700;color:${C.greenInk};text-transform:uppercase;letter-spacing:0.6px">${esc(t)}</div>`;
 
   const actions = [
     waLink && button(waLink, `WhatsApp ${name}`),
@@ -306,58 +323,78 @@ export function ownerEmail(r: PilotRequest, ctx: EmailContext): Email {
     ctx.dbUrl && button(ctx.dbUrl, "Open in Supabase", "outline"),
   ].filter(Boolean) as string[];
 
-  const body = `${logo(ctx.base, "New pilot request")}
+  const facts = details
+    ? `${fact("Area", get(q.fields.area))}${fact("Levels", get(q.fields.levels))}${fact("Tracks with", get(q.fields.monitoring))}${fact("Role", get(q.fields.role))}`
+    : `${fact("Farm type", q.farmTypes[r.farmType])}${fact("Country", country)}${fact("WhatsApp", r.phone)}`;
+
+  const body = `${logo(ctx.base, details ? "More details" : "New pilot request")}
 <tr><td style="background:${C.paper};border-radius:20px;overflow:hidden">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr><td class="pad" style="background:${C.green};border-radius:20px 20px 0 0;padding:30px 36px 28px">
-<div>${chip(`#${ctx.id ? ctx.id.slice(0, 8) : "not saved"}`, C.greenDeep, C.onGreen)}${chip(lang, r.locale === "ar" ? "#ffe3f7" : "#ffffff", r.locale === "ar" ? "#8a1a6e" : C.greenInk)}${chip(`from ${r.source}`, C.greenDeep, C.onGreen)}</div>
+<div>${chip(`#${ctx.id ? ctx.id.slice(0, 8) : "not saved"}`, C.greenDeep, C.onGreen)}${chip(lang, r.locale === "ar" ? "#ffe3f7" : "#ffffff", r.locale === "ar" ? "#8a1a6e" : C.greenInk)}${details ? chip("Details added", "#ffffff", C.greenInk) : chip(`from ${r.source}`, C.greenDeep, C.onGreen)}</div>
 <h1 class="h1" style="margin:10px 0 4px;font:700 30px/36px ${DISPLAY};color:#ffffff;letter-spacing:-0.5px">${esc(r.farmName)}</h1>
-<p style="margin:0 0 22px;font-size:15px;line-height:22px;color:${C.onGreen}">${esc(r.name)} · ${esc(get(q.fields.role))} · ${esc(country)}</p>
+<p style="margin:0 0 22px;font-size:15px;line-height:22px;color:${C.onGreen}">${esc(r.name)} · ${esc(q.farmTypes[r.farmType])} · ${esc(country)}</p>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-${fact("Farm type", q.farmTypes[r.farmType])}${fact("Area", `${r.areaM2.toLocaleString("en")} m²`)}${fact("Levels", String(r.levels))}${fact("Tracks with", q.monitoring[r.monitoring])}
+${facts}
 </tr></table>
 </td></tr>
 <tr><td class="pad" style="padding:22px 36px 4px;background:${C.tint}">
-<p style="margin:0;font-size:14px;line-height:21px;color:${C.greenInk}"><strong>Reply by ${esc(replyBy(received))}</strong> (one business day) · received ${esc(stamp(received))}, Amman time</p>
+<p style="margin:0;font-size:14px;line-height:21px;color:${C.greenInk}">${
+    details
+      ? `They answered the optional questions · ${esc(stamp(received))}, Amman time`
+      : `<strong>Reply by ${esc(replyBy(received))}</strong> (one business day) · received ${esc(stamp(received))}, Amman time`
+  }</p>
 </td></tr>
 <tr><td class="pad" style="padding:0 36px 20px;background:${C.tint}">
 <div style="margin-top:14px">${actions.join(" ")}</div>
 </td></tr>
 ${
-  r.message
+  details?.message
     ? `<tr><td class="pad" style="padding:26px 36px 0">
-<div style="font-size:12px;line-height:16px;font-weight:700;color:${C.greenInk};text-transform:uppercase;letter-spacing:0.6px">In their words</div>
-<div dir="auto" style="margin-top:8px;padding:14px 18px;border-left:4px solid ${C.leaf};background:${C.bg};border-radius:0 12px 12px 0;font-size:15px;line-height:23px;color:${C.ink}">${nl2br(r.message)}</div>
+${label("In their words")}
+<div dir="auto" style="margin-top:8px;padding:14px 18px;border-left:4px solid ${C.leaf};background:${C.bg};border-radius:0 12px 12px 0;font-size:15px;line-height:23px;color:${C.ink}">${nl2br(details.message)}</div>
 </td></tr>`
     : ""
 }
-<tr><td class="pad" style="padding:26px 36px 0">
-<div style="font-size:12px;line-height:16px;font-weight:700;color:${C.greenInk};text-transform:uppercase;letter-spacing:0.6px">What they want</div>
-<p style="margin:8px 0 0;font-size:15px;line-height:23px">${esc(get(q.fields.goals))}</p>
-<p style="margin:6px 0 0;font-size:14px;line-height:21px;color:${C.muted}">Grows: ${esc(get(q.fields.crops))}${r.sensorBrand ? ` · Sensors: ${esc(r.sensorBrand)}` : ""}</p>
+${
+  details
+    ? `<tr><td class="pad" style="padding:26px 36px 0">
+${label("What they want")}
+<p style="margin:8px 0 0;font-size:15px;line-height:23px">${esc(get(q.fields.goals) || "—")}</p>
+<p style="margin:6px 0 0;font-size:14px;line-height:21px;color:${C.muted}">Grows: ${esc(get(q.fields.crops) || "—")}${details.sensorBrand ? ` · Sensors: ${esc(details.sensorBrand)}` : ""}</p>
 </td></tr>
 <tr><td class="pad" style="padding:26px 36px 0">
-<div style="font-size:12px;line-height:16px;font-weight:700;color:${C.greenInk};text-transform:uppercase;letter-spacing:0.6px">Your next steps</div>
+${label("Their answers")}
+<div style="margin-top:4px">${detailTable(extra, false)}</div>
+</td></tr>`
+    : `<tr><td class="pad" style="padding:26px 36px 0">
+${label("Your next steps")}
 <ol style="margin:8px 0 0;padding:0 0 0 20px;font-size:14px;line-height:22px;color:${C.ink}">
 <li>Say hello on WhatsApp${r.locale === "ar" ? " (in Arabic; the button writes it for you)" : ""} and ask for layout photos.</li>
 <li>Record a short video of their demo (<span style="color:${C.muted}">docs/launch-kit/demo-video.md</span>).</li>
 <li>Send the video and the setup checklist by ${esc(replyBy(received))}.</li>
 </ol>
-</td></tr>
+<p style="margin:10px 0 0;font-size:13px;line-height:19px;color:${C.muted}">They can still answer the optional questions (size, crops, goals). If they do, you'll get a second email.</p>
+</td></tr>`
+}
 <tr><td class="pad" style="padding:26px 36px 32px">
-<div style="font-size:12px;line-height:16px;font-weight:700;color:${C.greenInk};text-transform:uppercase;letter-spacing:0.6px">Everything they sent</div>
+${label(details ? "Their request" : "What they sent")}
 <div style="margin-top:4px">${detailTable(rows, false)}</div>
 </td></tr>
 </table>
 </td></tr>
 <tr><td style="padding:20px 16px 8px;text-align:center;font-size:12px;line-height:19px;color:${C.muted}">
-Hit Reply to answer ${esc(name)} at ${esc(r.email)}. They got a confirmation in ${lang}.<br>Sent by ${esc(ctx.base.replace(/^https?:\/\//, ""))}
+Hit Reply to answer ${esc(name)} at ${esc(r.email)}.${details ? " They weren't emailed about these answers." : ` They got a confirmation in ${lang}.`}<br>Sent by ${esc(ctx.base.replace(/^https?:\/\//, ""))}
 </td></tr>`;
 
   const text = [
-    `New pilot request${ctx.id ? ` #${ctx.id}` : ""} · ${lang} · from ${r.source}`,
-    `Reply by ${replyBy(received)} (received ${stamp(received)}, Amman time)`,
+    details
+      ? `More details${ctx.id ? ` #${ctx.id}` : ""} · ${lang}`
+      : `New pilot request${ctx.id ? ` #${ctx.id}` : ""} · ${lang} · from ${r.source}`,
+    details ? `Received ${stamp(received)}, Amman time` : `Reply by ${replyBy(received)} (received ${stamp(received)}, Amman time)`,
     "",
+    ...extra.map(([k, val]) => `${k}: ${val}`),
+    ...(extra.length ? [""] : []),
     ...rows.map(([k, val]) => `${k}: ${val}`),
     "",
     ...(waLink ? [`WhatsApp: ${waLink}`] : []),
@@ -365,5 +402,8 @@ Hit Reply to answer ${esc(name)} at ${esc(r.email)}. They got a confirmation in 
     ...(ctx.dbUrl ? [`Supabase: ${ctx.dbUrl}`] : []),
   ].join("\n");
 
-  return { subject, html: page({ lang: "en", title: subject, preheader: `${r.name} · ${q.farmTypes[r.farmType]} · ${r.areaM2} m² · ${country}`, body }), text };
+  const preheader = details
+    ? `${r.name} · ${[get(q.fields.area), get(q.fields.goals)].filter(Boolean).join(" · ") || "details added"}`
+    : `${r.name} · ${q.farmTypes[r.farmType]} · ${country}`;
+  return { subject, html: page({ lang: "en", title: subject, preheader, body }), text };
 }

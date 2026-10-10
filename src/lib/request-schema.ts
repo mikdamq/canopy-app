@@ -13,40 +13,54 @@ export const GOALS = ["remote", "loss", "energy", "planning", "investors"] as co
 
 const text = (max: number) => z.string().trim().max(max);
 
+/**
+ * The short form: only what we need to reply. Everything else is optional and
+ * sent afterwards with `detailsSchema` (it only reaches the team).
+ */
 export const requestSchema = z.object({
   locale: z.enum(LOCALES),
   source: text(40).default("landing"),
-  // About you
+  farmName: text(80).min(1),
+  farmType: z.enum(FARM_TYPES),
   name: text(100).min(2),
   email: z.email().max(200),
   phone: z
     .string()
     .trim()
     .regex(/^\+?[0-9\s\-().]{7,22}$/),
-  role: z.enum(ROLES),
   country: text(60).min(2),
-  // Your farm
-  farmName: text(80).min(1),
-  farmType: z.enum(FARM_TYPES),
-  areaM2: z.coerce.number().positive().max(1_000_000),
-  levels: z.coerce.number().int().min(1).max(500),
-  crops: z.array(z.enum(CROPS)).max(CROPS.length),
-  cropsOther: text(200).default(""),
-  monitoring: z.enum(MONITORING),
-  sensorBrand: text(120).default(""),
-  // Your goals
-  goals: z.array(z.enum(GOALS)).min(1).max(GOALS.length),
-  message: text(2000).default(""),
   consent: z.literal(true),
 });
 
 export type PilotRequest = z.infer<typeof requestSchema>;
+/** A request as stored and emailed (consent is implied by having sent it). */
+export type RequestBasics = Omit<PilotRequest, "consent">;
 
-/** Which fields each form step owns, for step-by-step validation. */
-export const STEP_FIELDS = [
-  ["name", "email", "phone", "role", "country"],
-  ["farmName", "farmType", "areaM2", "levels", "crops", "cropsOther", "monitoring", "sensorBrand"],
-  ["goals", "message", "consent"],
-] as const satisfies readonly (readonly (keyof PilotRequest)[])[];
+/** The short form's fields, in the order they're shown (and checked). */
+export const FORM_FIELDS = ["farmName", "farmType", "name", "email", "phone", "country", "consent"] as const satisfies readonly (keyof PilotRequest)[];
 
-export type FieldName = (typeof STEP_FIELDS)[number][number];
+export type FieldName = (typeof FORM_FIELDS)[number];
+
+/** Blank number boxes count as "not given"; anything else must be a real number. */
+const optionalNumber = (schema: z.ZodNumber) =>
+  z.preprocess((v) => (v === "" || v === null || v === undefined ? undefined : v), z.coerce.number().pipe(schema).optional());
+
+/** "Tell us more": every answer is optional. */
+export const detailsSchema = z.object({
+  role: z.enum(ROLES).optional(),
+  areaM2: optionalNumber(z.number().positive().max(1_000_000)),
+  levels: optionalNumber(z.number().int().min(1).max(500)),
+  crops: z.array(z.enum(CROPS)).max(CROPS.length).default([]),
+  cropsOther: text(200).default(""),
+  monitoring: z.enum(MONITORING).optional(),
+  sensorBrand: text(120).default(""),
+  goals: z.array(z.enum(GOALS)).max(GOALS.length).default([]),
+  message: text(2000).default(""),
+});
+
+export type PilotDetails = z.infer<typeof detailsSchema>;
+export type DetailName = keyof PilotDetails;
+
+/** True when at least one optional answer was given. */
+export const hasDetails = (d: PilotDetails) =>
+  Boolean(d.role || d.areaM2 || d.levels || d.crops.length || d.cropsOther || d.monitoring || d.sensorBrand || d.goals.length || d.message);

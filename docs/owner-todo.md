@@ -14,7 +14,7 @@ Last updated: 10 Oct 2026 (AutoSSL done; working hours and pricing answer decide
 - [x] Hosting decision: live site on **your Namecheap hosting** (cPanel Node.js); **Netlify** for staging only; no Vercel (9 Oct 2026)
 - [ ] **Netlify (staging only):** keep it for previews. Don't add the Supabase or email settings there, so test requests never reach your real inbox
 - [x] **Review the new email designs**: approved 10 Oct 2026 (green success header, signed "The Lamina team")
-- [ ] **Merge the emails PR**, then send yourself one test request (English and Arabic) from laminafarm.app and check both emails, including on your phone
+- [ ] **Merge PR #12** (new emails, green thank-you screen, and the new short form), then send yourself one test request (English and Arabic) from laminafarm.app: check both emails, then try "Add details" on the thank-you screen and check you get a third email ("More details: …")
 - [ ] **Leave Vercel** (any time now): delete the Vercel project (Settings → Advanced → Delete), remove the Vercel app from GitHub (GitHub → Settings → Applications → Vercel → Uninstall), then delete your Vercel account if you like
 
 ## 2. Domain and email (guide: `docs/accounts-setup.md`, phase 1)
