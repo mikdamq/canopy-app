@@ -100,7 +100,7 @@ If you add or swap an analytics tool, update the privacy policy (`privacy` in `s
 
 **Live site:** the owner's Namecheap hosting, through cPanel → **Setup Node.js App**. Step by step: [`docs/hosting-cpanel.md`](docs/hosting-cpanel.md).
 - `STANDALONE=1 pnpm build`, then `bash deploy/cpanel/package.sh`, makes `dist/lamina-cpanel.zip`: the standalone server with its static files and the `app.js` startup file. It has no `node_modules`; cPanel's "Run NPM Install" adds `next`, `react` and `react-dom`.
-- The GitHub workflow **cPanel package** (`.github/workflows/cpanel-package.yml`) builds this zip on every merge to `main`. Public `NEXT_PUBLIC_*` values come from GitHub Actions variables; server secrets live in the cPanel app's environment variables.
+- The GitHub workflow **cPanel package** (`.github/workflows/cpanel-package.yml`) builds this zip on every merge to `main`, then `deploy/cpanel/publish.sh` uploads it over FTPS and restarts the app (needs the `FTP_SERVER`, `FTP_USERNAME` and `FTP_PASSWORD` secrets; without them it only builds the zip). Public `NEXT_PUBLIC_*` values come from GitHub Actions variables; server secrets live in the cPanel app's environment variables.
 
 **Staging:** Netlify (decided 9 Oct 2026; no Vercel). Every pull request gets a Netlify preview link. Don't point the domain at Netlify, and keep the Supabase and email settings off it. Keep the code host-neutral: no host-only APIs.
 

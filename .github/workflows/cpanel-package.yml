@@ -1,5 +1,6 @@
-# Builds the package for the live site (cPanel "Setup Node.js App") on every merge to main.
-# Download it from the run's "Artifacts" section; docs/hosting-cpanel.md has the steps.
+# Builds the package for the live site (cPanel "Setup Node.js App") on every merge to main,
+# then publishes it over FTPS when the FTP secrets are set (deploy/cpanel/publish.sh).
+# The package is also kept under the run's "Artifacts"; docs/hosting-cpanel.md has the steps.
 # Public settings (NEXT_PUBLIC_*) are baked in at build time, so they come from
 # GitHub → Settings → Secrets and variables → Actions → Variables. Secrets (Supabase key,
 # mailbox password) never go here: they live in cPanel's Node.js app settings.
@@ -15,6 +16,11 @@ on:
 
 permissions:
   contents: read
+
+# One publish at a time; a newer merge waits for the one in progress.
+concurrency:
+  group: cpanel-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   package:
@@ -45,3 +51,10 @@ jobs:
           name: lamina-cpanel
           path: dist/lamina-cpanel.zip
           retention-days: 30
+      - name: Publish to cPanel (FTPS)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: bash deploy/cpanel/publish.sh
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
