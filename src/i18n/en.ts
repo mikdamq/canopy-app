@@ -507,12 +507,20 @@ const en = {
   },
   email: {
     ownerSubject: "New pilot request: {farm} ({country})",
-    userSubject: "We received your request, {name}",
-    userHello: "Hi {name},",
-    userBody:
-      "Thanks for telling us about {farm}. We'll review your details and get back to you within one business day with next steps. To help us start, reply with a photo or sketch of your layout.",
-    userSummary: "Here's what you sent us:",
-    userSign: "The {brand} team",
+    userSubject: "You're in, {name}: what happens next for {farm}",
+    preheader: "We reply within one business day. One thing you can do now: send your layout photos.",
+    heroTitle: "You're in, {name}.",
+    heroSub: "Your pilot request for {farm} is with us.",
+    nextTitle: "What happens next",
+    photosHint: "The fastest way to start: send us a few photos of {farm}'s layout.",
+    demoLink: "Open {farm}'s demo again",
+    summaryTitle: "Your request",
+    summaryNote: "Something wrong? Just reply to this email and we'll fix it.",
+    sign: "Talk soon,",
+    signName: "Mikdam, founder of {brand}",
+    hours: "We reply Sunday to Thursday, 9:00–23:00 (Amman time).",
+    why: "You're getting this email because you asked for a pilot at {site}.",
+    ownerWhatsApp: "Hi {name}, this is Mikdam from Lamina. Thanks for your pilot request for {farm}!",
   },
 };
 
