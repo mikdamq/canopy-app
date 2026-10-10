@@ -157,7 +157,7 @@ const en = {
       },
       {
         q: "Is it really free?",
-        a: "Yes, for pilot farms. We'll agree on pricing together before the pilot ends, and you can stop at any time.",
+        a: "Yes, for pilot farms. Before the pilot ends, we agree a price together, based on your farm's size. No surprises, no lock-in: you can stop at any time.",
       },
       {
         q: "Who can see my farm's data?",

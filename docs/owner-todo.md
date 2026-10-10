@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 10 Oct 2026 (the request form works end to end on the live site).
+Last updated: 10 Oct 2026 (AutoSSL done; working hours and pricing answer decided).
 
 **The minimum for a safe launch is sections 1–4.** Sections 5–7 can follow.
 
@@ -25,13 +25,13 @@ Last updated: 10 Oct 2026 (the request form works end to end on the live site).
   - [x] Create the Node.js app (steps 1–2)
   - [x] Create the FTP account `deploy@laminafarm.app`, limited to the `lamina` folder, and add the 3 GitHub secrets (`FTP_SERVER` = `premium239.web-hosting.com`, the name on the server's certificate). Every merge now publishes itself
   - [x] Run the workflow once, then **Run NPM Install** → **Restart** (steps 3c and 5)
-  - [ ] **Run AutoSSL** (step 6), and check the padlock on https://laminafarm.app and https://www.laminafarm.app
+  - [x] **Run AutoSSL** (step 6), and check the padlock on https://laminafarm.app and https://www.laminafarm.app
 
 ## 3. Accounts (guide: `docs/accounts-setup.md`, phase 2)
 
 - [x] **Supabase:** create the project (Frankfurt) and run `supabase/schema.sql`
-- [ ] **Umami:** sign up and choose the **Europe (EU)** region (same region as Supabase), add the website. *Send me the Website ID*
-- [x] **Clarity:** project created, Project ID `yv5sglt7cp` (not secret). Still to do: set **Masking: Strict** in Clarity, (the ID is already built into the site, nothing to add). Don't paste Clarity's script anywhere: the site already has it, behind the "Allow" prompt
+- [ ] **Umami:** account made (EU). Add `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (and `NEXT_PUBLIC_UMAMI_SRC` if its script address isn't `https://cloud.umami.is/script.js`) under GitHub → Settings → Secrets and variables → Actions → **Variables**, then Actions → cPanel package → Run workflow. Then check Realtime shows you, Events shows `demo_opened`, and no farm names appear in page addresses
+- [x] **Clarity:** project created, Project ID `yv5sglt7cp` (not secret). Still to do: Clarity → Settings → Masking → **Strict** (hides all on-page text in recordings, so nobody's farm or contact details are ever recorded); (the ID is already built into the site, nothing to add). Don't paste Clarity's script anywhere: the site already has it, behind the "Allow" prompt
 - [ ] **WhatsApp Business** on +962 78 7016 351, using the texts in `docs/launch-kit/whatsapp-business.md`
 - [x] **Settings:** the server ones (Supabase, email; 2 are secret) go in **cPanel → Setup Node.js App → Environment variables**, then Restart. The Umami ID goes in **GitHub → Settings → Secrets and variables → Actions → Variables**, then rebuild. Full table: `docs/hosting-cpanel.md` Part 3. Never paste the 2 secret ones into chat
 - [x] End-to-end test (10 Oct 2026): a request from the live site arrived. On the way we fixed `SMTP_HOST` (it had a trailing space; now `premium239.web-hosting.com`, and the site ignores stray spaces since PR #11)
@@ -42,8 +42,8 @@ Last updated: 10 Oct 2026 (the request form works end to end on the live site).
 
 - [x] **Production hosting:** your Namecheap hosting, via cPanel → Setup Node.js App (decided 9 Oct 2026; it's available on your plan). Netlify is staging only
 
-- [ ] **Working hours** for "one business day" (e.g. Sun–Thu, 9:00–17:00 Amman). Used in the WhatsApp away message and the FAQ
-- [ ] **Pricing answer:** is "we'll agree on pricing together before the pilot ends" right? Or give a range
+- [x] **Working hours:** Sunday to Thursday, 9:00–23:00 Amman time (10 Oct 2026). Filled into `docs/launch-kit/whatsapp-business.md`
+- [x] **Pricing answer:** decide together (10 Oct 2026): "Free during the pilot. Before it ends we agree a price together, based on your farm's size. No surprises, no lock-in." Now in the FAQ and the WhatsApp `/price` reply
 - [ ] **Confirm the site's promises:**
   - reply within one business day;
   - set up in about two weeks;

@@ -53,8 +53,8 @@ Do these first. Most of the later steps need the domain.
   - greeting message;
   - away message (outside working hours);
   - 4–5 quick replies: "send your layout", "your demo video", "how the pilot works", "pricing after the pilot", "thank you".
-- [ ] **C5. Working hours** (You). "One business day": which days and hours? For example, Sunday to Thursday, 9:00–17:00 Amman time. This goes in the away message and the FAQ.
-- [ ] **C6. Answer to "what does it cost after the pilot?"** (You). The FAQ already says "we'll agree on pricing together before the pilot ends, and you can stop at any time", and the WhatsApp `/price` reply uses the same words. Confirm it, or give a range.
+- [x] **C5. Working hours** (You). **Sunday to Thursday, 9:00–23:00 Amman time** (decided 10 Oct 2026). Filled into the WhatsApp away message and profile.
+- [x] **C6. Answer to "what does it cost after the pilot?"** (You). **Decide together** (10 Oct 2026): "Free during the pilot. Before it ends we agree a price together, based on your farm's size. No surprises, no lock-in." Used in the FAQ and the WhatsApp `/price` reply.
 
 ## D. Outreach readiness
 

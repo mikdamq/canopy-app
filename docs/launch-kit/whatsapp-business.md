@@ -2,7 +2,7 @@
 
 Set this up in the WhatsApp Business app: Settings → Business tools. Use one language per message where possible, with English first and Arabic second, since visitors write in either.
 
-Replace `[hours]` with your working hours (launch prep C5, e.g. "Sunday to Thursday, 9:00–17:00 Amman time").
+Working hours (decided 10 Oct 2026): **Sunday to Thursday, 9:00–23:00 Amman time**. In the app: Business tools → Business profile → Hours → "Open for selected hours".
 
 ## Business profile
 
@@ -11,7 +11,7 @@ Replace `[hours]` with your working hours (launch prep C5, e.g. "Sunday to Thurs
 - **Description (max 512 characters):** Live 3D twins of vertical farms, container farms, greenhouses and research labs. See every crop, light recipe and crate in one view. Free pilot for farms in Jordan and the Gulf. | نسخ رقمية حيّة ثلاثية الأبعاد للمزارع العمودية ومزارع الحاويات والبيوت المحمية ومختبرات الأبحاث. برنامج تجريبي مجاني للمزارع في الأردن والخليج.
 - **Website:** `https://laminafarm.app`
 - **Email:** hello@laminafarm.app
-- **Hours:** [hours]
+- **Hours:** Sunday–Thursday, 9:00–23:00 (Friday and Saturday closed)
 
 ## Greeting message (first message from a new contact)
 
@@ -20,8 +20,8 @@ Replace `[hours]` with your working hours (launch prep C5, e.g. "Sunday to Thurs
 
 ## Away message (outside working hours)
 
-> Thanks for your message. I'm away right now and will reply within one business day ([hours]).
-> شكرًا لرسالتك. أنا غير متاح حاليًا وسأرد خلال يوم عمل واحد ([hours]).
+> Thanks for your message. I'm away right now and will reply within one business day (Sunday to Thursday, 9:00–23:00 Amman time).
+> شكرًا لرسالتك. أنا غير متاح حاليًا وسأرد خلال يوم عمل واحد (من الأحد إلى الخميس، 9:00–23:00 بتوقيت عمّان).
 
 ## Quick replies
 
@@ -40,8 +40,8 @@ In the app, type `/` plus the shortcut to insert a reply.
 > التجربة: نبني النسخة الرقمية لمزرعتك من صورك خلال أسبوعين تقريبًا، ثم تستخدمها مجانًا لثلاثة أشهر، مقابل استبيان قصير مدته دقيقتان كل أسبوعين. التفاصيل: https://laminafarm.app/ar#pilot
 
 **`/price`: pricing after the pilot**
-> The pilot is free for three months. Before it ends, we'll agree on pricing together based on your farm's size, and you can stop at any time.
-> التجربة مجانية لمدة ثلاثة أشهر. وقبل انتهائها نتفق معًا على السعر بحسب حجم مزرعتك، ويمكنك التوقف في أي وقت.
+> The pilot is free for three months. Before it ends, we'll agree on a price together, based on your farm's size. No surprises, no lock-in: you can stop at any time.
+> التجربة مجانية لمدة ثلاثة أشهر. وقبل انتهائها نتفق معًا على السعر بحسب حجم مزرعتك. لا مفاجآت ولا التزام: يمكنك التوقف في أي وقت.
 
 **`/demo`: someone who hasn't tried the demo yet**
 > You can try a live demo with your farm's name here: https://laminafarm.app/en/demo (Arabic: https://laminafarm.app/ar/demo). It takes two minutes.
