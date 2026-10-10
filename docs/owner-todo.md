@@ -19,7 +19,7 @@ Last updated: 10 Oct 2026 (the site is live on your Namecheap hosting).
 
 - [x] Buy the domain: **laminafarm.app**
 - [ ] Turn on **Withheld for Privacy** and **Auto-renew** for laminafarm.app in Namecheap
-- [ ] Create the mailbox **hello@laminafarm.app** in **cPanel → Email Accounts** (included in your hosting), and note the outgoing server from **Connect Devices**
+- [x] Create the mailbox **hello@laminafarm.app** in **cPanel → Email Accounts** (included in your hosting), and note the outgoing server from **Connect Devices** (created 10 Oct 2026)
 - [ ] Add the email trust records: **SPF and DKIM** via cPanel → Email Deliverability → Repair, and **DMARC** in cPanel → Zone Editor
 - [x] **Put the site live on your hosting:** live on 10 Oct 2026 🎉 follow `docs/hosting-cpanel.md` Part 1. No DNS changes needed; Netlify stays staging only
   - [x] Create the Node.js app (steps 1–2)
