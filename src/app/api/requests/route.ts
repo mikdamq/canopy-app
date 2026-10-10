@@ -34,7 +34,8 @@ export async function POST(req: Request) {
   if (mailed.status === "failed") console.error("[pilot-request] email:", mailed.error);
   if (stored.status === "skipped" && mailed.status === "skipped") {
     // Nothing configured yet (local development): keep the request in the server log.
-    console.info("[pilot-request] no database or SMTP configured; request:", JSON.stringify(data));
+    // console.warn, not info: some hosts (LiteSpeed on cPanel) only keep stderr in the log.
+    console.warn("[pilot-request] no database or SMTP configured; request:", JSON.stringify(data));
   }
 
   const anyOk = stored.status === "ok" || mailed.status === "ok";
