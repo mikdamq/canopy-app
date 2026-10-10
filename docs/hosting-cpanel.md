@@ -33,6 +33,7 @@ Fill in the form:
 
 - [ ] Under **Environment variables**, click **Add Variable** for each of the server settings in Part 3 (you can add them later too).
 - [ ] Click **Create**. cPanel makes the `lamina` folder with a sample `app.js`, which the next step replaces.
+- [ ] Your domain also has its own folder, `/home/chefxmkt/laminafarm.app` (cPanel made it when the domain was added). Leave it where it is: on **Create**, cPanel puts a small `.htaccess` file in it that hands visitors to the app. Open it in File Manager (with hidden files shown) and delete any placeholder page such as `index.html`, `index.php` or `default.html`, which could show instead of Lamina. **Keep** `.htaccess` and `.well-known` (AutoSSL needs it).
 
 ### 3. Let GitHub publish for you (recommended, 10 min)
 **a. An FTP account that can only see the site's folder**
