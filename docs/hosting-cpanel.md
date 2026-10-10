@@ -18,14 +18,14 @@ No DNS changes are needed: `laminafarm.app` already points at your hosting.
 
 ### 1. Check the Node.js version
 - [ ] cPanel → **Setup Node.js App** → **Create Application** → open the **Node.js version** list.
-- [ ] Pick the highest **22.x** (or at least **20.9**). If the highest on offer is below 20.9, stop and tell me; the site needs 20.9 or newer.
+- [ ] Pick **22.x** if it's listed (GitHub builds the site with Node 22); otherwise the highest version from **20.9** up, e.g. **24.21.0** (your plan offers it). If nothing is 20.9 or newer, stop and tell me.
 
 ### 2. Create the application
 Fill in the form:
 
 | Field | Value |
 |---|---|
-| Node.js version | the highest 22.x |
+| Node.js version | 22.x if listed, otherwise 24.x |
 | Application mode | **Production** |
 | Application root | `lamina` (a folder in your home directory, **not** inside `public_html`) |
 | Application URL | `laminafarm.app` (leave the path after it empty) |
