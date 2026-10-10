@@ -35,7 +35,8 @@ const C = {
   greenInk: "#086b4a",
   leaf: "#2e9e5b",
   tint: "#eaf5ee",
-  night: "#0b1222",
+  onGreen: "#e3f4ea",
+  greenDeep: "#17613a",
 };
 const LATIN = "'IBM Plex Sans',-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 const DISPLAY = "'Bricolage Grotesque',-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
@@ -173,25 +174,26 @@ export function visitorEmail(r: PilotRequest, ctx: EmailContext): Email {
   const body = `${logo(ctx.base)}
 <tr><td style="background:${C.paper};border-radius:20px;overflow:hidden">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-<tr><td style="background:#e6ebee;border-radius:20px 20px 0 0;overflow:hidden">
-<a href="${esc(demo)}" target="_blank"><img src="${ctx.base}/email/${type}.jpg" width="600" alt="${esc(d.request.farmTypes[r.farmType])}" style="display:block;width:100%;height:auto;border:0;border-radius:20px 20px 0 0"></a>
+<tr><td class="pad" align="center" style="background:${C.green};border-radius:20px 20px 0 0;padding:40px 40px 36px;text-align:center">
+<table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" width="72" height="72" style="width:72px;height:72px;border-radius:36px;background:#ffffff;color:${C.green};font:700 40px/72px Arial,sans-serif;text-align:center">&#10003;</td></tr></table>
+<div style="margin:20px 0 0"><span style="display:inline-block;padding:5px 14px;border-radius:999px;background:${C.greenDeep};color:${C.onGreen};font-size:13px;line-height:18px;font-weight:600">${esc(e.heroBadge)}</span></div>
+<h1 class="h1" style="margin:14px 0 10px;font:700 32px/40px ${display};color:#ffffff;letter-spacing:${rtl ? "0" : "-0.5px"}">${esc(fmt(e.heroTitle, v))}</h1>
+<p style="margin:0 auto;max-width:440px;font-size:17px;line-height:26px;color:${C.onGreen}">${esc(fmt(e.heroSub, v))}</p>
 </td></tr>
-<tr><td class="pad" style="padding:34px 40px 8px;text-align:${align}">
-<div style="width:40px;height:4px;background:${C.leaf};border-radius:4px;font-size:0;line-height:0">&nbsp;</div>
-<h1 class="h1" style="margin:18px 0 8px;font:700 30px/36px ${display};color:${C.ink};letter-spacing:${rtl ? "0" : "-0.5px"}">${esc(fmt(e.heroTitle, v))}</h1>
-<p style="margin:0;font-size:16px;line-height:25px;color:${C.muted}">${esc(fmt(e.heroSub, v))}</p>
+<tr><td style="background:#e6ebee;font-size:0;line-height:0">
+<a href="${esc(demo)}" target="_blank"><img src="${ctx.base}/email/${type}.jpg" width="600" alt="${esc(d.request.farmTypes[r.farmType])}" style="display:block;width:100%;height:auto;border:0"></a>
 </td></tr>
-<tr><td class="pad" style="padding:26px 40px 6px;text-align:${align}">
-<h2 style="margin:0 0 14px;font:700 18px/24px ${display};color:${C.ink}">${esc(e.nextTitle)}</h2>
+<tr><td class="pad" style="padding:32px 40px 6px;text-align:${align}">
+<h2 style="margin:0 0 16px;font:700 20px/26px ${display};color:${C.greenInk}">${esc(e.nextTitle)}</h2>
 ${steps
   .map(
-    (s, i) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 14px"><tr>
-<td valign="top" width="40" style="width:40px;padding-${rtl ? "left" : "right"}:12px">
-<div style="width:28px;height:28px;border-radius:14px;background:${C.green};color:#ffffff;font:700 14px/28px ${LATIN};text-align:center">${i + 1}</div>
+    (s, i) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 10px;background:${C.tint};border-radius:14px"><tr>
+<td valign="top" width="48" style="width:48px;padding:16px 0 16px;padding-${rtl ? "right" : "left"}:16px">
+<div style="width:32px;height:32px;border-radius:16px;background:${C.green};color:#ffffff;font:700 15px/32px ${LATIN};text-align:center">${i + 1}</div>
 </td>
-<td valign="top" style="text-align:${align}">
-<div style="font-weight:600;font-size:15px;line-height:22px;color:${C.ink}">${esc(fmt(s.t, v))}</div>
-<div style="font-size:14px;line-height:21px;color:${C.muted}">${esc(fmt(s.d, v))}</div>
+<td valign="top" style="padding:${rtl ? "16px 12px 16px 16px" : "16px 16px 16px 12px"};text-align:${align}">
+<div style="font-weight:700;font-size:16px;line-height:22px;color:${C.greenInk}">${esc(fmt(s.t, v))}</div>
+<div style="margin-top:2px;font-size:14px;line-height:21px;color:${C.ink}">${esc(fmt(s.d, v))}</div>
 </td></tr></table>`,
   )
   .join("")}
@@ -199,8 +201,8 @@ ${steps
 ${
   photos
     ? `<tr><td class="pad" style="padding:6px 40px 4px">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${C.tint};border-radius:14px"><tr><td style="padding:20px 22px;text-align:${align}">
-<p style="margin:0 0 14px;font-size:15px;line-height:22px;color:${C.greenInk};font-weight:600">${esc(fmt(e.photosHint, v))}</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${C.paper};border:2px solid ${C.green};border-radius:16px"><tr><td style="padding:22px 24px;text-align:${align}">
+<p style="margin:0 0 16px;font-size:16px;line-height:24px;color:${C.ink};font-weight:600">${esc(fmt(e.photosHint, v))}</p>
 ${button(photos, d.request.done.photos)}
 </td></tr></table>
 </td></tr>`
@@ -211,22 +213,23 @@ ${button(photos, d.request.done.photos)}
 </td></tr>
 <tr><td class="pad" style="padding:28px 40px 6px;text-align:${align}">
 <div style="border-top:1px solid ${C.line};font-size:0;line-height:0">&nbsp;</div>
-<h2 style="margin:22px 0 4px;font:700 18px/24px ${display};color:${C.ink}">${esc(e.summaryTitle)}</h2>
+<h2 style="margin:22px 0 4px;font:700 20px/26px ${display};color:${C.greenInk}">${esc(e.summaryTitle)}</h2>
 ${detailTable(requestRows(r, d), rtl)}
 <p style="margin:12px 0 0;font-size:13px;line-height:19px;color:${C.muted}">${esc(e.summaryNote)}</p>
 </td></tr>
 <tr><td class="pad" style="padding:26px 40px 36px;text-align:${align}">
-<p style="margin:0;font-size:15px;line-height:23px;color:${C.ink}">${esc(e.sign)}<br><strong>${esc(fmt(e.signName, v))}</strong></p>
+<p style="margin:0;font-size:15px;line-height:23px;color:${C.ink}">${esc(e.sign)}<br><strong style="color:${C.greenInk}">${esc(fmt(e.signName, v))}</strong></p>
 </td></tr>
 </table>
 </td></tr>
 <tr><td style="padding:22px 16px 8px;text-align:center;font-size:12px;line-height:19px;color:${C.muted}">
 ${esc(e.hours)}<br>
-<a href="mailto:${CONTACT_EMAIL}" style="color:${C.muted}">${CONTACT_EMAIL}</a> &nbsp;·&nbsp; <a href="${ctx.base}/${r.locale}/privacy" target="_blank" style="color:${C.muted}">${esc(d.request.privacyLink)}</a><br>
+<a href="mailto:${CONTACT_EMAIL}" style="color:${C.green};font-weight:600">${CONTACT_EMAIL}</a> &nbsp;·&nbsp; <a href="${ctx.base}/${r.locale}/privacy" target="_blank" style="color:${C.green};font-weight:600">${esc(d.request.privacyLink)}</a><br>
 ${esc(fmt(e.why, v))}
 </td></tr>`;
 
   const text = [
+    `✓ ${e.heroBadge}`,
     fmt(e.heroTitle, v),
     fmt(e.heroSub, v),
     "",
@@ -293,7 +296,7 @@ export function ownerEmail(r: PilotRequest, ctx: EmailContext): Email {
     `<span style="display:inline-block;padding:4px 10px;margin:0 6px 6px 0;border-radius:999px;background:${bg};color:${fg};font-size:12px;line-height:16px;font-weight:600">${esc(t)}</span>`;
 
   const fact = (label: string, value: string) => `<td class="stack" valign="top" width="25%" style="padding:0 8px 0 0">
-<div style="font-size:12px;line-height:16px;color:#9fb0c8">${esc(label)}</div>
+<div style="font-size:12px;line-height:16px;color:${C.onGreen}">${esc(label)}</div>
 <div style="font:700 17px/24px ${DISPLAY};color:#ffffff">${esc(value)}</div></td>`;
 
   const actions = [
@@ -306,10 +309,10 @@ export function ownerEmail(r: PilotRequest, ctx: EmailContext): Email {
   const body = `${logo(ctx.base, "New pilot request")}
 <tr><td style="background:${C.paper};border-radius:20px;overflow:hidden">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-<tr><td class="pad" style="background:${C.night};border-radius:20px 20px 0 0;padding:30px 36px 28px">
-<div>${chip(`#${ctx.id ? ctx.id.slice(0, 8) : "not saved"}`, "#1d2a44", "#c9d4e6")}${chip(lang, r.locale === "ar" ? "#3a1d3a" : "#1d2a44", r.locale === "ar" ? "#ffb3ee" : "#c9d4e6")}${chip(`from ${r.source}`, "#1d2a44", "#c9d4e6")}</div>
+<tr><td class="pad" style="background:${C.green};border-radius:20px 20px 0 0;padding:30px 36px 28px">
+<div>${chip(`#${ctx.id ? ctx.id.slice(0, 8) : "not saved"}`, C.greenDeep, C.onGreen)}${chip(lang, r.locale === "ar" ? "#ffe3f7" : "#ffffff", r.locale === "ar" ? "#8a1a6e" : C.greenInk)}${chip(`from ${r.source}`, C.greenDeep, C.onGreen)}</div>
 <h1 class="h1" style="margin:10px 0 4px;font:700 30px/36px ${DISPLAY};color:#ffffff;letter-spacing:-0.5px">${esc(r.farmName)}</h1>
-<p style="margin:0 0 22px;font-size:15px;line-height:22px;color:#c9d4e6">${esc(r.name)} · ${esc(get(q.fields.role))} · ${esc(country)}</p>
+<p style="margin:0 0 22px;font-size:15px;line-height:22px;color:${C.onGreen}">${esc(r.name)} · ${esc(get(q.fields.role))} · ${esc(country)}</p>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
 ${fact("Farm type", q.farmTypes[r.farmType])}${fact("Area", `${r.areaM2.toLocaleString("en")} m²`)}${fact("Levels", String(r.levels))}${fact("Tracks with", q.monitoring[r.monitoring])}
 </tr></table>
@@ -323,18 +326,18 @@ ${fact("Farm type", q.farmTypes[r.farmType])}${fact("Area", `${r.areaM2.toLocale
 ${
   r.message
     ? `<tr><td class="pad" style="padding:26px 36px 0">
-<div style="font-size:12px;line-height:16px;font-weight:600;color:${C.muted};text-transform:uppercase;letter-spacing:0.6px">In their words</div>
+<div style="font-size:12px;line-height:16px;font-weight:700;color:${C.greenInk};text-transform:uppercase;letter-spacing:0.6px">In their words</div>
 <div dir="auto" style="margin-top:8px;padding:14px 18px;border-left:4px solid ${C.leaf};background:${C.bg};border-radius:0 12px 12px 0;font-size:15px;line-height:23px;color:${C.ink}">${nl2br(r.message)}</div>
 </td></tr>`
     : ""
 }
 <tr><td class="pad" style="padding:26px 36px 0">
-<div style="font-size:12px;line-height:16px;font-weight:600;color:${C.muted};text-transform:uppercase;letter-spacing:0.6px">What they want</div>
+<div style="font-size:12px;line-height:16px;font-weight:700;color:${C.greenInk};text-transform:uppercase;letter-spacing:0.6px">What they want</div>
 <p style="margin:8px 0 0;font-size:15px;line-height:23px">${esc(get(q.fields.goals))}</p>
 <p style="margin:6px 0 0;font-size:14px;line-height:21px;color:${C.muted}">Grows: ${esc(get(q.fields.crops))}${r.sensorBrand ? ` · Sensors: ${esc(r.sensorBrand)}` : ""}</p>
 </td></tr>
 <tr><td class="pad" style="padding:26px 36px 0">
-<div style="font-size:12px;line-height:16px;font-weight:600;color:${C.muted};text-transform:uppercase;letter-spacing:0.6px">Your next steps</div>
+<div style="font-size:12px;line-height:16px;font-weight:700;color:${C.greenInk};text-transform:uppercase;letter-spacing:0.6px">Your next steps</div>
 <ol style="margin:8px 0 0;padding:0 0 0 20px;font-size:14px;line-height:22px;color:${C.ink}">
 <li>Say hello on WhatsApp${r.locale === "ar" ? " (in Arabic; the button writes it for you)" : ""} and ask for layout photos.</li>
 <li>Record a short video of their demo (<span style="color:${C.muted}">docs/launch-kit/demo-video.md</span>).</li>
@@ -342,7 +345,7 @@ ${
 </ol>
 </td></tr>
 <tr><td class="pad" style="padding:26px 36px 32px">
-<div style="font-size:12px;line-height:16px;font-weight:600;color:${C.muted};text-transform:uppercase;letter-spacing:0.6px">Everything they sent</div>
+<div style="font-size:12px;line-height:16px;font-weight:700;color:${C.greenInk};text-transform:uppercase;letter-spacing:0.6px">Everything they sent</div>
 <div style="margin-top:4px">${detailTable(rows, false)}</div>
 </td></tr>
 </table>
