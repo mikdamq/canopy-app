@@ -3,7 +3,7 @@
  * these are the custom steps after it. Everything is a no-op until the Umami / Clarity
  * IDs are set, so nothing breaks in development.
  */
-export type FunnelEvent = "demo_opened" | "demo_interaction" | "request_step" | "request_error" | "request_sent" | "whatsapp_click";
+export type FunnelEvent = "demo_opened" | "demo_interaction" | "request_details" | "request_error" | "request_sent" | "whatsapp_click";
 type Data = Record<string, string | number | boolean>;
 
 declare global {

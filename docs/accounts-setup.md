@@ -60,7 +60,7 @@ The live site runs on your **Namecheap hosting** (cPanel → Setup Node.js App).
 
 ### 8. WhatsApp Business (20 min, no Netlify setting)
 - [ ] Install **WhatsApp Business** on the phone with +962 78 7016 351. Your chats move over.
-- [ ] Set up the profile, greeting, away message, quick replies and labels from `docs/launch-kit/whatsapp-business.md` (needs your working hours, launch prep C5).
+- [ ] Set up the profile, greeting, away message, quick replies and labels from `docs/launch-kit/whatsapp-business.md` (working hours are filled in: Sunday to Thursday, 9:00–23:00).
 
 ---
 

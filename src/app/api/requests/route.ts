@@ -1,20 +1,12 @@
 import { requestSchema } from "@/lib/request-schema";
 import { sendRequestEmails } from "@/lib/server/mail";
+import { issueDetailsToken } from "@/lib/server/details-token";
 import { saveRequest } from "@/lib/server/store";
-
-/** Simple per-instance limit: 5 requests per IP per 10 minutes. */
-const hits = new Map<string, number[]>();
-function limited(ip: string) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < 10 * 60_000);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > 5;
-}
+import { limited } from "./limit";
 
 export async function POST(req: Request) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
-  if (limited(ip)) return Response.json({ ok: false, error: "rate_limited" }, { status: 429 });
+  if (limited(`send:${ip}`)) return Response.json({ ok: false, error: "rate_limited" }, { status: 429 });
 
   const body = (await req.json().catch(() => null)) as Record<string, unknown> | null;
   if (!body) return Response.json({ ok: false, error: "bad_json" }, { status: 400 });
@@ -42,6 +34,8 @@ export async function POST(req: Request) {
   const noneConfigured = stored.status === "skipped" && mailed.status === "skipped";
   if (!anyOk && !noneConfigured) return Response.json({ ok: false, error: "delivery_failed" }, { status: 502 });
 
-  // `emailed` tells the thank-you screen whether a confirmation email really went out.
-  return Response.json({ ok: true, id: stored.status === "ok" ? stored.id : undefined, emailed: mailed.status === "ok" });
+  // `emailed` tells the thank-you screen whether a confirmation email really went out;
+  // `details` lets the visitor add the optional answers to this request (and only this one).
+  const pass = issueDetailsToken(stored.status === "ok" ? stored.id : undefined);
+  return Response.json({ ok: true, emailed: mailed.status === "ok", details: pass.token });
 }

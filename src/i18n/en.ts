@@ -57,7 +57,7 @@ const en = {
   },
   how: {
     eyebrow: "How it works",
-    title: "From a 2-minute form to a live farm in about two weeks",
+    title: "From a one-minute form to a live farm in about two weeks",
     steps: [
       {
         t: "Tell us about your farm",
@@ -157,7 +157,7 @@ const en = {
       },
       {
         q: "Is it really free?",
-        a: "Yes, for pilot farms. We'll agree on pricing together before the pilot ends, and you can stop at any time.",
+        a: "Yes, for pilot farms. Before the pilot ends, we agree a price together, based on your farm's size. No surprises, no lock-in: you can stop at any time.",
       },
       {
         q: "Who can see my farm's data?",
@@ -167,7 +167,7 @@ const en = {
   },
   final: {
     title: "Ready to see your own farm?",
-    sub: "Tell us about it in 2 minutes. We reply within one business day.",
+    sub: "Tell us about it in a minute. We reply within one business day.",
     cta: "Request a pilot",
     demo: "Open the demo",
   },
@@ -412,15 +412,14 @@ const en = {
   request: {
     eyebrow: "Pilot request",
     title: "Tell us about your farm",
-    sub: "Takes about 2 minutes. No calls needed: we reply on WhatsApp or email within one business day.",
-    steps: ["About you", "Your farm", "Your goals", "What's next"],
-    progress: "Step {n} of {total}",
+    sub: "One short form, under a minute. No calls needed: we reply on WhatsApp or email within one business day.",
+    steps: ["Your farm and contact", "What's next"],
     doneHeading: "You're in, {name}",
     doneSub: "Your request is with us. Here's what happens next.",
     fields: {
       name: "Full name",
       email: "Work email",
-      phone: "Phone or WhatsApp",
+      phone: "WhatsApp number",
       phoneHint: "Include the country code, e.g. +962",
       role: "Your role",
       country: "Country",
@@ -475,8 +474,6 @@ const en = {
       "Plan harvests and deliveries",
       "Show the farm to investors or buyers",
     ],
-    next: "Next",
-    back: "Back",
     submit: "Send request",
     sending: "Sending…",
     errors: {
@@ -489,6 +486,8 @@ const en = {
       server: "We couldn't send your request. Please try again, or email us at {email}.",
     },
     done: {
+      badge: "Request received",
+      reply: "We'll reply within one business day, on WhatsApp or email.",
       emailed: "We've emailed you a copy.",
       nextTitle: "What happens next",
       next: [
@@ -502,17 +501,35 @@ const en = {
       demo: "Back to the demo",
       home: "Back to the homepage",
     },
+    details: {
+      title: "Tell us more (optional, about 2 minutes)",
+      sub: "Your farm's size, crops and goals help us prepare a better demo video. Only our team sees this, and we won't email you about it.",
+      open: "Add details",
+      send: "Send details",
+      sending: "Sending…",
+      done: "Thanks! We've added this to your request.",
+      error: "We couldn't save these details. Please try again, or send them on WhatsApp.",
+    },
     privacy: "We only use these details to reply to your request.",
     privacyLink: "Privacy policy",
   },
   email: {
     ownerSubject: "New pilot request: {farm} ({country})",
-    userSubject: "We received your request, {name}",
-    userHello: "Hi {name},",
-    userBody:
-      "Thanks for telling us about {farm}. We'll review your details and get back to you within one business day with next steps. To help us start, reply with a photo or sketch of your layout.",
-    userSummary: "Here's what you sent us:",
-    userSign: "The {brand} team",
+    userSubject: "You're in, {name}: what happens next for {farm}",
+    preheader: "We reply within one business day. One thing you can do now: send your layout photos.",
+    heroBadge: "Request received",
+    heroTitle: "You're in, {name}!",
+    heroSub: "We've got your pilot request for {farm}. We'll reply within one business day.",
+    nextTitle: "What happens next",
+    photosHint: "The fastest way to start: send us a few photos of {farm}'s layout.",
+    demoLink: "Open {farm}'s demo again",
+    summaryTitle: "Your request",
+    summaryNote: "Something wrong? Just reply to this email and we'll fix it.",
+    sign: "Talk soon,",
+    signName: "The {brand} team",
+    hours: "We reply Sunday to Thursday, 9:00–23:00 (Amman time).",
+    why: "You're getting this email because you asked for a pilot at {site}.",
+    ownerWhatsApp: "Hi {name}, this is Mikdam from Lamina. Thanks for your pilot request for {farm}!",
   },
 };
 

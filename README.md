@@ -70,7 +70,7 @@ There are no calls in the flow. If you ever want to offer one, put a Cal.com or 
 3. The funnel is tracked for you. Page views on `/en` or `/ar` are the landing step, then these events:
    - `demo_opened`: the demo loaded (`named` says whether a farm name was given);
    - `demo_interaction`: the first click, tap or key press inside the demo after the welcome card;
-   - `request_step` (`step` 2 or 3) and `request_error` (`step`, `field`): progress and problems in the request form;
+   - `request_error` (`field`) and `request_details` (`stage`: `open` or `sent`): problems in the request form, and use of the optional "Tell us more" questions;
    - `request_sent`: a pilot request went through (`source` is `landing` or `demo`);
    - `whatsapp_click`: someone opened WhatsApp (`place` says which button: `landing`, `founder`, `footer`, `request` or `demo`).
 4. In Umami, open **Reports → Funnel** and add the steps: page `/en` (or `/ar`), then `demo_opened`, `demo_interaction`, `request_sent`.
