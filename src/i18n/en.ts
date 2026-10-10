@@ -31,6 +31,14 @@ const en = {
     home: "Home",
     backToSite: "Back to site",
     privacy: "Privacy",
+    product: "Product",
+    solutions: "Solutions",
+    solutionsAll: "All farm types",
+    about: "About",
+    learn: "Guides",
+    pages: "Pages",
+    solutionNames: { tower: "Vertical farms", container: "Container farms", greenhouse: "Hydroponic greenhouses", lab: "Research labs" },
+    solutionHints: { tower: "Stacked floors and a lift", container: "Racks inside containers", greenhouse: "Bays, sun and LEDs", lab: "Growth chambers and trials" },
   },
   hero: {
     eyebrow: "For vertical and indoor farms",
@@ -56,6 +64,7 @@ const en = {
     items: ["Vertical farms", "Container farms", "Hydroponic greenhouses", "Research labs"],
   },
   how: {
+    more: "See the product",
     eyebrow: "How it works",
     title: "From a one-minute form to a live farm in about two weeks",
     steps: [
@@ -126,8 +135,10 @@ const en = {
     laterTitle: "Coming after the pilot",
     later: ["Live sensor connections", "Alerts and reports", "Several sites and team seats", "Yield and energy forecasts"],
     cta: "Request a pilot",
+    more: "How the pilot works",
   },
   founder: {
+    more: "About Lamina",
     eyebrow: "Who's behind it",
     title: "You'll work with me directly",
     note: [
@@ -142,6 +153,7 @@ const en = {
   faq: {
     eyebrow: "FAQ",
     title: "Questions farm owners ask us",
+    all: "See all questions",
     items: [
       {
         q: "Do I need sensors to start?",
