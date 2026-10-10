@@ -13,7 +13,8 @@ Last updated: 10 Oct 2026 (AutoSSL done; working hours and pricing answer decide
 - [ ] **Try the new navigation on your phone** (the Netlify "Deploy Preview" link on PR #6): the header stays while you scroll, and the demo has a "Lamina" home link and a ☰ menu. Tell me anything that feels off.
 - [x] Hosting decision: live site on **your Namecheap hosting** (cPanel Node.js); **Netlify** for staging only; no Vercel (9 Oct 2026)
 - [ ] **Netlify (staging only):** keep it for previews. Don't add the Supabase or email settings there, so test requests never reach your real inbox
-- [ ] **Review the new email designs** (sent in chat on 10 Oct 2026): the visitor's confirmation (EN/AR) and your new-request email. Round 2 (green success header, "The Lamina team") sent 10 Oct; say "go" and I open the PR
+- [x] **Review the new email designs**: approved 10 Oct 2026 (green success header, signed "The Lamina team")
+- [ ] **Merge the emails PR**, then send yourself one test request (English and Arabic) from laminafarm.app and check both emails, including on your phone
 - [ ] **Leave Vercel** (any time now): delete the Vercel project (Settings → Advanced → Delete), remove the Vercel app from GitHub (GitHub → Settings → Applications → Vercel → Uninstall), then delete your Vercel account if you like
 
 ## 2. Domain and email (guide: `docs/accounts-setup.md`, phase 1)
