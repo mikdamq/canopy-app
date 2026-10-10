@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 10 Oct 2026 (the site is live on your Namecheap hosting).
+Last updated: 10 Oct 2026 (the request form works end to end on the live site).
 
 **The minimum for a safe launch is sections 1–4.** Sections 5–7 can follow.
 
@@ -29,12 +29,13 @@ Last updated: 10 Oct 2026 (the site is live on your Namecheap hosting).
 
 ## 3. Accounts (guide: `docs/accounts-setup.md`, phase 2)
 
-- [ ] **Supabase:** create the project (Frankfurt) and run `supabase/schema.sql`
+- [x] **Supabase:** create the project (Frankfurt) and run `supabase/schema.sql`
 - [ ] **Umami:** sign up and choose the **Europe (EU)** region (same region as Supabase), add the website. *Send me the Website ID*
 - [x] **Clarity:** project created, Project ID `yv5sglt7cp` (not secret). Still to do: set **Masking: Strict** in Clarity, (the ID is already built into the site, nothing to add). Don't paste Clarity's script anywhere: the site already has it, behind the "Allow" prompt
 - [ ] **WhatsApp Business** on +962 78 7016 351, using the texts in `docs/launch-kit/whatsapp-business.md`
-- [ ] **Settings:** the server ones (Supabase, email; 2 are secret) go in **cPanel → Setup Node.js App → Environment variables**, then Restart. The Umami ID goes in **GitHub → Settings → Secrets and variables → Actions → Variables**, then rebuild. Full table: `docs/hosting-cpanel.md` Part 3. Never paste the 2 secret ones into chat
-- [ ] Then tell me **"settings are in"**, and I'll run the end-to-end test
+- [x] **Settings:** the server ones (Supabase, email; 2 are secret) go in **cPanel → Setup Node.js App → Environment variables**, then Restart. The Umami ID goes in **GitHub → Settings → Secrets and variables → Actions → Variables**, then rebuild. Full table: `docs/hosting-cpanel.md` Part 3. Never paste the 2 secret ones into chat
+- [x] End-to-end test (10 Oct 2026): a request from the live site arrived. On the way we fixed `SMTP_HOST` (it had a trailing space; now `premium239.web-hosting.com`, and the site ignores stray spaces since PR #11)
+  - [ ] Still to try: one request in **Arabic** on your phone, and check the emails don't land in **Spam**
 - [ ] Once laminafarm.app is live, open **https://pagespeed.web.dev**, test `laminafarm.app/en` and `laminafarm.app/en/demo`, and **send me the two result links**. My test machine can't measure real phone speed for the 3D pages
 
 ## 4. Decisions and answers
