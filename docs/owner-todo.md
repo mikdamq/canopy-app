@@ -58,7 +58,7 @@ Last updated: 10 Oct 2026 (AutoSSL done; working hours and pricing answer decide
 
 ## 5. Content only you can give
 
-- [ ] **Landing images (AI, photo-real, warm light):** make the 6 images in `docs/image-brief.md` with your own tool (check it isn't from an Israeli company), and send them in chat. Start with 1 and 2, the hero background
+- [ ] **(On hold, 10 Oct 2026) Landing images (AI, photo-real, warm light):** make the 6 images in `docs/image-brief.md` with your own tool (check it isn't from an Israeli company), and send them in chat. Start with 1 and 2, the hero background
 
 - [ ] **Founder photo:** square, at least 800 × 800 px, plain or soft background
 - [ ] **Founder text:** edit my draft on the landing page (EN and AR) so it sounds like you
