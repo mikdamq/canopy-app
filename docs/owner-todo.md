@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 9 Oct 2026 (automatic publishing to your cPanel over FTPS).
+Last updated: 10 Oct 2026 (the site is live on your Namecheap hosting).
 
 **The minimum for a safe launch is sections 1–4.** Sections 5–7 can follow.
 
@@ -21,10 +21,11 @@ Last updated: 9 Oct 2026 (automatic publishing to your cPanel over FTPS).
 - [ ] Turn on **Withheld for Privacy** and **Auto-renew** for laminafarm.app in Namecheap
 - [ ] Create the mailbox **hello@laminafarm.app** in **cPanel → Email Accounts** (included in your hosting), and note the outgoing server from **Connect Devices**
 - [ ] Add the email trust records: **SPF and DKIM** via cPanel → Email Deliverability → Repair, and **DMARC** in cPanel → Zone Editor
-- [ ] **Put the site live on your hosting:** follow `docs/hosting-cpanel.md` Part 1. No DNS changes needed; Netlify stays staging only
-  - [ ] Create the Node.js app (steps 1–2)
-  - [ ] Create the FTP account `deploy@laminafarm.app`, limited to the `lamina` folder, and add the 3 GitHub secrets `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` (step 3). After that, every merge publishes itself
-  - [ ] Run the workflow once, then **Run NPM Install** → **Restart** (steps 3c and 5), then **Run AutoSSL** (step 6)
+- [x] **Put the site live on your hosting:** live on 10 Oct 2026 🎉 follow `docs/hosting-cpanel.md` Part 1. No DNS changes needed; Netlify stays staging only
+  - [x] Create the Node.js app (steps 1–2)
+  - [x] Create the FTP account `deploy@laminafarm.app`, limited to the `lamina` folder, and add the 3 GitHub secrets (`FTP_SERVER` = `premium239.web-hosting.com`, the name on the server's certificate). Every merge now publishes itself
+  - [x] Run the workflow once, then **Run NPM Install** → **Restart** (steps 3c and 5)
+  - [ ] **Run AutoSSL** (step 6), and check the padlock on https://laminafarm.app and https://www.laminafarm.app
 
 ## 3. Accounts (guide: `docs/accounts-setup.md`, phase 2)
 

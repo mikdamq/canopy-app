@@ -69,6 +69,7 @@ Fill in the form:
 ### 5. Install and start
 - [ ] cPanel → **Setup Node.js App** → click the pencil next to `laminafarm.app`.
 - [ ] Click **Run NPM Install**. It downloads the three packages the site needs; this takes a minute or two.
+  - cPanel may then say *"An error occured… content type … doesn't equal…"*. That's harmless: it only means the page changed from cPanel's placeholder to Lamina. Carry on.
 - [ ] Click **Restart**.
 - [ ] Open **https://laminafarm.app**. You should see Lamina. The first visit after a restart can take a few seconds.
 
