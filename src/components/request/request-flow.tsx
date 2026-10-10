@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, CalendarCheck, Check, ChevronDown, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarCheck, Check, ChevronDown, Loader2, Mail } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
@@ -456,7 +456,7 @@ export default function RequestFlow({
                 transition={{ duration: 0.3, ease: EASE }}
                 className="flex flex-col gap-5"
               >
-                <h2 className="font-display text-[22px] font-bold">{r.steps[step]}</h2>
+                {step < 3 && <h2 className="font-display text-[22px] font-bold">{r.steps[step]}</h2>}
 
                 {step === 0 && (
                   <>
@@ -632,26 +632,44 @@ export default function RequestFlow({
 
                 {step === 3 && (
                   <div className="flex flex-col gap-6">
-                    {/* The page heading already says "You're in"; this line only adds real news. */}
-                    {emailed && (
-                      <p className="flex items-center gap-2.5 text-[14.5px] text-muted">
-                        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#eaf6ef] text-green">
-                          <Check className="size-4" aria-hidden />
-                        </span>
-                        {r.done.emailed}
-                      </p>
-                    )}
+                    {/* Success band, edge to edge across the top of the card, like the confirmation email. */}
+                    <div role="status" className="-mx-5 -mt-5 flex flex-col items-center gap-3 rounded-t-3xl bg-green px-6 pt-9 pb-8 text-center text-white sm:-mx-8 sm:-mt-8">
+                      <motion.span
+                        initial={{ scale: 0.4, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 320, damping: 16, delay: 0.1 }}
+                        className="grid size-16 place-items-center rounded-full bg-white text-green shadow-[0_0_0_10px_rgba(255,255,255,0.14)]"
+                      >
+                        <Check className="size-8" strokeWidth={3} aria-hidden />
+                      </motion.span>
+                      <span className="mt-2 rounded-full bg-[#17613a] px-3.5 py-1 text-[13px] font-semibold text-[#e3f4ea]">
+                        {r.done.badge}
+                      </span>
+                      <h2 className="font-display text-[22px] leading-snug font-bold text-balance sm:text-[26px]">{r.done.reply}</h2>
+                      {emailed && (
+                        <p className="flex items-center gap-2 text-[14.5px] text-[#e3f4ea]">
+                          <Mail className="size-4" aria-hidden />
+                          {r.done.emailed}
+                        </p>
+                      )}
+                    </div>
                     <div className="flex flex-col gap-3">
-                      <p className="text-[14px] font-semibold">{r.done.nextTitle}</p>
-                      <ol className="flex flex-col gap-4">
+                      <h3 className="font-display text-[18px] font-bold text-green-ink">{r.done.nextTitle}</h3>
+                      <ol className="flex flex-col gap-2.5">
                         {r.done.next.map((n, i) => (
-                          <li key={n.t} className="grid grid-cols-[28px_minmax(0,1fr)] gap-3">
-                            <span className="grid size-7 place-items-center rounded-full bg-[#eef1f6] font-mono text-[12px] text-muted" dir="ltr">
+                          <li
+                            key={n.t}
+                            className={cn(
+                              "grid grid-cols-[32px_minmax(0,1fr)] gap-3 rounded-2xl bg-[#eaf5ee] p-4",
+                              i === 0 && WHATSAPP_NUMBER && "ring-2 ring-green",
+                            )}
+                          >
+                            <span className="grid size-8 place-items-center rounded-full bg-green font-mono text-[13px] font-semibold text-white" dir="ltr">
                               {i + 1}
                             </span>
                             <div className="flex flex-col gap-0.5">
-                              <span className="text-[15px] font-semibold">{n.t}</span>
-                              <span className="text-[14px] leading-relaxed text-muted">{fmt(n.d, { farm: shownFarm })}</span>
+                              <span className="text-[15.5px] font-bold text-green-ink">{n.t}</span>
+                              <span className="text-[14px] leading-relaxed text-ink">{fmt(n.d, { farm: shownFarm })}</span>
                               {i === 0 && WHATSAPP_NUMBER && (
                                 <a
                                   href={whatsappUrl(fmt(r.done.photosMessage, { farm: shownFarm }))}
@@ -670,7 +688,7 @@ export default function RequestFlow({
                       </ol>
                     </div>
                     <div className="flex flex-wrap items-center gap-2 border-t border-line pt-5">
-                      <Link href={demoHref} className="rounded-xl bg-ink px-4 py-2.5 text-[14px] font-semibold text-white">
+                      <Link href={demoHref} className="rounded-xl border-2 border-green px-4 py-2 text-[14px] font-semibold text-green transition-colors hover:bg-green hover:text-white">
                         {r.done.demo}
                       </Link>
                       <Link href={`/${lang}`} className="rounded-xl border border-line px-4 py-2.5 text-[14px] font-semibold hover:border-ink">

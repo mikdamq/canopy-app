@@ -489,6 +489,8 @@ const en = {
       server: "We couldn't send your request. Please try again, or email us at {email}.",
     },
     done: {
+      badge: "Request received",
+      reply: "We'll reply within one business day, on WhatsApp or email.",
       emailed: "We've emailed you a copy.",
       nextTitle: "What happens next",
       next: [
