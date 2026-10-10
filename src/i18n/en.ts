@@ -57,7 +57,7 @@ const en = {
   },
   how: {
     eyebrow: "How it works",
-    title: "From a 2-minute form to a live farm in about two weeks",
+    title: "From a one-minute form to a live farm in about two weeks",
     steps: [
       {
         t: "Tell us about your farm",
@@ -167,7 +167,7 @@ const en = {
   },
   final: {
     title: "Ready to see your own farm?",
-    sub: "Tell us about it in 2 minutes. We reply within one business day.",
+    sub: "Tell us about it in a minute. We reply within one business day.",
     cta: "Request a pilot",
     demo: "Open the demo",
   },
