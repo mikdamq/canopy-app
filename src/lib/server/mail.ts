@@ -5,6 +5,7 @@ import ar from "@/i18n/ar";
 import en from "@/i18n/en";
 import { BRAND, brandName, CONTACT_EMAIL } from "@/lib/site";
 import { CROPS, GOALS, ROLES, type PilotRequest } from "@/lib/request-schema";
+import { env } from "./env";
 import type { ChannelResult } from "./store";
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
@@ -43,14 +44,14 @@ function table(list: [string, string][], rtl = false) {
 
 /** Email the team a new request, and send the visitor a confirmation in their language. */
 export async function sendRequestEmails(r: PilotRequest, id?: string): Promise<ChannelResult> {
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
+  const host = env("SMTP_HOST");
+  const user = env("SMTP_USER");
+  const pass = env("SMTP_PASS");
   if (!host || !user || !pass) return { status: "skipped" };
 
-  const port = Number(process.env.SMTP_PORT || 465);
-  const from = process.env.MAIL_FROM || `${BRAND} <${user}>`;
-  const notify = process.env.REQUESTS_NOTIFY_EMAIL || CONTACT_EMAIL;
+  const port = Number(env("SMTP_PORT") || 465);
+  const from = env("MAIL_FROM") || `${BRAND} <${user}>`;
+  const notify = env("REQUESTS_NOTIFY_EMAIL") || CONTACT_EMAIL;
   const transport = nodemailer.createTransport({ host, port, secure: port === 465, auth: { user, pass } });
 
   const d = r.locale === "ar" ? ar : en;

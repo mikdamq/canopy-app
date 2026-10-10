@@ -1,5 +1,6 @@
 import "server-only";
 import type { PilotRequest } from "@/lib/request-schema";
+import { env } from "./env";
 
 export type ChannelResult = { status: "ok"; id?: string } | { status: "skipped" } | { status: "failed"; error: string };
 
@@ -10,8 +11,8 @@ export type ChannelResult = { status: "ok"; id?: string } | { status: "skipped" 
  * as a Bearer token) or a newer secret key (`sb_secret_…`, sent only as `apikey`).
  */
 export async function saveRequest(r: PilotRequest, meta: { userAgent: string }): Promise<ChannelResult> {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = env("SUPABASE_URL");
+  const key = env("SUPABASE_SERVICE_ROLE_KEY");
   if (!url || !key) return { status: "skipped" };
 
   try {
