@@ -54,3 +54,11 @@ export function pageMeta({
     twitter: { card: "summary_large_image", title, description, images: [image] },
   };
 }
+
+/** Metadata for a content page: its own title (the layout adds " · Lamina"), description and links. */
+export function contentMeta(lang: Locale, path: string, meta: { title: string; description: string }, imageAlt: string): Metadata {
+  return {
+    title: meta.title,
+    ...pageMeta({ lang, path, title: `${meta.title} · ${lang === "ar" ? "لامينا" : BRAND}`, description: meta.description, imageAlt }),
+  };
+}

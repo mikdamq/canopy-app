@@ -38,7 +38,7 @@ Status: ☐ to do · ◐ in progress · ☑ done (with the PR)
 - **Phone:** logo · Request · ☰. The menu groups the same things: pages, then the two buttons.
 - The footer gets a full site map (all pages, both languages), which also helps search engines.
 
-☐ B1 new header (desktop + phone) · ☐ B2 menu sheet grouped · ☐ B3 footer site map
+☑ B1 new header (desktop + phone) · ☑ B2 menu sheet grouped · ☑ B3 footer site map
 
 ## C. Pages (each in English and Arabic, each with its own address, title and description)
 
@@ -55,7 +55,7 @@ Status: ☐ to do · ◐ in progress · ☑ done (with the PR)
 | Privacy | `/en/privacy` | As is | |
 | Guides | `/en/learn/…` | Short articles ("What is a digital twin for a farm?") — the strongest GEO signal | what is a farm digital twin… |
 
-☐ C1 page shells + routing · ☐ C2 Product · ☐ C3 Solutions ×4 · ☐ C4 Pilot · ☐ C5 About · ☐ C6 FAQ · ☐ C7 Home slimmed (links out to the pages) · ☐ C8 Guides (first 3 articles)
+☑ C1 page shells + routing · ☑ C2 Product · ☑ C3 Solutions ×4 (+ Solutions index) · ☑ C4 Pilot · ☑ C5 About · ☑ C6 FAQ · ☑ C7 Home links out to the pages · ☐ C8 Guides (first 3 articles, next PR)
 
 ## D. SEO and GEO, built in everywhere
 
@@ -70,7 +70,7 @@ Status: ☐ to do · ◐ in progress · ☑ done (with the PR)
 - **Internal links:** every page links to related pages and to the demo and request.
 - **Fix L8** (instant Back button) and confirm L7 (real phone speed) along the way.
 
-☐ D1 metadata helper + JSON-LD · ☐ D2 robots, sitemap, llms.txt · ☐ D3 alt text everywhere · ☐ D4 L8 Back button · ☐ D5 checks (Lighthouse, Rich Results, links)
+☑ D1 metadata helper + JSON-LD · ☑ D2 robots, sitemap, llms.txt · ☑ D3 alt text on every new image · ◐ D4 L8 Back button (header fixed; confirm on a phone) · ◐ D5 checks (done locally; Rich Results test once live)
 
 ## E. Owner tasks for this phase (also in `owner-todo.md`)
 - Google Search Console and Bing Webmaster Tools: verify laminafarm.app (DNS record in cPanel Zone Editor; step-by-step guide to come), then submit the sitemap.

@@ -56,6 +56,13 @@ Last updated: 10 Oct 2026 (AutoSSL done; working hours and pricing answer decide
 - [ ] **Trademark check** for "Lamina": WIPO Brand Database, classes 9 and 42 (plus Saudi Arabia's SAIP and the UAE if you can)
 - [ ] **Social handles:** grab @lamina / @laminafarm (or close) on Instagram and LinkedIn
 
+## 4b. Getting found (phase 3)
+
+- [ ] **Review the new pages' wording** (English and Arabic) on the preview link of the pages PR: Product, Solutions (4 farm types), Pilot, About, FAQ. Tell me anything that isn't true or doesn't sound like you
+- [ ] **Google Search Console:** add `laminafarm.app` as a Domain property, add the TXT record it gives you in **cPanel → Zone Editor**, then **Sitemaps → submit `https://laminafarm.app/sitemap.xml`**
+- [ ] **Bing Webmaster Tools** (also feeds Copilot and ChatGPT search): sign in, **Import from Google Search Console**, done
+- [ ] After the pages PR is live: on your phone, open a page, tap a link, then Back. It should come back instantly (L8)
+
 ## 5. Content only you can give
 
 - [ ] **(On hold, 10 Oct 2026) Landing images (AI, photo-real, warm light):** make the 6 images in `docs/image-brief.md` with your own tool (check it isn't from an Israeli company), and send them in chat. Start with 1 and 2, the hero background

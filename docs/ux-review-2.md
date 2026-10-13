@@ -127,7 +127,7 @@ A final pass on a production build, before the accounts are connected.
 - **L5 ☑ Copy:** the English and Arabic texts have the same keys and the same `{placeholders}`. No "Canopy" is left in anything a visitor sees; it remains only in internal names.
 - **L6 ☑ Supabase keys:** the form now saves with either kind of Supabase server key (the older `service_role` key or the newer `sb_secret_…` key), tested against a stand-in server.
 - **L7 ☐ Speed on a real phone:** this test machine draws the 3D in software, so its speed scores for the 3D pages (35–37) mean nothing. Run PageSpeed Insights on the live site instead (see the owner to-do list).
-- **L8 ☐ (minor) Back/forward cache:** pages are sent with `no-store`, so the browser's instant back button can't keep them. Worth a look after launch; not a blocker.
+- **L8 ◐ (minor) Back/forward cache:** the demo and the form were sent with `no-store`, so the browser's instant Back button couldn't keep them. Since phase 3 they're sent as `private, no-cache` (`next.config.ts`); the other pages were never `no-store`. Still to confirm on a real phone (headless Chrome in the test machine never restores pages from that cache).
 
 ## Fix order (one PR)
 

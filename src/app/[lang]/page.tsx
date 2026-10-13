@@ -15,7 +15,10 @@ import { SiteHeader } from "@/components/ui/site-header";
 import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { fmt, hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { SOLUTION_TYPES, solutionPath } from "@/lib/routes";
+import { organization, software, website, graph } from "@/lib/schema";
 import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/page/json-ld";
 import { brandName, CONTACT_EMAIL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -89,6 +92,15 @@ function PrimaryCta({ href, children, label }: { href: string; children: ReactNo
   );
 }
 
+function MoreLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <Link href={href} className="group inline-flex w-fit items-center gap-1.5 text-[15px] font-semibold text-green underline-offset-4 hover:underline">
+      {children}
+      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" aria-hidden />
+    </Link>
+  );
+}
+
 export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
@@ -140,6 +152,9 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
           <WordReveal text={d.how.title} className={h2} />
         </div>
         <Steps steps={d.how.steps} />
+        <div className="mt-10">
+          <MoreLink href={`/${lang}/product`}>{d.how.more}</MoreLink>
+        </div>
       </section>
 
       {/* Features: pinned 3D tour on desktop, cards on phones */}
@@ -214,11 +229,16 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
             {d.built.items.map((t, i) => {
               const Icon = [Building2, Container, Droplets, FlaskConical][i];
               return (
-                <li key={t} className="flex items-center gap-3 rounded-2xl border border-line bg-white px-4 py-3 text-[14.5px] font-medium">
-                  <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[#eef6f1] text-green">
-                    <Icon className="size-[18px]" aria-hidden />
-                  </span>
-                  {t}
+                <li key={t}>
+                  <Link
+                    href={`/${lang}${solutionPath(SOLUTION_TYPES[i])}`}
+                    className="flex h-full items-center gap-3 rounded-2xl border border-line bg-white px-4 py-3 text-[14.5px] font-medium transition-colors hover:border-green"
+                  >
+                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[#eef6f1] text-green">
+                      <Icon className="size-[18px]" aria-hidden />
+                    </span>
+                    {t}
+                  </Link>
                 </li>
               );
             })}
@@ -234,10 +254,11 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
               <Eyebrow>{d.pilot.eyebrow}</Eyebrow>
               <WordReveal text={d.pilot.title} className={h2} />
               <p className="max-w-[44ch] text-[16px] leading-relaxed text-muted">{d.pilot.sub}</p>
-              <div className="mt-2">
+              <div className="mt-2 flex flex-wrap items-center gap-5">
                 <PrimaryCta href={`/${lang}/request`} label={d.cursor.go}>
                   {d.pilot.cta}
                 </PrimaryCta>
+                <MoreLink href={`/${lang}/pilot`}>{d.pilot.more}</MoreLink>
               </div>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -274,6 +295,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
           <div className="flex flex-col gap-4">
             <Eyebrow>{d.founder.eyebrow}</Eyebrow>
             <WordReveal text={d.founder.title} className={h2} />
+            <MoreLink href={`/${lang}/about`}>{d.founder.more}</MoreLink>
           </div>
           <Reveal>
             <figure className="relative rounded-[32px] border border-line bg-white p-6 sm:p-10">
@@ -323,6 +345,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
           <div className="flex flex-col gap-4">
             <Eyebrow>{d.faq.eyebrow}</Eyebrow>
             <WordReveal text={d.faq.title} className={h2} />
+            <MoreLink href={`/${lang}/faq`}>{d.faq.all}</MoreLink>
           </div>
           <div className="flex flex-col">
             {d.faq.items.map((f, i) => (
@@ -374,6 +397,7 @@ export default async function Landing({ params }: PageProps<"/[lang]">) {
       </section>
 
       <SiteFooter lang={lang} d={d.footer} nav={d.nav} wa={d.whatsapp} />
+      <JsonLd data={graph(organization(), website(lang), software(lang, d.meta.description))} />
     </div>
     </MotionRoot>
   );

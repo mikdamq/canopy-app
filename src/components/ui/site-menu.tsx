@@ -10,23 +10,15 @@ import type { Dict } from "@/i18n/en";
 import { cn } from "@/lib/utils";
 import { LangSwitch } from "./lang-switch";
 import { Logo } from "./logo";
+import { sitePages, siteSolutions } from "./site-nav";
 import { WhatsAppIcon, WhatsAppLink } from "./whatsapp-link";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-/** The landing page's sections, linked from any page (`/en#how`). */
-export const siteSections = (lang: Locale, nav: Dict["nav"]) =>
-  [
-    [`/${lang}#how`, nav.how],
-    [`/${lang}#features`, nav.features],
-    [`/${lang}#who`, nav.who],
-    [`/${lang}#pilot`, nav.pilot],
-    [`/${lang}#faq`, nav.faq],
-  ] as const;
-
 /**
- * The menu button and its sheet: home, the demo, every landing section, the request
- * form, WhatsApp, privacy and the language switch. On the site it shows below the
+ * The menu button and its sheet: the site's pages (with the four farm types under
+ * Solutions), then the two actions (request a pilot, the live demo), WhatsApp, privacy
+ * and the language switch. On the site it shows below the
  * desktop breakpoint; in the demo (`always`) it shows at every size.
  */
 export function SiteMenu({
@@ -87,7 +79,7 @@ export function SiteMenu({
     () => false,
   );
   const close = () => setOpen(false);
-  const row = "border-b border-line py-3 font-display text-[22px] font-bold";
+  const row = "block border-b border-line py-3 font-display text-[22px] font-bold";
 
   return (
     <>
@@ -142,17 +134,27 @@ export function SiteMenu({
                       <X className="size-4" aria-hidden />
                     </button>
                   </div>
-                  <nav className="flex flex-col">
+                  <nav aria-label={nav.pages} className="flex flex-col">
                     <Link href={`/${lang}`} onClick={close} className={row}>
                       {nav.home}
                     </Link>
-                    <Link href={`/${lang}/demo`} onClick={close} className={cn(row, "text-green")}>
-                      {nav.demo}
-                    </Link>
-                    {siteSections(lang, nav).map(([href, label]) => (
-                      <a key={href} href={href} onClick={close} className={row}>
-                        {label}
-                      </a>
+                    {sitePages(lang, nav).map((pg) => (
+                      <div key={pg.key} className={pg.key === "solutions" ? "border-b border-line pb-2" : undefined}>
+                        <Link href={pg.href} onClick={close} className={cn(row, pg.key === "solutions" && "border-b-0 pb-1")}>
+                          {pg.label}
+                        </Link>
+                        {pg.key === "solutions" && (
+                          <ul className="grid grid-cols-2 gap-x-3 gap-y-1 pb-1">
+                            {siteSolutions(lang, nav).map((so) => (
+                              <li key={so.type}>
+                                <Link href={so.href} onClick={close} className="block py-1.5 text-[15px] font-semibold text-muted hover:text-ink">
+                                  {so.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
                     ))}
                   </nav>
                   <div className="flex flex-col gap-2">
@@ -162,6 +164,13 @@ export function SiteMenu({
                       className="rounded-xl bg-green px-4 py-3 text-center text-[15px] font-semibold text-white"
                     >
                       {nav.cta}
+                    </Link>
+                    <Link
+                      href={`/${lang}/demo`}
+                      onClick={close}
+                      className="rounded-xl border-2 border-green px-4 py-2.5 text-center text-[15px] font-semibold text-green"
+                    >
+                      {nav.demo}
                     </Link>
                     <WhatsAppLink
                       d={wa}
