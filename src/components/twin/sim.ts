@@ -185,7 +185,7 @@ export type Snapshot = {
   playing: boolean;
   sel: number;
   focus: number | null;
-  /** Which of the welcome card's three suggestions the visitor has tried. */
+  /** What the visitor has done; the guided tour moves on when they do a step's action. */
   tried: Tried;
   floors: FloorView[];
   step: JourneyStep;
@@ -267,6 +267,11 @@ export class FarmSim {
 
   select(k: number) {
     this.sel = k;
+    this.emit();
+  }
+  /** Forget what the visitor has tried (the guided tour starts counting afresh). */
+  resetTried() {
+    this.tried = { zoom: false, recipe: false, clock: false };
     this.emit();
   }
   setFocus(k: number | null) {

@@ -208,7 +208,7 @@ const en = {
   privacy: {
     eyebrow: "Privacy",
     title: "Privacy policy",
-    updated: "Last updated 7 October 2026",
+    updated: "Last updated 13 October 2026",
     intro:
       "This page explains what we collect when you visit this site, try the demo or request a pilot, why we collect it, and what you can ask us to do with it. We keep it short and plain on purpose.",
     sections: [
@@ -222,7 +222,7 @@ const en = {
       {
         t: "What we collect",
         p: [
-          "When you request a pilot: your name, email, phone or WhatsApp number, role, country, farm name, farm type and size, crops, how you track your farm today, your goals and any message you add. We also keep your browser's user agent, which helps us spot spam.",
+          "When you request a pilot: your farm's name and type, your name, email, WhatsApp number and country. If you choose to answer the optional questions afterwards, also your role, your farm's size, crops, how you track your farm today, your goals and any message you add. We also keep your browser's user agent, which helps us spot spam.",
           "When you try the demo: the farm name you type. It stays in the page address. We don't save it in our database, and we leave it out of our visit counts.",
           "When you browse: anonymous visit counts (which pages, which country, which device type, and steps like \"demo opened\" or \"request sent\"). These never include your name or contact details.",
         ],
@@ -239,6 +239,7 @@ const en = {
         t: "Cookies and analytics",
         p: [
           "We count visits with Umami, which uses no cookies and doesn't track you across sites.",
+          "Your browser also remembers two small choices on your device only: your answer to the recordings question, and whether you've finished the demo's tour. They're never sent to us.",
           "If you click \"Allow\", we also use Microsoft Clarity. It sets cookies and records how the page is used (clicks, scrolling, mouse movement) so we can see where people get stuck. Text you type into forms is hidden from these recordings. If you click \"No thanks\", Clarity never loads.",
           "You can change your choice at any time with \"Cookie settings\" at the bottom of the page.",
         ],
@@ -280,22 +281,37 @@ const en = {
     getThisShort: "Get this",
     site: "Tower 2",
     role: "Farm owner",
-    tryThis: {
-      title: "Try this",
-      /** After the farm type's own first item (types.*.zoomTry). */
-      items: ["Change a light recipe", "Move the clock"],
-      doneLabel: "done",
-      next: "Want this for {farm}?",
+    /** The toolbar: one panel open at a time. */
+    dock: {
+      label: "Farm panels",
+      floor: "Floor & lights",
+      clock: "Clock",
+      journey: "Seed to plate",
+      numbers: "Today",
+      close: "Close panel",
+    },
+    /** The guided tour after the welcome card. The first step uses types.*.zoomTry and types.*.tip. */
+    tour: {
+      label: "Guided tour",
+      replay: "Tour",
+      step: "{n} of {t}",
+      next: "Next",
+      back: "Back",
+      skip: "Skip tour",
+      doIt: "Try it now, or press Next.",
+      sensors: { t: "Live readings, where they happen", d: "Air, CO₂, water and light are pinned right where the sensors sit. In your twin, these come from your own data." },
+      recipe: { t: "Change the light recipe", d: "Pick another recipe for {unit} and watch growth speed and energy per kilo react." },
+      impact: { t: "See the effect before you change a fixture", d: "Growth speed and energy per kilo update with every change, so you can compare recipes safely." },
+      clock: { t: "Move through the day", d: "Drag the clock to night and watch the LEDs take over from the sun." },
+      journey: { t: "Follow every crate", d: "Seed, grow, harvest, pack, deliver: each batch moves along this line, with a live log underneath." },
+      done: { t: "That's the tour", d: "Keep exploring {farm}, or ask for the real thing: we'll build your own farm's twin, free for pilot farms." },
+      request: "Request a pilot",
+      explore: "Keep exploring",
     },
     welcome: {
       title: "Welcome to {farm}",
       titleNoName: "Welcome to your farm",
-      sub: "This is a live demo running on sample data. Here's what to try:",
-      /** After the farm type's own first tip (types.*.tip). */
-      tips: [
-        "Change a light recipe and watch growth speed react.",
-        "Drag the clock to night and watch the LEDs come on.",
-      ],
+      sub: "A live demo on sample data. Pick your type of farm, and a one-minute tour will show you around.",
       typeLabel: "Your type of farm",
       nameLabel: "Your farm's name",
       start: "Start exploring",
