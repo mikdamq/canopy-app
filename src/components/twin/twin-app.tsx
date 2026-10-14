@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Building2, Check, Container, Droplets, FlaskConical, Moon, MousePointerClick, PackageCheck, Pause, Play, Scissors, SlidersHorizontal, Sprout, Sun, Truck, ZoomIn } from "lucide-react";
+import { ArrowLeft, ArrowRight, BarChart3, Building2, Clock3, Compass, Container, Droplets, FlaskConical, Layers, Moon, PackageCheck, Pause, Play, Route, Scissors, Sprout, Sun, Truck, X, ZoomIn } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "motion/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -14,9 +14,9 @@ import { useMedia } from "@/lib/use-media";
 import { cn } from "@/lib/utils";
 import { Mark } from "@/components/ui/logo";
 import { SiteMenu } from "@/components/ui/site-menu";
-import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { DEMO_TYPES, type FarmType } from "./layouts";
 import type { AnchorSink } from "./scene";
+import { Tour, tourSeen, type TourPanel } from "./tour";
 import { FarmSim, JOURNEY, SPECTRA, fmtHour, type JourneyStep, type LogEntry, type Snapshot, type Spectrum } from "./sim";
 
 const FarmCanvas = dynamic(() => import("./scene"), { ssr: false });
@@ -49,12 +49,15 @@ class Anchors implements AnchorSink {
 
 /* ------------------------------ Primitives ------------------------------ */
 
-function Card({ className, children, delay = 0 }: { className?: string; children: ReactNode; delay?: number }) {
+/** A floating card over the 3D farm; `bare` drops the frame when it sits inside a panel. */
+function Card({ className, children, delay = 0, bare, ...rest }: { className?: string; children: ReactNode; delay?: number; bare?: boolean; "data-tour"?: string }) {
+  if (bare) return <div className={className} {...rest}>{children}</div>;
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: EASE, delay }}
+      {...rest}
       className={cn(
         "rounded-2xl border border-line bg-white/92 shadow-[0_12px_32px_-20px_rgba(20,27,43,0.45)] backdrop-blur-md",
         className,
@@ -110,6 +113,7 @@ function TagLayer({ snap, sim, anchors, d, rtl }: { snap: Snapshot; sim: FarmSim
             key={k}
             type="button"
             ref={anchors.bind(`f${k}`)}
+            data-tour={k === snap.sel ? "unit" : undefined}
             data-align={snap.type === "lab" ? "center" : "left"}
             dir={rtl ? "rtl" : "ltr"}
             style={hidden}
@@ -140,6 +144,7 @@ function TagLayer({ snap, sim, anchors, d, rtl }: { snap: Snapshot; sim: FarmSim
         <div
           key={i}
           ref={anchors.bind(`s${i}`)}
+          data-tour={i === 0 ? "sensors" : undefined}
           dir={rtl ? "rtl" : "ltr"}
           style={hidden}
           className="absolute top-0 left-0 rounded-lg border border-line bg-white/95 px-2 py-1 whitespace-nowrap shadow-sm"
@@ -154,7 +159,7 @@ function TagLayer({ snap, sim, anchors, d, rtl }: { snap: Snapshot; sim: FarmSim
 
 /* -------------------------------- Top bar ------------------------------- */
 
-function TopBar({ snap, d, lang, nav, wa, brand, farm, homeHref, ctaHref, langHref, onSwitchLang, langLabel, langTitle }: {
+function TopBar({ snap, d, lang, nav, wa, brand, farm, homeHref, ctaHref, langHref, onSwitchLang, langLabel, langTitle, onTour }: {
   snap: Snapshot;
   d: D;
   lang: Locale;
@@ -169,6 +174,8 @@ function TopBar({ snap, d, lang, nav, wa, brand, farm, homeHref, ctaHref, langHr
   onSwitchLang: () => string;
   langLabel: string;
   langTitle: string;
+  /** Starts the guided tour again. */
+  onTour: () => void;
 }) {
   const router = useRouter();
   const night = snap.day < 0.35;
@@ -206,8 +213,19 @@ function TopBar({ snap, d, lang, nav, wa, brand, farm, homeHref, ctaHref, langHr
       >
         {langLabel}
       </Link>
+      <button
+        type="button"
+        onClick={onTour}
+        title={d.tour.label}
+        className="flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap hover:border-ink"
+      >
+        <Compass className="size-3.5" aria-hidden />
+        <span className="hidden sm:inline">{d.tour.replay}</span>
+        <span className="sr-only sm:hidden">{d.tour.label}</span>
+      </button>
       <Link
         href={ctaHref}
+        data-tour="cta"
         className="hidden items-center gap-1.5 rounded-xl bg-green px-3 py-2 text-[13px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-green-ink sm:flex"
       >
         {d.getThis}
@@ -224,7 +242,7 @@ function TopBar({ snap, d, lang, nav, wa, brand, farm, homeHref, ctaHref, langHr
 
 /* --------------------------------- Stats -------------------------------- */
 
-function Stats({ snap, d }: { snap: Snapshot; d: D }) {
+function Stats({ snap, d, bare }: { snap: Snapshot; d: D; bare?: boolean }) {
   const solarShare = Math.min(100, Math.round((snap.solarKw / snap.loadKw) * 100));
   const items = [
     { k: d.stats.harvested, v: fmt(d.counts.kg, { n: snap.stats.kg }), s: fmt(d.stats.crates, { n: snap.stats.crates }), c: "text-green" },
@@ -237,9 +255,9 @@ function Stats({ snap, d }: { snap: Snapshot; d: D }) {
     { k: d.stats.deliveries, v: `${snap.stats.deliveries}`, s: d.van[snap.van], c: "text-[#2f5bea]" },
   ];
   return (
-    <div className="grid grid-cols-3 gap-2 lg:flex lg:gap-2.5">
+    <div className={cn("grid gap-2", bare ? "grid-cols-1" : "grid-cols-3 lg:flex lg:gap-2.5")}>
       {items.map((it, i) => (
-        <Card key={i} delay={0.05 * i} className="min-w-0 px-3 py-2.5 lg:min-w-[160px] lg:px-3.5">
+        <Card key={i} delay={0.05 * i} bare={bare} className={cn("min-w-0 px-3 py-2.5", bare ? "rounded-xl bg-[#f4f6fa]" : "lg:min-w-[160px] lg:px-3.5")}>
           <div className="text-[11px] leading-tight text-muted lg:truncate lg:text-[11.5px]">{it.k}</div>
           <div className="font-display text-[19px] leading-tight font-bold tabular-nums lg:text-[24px]">{it.v}</div>
           <div className={cn("line-clamp-2 font-mono text-[10.5px] leading-snug lg:truncate", it.c)}>{it.s}</div>
@@ -259,7 +277,7 @@ const PILL: Record<Snapshot["floors"][number]["state"], string> = {
   seeding: "bg-[#e3ebff] text-[#2f5bea]",
 };
 
-function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; reduce: boolean; d: D }) {
+function FloorPanel({ snap, sim, reduce, d, bare }: { snap: Snapshot; sim: FarmSim; reduce: boolean; d: D; bare?: boolean }) {
   const k = snap.sel;
   const f = snap.floors[k];
   const canHarvest = snap.busyFloor === null && (f.state === "growing" || f.state === "ready") && f.g >= 0.6;
@@ -274,7 +292,7 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
           : "";
   const zoomed = snap.focus === k;
   return (
-    <Card delay={0.1} className="flex min-w-0 flex-col gap-3.5 p-3.5">
+    <Card delay={0.1} bare={bare} className={cn("flex min-w-0 flex-col gap-3.5", !bare && "p-3.5")}>
       <div className="flex flex-wrap gap-1.5" role="group" aria-label={d.types[snap.type].group}>
         {snap.floors.map((_, i) => (
           <button
@@ -328,7 +346,7 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 border-t border-dashed border-line pt-3">
+          <div data-tour="recipe" className="flex flex-col gap-2 border-t border-dashed border-line pt-3">
             <Kicker>{d.lightRecipe}</Kicker>
             <div className="grid grid-cols-3 gap-1.5" role="group" aria-label={d.lightRecipe}>
               {(Object.keys(SPECTRA) as Spectrum[]).map((s) => (
@@ -368,7 +386,7 @@ function FloorPanel({ snap, sim, reduce, d }: { snap: Snapshot; sim: FarmSim; re
             />
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
+          <div data-tour="impact" className="grid grid-cols-3 gap-2">
             {[
               [d.growthSpeed, `${f.speedPct}%`, f.speedPct >= 100 ? "text-green" : "text-[#b76e00]"],
               [d.energyPerKg, `${f.kwhPerKg.toFixed(1)} kWh`, f.kwhPerKg <= 9.6 ? "text-green" : "text-[#b76e00]"],
@@ -427,7 +445,7 @@ const STEP_ICON: Record<JourneyStep, typeof Sprout> = {
   Deliver: Truck,
 };
 
-function Journey({ snap, d }: { snap: Snapshot; d: D }) {
+function Journey({ snap, d, bare }: { snap: Snapshot; d: D; bare?: boolean }) {
   const counts: Record<JourneyStep, string> = {
     Seed: fmt(d.counts.trays, { n: snap.stats.seeded }),
     Grow: fmt(d.types[snap.type].count, { n: snap.floors.filter((f) => f.state === "growing" || f.state === "ready").length }),
@@ -436,14 +454,14 @@ function Journey({ snap, d }: { snap: Snapshot; d: D }) {
     Deliver: fmt(d.counts.runs, { n: snap.stats.deliveries }),
   };
   return (
-    <Card delay={0.15} className="flex min-w-0 flex-col gap-3 p-3.5">
+    <Card delay={0.15} bare={bare} className={cn("flex min-w-0 flex-col gap-3", !bare && "p-3.5")}>
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <b className="text-[13.5px]">{d.journey}</b>
+        {!bare && <b className="text-[13.5px]">{d.journey}</b>}
         <span className="font-mono text-[11px] text-muted">
           {snap.busyFloor !== null ? fmt(d.inLine, { unit: unitName(d, snap.type, snap.busyFloor) }) : fmt(d.atDock, { n: snap.stack })}
         </span>
       </div>
-      <ol className="grid grid-cols-5 gap-1">
+      <ol data-tour="journey" className="grid grid-cols-5 gap-1">
         {JOURNEY.map((s, i) => {
           const Icon = STEP_ICON[s];
           const active = snap.step === s;
@@ -489,11 +507,11 @@ function Journey({ snap, d }: { snap: Snapshot; d: D }) {
 
 /* --------------------------------- Clock -------------------------------- */
 
-function Clock({ snap, sim, d }: { snap: Snapshot; sim: FarmSim; d: D }) {
+function Clock({ snap, sim, d, bare }: { snap: Snapshot; sim: FarmSim; d: D; bare?: boolean }) {
   const night = snap.day < 0.35;
   const lit = snap.floors.filter((f) => f.on).length;
   return (
-    <Card delay={0.2} className="flex min-w-0 flex-col gap-2.5 p-3.5">
+    <Card delay={0.2} bare={bare} data-tour="clock" className={cn("flex min-w-0 flex-col gap-2.5", !bare && "p-3.5")}>
       <div className="flex items-center justify-between gap-3">
         <div>
           <Kicker>{night ? d.nightShift : d.dayShift}</Kicker>
@@ -536,101 +554,74 @@ function Clock({ snap, sim, d }: { snap: Snapshot; sim: FarmSim; d: D }) {
         </div>
       </div>
       {/* Hidden on short laptop screens so the side panel fits without scrolling. */}
-      <p className="text-[11.5px] leading-snug text-muted lg:[@media(max-height:960px)]:hidden">{fmt(d.types[snap.type].litNote, { n: lit })}</p>
+      <p className="text-[11.5px] leading-snug text-muted">{fmt(d.types[snap.type].litNote, { n: lit })}</p>
     </Card>
   );
 }
 
-/* ------------------------------- CTA card ------------------------------- */
+/* --------------------------------- Dock --------------------------------- */
 
-function CtaCard({ d, wa, farm, named, href, pilotHref }: { d: D; wa: Dict["whatsapp"]; farm: string; named: string; href: string; pilotHref: string }) {
+const DOCK: { id: TourPanel; icon: typeof Layers }[] = [
+  { id: "floor", icon: Layers },
+  { id: "clock", icon: Clock3 },
+  { id: "journey", icon: Route },
+  { id: "numbers", icon: BarChart3 },
+];
+
+/** The toolbar: one panel open at a time, so the farm itself stays the main thing on screen. */
+function Dock({ d, panel, onPanel, compact }: { d: D; panel: TourPanel | null; onPanel: (p: TourPanel | null) => void; compact?: boolean }) {
   return (
-    <Card delay={0.25} className="flex flex-col gap-2.5 border-transparent bg-ink p-4 text-white">
-      <div className="font-display text-[18px] leading-snug font-bold">{fmt(d.cta.title, { farm })}</div>
-      <p className="text-[12.5px] leading-snug text-white/70">
-        {d.cta.sub}{" "}
-        <Link href={pilotHref} className="font-semibold text-white underline underline-offset-4 hover:text-[#7fe0a6]">
-          {d.cta.how}
-        </Link>
-      </p>
-      <div className="mt-1 flex gap-2">
-        <Link
-          href={href}
-          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-green px-3 py-2.5 text-[13.5px] font-semibold text-white transition-colors hover:bg-green-ink"
-        >
-          {d.cta.button}
-          <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
-        </Link>
-        <WhatsAppLink
-          d={wa}
-          farm={named}
-          place="demo"
-          className="grid w-11 shrink-0 place-items-center rounded-xl bg-white/10 text-white transition-colors hover:bg-white/20"
-        >
-          <WhatsAppIcon className="size-[18px]" />
-          <span className="sr-only">{wa.label}</span>
-        </WhatsAppLink>
-      </div>
-    </Card>
-  );
-}
-
-/* ------------------------------ Try this ------------------------------- */
-
-/**
- * The welcome card's three suggestions, kept on screen as a checklist that ticks
- * itself off. After two of three, it points to the request form.
- */
-function TryThis({ snap, d, farm, href, compact }: { snap: Snapshot; d: D; farm: string; href: string; compact?: boolean }) {
-  const items = [
-    ["zoom", d.types[snap.type].zoomTry],
-    ["recipe", d.tryThis.items[0]],
-    ["clock", d.tryThis.items[1]],
-  ] as const;
-  const done = items.filter(([k]) => snap.tried[k]).length;
-  const ready = done >= 2;
-  return (
-    <Card delay={0.15} className={cn("flex flex-col gap-2 p-3", !compact && "w-[250px]")}>
-      <div className="flex items-center justify-between gap-2">
-        <span className="font-mono text-[10.5px] tracking-[0.08em] text-muted uppercase">{d.tryThis.title}</span>
-        <span className="font-mono text-[11px] text-muted" dir="ltr">
-          {done}/3
-        </span>
-      </div>
-      <ul className={cn("flex gap-1.5", compact ? "flex-wrap" : "flex-col")}>
-        {items.map(([k, label]) => {
-          const ok = snap.tried[k];
-          return (
-            <li
-              key={k}
-              className={cn(
-                "flex items-center gap-2 text-[12.5px] leading-snug",
-                compact && "rounded-full border px-2.5 py-1",
-                compact && (ok ? "border-transparent bg-[#eaf6ef]" : "border-line"),
-              )}
-            >
-              <span
-                aria-hidden
-                className={cn(
-                  "grid size-4 shrink-0 place-items-center rounded-full transition-colors",
-                  ok ? "bg-green text-white" : "ring-1 ring-line",
-                )}
-              >
-                {ok && <Check className="size-3" strokeWidth={3} />}
-              </span>
-              <span className={cn(ok ? "text-muted line-through decoration-[#9aa6ba]" : "text-ink")}>{label}</span>
-              <span className="sr-only">{ok ? d.tryThis.doneLabel : ""}</span>
-            </li>
-          );
-        })}
-      </ul>
-      {ready && (
-        <Link href={href} className="mt-1 flex items-center gap-1 text-[12.5px] font-semibold text-green hover:underline">
-          {fmt(d.tryThis.next, { farm })}
-          <ArrowRight className="size-3.5 rtl:rotate-180" aria-hidden />
-        </Link>
+    <nav
+      aria-label={d.dock.label}
+      className={cn(
+        "rounded-2xl border border-line bg-white/92 p-1.5 shadow-[0_12px_32px_-20px_rgba(20,27,43,0.45)] backdrop-blur-md",
+        compact ? "grid grid-cols-4 gap-1" : "flex gap-1",
       )}
-    </Card>
+    >
+      {DOCK.map(({ id, icon: Icon }) => {
+        const on = panel === id;
+        return (
+          <button
+            key={id}
+            type="button"
+            aria-pressed={on}
+            aria-controls="demo-panel"
+            onClick={() => onPanel(on ? null : id)}
+            className={cn(
+              "flex items-center justify-center rounded-xl font-semibold whitespace-nowrap transition-colors",
+              compact ? "min-w-0 flex-col gap-1 px-1 py-2 text-[11px] leading-tight" : "gap-2 px-3.5 py-2 text-[13.5px]",
+              on ? "bg-ink text-white" : "text-muted hover:bg-[#f1f4f8] hover:text-ink",
+            )}
+          >
+            <Icon className="size-4 shrink-0" aria-hidden />
+            <span className={cn(compact && "max-w-full truncate")}>{d.dock[id]}</span>
+          </button>
+        );
+      })}
+    </nav>
+  );
+}
+
+/** The open panel, with its title and a close button. */
+function Panel({ d, panel, onClose, children }: { d: D; panel: TourPanel; onClose: () => void; children: ReactNode }) {
+  return (
+    <motion.section
+      id="demo-panel"
+      aria-label={d.dock[panel]}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 8 }}
+      transition={{ duration: 0.25, ease: EASE }}
+      className="flex min-w-0 flex-col gap-3 rounded-2xl border border-line bg-white/95 p-3.5 shadow-[0_12px_32px_-20px_rgba(20,27,43,0.45)] backdrop-blur-md"
+    >
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="text-[13.5px] font-bold">{d.dock[panel]}</h2>
+        <button type="button" onClick={onClose} aria-label={d.dock.close} className="grid size-7 place-items-center rounded-full text-muted hover:bg-[#f1f4f8] hover:text-ink">
+          <X className="size-4" aria-hidden />
+        </button>
+      </div>
+      {children}
+    </motion.section>
   );
 }
 
@@ -652,7 +643,6 @@ function Welcome({ d, farm, type, onType, onStart }: {
   useEffect(() => {
     (farm ? startBtn.current : input.current)?.focus();
   }, [farm]);
-  const icons = [MousePointerClick, SlidersHorizontal, Moon];
   return (
     <motion.div
       data-consent-wait
@@ -698,19 +688,6 @@ function Welcome({ d, farm, type, onType, onStart }: {
           </h2>
           <p className="text-[14px] text-muted">{d.welcome.sub}</p>
         </div>
-        <ul className="flex flex-col gap-2.5">
-          {[d.types[type].tip, ...d.welcome.tips].map((t, i) => {
-            const Icon = icons[i];
-            return (
-              <li key={i} className="flex items-start gap-3 text-[14px]">
-                <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-[#eef6f1] text-green">
-                  <Icon className="size-4" aria-hidden />
-                </span>
-                <span className="pt-1">{t}</span>
-              </li>
-            );
-          })}
-        </ul>
         <fieldset className="flex flex-col gap-1.5">
           <legend className="mb-1.5 text-[13px] font-medium">{d.welcome.typeLabel}</legend>
           <div className="grid grid-cols-2 gap-2">
@@ -800,6 +777,8 @@ export default function TwinApp({
   const wide = useMedia("(min-width: 1024px)");
   const [farm, setFarm] = useState(initialFarm);
   const [welcome, setWelcome] = useState(!resume?.skipWelcome);
+  const [panel, setPanel] = useState<TourPanel | null>("floor");
+  const [tour, setTour] = useState(false);
 
   useEffect(() => {
     if (reduce) sim.setPlaying(false);
@@ -847,11 +826,23 @@ export default function TwinApp({
     return `/${lang === "en" ? "ar" : "en"}/demo?${p}`;
   };
   const zoomed = snap.focus !== null;
+  const panelBody = (p: TourPanel) =>
+    p === "floor" ? (
+      <FloorPanel snap={snap} sim={sim} reduce={reduce} d={dict} bare />
+    ) : p === "clock" ? (
+      <Clock snap={snap} sim={sim} d={dict} bare />
+    ) : p === "journey" ? (
+      <Journey snap={snap} d={dict} bare />
+    ) : (
+      <Stats snap={snap} d={dict} bare />
+    );
 
   const start = (name: string) => {
     const clean = cleanFarmName(name);
     setFarm(clean);
     setWelcome(false);
+    // First visit on this device: the guided tour takes over from the welcome card.
+    if (!tourSeen()) setTour(true);
     const type = sim.layout.type;
     if (clean !== initialFarm || type !== initialType) router.replace(`/${lang}/demo${demoQuery(clean, type)}`, { scroll: false });
   };
@@ -869,7 +860,7 @@ export default function TwinApp({
           <TagLayer snap={snap} sim={sim} anchors={anchors} d={dict} rtl={lang === "ar"} />
 
           <div className="pointer-events-none fixed inset-x-3 top-3 z-40 lg:absolute lg:inset-x-4 lg:top-4 lg:z-30 [&>*]:pointer-events-auto">
-            <TopBar snap={snap} d={dict} lang={lang} nav={nav} wa={wa} brand={brandName(lang)} farm={shown} homeHref={`/${lang}`} ctaHref={ctaHref} langHref={langHref} onSwitchLang={switchLang} langLabel={langLabel} langTitle={langTitle} />
+            <TopBar snap={snap} d={dict} lang={lang} nav={nav} wa={wa} brand={brandName(lang)} farm={shown} homeHref={`/${lang}`} ctaHref={ctaHref} langHref={langHref} onSwitchLang={switchLang} langLabel={langLabel} langTitle={langTitle} onTour={() => setTour(true)} />
           </div>
 
           <AnimatePresence>
@@ -891,27 +882,20 @@ export default function TwinApp({
 
         {wide ? (
           <>
-            <div className="absolute start-4 top-[84px] z-30 flex flex-col items-start gap-3">
-              <Stats snap={snap} d={dict} />
-              {!welcome && <TryThis snap={snap} d={dict} farm={shown} href={ctaHref} />}
+            {/* The open panel sits on the right; the toolbar sits under the farm. */}
+            <div className="absolute end-4 top-[84px] bottom-4 z-30 flex w-[340px] flex-col overflow-y-auto pb-1">
+              <AnimatePresence mode="wait">{panel && <Panel key={panel} d={dict} panel={panel} onClose={() => setPanel(null)}>{panelBody(panel)}</Panel>}</AnimatePresence>
             </div>
-            <div className="absolute end-4 top-[84px] bottom-4 z-30 flex w-[340px] flex-col gap-3 overflow-y-auto pb-1 [@media(max-height:960px)]:gap-2.5">
-              <FloorPanel snap={snap} sim={sim} reduce={reduce} d={dict} />
-              <Clock snap={snap} sim={sim} d={dict} />
-              <CtaCard d={dict} wa={wa} farm={shown} named={farm} href={ctaHref} pilotHref={`/${lang}#pilot`} />
-            </div>
-            <div className="absolute start-4 bottom-4 z-30 w-[min(560px,calc(100%-388px))]">
-              <Journey snap={snap} d={dict} />
+            <div className="absolute start-4 end-[372px] bottom-4 z-30 flex justify-center">
+              <Dock d={dict} panel={panel} onPanel={setPanel} />
             </div>
           </>
         ) : (
           <div className="flex flex-col gap-3 border-t border-line bg-[#f1f4f8] p-3">
-            <Stats snap={snap} d={dict} />
-            {!welcome && <TryThis snap={snap} d={dict} farm={shown} href={ctaHref} compact />}
-            <FloorPanel snap={snap} sim={sim} reduce={reduce} d={dict} />
-            <CtaCard d={dict} wa={wa} farm={shown} named={farm} href={ctaHref} pilotHref={`/${lang}#pilot`} />
-            <Journey snap={snap} d={dict} />
-            <Clock snap={snap} sim={sim} d={dict} />
+            <div className="sticky top-[76px] z-30">
+              <Dock d={dict} panel={panel} onPanel={setPanel} compact />
+            </div>
+            <AnimatePresence mode="wait">{panel && <Panel key={panel} d={dict} panel={panel} onClose={() => setPanel(null)}>{panelBody(panel)}</Panel>}</AnimatePresence>
           </div>
         )}
 
@@ -919,12 +903,27 @@ export default function TwinApp({
         <div data-cta-bar className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 p-3 backdrop-blur sm:hidden">
           <Link
             href={ctaHref}
+            data-tour="cta"
             className="flex items-center justify-center gap-1.5 rounded-xl bg-green px-4 py-3 text-[15px] font-semibold text-white"
           >
             {dict.getThis}
             <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
           </Link>
         </div>
+
+        {tour && !welcome && (
+          <Tour
+            d={dict}
+            sim={sim}
+            snap={snap}
+            farm={shown}
+            ctaHref={ctaHref}
+            unit={unitName(dict, snap.type, snap.sel)}
+            onPanel={setPanel}
+            onClose={() => setTour(false)}
+            reduce={reduce}
+          />
+        )}
 
         <AnimatePresence>{welcome && <Welcome d={dict} farm={farm} type={snap.type} onType={(t) => sim.setType(t)} onStart={start} />}</AnimatePresence>
       </div>
