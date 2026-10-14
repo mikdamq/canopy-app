@@ -8,6 +8,7 @@ export const PAGE = {
   pilot: "/pilot",
   about: "/about",
   faq: "/faq",
+  learn: "/learn",
   demo: "/demo",
   request: "/request",
   privacy: "/privacy",
@@ -26,6 +27,19 @@ export const SOLUTION_SLUG: Record<SolutionType, string> = {
 
 export const solutionBySlug = (slug: string) => SOLUTION_TYPES.find((t) => SOLUTION_SLUG[t] === slug);
 export const solutionPath = (t: SolutionType) => `${PAGE.solutions}/${SOLUTION_SLUG[t]}`;
+
+/** The guides (short articles under /learn). Addresses are the same in both languages. */
+export const GUIDES = ["twin", "tracking", "compare"] as const;
+export type Guide = (typeof GUIDES)[number];
+
+export const GUIDE_SLUG: Record<Guide, string> = {
+  twin: "what-is-a-farm-digital-twin",
+  tracking: "seed-to-delivery-tracking",
+  compare: "container-vs-vertical-farm",
+};
+
+export const guideBySlug = (slug: string) => GUIDES.find((g) => GUIDE_SLUG[g] === slug);
+export const guidePath = (g: Guide) => `${PAGE.learn}/${GUIDE_SLUG[g]}`;
 
 export const href = (lang: Locale, path: string) => `/${lang}${path}`;
 

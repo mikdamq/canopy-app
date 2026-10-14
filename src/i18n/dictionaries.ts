@@ -1,6 +1,7 @@
 import "server-only";
 import type { Locale } from "./config";
 import type { Dict } from "./en";
+import type { GuidesDict } from "./guides-en";
 import type { PagesDict } from "./pages-en";
 
 const dictionaries: Record<Locale, () => Promise<Dict>> = {
@@ -19,3 +20,12 @@ const pages: Record<Locale, () => Promise<PagesDict>> = {
 /** Copy for the content pages (Product, Solutions, Pilot, About, FAQ). */
 export const getPages = (locale: Locale) => pages[locale]();
 export type { PagesDict };
+
+const guides: Record<Locale, () => Promise<GuidesDict>> = {
+  en: () => import("./guides-en").then((m) => m.default),
+  ar: () => import("./guides-ar").then((m) => m.default),
+};
+
+/** Copy for the guides under /learn. */
+export const getGuides = (locale: Locale) => guides[locale]();
+export type { GuidesDict };

@@ -55,7 +55,7 @@ Status: ☐ to do · ◐ in progress · ☑ done (with the PR)
 | Privacy | `/en/privacy` | As is | |
 | Guides | `/en/learn/…` | Short articles ("What is a digital twin for a farm?") — the strongest GEO signal | what is a farm digital twin… |
 
-☑ C1 page shells + routing · ☑ C2 Product · ☑ C3 Solutions ×4 (+ Solutions index) · ☑ C4 Pilot · ☑ C5 About · ☑ C6 FAQ · ☑ C7 Home links out to the pages · ☐ C8 Guides (first 3 articles, next PR)
+☑ C1 page shells + routing · ☑ C2 Product · ☑ C3 Solutions ×4 (+ Solutions index) · ☑ C4 Pilot · ☑ C5 About · ☑ C6 FAQ · ☑ C7 Home links out to the pages · ◐ C8 Guides: first 3 articles EN/AR (PR open; owner reviews the copy)
 
 ## D. SEO and GEO, built in everywhere
 

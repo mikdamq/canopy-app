@@ -100,6 +100,27 @@ export function service(lang: Locale, name: string, description: string, path: s
   };
 }
 
+export function article(
+  lang: Locale,
+  path: string,
+  a: { title: string; description: string; date: string; image: string; section: string },
+): Thing {
+  return {
+    "@type": "Article",
+    "@id": abs(`/${lang}${path}#article`),
+    mainEntityOfPage: { "@id": abs(`/${lang}${path}#page`) },
+    headline: a.title,
+    description: a.description,
+    image: abs(`/farms/${a.image}.webp`),
+    datePublished: a.date,
+    dateModified: a.date,
+    inLanguage: lang,
+    articleSection: a.section,
+    author: { "@type": "Person", name: "Mikdam Qandil", jobTitle: "Founder", worksFor: { "@id": ORG_ID() } },
+    publisher: { "@id": ORG_ID() },
+  };
+}
+
 /** One `<script type="application/ld+json">` holding a graph of things. */
 export function graph(...things: Thing[]) {
   return { "@context": "https://schema.org", "@graph": things };

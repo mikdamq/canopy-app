@@ -58,13 +58,14 @@ Last updated: 10 Oct 2026 (AutoSSL done; working hours and pricing answer decide
 
 ## 4a. Demo tour (13 Oct 2026)
 
-- [ ] **Try the new demo** on the preview link of the tour PR, on your phone and laptop: the guided tour starts after the welcome card, and the toolbar opens one panel at a time. To see the tour again, press **Tour** in the demo's top bar. Tell me anything that feels off (wording, which steps, the order)
+- [ ] **Try the new demo** (live since PR #14 was merged), on your phone and laptop: the guided tour starts after the welcome card, and the toolbar opens one panel at a time. To see the tour again, press **Tour** in the demo's top bar. Tell me anything that feels off (wording, which steps, the order)
 
 ## 4b. Getting found (phase 3)
 
 - [ ] **Review the new pages' wording** (now live since PR #13 was merged) (English and Arabic) on the preview link of the pages PR: Product, Solutions (4 farm types), Pilot, About, FAQ. Tell me anything that isn't true or doesn't sound like you
 - [ ] **Google Search Console:** add `laminafarm.app` as a Domain property, add the TXT record it gives you in **cPanel → Zone Editor**, then **Sitemaps → submit `https://laminafarm.app/sitemap.xml`**
 - [ ] **Bing Webmaster Tools** (also feeds Copilot and ChatGPT search): sign in, **Import from Google Search Console**, done
+- [ ] **Review the 3 guides** (English and Arabic) on the preview link of the guides PR, before it goes live: *What is a digital twin for a farm?*, *How to track a vertical farm from seed to delivery*, *Container farm vs. vertical farm*. They carry your name as the author ("By Mikdam Qandil, founder of Lamina"); tell me if you'd rather they say "The Lamina team". Also tell me any facts that don't match your experience, and topics for the next guides
 - [ ] After the pages PR is live: on your phone, open a page, tap a link, then Back. It should come back instantly (L8)
 
 ## 5. Content only you can give
