@@ -73,7 +73,7 @@ Status: ☐ to do · ◐ in progress · ☑ done (with the PR)
 ☑ D1 metadata helper + JSON-LD · ☑ D2 robots, sitemap, llms.txt · ☑ D3 alt text on every new image · ◐ D4 L8 Back button (header fixed; confirm on a phone) · ◐ D5 checks (done locally; Rich Results test once live)
 
 ## E. Owner tasks for this phase (also in `owner-todo.md`)
-- Google Search Console and Bing Webmaster Tools: verify laminafarm.app (DNS record in cPanel Zone Editor; step-by-step guide to come), then submit the sitemap.
+- Google Search Console and Bing Webmaster Tools: verify laminafarm.app (step-by-step guide: `docs/search-console.md`), then submit the sitemap.
 - Google Business Profile (optional, helps "near me" and trust).
 - Review the new page copy (EN/AR) before it goes live, especially About and Pilot.
 
