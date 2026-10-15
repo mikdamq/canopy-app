@@ -2,12 +2,13 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 15 Oct 2026 (cleaned up: open items first, in order; finished ones moved to the end).
+Last updated: 15 Oct 2026 (growth plan added for review; GA4 decided).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
 ## 1. This week
 
+- [ ] **Review the growth plan** in `docs/growth-plan.md` (tracking with GA4, keywords, site map, next articles, schema) and reply "go" or tell me what to change. Also send me **your LinkedIn profile address** (for the author page).
 - [ ] **Review the 3 guides** (English and Arabic) on the preview of PR #15, then say "Merge":
   - English: https://deploy-preview-15--frabjous-caramel-1e10ec.netlify.app/en/learn
   - Arabic: https://deploy-preview-15--frabjous-caramel-1e10ec.netlify.app/ar/learn
