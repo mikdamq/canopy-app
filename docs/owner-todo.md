@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 16 Oct 2026 (guides merged; company names removed; GA4 ready).
+Last updated: 16 Oct 2026 (LinkedIn company page: step 1).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
@@ -54,7 +54,12 @@ Last updated: 16 Oct 2026 (guides merged; company names removed; GA4 ready).
 - [ ] **Look through the kit:** one-pager, banners, 5 posts and clips in `docs/marketing/`. Tell me what to change: wording, images, colours.
 - [ ] Ask a native speaker to read the **Arabic** of posts 1 and 5 and the Arabic one-pager.
 - [ ] **Your LinkedIn profile:** new banner, headline, a line about Lamina and the Featured link (texts in `docs/marketing/profiles.md`). Prospects will look you up.
-- [ ] **Create the Lamina company page** on LinkedIn: logo, cover, tagline and About (all in `profiles.md`).
+- [ ] **Create the Lamina company page** on LinkedIn (walked through step by step in the marketing chat, 16 Oct):
+  - [ ] Step 1, basics: name **Lamina**, address `linkedin.com/company/laminafarm`, website with UTM, industry **Software Development**, size **2–10**, type **Privately held**, location **Amman, Jordan** (decided 16 Oct). Tell me the address you actually got
+  - [ ] Step 2, logo `social/logo-400.png` and the new cover (LinkedIn now wants **4200 × 700**, JPEG, under 3 MB; I'm re-rendering EN and AR)
+  - [ ] Step 3, tagline and About, plus the **Arabic** version via Manage languages (decided 16 Oct; a language can't be removed once added)
+  - [ ] Step 4, custom button, specialties, hashtags
+  - [ ] Step 5, link your profile, invite people, first 3 posts, 2-week plan
 - [ ] **Post 1** once the promises in section 2 are confirmed, then one post every 2–3 days (`posts.md`).
 - [ ] **Social handles:** grab @lamina / @laminafarm (or close) on Instagram and LinkedIn. Instagram posts can come later, with the same images and bio.
 
