@@ -48,6 +48,25 @@ export const GUIDE_SLUG: Record<Guide, string> = {
   compare: "container-vs-vertical-farm",
 };
 
+/** The guide groups on the Guides page. The main guide ("guide") is featured on its own. */
+export const GUIDE_TOPICS = ["monitoring", "money", "gulf"] as const;
+export type GuideTopic = (typeof GUIDE_TOPICS)[number];
+export const GUIDE_TOPIC: Record<Exclude<Guide, "guide">, GuideTopic> = {
+  twin: "monitoring",
+  tracking: "monitoring",
+  sensors: "monitoring",
+  lights: "monitoring",
+  energy: "money",
+  cost: "money",
+  yield: "money",
+  failures: "money",
+  water: "gulf",
+  heat: "gulf",
+  compare: "gulf",
+  containers: "gulf",
+};
+export const topicOf = (g: Guide): GuideTopic | undefined => (g === "guide" ? undefined : GUIDE_TOPIC[g]);
+
 export const guideBySlug = (slug: string) => GUIDES.find((g) => GUIDE_SLUG[g] === slug);
 export const guidePath = (g: Guide) => `${PAGE.learn}/${GUIDE_SLUG[g]}`;
 

@@ -66,6 +66,15 @@ const guidesEn = {
     sources: "Sources",
     terms: "Words used in this guide",
     start: "Start here",
+    onThisPage: "On this page",
+    close: "Close",
+    all: "See all guides",
+    topicsLabel: "Topics",
+    topics: {
+      monitoring: { t: "Monitoring and tracking", d: "See the whole farm, track every batch, and measure the right things in the right places." },
+      money: { t: "Energy and money", d: "Energy, cost and yield per kilo, and what the farms that failed teach the rest." },
+      gulf: { t: "Gulf farming and resources", d: "Heat, water, and choosing the right kind of farm and software for the region." },
+    },
   },
   items: {
     twin: {
