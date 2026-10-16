@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/ui/site-header";
 import type { Locale } from "@/i18n/config";
 import type { Dict, PagesDict } from "@/i18n/dictionaries";
 import { PAGE, href } from "@/lib/routes";
+import { cn } from "@/lib/utils";
 import { breadcrumbs as breadcrumbLd, graph } from "@/lib/schema";
 import { PrimaryLink, SecondaryLink } from "./blocks";
 import { JsonLd } from "./json-ld";
@@ -24,6 +25,7 @@ export function PageShell({
   path,
   crumbs,
   ld,
+  band,
   children,
 }: {
   lang: Locale;
@@ -32,6 +34,8 @@ export function PageShell({
   path: string;
   crumbs: Crumb[];
   ld: Record<string, unknown>[];
+  /** Put the breadcrumb on a green band, so a green page hero can follow it seamlessly. */
+  band?: boolean;
   children: ReactNode;
 }) {
   const other = lang === "en" ? "ar" : "en";
@@ -40,17 +44,18 @@ export function PageShell({
     <div className="flex min-h-svh flex-col bg-bg">
       <SiteHeader lang={lang} nav={d.nav} wa={d.whatsapp} langHref={`/${other}${path}`} />
       <main id="main" className="flex-1">
+        <div className={band ? "bg-green" : undefined}>
         <nav aria-label={p.common.breadcrumb} className="mx-auto w-full max-w-6xl px-4 pt-6 sm:px-6">
-          <ol className="flex flex-wrap items-center gap-1.5 text-[13px] text-muted">
+          <ol className={cn("flex flex-wrap items-center gap-1.5 text-[13px]", band ? "text-[#d6efe0]" : "text-muted")}>
             {trail.map((c, i) => (
               <li key={c.path} className="flex items-center gap-1.5">
                 {i > 0 && <ChevronRight className="size-3.5 rtl:rotate-180" aria-hidden />}
                 {i < trail.length - 1 ? (
-                  <Link href={c.path} className="underline-offset-4 hover:text-ink hover:underline">
+                  <Link href={c.path} className={cn("underline-offset-4 hover:underline", band ? "hover:text-white" : "hover:text-ink")}>
                     {c.name}
                   </Link>
                 ) : (
-                  <span aria-current="page" className="font-semibold text-ink">
+                  <span aria-current="page" className={cn("line-clamp-1 font-semibold", band ? "text-white" : "text-ink")}>
                     {c.name}
                   </span>
                 )}
@@ -58,6 +63,7 @@ export function PageShell({
             ))}
           </ol>
         </nav>
+        </div>
         {children}
         <section className="mx-auto w-full max-w-6xl px-4 pb-16 sm:px-6 lg:pb-24">
           <div className="flex flex-col items-start gap-5 rounded-3xl bg-green px-6 py-10 text-white sm:px-10 lg:flex-row lg:items-center lg:justify-between">

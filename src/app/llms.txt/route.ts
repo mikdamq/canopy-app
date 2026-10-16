@@ -1,6 +1,7 @@
 import en from "@/i18n/en";
+import guides from "@/i18n/guides-en";
 import pages from "@/i18n/pages-en";
-import { PAGE, SOLUTION_TYPES, solutionPath } from "@/lib/routes";
+import { GUIDES, PAGE, SOLUTION_TYPES, guidePath, solutionPath } from "@/lib/routes";
 import { BRAND, BRAND_AR, CONTACT_EMAIL, baseUrl } from "@/lib/site";
 
 /**
@@ -29,9 +30,14 @@ ${SOLUTION_TYPES.map((t) => line(s[t].meta.title, solutionPath(t), s[t].meta.des
 ${line(pages.pilot.meta.title, PAGE.pilot, pages.pilot.meta.description)}
 ${line(pages.about.meta.title, PAGE.about, pages.about.meta.description)}
 ${line(pages.faq.meta.title, PAGE.faq, pages.faq.meta.description)}
+${line(guides.index.meta.title, PAGE.learn, guides.index.meta.description)}
 - [Live demo](${u(PAGE.demo)}): ${en.hero.note} Add ?farm=Your%20Farm to see it with a farm's name, and &type=container, greenhouse or lab for other farm types.
 - [Request a pilot](${u(PAGE.request)}): a one-minute form; the team replies within one business day on WhatsApp or email.
 - [Arabic home page](${ar(PAGE.home)})
+
+## Guides
+
+${GUIDES.map((g) => line(guides.items[g].title, guidePath(g), guides.items[g].lead)).join("\n")}
 
 ## Key facts
 

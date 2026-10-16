@@ -1,11 +1,12 @@
 import { Database, Lightbulb, Layers, Route, Sun, Users } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Cards, FarmImage, Faq, PageIntro, PrimaryLink, SecondaryLink, Section, Steps, Ticks } from "@/components/page/blocks";
 import { PageShell } from "@/components/page/page-shell";
 import { hasLocale } from "@/i18n/config";
-import { getDictionary, getPages } from "@/i18n/dictionaries";
-import { PAGE, href } from "@/lib/routes";
+import { getDictionary, getGuides, getPages } from "@/i18n/dictionaries";
+import { PAGE, guidePath, href } from "@/lib/routes";
 import { faqPage, software, webPage } from "@/lib/schema";
 import { contentMeta } from "@/lib/seo";
 
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/product">)
 export default async function ProductPage({ params }: PageProps<"/[lang]/product">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const [d, p] = await Promise.all([getDictionary(lang), getPages(lang)]);
+  const [d, p, g] = await Promise.all([getDictionary(lang), getPages(lang), getGuides(lang)]);
   const x = p.product;
   const icon = "size-5";
 
@@ -49,6 +50,11 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
           {x.what.map((t) => (
             <p key={t}>{t}</p>
           ))}
+          <p>
+            <Link href={href(lang, guidePath("twin"))} className="font-semibold text-green underline underline-offset-4 hover:text-green-ink">
+              {g.index.open}: {g.items.twin.title}
+            </Link>
+          </p>
         </div>
       </Section>
 

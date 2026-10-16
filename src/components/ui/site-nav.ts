@@ -8,6 +8,7 @@ export const sitePages = (lang: Locale, nav: Dict["nav"]) =>
     { key: "product", href: href(lang, PAGE.product), label: nav.product },
     { key: "solutions", href: href(lang, PAGE.solutions), label: nav.solutions },
     { key: "pilot", href: href(lang, PAGE.pilot), label: nav.pilot },
+    { key: "learn", href: href(lang, PAGE.learn), label: nav.learn },
     { key: "about", href: href(lang, PAGE.about), label: nav.about },
     { key: "faq", href: href(lang, PAGE.faq), label: nav.faq },
   ] as const;

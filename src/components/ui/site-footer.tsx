@@ -30,6 +30,7 @@ export function SiteFooter({ lang, d, nav, wa }: { lang: Locale; d: Dict["footer
       title: BRAND,
       links: [
         [h("/pilot"), nav.pilot],
+        [h("/learn"), nav.learn],
         [h("/about"), nav.about],
         [h("/faq"), nav.faq],
         [h("/privacy"), d.privacy],

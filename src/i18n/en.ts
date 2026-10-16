@@ -200,7 +200,7 @@ const en = {
     prefer: "Prefer to chat?",
   },
   consent: {
-    text: "Can we record anonymous visits to see how people use the demo? It sets a cookie and helps us make it better.",
+    text: "Can we use cookies to measure visits (Google Analytics) and record anonymous sessions (Microsoft Clarity)? It helps us make the site and the demo better.",
     accept: "Allow",
     decline: "No thanks",
     more: "Privacy policy",
@@ -208,7 +208,7 @@ const en = {
   privacy: {
     eyebrow: "Privacy",
     title: "Privacy policy",
-    updated: "Last updated 13 October 2026",
+    updated: "Last updated 16 October 2026",
     intro:
       "This page explains what we collect when you visit this site, try the demo or request a pilot, why we collect it, and what you can ask us to do with it. We keep it short and plain on purpose.",
     sections: [
@@ -240,14 +240,14 @@ const en = {
         p: [
           "We count visits with Umami, which uses no cookies and doesn't track you across sites.",
           "Your browser also remembers two small choices on your device only: your answer to the recordings question, and whether you've finished the demo's tour. They're never sent to us.",
-          "If you click \"Allow\", we also use Microsoft Clarity. It sets cookies and records how the page is used (clicks, scrolling, mouse movement) so we can see where people get stuck. Text you type into forms is hidden from these recordings. If you click \"No thanks\", Clarity never loads.",
+          "If you click \"Allow\", we also use two tools that set cookies. Google Analytics counts visits and the steps people take (for example opening the demo or sending a request), with advertising features and Google signals turned off; we never send it your name, contact details or farm name. Microsoft Clarity records how the page is used (clicks, scrolling, mouse movement) so we can see where people get stuck; text you type into forms is hidden from these recordings. If you click \"No thanks\", neither of them loads.",
           "You can change your choice at any time with \"Cookie settings\" at the bottom of the page.",
         ],
       },
       {
         t: "Who else handles it",
         p: [
-          "We use a few trusted services to run the site: our hosting provider, Supabase (database), our email provider (to send you a copy of your request), Cal.com (if you choose to book a time with us), Umami (visit counts) and Microsoft Clarity (only if you allow it). They only process your data to provide their service to us.",
+          "We use a few trusted services to run the site: our hosting provider, Supabase (database), our email provider (to send you a copy of your request), Cal.com (if you choose to book a time with us), Umami (visit counts), and Google Analytics and Microsoft Clarity (only if you allow them). They only process your data to provide their service to us.",
           "If you message us on WhatsApp, that conversation is handled by WhatsApp (Meta) under its own privacy policy, and we see your name and number there.",
           "Some of these services store data outside Jordan, for example in the European Union or the United States.",
         ],

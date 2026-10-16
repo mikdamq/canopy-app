@@ -2,15 +2,20 @@
 
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Script from "next/script";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
 import {
   CLARITY_ID,
   CONSENT_OPEN_EVENT,
+  GA_ID,
+  NEEDS_CONSENT,
   UMAMI_ID,
   UMAMI_SRC,
+  cleanLocation,
+  clearGaCookies,
   consentSnapshot,
   flushPending,
   stripFarm,
@@ -24,8 +29,10 @@ import { SITE_URL } from "@/lib/site";
 if (typeof window !== "undefined") (window as unknown as Record<string, unknown>).canopyBeforeSend = stripFarm;
 
 /**
- * Umami (no cookies) always runs once its ID is set. Microsoft Clarity sets cookies,
- * so it only loads after the visitor clicks "Allow" in the consent prompt.
+ * Umami (no cookies) always runs once its ID is set. Microsoft Clarity and Google
+ * Analytics 4 set cookies, so they only load after the visitor clicks "Allow" in the
+ * consent prompt. GA4 runs with Google signals and ad features off, and its page views
+ * never carry the farm name (?farm=).
  */
 export function Analytics({ lang, d }: { lang: Locale; d: Dict["consent"] }) {
   // undefined = not read yet (server render), null = not asked yet.
@@ -33,7 +40,7 @@ export function Analytics({ lang, d }: { lang: Locale; d: Dict["consent"] }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (!CLARITY_ID) return;
+    if (!NEEDS_CONSENT) return;
     // Let the page settle before asking.
     const t = consentSnapshot() === null ? window.setTimeout(() => setOpen(true), 2500) : undefined;
     const reopen = () => setOpen(true);
@@ -51,6 +58,8 @@ export function Analytics({ lang, d }: { lang: Locale; d: Dict["consent"] }) {
     if (withdrawing) {
       // Clarity erases its cookies, then a reload makes sure its script is gone.
       window.clarity?.("consent", false);
+      window.gtag?.("consent", "update", { analytics_storage: "denied" });
+      clearGaCookies();
       window.location.reload();
     }
   };
@@ -81,7 +90,21 @@ export function Analytics({ lang, d }: { lang: Locale; d: Dict["consent"] }) {
         />
       )}
 
-      {CLARITY_ID && (
+      {GA_ID && consent === "granted" && (
+        <>
+          <Script src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}`} strategy="afterInteractive" />
+          <Script
+            id="ga-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag("consent","default",{ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",analytics_storage:"granted"});gtag("js",new Date());gtag("config",${JSON.stringify(GA_ID)},{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false});(function(){var u=new URL(location.href);u.searchParams.delete("farm");gtag("event","page_view",{page_location:u.href,page_title:document.title})})();`,
+            }}
+          />
+          <GaPageViews />
+        </>
+      )}
+
+      {NEEDS_CONSENT && (
         <MotionConfig reducedMotion="user">
           <AnimatePresence>
             {open && (
@@ -126,9 +149,27 @@ export function Analytics({ lang, d }: { lang: Locale; d: Dict["consent"] }) {
   );
 }
 
-/** Footer link that brings the consent prompt back. Hidden when Clarity isn't set up. */
+/**
+ * GA4 page views for in-site navigation (the first one is sent by the set-up script).
+ * Waits a tick so the new page's title is in place.
+ */
+function GaPageViews() {
+  const path = usePathname();
+  const first = useRef(true);
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    const t = window.setTimeout(() => window.gtag?.("event", "page_view", { page_location: cleanLocation(), page_title: document.title }), 0);
+    return () => window.clearTimeout(t);
+  }, [path]);
+  return null;
+}
+
+/** Footer link that brings the consent prompt back. Hidden when no cookie-setting tool is set up. */
 export function CookieSettingsButton({ label, className }: { label: string; className?: string }) {
-  if (!CLARITY_ID) return null;
+  if (!NEEDS_CONSENT) return null;
   return (
     <button type="button" className={className} onClick={() => window.dispatchEvent(new Event(CONSENT_OPEN_EVENT))}>
       {label}
