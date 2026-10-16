@@ -1,19 +1,41 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
+import { Fragment, type ReactNode } from "react";
 import { fmt, type Locale } from "@/i18n/config";
 import type { GuideCopy, GuideSection } from "@/i18n/guides-en";
 import { GUIDES, href, guidePath, type Guide } from "@/lib/routes";
-import { h2Cls, Steps, Ticks } from "./blocks";
+import { h2Cls, Steps } from "./blocks";
+
+/** Text with links written as [words](/path); the path is after the language. */
+export function Rich({ lang, text }: { lang: Locale; text: string }) {
+  const out: ReactNode[] = [];
+  const re = /\[([^\]]+)\]\((\/[^)\s]*)\)/g;
+  let last = 0;
+  for (const m of text.matchAll(re)) {
+    out.push(text.slice(last, m.index));
+    out.push(
+      <Link key={m.index} href={href(lang, m[2])} className="font-semibold text-green-ink underline underline-offset-4 hover:text-green">
+        {m[1]}
+      </Link>,
+    );
+    last = m.index + m[0].length;
+  }
+  out.push(text.slice(last));
+  return <>{out.map((n, i) => (typeof n === "string" ? <Fragment key={`t${i}`}>{n}</Fragment> : n))}</>;
+}
+
+/** Plain text of a string with [words](/path) links, for word counts and structured data. */
+export const plain = (text: string) => text.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1");
 
 /** Reading time in minutes, at about 200 words a minute (never under 3). */
 export function readMinutes(g: GuideCopy) {
   const text = [g.lead, ...g.summary, ...g.sections.flatMap((s) => [...s.body, ...(s.list ?? []), ...(s.steps ?? []).map((x) => `${x.t} ${x.d}`)]), ...g.faq.map((f) => `${f.q} ${f.a}`)];
-  const words = text.join(" ").split(/\s+/).length;
+  const words = plain(text.join(" ")).split(/\s+/).length;
   return Math.max(3, Math.round(words / 200));
 }
 
 /** A guide's card on the Guides page and under "More guides". */
-export function GuideCard({ lang, g, guide, read, open }: { lang: Locale; g: GuideCopy; guide: Guide; read: string; open: string }) {
+export function GuideCard({ lang, g, guide, read, open, badge }: { lang: Locale; g: GuideCopy; guide: Guide; read: string; open: string; badge?: string }) {
   return (
     <li>
       <Link
@@ -31,7 +53,10 @@ export function GuideCard({ lang, g, guide, read, open }: { lang: Locale; g: Gui
           className="aspect-[16/9] w-full bg-[#e6ebee] object-cover"
         />
         <div className="flex flex-1 flex-col gap-2 p-5">
-          <p className="font-mono text-[12px] text-muted">{fmt(read, { n: String(readMinutes(g)) })}</p>
+          <p className="flex items-center gap-2 font-mono text-[12px] text-muted">
+            {badge && <span className="rounded-full bg-green px-2 py-0.5 font-sans text-[11.5px] font-semibold text-white">{badge}</span>}
+            {fmt(read, { n: String(readMinutes(g)) })}
+          </p>
           <h3 className="font-display text-[19px] leading-snug font-bold text-balance">{g.title}</h3>
           <p className="text-[14.5px] leading-relaxed text-muted">{g.meta.description}</p>
           <span className="mt-auto inline-flex items-center gap-1.5 pt-2 text-[14.5px] font-semibold text-green">
@@ -47,7 +72,7 @@ export function GuideCard({ lang, g, guide, read, open }: { lang: Locale; g: Gui
 export const otherGuides = (g: Guide) => GUIDES.filter((o) => o !== g);
 
 /** One section of a guide: its h2, paragraphs, then a list, steps or table if it has one. */
-export function GuideBlock({ s }: { s: GuideSection }) {
+export function GuideBlock({ lang, s }: { lang: Locale; s: GuideSection }) {
   return (
     <section id={s.id} aria-labelledby={`${s.id}-title`} className="flex scroll-mt-24 flex-col gap-4">
       <h2 id={`${s.id}-title`} className={h2Cls}>
@@ -55,10 +80,23 @@ export function GuideBlock({ s }: { s: GuideSection }) {
       </h2>
       {s.body.map((t) => (
         <p key={t} className="text-[16.5px] leading-[1.7]">
-          {t}
+          <Rich lang={lang} text={t} />
         </p>
       ))}
-      {s.list && <Ticks items={s.list} />}
+      {s.list && (
+        <ul className="flex flex-col gap-2.5">
+          {s.list.map((t) => (
+            <li key={t} className="flex items-start gap-3 text-[15.5px] leading-relaxed">
+              <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-green text-white">
+                <Check className="size-3.5" strokeWidth={3} aria-hidden />
+              </span>
+              <span>
+                <Rich lang={lang} text={t} />
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
       {s.steps && (
         <div className="[&_ol]:lg:grid-cols-2">
           <Steps items={s.steps} />

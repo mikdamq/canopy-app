@@ -9,6 +9,7 @@ Last updated: 15 Oct 2026 (growth plan added for review; GA4 decided).
 ## 1. This week
 
 - [ ] **Review the growth plan** in `docs/growth-plan.md` (tracking with GA4, keywords, site map, next articles, schema) and reply "go" or tell me what to change. Also send me **your LinkedIn profile address** (for the author page).
+- [ ] **Review the 2 newest guides** too: *Running an indoor farm: the complete guide* (`/learn/indoor-farm-guide`) and *How much energy does a vertical farm use per kg?* (`/learn/vertical-farm-energy-per-kg`). Every number links to its source at the bottom of the page.
 - [ ] **Review the 3 guides** (English and Arabic) on the preview of PR #15, then say "Merge":
   - English: https://deploy-preview-15--frabjous-caramel-1e10ec.netlify.app/en/learn
   - Arabic: https://deploy-preview-15--frabjous-caramel-1e10ec.netlify.app/ar/learn

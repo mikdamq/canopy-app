@@ -29,10 +29,12 @@ export const solutionBySlug = (slug: string) => SOLUTION_TYPES.find((t) => SOLUT
 export const solutionPath = (t: SolutionType) => `${PAGE.solutions}/${SOLUTION_SLUG[t]}`;
 
 /** The guides (short articles under /learn). Addresses are the same in both languages. */
-export const GUIDES = ["twin", "tracking", "compare"] as const;
+export const GUIDES = ["guide", "twin", "tracking", "energy", "compare"] as const;
 export type Guide = (typeof GUIDES)[number];
 
 export const GUIDE_SLUG: Record<Guide, string> = {
+  guide: "indoor-farm-guide",
+  energy: "vertical-farm-energy-per-kg",
   twin: "what-is-a-farm-digital-twin",
   tracking: "seed-to-delivery-tracking",
   compare: "container-vs-vertical-farm",

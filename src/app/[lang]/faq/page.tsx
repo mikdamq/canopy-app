@@ -52,7 +52,7 @@ export default async function FaqPage({ params }: PageProps<"/[lang]/faq">) {
       <Section id="guides" title={g.index.title} lead={g.index.lead} tone="white">
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {GUIDES.map((k) => (
-            <GuideCard key={k} lang={lang} g={g.items[k]} guide={k} read={g.index.read} open={g.index.open} />
+            <GuideCard key={k} lang={lang} g={g.items[k]} guide={k} read={g.index.read} open={g.index.open} badge={k === "guide" ? g.index.start : undefined} />
           ))}
         </ul>
       </Section>

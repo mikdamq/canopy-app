@@ -47,7 +47,7 @@ export default async function LearnPage({ params }: PageProps<"/[lang]/learn">) 
       <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {GUIDES.map((k) => (
-            <GuideCard key={k} lang={lang} g={g.items[k]} guide={k} read={x.read} open={x.open} />
+            <GuideCard key={k} lang={lang} g={g.items[k]} guide={k} read={x.read} open={x.open} badge={k === "guide" ? x.start : undefined} />
           ))}
         </ul>
       </div>

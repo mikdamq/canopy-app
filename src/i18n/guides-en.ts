@@ -7,6 +7,7 @@
  */
 import type { Guide, SolutionType } from "@/lib/routes";
 
+/** Body text may hold links written as [words](/learn/slug); the path is after the language. */
 export type GuideSection = {
   id: string;
   h: string;
@@ -34,6 +35,14 @@ export type GuideCopy = {
   /** Related Solutions pages, and the farm type the demo link opens. */
   solutions: SolutionType[];
   demo: SolutionType;
+  /** "tech" marks a technical reference page (TechArticle in structured data). */
+  kind?: "tech";
+  /** Short definitions shown beside the text. */
+  terms?: { t: string; d: string }[];
+  /** Where the numbers come from; listed at the end and in structured data. */
+  sources?: { t: string; url: string }[];
+  /** Topics the page is about, for structured data. */
+  about?: string[];
 };
 
 const guidesEn = {
@@ -54,6 +63,9 @@ const guidesEn = {
     more: "More guides",
     farmTypes: "Farm types",
     open: "Read the guide",
+    sources: "Sources",
+    terms: "Words used in this guide",
+    start: "Start here",
   },
   items: {
     twin: {
@@ -134,7 +146,7 @@ const guidesEn = {
           h: "How Lamina does it",
           body: [
             "Lamina builds a 3D twin of your farm from photos and a sketch you send on WhatsApp, in about two weeks, and loads the data you already have. It works for vertical towers, container farms, hydroponic greenhouses and research labs, and it runs in the browser on phones and laptops.",
-            "You can see how it feels before talking to anyone: the live demo runs on sample data and carries your farm's name. Pilot farms use it free for three months.",
+            "You can see how it feels before talking to anyone: the [live demo](/demo) runs on sample data and carries your farm's name. Pilot farms use it free for three months. For the bigger picture, read [the complete guide to running an indoor farm](/learn/indoor-farm-guide).",
           ],
         },
       ],
@@ -287,7 +299,7 @@ const guidesEn = {
             "Water and nutrients: pH, EC and water temperature.",
             "Light: recipe (spectrum), intensity and hours per day.",
             "Batches: what's planted where, and when it's due.",
-            "Energy: lights and cooling, which are usually the biggest costs.",
+            "Energy: lights and cooling, which are usually the biggest costs. See [how much energy a vertical farm uses per kg](/learn/vertical-farm-energy-per-kg).",
           ],
         },
         {
@@ -338,6 +350,226 @@ const guidesEn = {
       ],
       solutions: ["container", "tower"],
       demo: "container",
+    },
+    guide: {
+      meta: {
+        title: "Running an indoor farm: the complete guide",
+        description:
+          "How to run an indoor farm with a digital twin: see every floor, track each batch, measure energy per kg and farm well in Jordan and the Gulf.",
+      },
+      eyebrow: "Guide · Start here",
+      title: "Running an indoor farm with a digital twin: the complete guide",
+      lead: "Running an indoor farm well comes down to four habits: see the whole farm in one place, track every batch from seed to delivery, know what each kilo costs in energy, and fix problems where they start. A digital twin puts all four on one screen. This guide walks through each one and links to the detail.",
+      date: "2026-10-16",
+      dateText: "16 October 2026",
+      image: "tower-night",
+      imageAlt: "A 3D twin of a vertical farm at night: four stacked floors lit by pink LED bars, with crates waiting at the packing area.",
+      summary: [
+        "See the whole farm in one place, with readings where they're measured.",
+        "Give every batch one ID and record five moments, from seed to delivery.",
+        "Measure electricity per kg: it's the number that decides whether a farm pays.",
+        "Track per floor or per container, because that's where problems start.",
+        "Start with what you have; sensors can come later.",
+      ],
+      sections: [
+        {
+          id: "habits",
+          h: "What does it take to run an indoor farm well?",
+          body: [
+            "Indoor farms win or lose on control: the same crop, the same quality, every week, at a cost per kilo that buyers will pay. That needs four habits, and each one depends on good records.",
+          ],
+          steps: [
+            { t: "See the whole farm", d: "Every floor, room or container in one view, with live or daily readings in place." },
+            { t: "Track every batch", d: "One ID from the seed tray to the customer's crate." },
+            { t: "Know your energy per kg", d: "Lights and cooling are usually the biggest costs." },
+            { t: "Act where it starts", d: "A problem on one floor or in one container, caught before it spreads." },
+          ],
+        },
+        {
+          id: "see",
+          h: "How do you see the whole farm at once?",
+          body: [
+            "A digital twin is a live copy of your farm on screen: the same rooms, racks and lights in 3D, with your data placed where it belongs. Instead of reading tables, the team looks at the farm and sees which floor or container needs attention. Read more in [what a digital twin for a farm is](/learn/what-is-a-farm-digital-twin), or see how Lamina does it on the [Product page](/product).",
+          ],
+        },
+        {
+          id: "track",
+          h: "How do you track a crop from seed to delivery?",
+          body: [
+            "Give each batch one ID when it's seeded and record it at five moments: seeding, moving to its growing spot, harvest, packing and delivery. Add the floor or rack where it grew, and every reading from that spot becomes part of its story. The full method, with a starter spreadsheet, is in [how to track a vertical farm from seed to delivery](/learn/seed-to-delivery-tracking).",
+          ],
+        },
+        {
+          id: "energy",
+          h: "Why does energy per kg matter so much?",
+          body: [
+            "Electricity is one of the biggest running costs of a vertical farm, and published studies show a wide spread: most farms studied used about 10–18 kWh per kg of lettuce, some far more. Knowing your own number, per floor and per month, is the clearest sign of whether the farm is getting better. See [how much energy a vertical farm uses per kg](/learn/vertical-farm-energy-per-kg).",
+          ],
+        },
+        {
+          id: "types",
+          h: "Does the type of farm change what you track?",
+          body: [
+            "The basics are the same everywhere: climate, water and nutrients, light, batches and energy. What changes is the unit you watch: each container in a container farm, each floor and zone in a vertical farm, each bay in a greenhouse, each chamber in a lab. Compare the two most common types in [container farm vs. vertical farm](/learn/container-vs-vertical-farm), or pick yours under [Solutions](/solutions).",
+          ],
+        },
+        {
+          id: "gulf",
+          h: "What changes when you farm indoors in Jordan and the Gulf?",
+          body: [
+            "Heat and water. Cooling works harder against outside heat, so the building's insulation and the cooling's run-time matter more. Water is scarce, which is one of the main reasons farms grow indoors here. A study comparing plant factories with greenhouses in the Netherlands, the UAE and Sweden found that plant factories used 28–95% less water, but needed more purchased electricity, because greenhouses use free sunlight. That trade-off is why tracking energy and water side by side matters.",
+          ],
+        },
+        {
+          id: "start",
+          h: "Where should a farm start?",
+          body: ["Start small and build the habit before the tools:"],
+          list: [
+            "Sketch your layout and photograph each growing area.",
+            "Track climate and batches first: they explain most good and bad harvests.",
+            "Add electricity per floor or per container next.",
+            "Add sensors when the manual routine works, so the twin updates by itself.",
+          ],
+        },
+        {
+          id: "lamina",
+          h: "How does Lamina help?",
+          body: [
+            "Lamina builds a live 3D twin of your farm from photos and a sketch you send on WhatsApp, in about two weeks, and loads the data you already keep. Pilot farms in Jordan and the Gulf use it free for three months. You can [try the live demo](/demo) first, with no sign-up.",
+          ],
+        },
+      ],
+      faq: [
+        { q: "What is the most important number for an indoor farm?", a: "There isn't just one, but cost per kg of sellable crop sums up most of the others, and electricity per kg is usually the biggest part of it." },
+        { q: "Do I need sensors before I start tracking?", a: "No. A daily reading at the same time, written down or in a spreadsheet, is enough to start. Sensors make it automatic later." },
+        { q: "Is a digital twin only for big farms?", a: "It helps most when a farm has several floors, rooms, containers or sites, or more than one shift. A single small room checked by one person may not need it yet." },
+      ],
+      solutions: ["tower", "container"],
+      demo: "tower",
+      sources: [
+        { t: "Graamans et al. (2018), Plant factories versus greenhouses: comparison of resource use efficiency. Agricultural Systems 160", url: "https://www.sciencedirect.com/science/article/abs/pii/S0308521X17307151" },
+        { t: "Miserocchi & Franco (2025), Benchmarking energy efficiency in vertical farming: status and prospects. Thermal Science and Engineering Progress", url: "https://www.sciencedirect.com/science/article/pii/S2451904924007832" },
+      ],
+      about: ["Indoor farming", "Vertical farming", "Digital twin", "Controlled-environment agriculture"],
+    },
+    energy: {
+      meta: {
+        title: "How much energy does a vertical farm use per kg?",
+        description:
+          "Most vertical farms studied use about 10–18 kWh per kg of lettuce. Where the energy goes, why numbers vary, the Gulf heat, and how to measure your own.",
+      },
+      eyebrow: "Guide · Energy",
+      title: "How much energy does a vertical farm use per kg?",
+      lead: "Most vertical farms in published studies use about 10–18 kWh of electricity per kg of lettuce, and some use far more. Lighting is usually the largest load, followed by cooling and dehumidification. Researchers estimate that well-run farms could reach about 3–7 kWh per kg.",
+      date: "2026-10-16",
+      dateText: "16 October 2026",
+      image: "tower-zoom",
+      imageAlt: "A close-up of one floor in a 3D vertical farm twin: lettuce under pink LED bars, with readings pinned above the beds.",
+      summary: [
+        "A 2025 review of 16 studies found most values between 10 and 18 kWh per kg of lettuce.",
+        "Lighting and cooling are the two biggest loads; light intensity drives both.",
+        "Numbers vary because studies measure different things: lights only or the whole building, fresh or dry weight.",
+        "Measure your own: electricity per floor, divided by the sellable kilos from that floor.",
+      ],
+      sections: [
+        {
+          id: "numbers",
+          h: "How much electricity does a vertical farm use per kg of lettuce?",
+          body: [
+            "A 2025 review of 16 published studies, 14 of them on lettuce, found that most vertical farms used about 10–18 kWh of electricity per kg, with reported values from about 5 to nearly 40 kWh per kg. The same review estimates a technical benchmark of 3.1–7.4 kWh per kg for a well-designed, well-run farm.",
+            "So there is a big gap between what farms typically use and what is possible, and that gap is mostly about how light and cooling are managed.",
+          ],
+          table: {
+            head: ["What was measured", "Figure", "Source"],
+            rows: [
+              ["Electricity per kg of lettuce, most studies", "about 10–18 kWh/kg", "Miserocchi & Franco, 2025"],
+              ["Estimated technical benchmark", "3.1–7.4 kWh/kg", "Miserocchi & Franco, 2025"],
+              ["Lighting share of total energy (one farm, cold climate)", "46–75%", "University of Manitoba thesis"],
+              ["Cooling and air handling share (same farm)", "22–52%", "University of Manitoba thesis"],
+              ["Main driver of total energy in 162 modelled scenarios", "light intensity (PPFD)", "arXiv 2507.18419, 2025"],
+            ],
+          },
+          note: "Figures are for lettuce and leafy greens. Other crops differ.",
+        },
+        {
+          id: "vary",
+          h: "Why do the published numbers vary so much?",
+          body: ["Because studies don't measure the same thing. Before comparing a number with your own, check:"],
+          list: [
+            "What's included: lights only, or the whole building (cooling, pumps, offices).",
+            "How the crop is weighed: fresh weight or dry weight. Some studies use dry weight, which gives much bigger numbers per kg.",
+            "Which crop, and how much light it gets: more light grows faster but costs more.",
+            "The farm's size and age: older LEDs and half-empty racks raise the number.",
+          ],
+        },
+        {
+          id: "where",
+          h: "Where does the energy go: lighting, cooling or pumps?",
+          body: [
+            "Lighting is usually the biggest share, and cooling the second. In a measured farm studied at the University of Manitoba, lighting took 46–75% of total energy and heating, ventilation and air conditioning 22–52%, depending on conditions.",
+            "The two are linked: almost all the energy that goes into the lights ends up as heat, which the cooling then has to remove. That's why a 2025 modelling study found that light intensity was the main driver of total energy use, more than the climate outside.",
+          ],
+        },
+        {
+          id: "gulf",
+          h: "Does a hot climate like the Gulf change the numbers?",
+          body: [
+            "Less than you might expect, for a well-insulated building. The 2025 study modelled the same farm in Trondheim, Shanghai and Dubai. With insulation and proper climate control, the outside climate had little effect on how much was grown, and light intensity stayed the main driver of energy use. Its most cost-effective setup in all three climates was 24 °C, a light level of 250 µmol/m²/s and 1,400 ppm CO₂, with insulation.",
+            "In practice, the Gulf heat makes insulation, door discipline and cooling efficiency matter more. A container in direct sun, or a room with poor insulation, will pay for it in cooling.",
+          ],
+        },
+        {
+          id: "measure",
+          h: "How do I measure kWh per kg on my own farm?",
+          body: ["You need two numbers for the same period and the same part of the farm:"],
+          steps: [
+            { t: "Meter the electricity", d: "Read a meter per floor, room or container, or at least per circuit (lights, cooling, pumps), at the start and end of each month." },
+            { t: "Weigh what you sell", d: "Record the sellable weight of each harvest from that floor, and the waste separately." },
+            { t: "Divide", d: "kWh used ÷ kg sold = kWh per kg. Compare month by month and floor by floor." },
+          ],
+        },
+        {
+          id: "lower",
+          h: "How can a farm lower its energy per kg?",
+          body: ["Most savings come from matching light and climate to the crop, not from new equipment:"],
+          list: [
+            "Give each crop the light it needs, not the maximum: more light costs more in lighting and in cooling.",
+            "Insulate well and keep doors closed, especially in hot climates.",
+            "Fill every rack: an empty space is still lit, cooled and dehumidified.",
+            "Harvest on time: extra days on the rack add energy but little weight.",
+            "Keep LEDs clean and replace old ones as they fade.",
+          ],
+        },
+        {
+          id: "lamina",
+          h: "Where does Lamina fit?",
+          body: [
+            "Lamina doesn't sell lights or growing hardware. It shows each floor's light recipe, the hours lights and cooling run, and energy next to harvest weights, so you can see your own kWh per kg and where it's highest. Try it in the [live demo](/demo), or read the [complete guide to running an indoor farm](/learn/indoor-farm-guide).",
+          ],
+        },
+      ],
+      faq: [
+        { q: "Is 10–18 kWh per kg good or bad?", a: "It's typical of the farms studied so far. Researchers estimate that well-run farms could reach about 3–7 kWh per kg, so most farms have room to improve." },
+        { q: "Do greenhouses use less energy than vertical farms?", a: "They usually buy less electricity, because they use free sunlight. A 2018 study found closed plant factories needed 14–251% more purchased energy than greenhouses, depending on the country, but used 28–95% less water." },
+        { q: "Does Lamina sell LED lights or cooling equipment?", a: "No. Lamina is software: a live 3D twin of your farm that helps you measure and compare energy per kg, per floor or per container." },
+      ],
+      solutions: ["tower", "container"],
+      demo: "tower",
+      kind: "tech",
+      terms: [
+        { t: "kWh per kg", d: "Electricity used, divided by the weight of sellable crop." },
+        { t: "PPFD", d: "How much usable light reaches the plants each second, in µmol/m²/s." },
+        { t: "DLI", d: "The total usable light a plant gets in a day, in mol/m²/day." },
+        { t: "Photoperiod", d: "How many hours a day the lights are on." },
+        { t: "HVAC", d: "Heating, ventilation and air conditioning; in farms it also removes moisture." },
+      ],
+      sources: [
+        { t: "Miserocchi & Franco (2025), Benchmarking energy efficiency in vertical farming: status and prospects. Thermal Science and Engineering Progress", url: "https://www.sciencedirect.com/science/article/pii/S2451904924007832" },
+        { t: "Beyond yield: integrating energy, water, cost, and carbon to benchmark indoor vertical farming viability (2025), arXiv 2507.18419", url: "https://arxiv.org/abs/2507.18419" },
+        { t: "Energy modelling and analysis of vertical farming for vegetable production, University of Manitoba (thesis)", url: "https://mspace.lib.umanitoba.ca/items/ac54c125-4283-4507-a3b3-c06e20a397d0" },
+        { t: "Graamans et al. (2018), Plant factories versus greenhouses: comparison of resource use efficiency. Agricultural Systems 160", url: "https://www.sciencedirect.com/science/article/abs/pii/S0308521X17307151" },
+      ],
+      about: ["Vertical farming", "Energy efficiency", "LED lighting", "Lettuce"],
     },
   },
 } satisfies { index: Record<string, unknown>; items: Record<Guide, GuideCopy> };

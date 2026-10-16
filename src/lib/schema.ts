@@ -103,10 +103,19 @@ export function service(lang: Locale, name: string, description: string, path: s
 export function article(
   lang: Locale,
   path: string,
-  a: { title: string; description: string; date: string; image: string; section: string },
+  a: {
+    title: string;
+    description: string;
+    date: string;
+    image: string;
+    section: string;
+    tech?: boolean;
+    sources?: { t: string; url: string }[];
+    about?: string[];
+  },
 ): Thing {
   return {
-    "@type": "Article",
+    "@type": a.tech ? "TechArticle" : "Article",
     "@id": abs(`/${lang}${path}#article`),
     mainEntityOfPage: { "@id": abs(`/${lang}${path}#page`) },
     headline: a.title,
@@ -118,6 +127,8 @@ export function article(
     articleSection: a.section,
     author: { "@type": "Person", name: "Mikdam Qandil", jobTitle: "Founder", worksFor: { "@id": ORG_ID() } },
     publisher: { "@id": ORG_ID() },
+    ...(a.about?.length ? { about: a.about.map((name) => ({ "@type": "Thing", name })) } : {}),
+    ...(a.sources?.length ? { citation: a.sources.map((s) => ({ "@type": "CreativeWork", name: s.t, url: s.url })) } : {}),
   };
 }
 

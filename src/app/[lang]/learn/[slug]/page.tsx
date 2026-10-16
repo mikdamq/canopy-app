@@ -46,7 +46,16 @@ export default async function GuidePage({ params }: PageProps<"/[lang]/learn/[sl
       ]}
       ld={[
         webPage(lang, path, x.meta.title, x.meta.description),
-        article(lang, path, { title: x.title, description: x.meta.description, date: x.date, image: x.image, section: d.nav.learn }),
+        article(lang, path, {
+          title: x.title,
+          description: x.meta.description,
+          date: x.date,
+          image: x.image,
+          section: d.nav.learn,
+          tech: x.kind === "tech",
+          sources: x.sources,
+          about: x.about,
+        }),
         faqPage(x.faq),
       ]}
     >
@@ -96,8 +105,39 @@ export default async function GuidePage({ params }: PageProps<"/[lang]/learn/[sl
           </nav>
           <div className="flex min-w-0 max-w-[70ch] flex-col gap-12">
             {x.sections.map((s) => (
-              <GuideBlock key={s.id} s={s} />
+              <GuideBlock key={s.id} lang={lang} s={s} />
             ))}
+            {x.terms && (
+              <aside aria-labelledby="terms-title" className="flex flex-col gap-3 rounded-2xl border border-line bg-white p-5 sm:p-6">
+                <h2 id="terms-title" className="font-display text-[18px] font-bold">
+                  {ix.terms}
+                </h2>
+                <dl className="grid gap-3 sm:grid-cols-2">
+                  {x.terms.map((t) => (
+                    <div key={t.t} className="flex flex-col gap-0.5">
+                      <dt className="text-[14.5px] font-semibold text-green-ink">{t.t}</dt>
+                      <dd className="text-[14.5px] leading-relaxed text-muted">{t.d}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </aside>
+            )}
+            {x.sources && (
+              <section aria-labelledby="sources-title" className="flex flex-col gap-3">
+                <h2 id="sources-title" className="font-display text-[18px] font-bold">
+                  {ix.sources}
+                </h2>
+                <ol className="flex list-decimal flex-col gap-2 ps-5 text-[14px] leading-relaxed text-muted marker:text-muted" dir="ltr">
+                  {x.sources.map((src) => (
+                    <li key={src.url}>
+                      <a href={src.url} target="_blank" rel="noopener" className="underline underline-offset-4 hover:text-ink">
+                        {src.t}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
             <div className="flex flex-wrap gap-3">
               <PrimaryLink href={href(lang, demoPath(x.demo))}>{fmt(p.common.tryType, { type: d.nav.solutionNames[x.demo].toLowerCase() })}</PrimaryLink>
               <SecondaryLink href={href(lang, PAGE.request)}>{p.common.ctaRequest}</SecondaryLink>
