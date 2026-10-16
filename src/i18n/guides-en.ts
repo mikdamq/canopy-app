@@ -571,6 +571,207 @@ const guidesEn = {
       ],
       about: ["Vertical farming", "Energy efficiency", "LED lighting", "Lettuce"],
     },
+    sensors: {
+      meta: {
+        title: "Sensors for indoor farms: what to measure, and where",
+        description:
+          "Which sensors an indoor farm needs first (air, water, light, power), where to put them on a rack, how many you need, and how to keep them accurate.",
+      },
+      eyebrow: "Guide · Monitoring",
+      title: "Sensors for indoor farms: what to measure, and where",
+      lead: "Start with air temperature and humidity in every growing zone, plus pH, EC and temperature in each water system. Add CO₂ and light next, then electricity per floor or container. Put air sensors at plant height, in the middle of the zone, away from lights, vents and walls, and check water probes against calibration solutions regularly.",
+      date: "2026-10-16",
+      dateText: "16 October 2026",
+      image: "container-zoom",
+      imageAlt: "A close-up of one container in a 3D container-farm twin: racks of leafy greens under LED light, with climate readings pinned where the sensors are.",
+      summary: [
+        "First: air temperature and humidity per zone; pH, EC and water temperature per system.",
+        "Next: CO₂, light at plant level, and electricity per floor or container.",
+        "Place air sensors at plant height, mid-zone, away from lights, vents and walls.",
+        "A sensor that isn't checked drifts: calibrate water probes on a schedule.",
+      ],
+      sections: [
+        {
+          id: "what",
+          h: "Which sensors does an indoor farm need first?",
+          body: ["Start with the readings that explain most problems:"],
+          table: {
+            head: ["Measure", "Why", "Priority"],
+            rows: [
+              ["Air temperature", "Growth speed, stress, cooling problems", "First"],
+              ["Relative humidity", "Disease risk, how fast plants use water", "First"],
+              ["pH (water)", "Whether roots can take up nutrients", "First"],
+              ["EC (water)", "How much nutrient is in the water", "First"],
+              ["Water temperature", "Root health and oxygen in the water", "First"],
+              ["CO₂", "Growth speed in a closed room", "Next"],
+              ["Light (PPFD) at plant level", "Whether each floor gets its recipe", "Next"],
+              ["Electricity per floor or container", "Energy per kg", "Next"],
+              ["Tank level and water use", "Leaks, water per kg", "Later"],
+              ["Door open/closed", "Heat and humidity coming in", "Later"],
+            ],
+          },
+        },
+        {
+          id: "where",
+          h: "Where should sensors go?",
+          body: ["Put each sensor where it reads what the plants feel:"],
+          list: [
+            "Air sensors at plant height, in the middle of the zone, not next to a light, a vent, a door or a wall.",
+            "In tall racks, read the top, middle and bottom at least once, because conditions can differ by level.",
+            "Water probes in the tank or return line where the solution is well mixed, not right at the dosing point.",
+            "Light readings at the top of the plants, at several points across the rack, since light is weaker at the edges.",
+          ],
+        },
+        {
+          id: "howmany",
+          h: "How many sensors do you need?",
+          body: [
+            "At least one air sensor per zone that can behave differently: each container, each floor of a vertical farm, each greenhouse bay, each lab chamber. One water set per separate water system. If two places always read the same, one sensor is enough; if they differ, each needs its own.",
+          ],
+        },
+        {
+          id: "accuracy",
+          h: "How do you keep sensors accurate?",
+          body: ["Sensors drift slowly, so a wrong reading can look normal:"],
+          list: [
+            "Check pH and EC probes against calibration solutions on the schedule the maker recommends, and log each check.",
+            "Compare air sensors with a handheld reference now and then.",
+            "Keep probes clean; algae and salt build-up skew readings.",
+            "Note every sensor change or move, so a sudden jump in the data isn't mistaken for a crop problem.",
+          ],
+        },
+        {
+          id: "alerts",
+          h: "Which alerts should you set?",
+          body: ["Alerts should be few and meaningful, or people stop reading them:"],
+          list: [
+            "Temperature or humidity outside the crop's range for more than a few minutes.",
+            "pH or EC outside range in any system.",
+            "A sensor that stops reporting.",
+            "Cooling failure or power cut. See [indoor farming in the Gulf heat](/learn/gulf-heat-indoor-farming).",
+          ],
+        },
+        {
+          id: "manual",
+          h: "Can you start without sensors?",
+          body: [
+            "Yes. A handheld thermometer, a pH and EC pen and a notebook, read at the same time every day, will show most problems. Sensors make it automatic and catch what happens at night. Start with the routine, then automate it.",
+          ],
+        },
+        {
+          id: "lamina",
+          h: "How does Lamina help?",
+          body: [
+            "Lamina pins each reading to the place it's measured in a live 3D view of your farm, so a warm floor or a drifting container shows up where it is. It works with readings you enter by hand and with sensor data. See it in the [live demo](/demo), or read [what a digital twin for a farm is](/learn/what-is-a-farm-digital-twin).",
+          ],
+        },
+      ],
+      faq: [
+        { q: "Which sensor brand should I buy?", a: "Any reliable brand whose data you can export. Before buying, check you can read the data outside the maker's app, so you're not locked in." },
+        { q: "Do I need a CO₂ sensor?", a: "In a closed room, yes, once the basics are covered: plants use up CO₂ quickly, and low CO₂ slows growth. In a ventilated greenhouse it matters less." },
+        { q: "How often should sensors record?", a: "Every few minutes is plenty for climate and water. What matters more is that someone looks at the readings, or that alerts reach someone." },
+      ],
+      solutions: ["container", "tower"],
+      demo: "tower",
+      kind: "tech",
+      terms: [
+        { t: "EC", d: "Electrical conductivity: a measure of how much nutrient is dissolved in the water." },
+        { t: "pH", d: "How acidic or alkaline the water is; roots take up nutrients best within a set range." },
+        { t: "Relative humidity", d: "How much water vapour is in the air, compared with the most it can hold at that temperature." },
+        { t: "Calibration", d: "Checking a sensor against a known standard and correcting it." },
+      ],
+      about: ["Farm sensors", "Indoor farming", "Monitoring", "Hydroponics"],
+    },
+    yield: {
+      meta: {
+        title: "Yield per square metre: how to measure it honestly",
+        description:
+          "How to measure an indoor farm's yield per square metre so it means something: which area, which kilos, per cycle or per year, and comparing floors fairly.",
+      },
+      eyebrow: "Guide · Yield",
+      title: "Yield per square metre: how to measure it honestly",
+      lead: "Yield per square metre is the weight of sellable crop divided by the growing area that produced it, over a set time. To make it honest, say which area you mean (growing area or building footprint), count kilos sold rather than harvested, and use the same period every time, usually per year.",
+      date: "2026-10-16",
+      dateText: "16 October 2026",
+      image: "tower-zoom",
+      imageAlt: "A close-up of one floor in a 3D vertical farm twin: rows of greens under LED bars, with readings pinned above the beds.",
+      summary: [
+        "Yield per m² = sellable kg ÷ growing area ÷ time.",
+        "Say which area: growing area (all levels) or building footprint. They give very different numbers.",
+        "Use kilos sold, not harvested, and report per year so crops with different cycles compare.",
+        "Compare floors and containers with the same method, month by month.",
+      ],
+      sections: [
+        {
+          id: "what",
+          h: "What is yield per square metre?",
+          body: [
+            "It's how much sellable crop a square metre of your farm produces in a set time. It tells you how well you use your space, and it's half of cost per kg: the more each metre produces, the less rent, light and cooling each kilo carries.",
+          ],
+        },
+        {
+          id: "area",
+          h: "Which area should you use?",
+          body: ["The same farm can give very different numbers depending on the area, so always say which one:"],
+          table: {
+            head: ["Area", "What it is", "Use it for"],
+            rows: [
+              ["Growing area", "The planted surface on every level added together", "Comparing floors, racks and recipes"],
+              ["Building footprint", "The floor space the farm stands on", "Comparing with field farming or other farm types"],
+            ],
+          },
+          note: "A vertical farm with five levels has about five times more growing area than footprint, so its yield per m² of footprint looks about five times higher.",
+        },
+        {
+          id: "how",
+          h: "How do you measure it, step by step?",
+          body: ["Use the same method every time:"],
+          steps: [
+            { t: "Measure the growing area", d: "Per floor, rack or container, in m², counting only planted surface." },
+            { t: "Weigh what you sell", d: "Sellable kilos from that area, per harvest. Record waste separately." },
+            { t: "Add up over a period", d: "A month, then scale to a year, so crops with different cycle lengths compare." },
+            { t: "Divide", d: "kg sold ÷ m² ÷ period = yield per m² per year." },
+          ],
+        },
+        {
+          id: "fair",
+          h: "How do you compare floors fairly?",
+          body: ["Before blaming a floor, check these:"],
+          list: [
+            "Same crop and variety? Different crops yield very differently.",
+            "Same light recipe and days to harvest? See [light recipes explained](/learn/light-recipes).",
+            "Racks equally full? Empty spaces lower the yield of the whole floor.",
+            "Same climate? Warmer upper floors or a humid container can explain the gap.",
+          ],
+        },
+        {
+          id: "mistakes",
+          h: "What are the common mistakes?",
+          body: ["These make yield look better than it is:"],
+          list: [
+            "Counting harvested weight, not sold weight.",
+            "Using footprint area without saying so, which makes vertical farms look several times better.",
+            "Reporting the best harvest, not the average.",
+            "Leaving out empty or replanting time between cycles.",
+          ],
+        },
+        {
+          id: "lamina",
+          h: "How does Lamina help?",
+          body: [
+            "Lamina keeps harvests per floor or container next to each floor's area, light recipe and climate, so yield per m² is easy to compare and the weaker floors show up. Read [cost per kg](/learn/cost-per-kg) for the other half of the picture, or [try the demo](/demo).",
+          ],
+        },
+      ],
+      faq: [
+        { q: "Is a higher yield per m² always better?", a: "Not if it costs more to get. Pushing light and climate harder raises yield but also energy per kg. Look at yield and cost per kg together." },
+        { q: "Should I measure per crop cycle or per year?", a: "Record each cycle, but compare per year: a crop that's ready in 25 days and one that takes 40 days can only be compared over the same time." },
+        { q: "How do vertical farms compare with field farms on yield?", a: "Per m² of footprint, vertical farms usually produce far more, because they stack levels and grow all year. Per m² of growing area, the gap is smaller. Always say which area you're comparing." },
+      ],
+      solutions: ["tower", "lab"],
+      demo: "tower",
+      about: ["Crop yield", "Vertical farming", "Farm economics"],
+    },
     cost: {
       meta: {
         title: "Cost per kg: how to work it out for your farm",
