@@ -571,6 +571,310 @@ const guidesEn = {
       ],
       about: ["Vertical farming", "Energy efficiency", "LED lighting", "Lettuce"],
     },
+    failures: {
+      meta: {
+        title: "Why big vertical farms failed, and what to track",
+        description:
+          "AeroFarms, AppHarvest, Infarm, Bowery and Plenty hit trouble between 2022 and 2025. What the reports say went wrong, and the numbers a smaller farm should watch.",
+      },
+      eyebrow: "Guide · Lessons",
+      title: "Why big vertical farms failed, and what smaller farms should track",
+      lead: "Several of the best-funded indoor farms in the US and Europe closed or went through bankruptcy between 2022 and 2025. The reasons reported most often are high energy costs, tight funding, and growing big before each farm paid its way. A smaller farm can avoid the same trap by tracking cost per kg, yield and waste from the first harvest.",
+      date: "2026-10-16",
+      dateText: "16 October 2026",
+      image: "tower",
+      imageAlt: "A 3D twin of a vertical farm tower with four stacked growing floors, a lift on one side and crates at the packing area.",
+      summary: [
+        "Infarm cut more than half its staff in late 2022, citing energy prices and tough financial markets.",
+        "AeroFarms and AppHarvest filed for Chapter 11 in 2023; Bowery closed in late 2024; Plenty filed in 2025.",
+        "The common thread: costs per kg higher than buyers would pay, and expansion before that was fixed.",
+        "Track cost per kg, energy per kg, yield per floor, waste and how full your racks are, every month.",
+      ],
+      sections: [
+        {
+          id: "what",
+          h: "Which vertical farms failed, and when?",
+          body: ["These are the best-known cases, as reported by trade and business press:"],
+          table: {
+            head: ["Company", "What happened", "When"],
+            rows: [
+              ["Infarm (Germany)", "Cut more than half its staff, about 500 people, citing escalating energy prices and tough financial markets; later left several European markets", "Late 2022 – 2023"],
+              ["AeroFarms (US)", "Filed for Chapter 11, citing industry and capital-market headwinds; came out of it later that year", "June – Sept 2023"],
+              ["AppHarvest (US, high-tech greenhouses)", "Filed for Chapter 11; its assets were then sold off", "July 2023"],
+              ["Bowery Farming (US)", "Shut down after failing to raise new funding; assets sold", "Late 2024"],
+              ["Plenty (US)", "Filed for Chapter 11 and kept two sites running", "March 2025"],
+              ["Freight Farms (US, container farms)", "Ceased operations and filed for Chapter 7; Growcer later bought its assets", "April – July 2025"],
+            ],
+          },
+          note: "Sources are listed at the end of the page.",
+        },
+        {
+          id: "why",
+          h: "Why did they fail?",
+          body: [
+            "Each company had its own story, but the reporting points to the same three pressures:",
+          ],
+          list: [
+            "Energy: when electricity prices jumped in Europe in 2022, the cost of lighting and cooling every kilo jumped with them. Infarm named energy prices directly.",
+            "Money: funding became harder and more expensive from 2022, and farms that relied on raising more capital to keep going ran out of room. AeroFarms cited capital-market headwinds.",
+            "Growing before it paid: large new farms were built before the first ones had proven they could sell produce for more than it cost to grow.",
+          ],
+        },
+        {
+          id: "lesson",
+          h: "What's the lesson for a smaller farm?",
+          body: [
+            "Know your cost per kg before you expand. A farm that sells every kilo for more than it costs to grow can wait out a bad year; a farm that doesn't, can't, however good its technology. That means measuring a few numbers honestly, every month, from the first harvest.",
+          ],
+        },
+        {
+          id: "track",
+          h: "Which numbers should a farm track every month?",
+          body: ["Five numbers tell you most of what matters:"],
+          steps: [
+            { t: "Cost per kg", d: "Everything it costs to run the farm in a month, divided by the kilos you sold. Compare it with your selling price per kg." },
+            { t: "Energy per kg", d: "Electricity used, divided by kilos sold, per floor or container if you can." },
+            { t: "Yield per square metre", d: "Kilos sold per square metre of growing area, per floor, per month." },
+            { t: "Waste", d: "Weight harvested but not sold, and why: quality, size, no buyer." },
+            { t: "How full the racks are", d: "The share of growing space actually planted. Empty racks still cost light and cooling." },
+          ],
+        },
+        {
+          id: "warning",
+          h: "What are the early warning signs?",
+          body: ["Watch for these before they become a crisis:"],
+          list: [
+            "Cost per kg rising for three months in a row.",
+            "Energy per kg higher on some floors or containers than others, with no clear reason.",
+            "Waste growing, or harvests being left on the rack because there's no buyer.",
+            "Plans to expand before the current farm sells above its cost.",
+          ],
+        },
+        {
+          id: "gulf",
+          h: "Is indoor farming still worth it in Jordan and the Gulf?",
+          body: [
+            "The failures were mostly large, venture-funded companies in the US and Europe. In the Gulf, indoor farming is backed as part of food-security plans, and water scarcity makes it more attractive than in many other places. The same rule still applies: prove the numbers on one farm first. See [how much energy a vertical farm uses per kg](/learn/vertical-farm-energy-per-kg) and [farming indoors in the Gulf heat](/learn/gulf-heat-indoor-farming).",
+          ],
+        },
+        {
+          id: "lamina",
+          h: "How does Lamina help?",
+          body: [
+            "Lamina puts these numbers on a live 3D view of your farm: energy, harvests and batches per floor or container, so the weak spots show up early. Pilot farms use it free for three months. Start with the [complete guide to running an indoor farm](/learn/indoor-farm-guide), or [try the demo](/demo).",
+          ],
+        },
+      ],
+      faq: [
+        { q: "Is vertical farming dead?", a: "No. Several large companies failed, but others continue, AeroFarms came out of bankruptcy in 2023, and Freight Farms' container farms were taken over by Growcer. The failures show that the economics must work farm by farm." },
+        { q: "What was the biggest reason vertical farms failed?", a: "Reports point to costs per kg above what buyers would pay, made worse by energy prices in 2022 and harder funding, at companies that had grown fast." },
+        { q: "What's the first number a small farm should track?", a: "Cost per kg sold, compared with your selling price per kg. If the first is above the second, fix that before anything else." },
+      ],
+      solutions: ["tower", "container"],
+      demo: "tower",
+      sources: [
+        { t: "AgFunderNews: Infarm to lay off more than half of its workforce", url: "https://agfundernews.com/infarm-to-lay-off-more-than-half-of-its-workforce" },
+        { t: "FoodNavigator: What does AeroFarms' re-emergence from Chapter 11 and AppHarvest's liquidation say about the future of vertical farming? (Sept 2023)", url: "https://www.foodnavigator.com/Article/2023/09/19/what-does-aerofarms-re-emergence-from-chapter-11-and-appharvest-s-liquidation-say-about-the-future-of-vertical-farming" },
+        { t: "Just Food: AppHarvest joins indoor farming peer AeroFarms in Chapter 11 proceedings", url: "https://just-food.com/news/appharvest-joins-indoor-farming-peer-aerofarms-in-chapter-11-proceedings/" },
+        { t: "Agriculture Dive: Indoor farming company Bowery closes", url: "https://www.agriculturedive.com/news/celebrity-backed-indoor-farming-company-bowery-closes-lays-off-187-workers/732282" },
+        { t: "Fertilizer Daily: Vertical farming startup Plenty filed for bankruptcy (March 2025)", url: "https://fertilizerdaily.com/20250326-vertical-farming-startup-plenty-filed-for-bankruptcy-despite-raising-1-billion-from-softbank-walmart-and-jeff-bezos" },
+        { t: "AgFunderNews: Freight Farms customers find a new home as Growcer acquires the former's assets", url: "https://agfundernews.com/freight-farms-customers-find-a-new-home-as-vertical-farming-co-growcer-acquires-the-formers-assets" },
+        { t: "AGBI: The Gulf's vertical farming push for food security", url: "https://www.agbi.com/analysis/gulf-vertical-farming-push-food-security/" },
+      ],
+      about: ["Vertical farming", "Farm economics", "Cost per kilogram"],
+    },
+    heat: {
+      meta: {
+        title: "Indoor farming in the Gulf heat: cooling and humidity",
+        description:
+          "How outside heat affects indoor and container farms in Jordan and the Gulf, why lights drive cooling, and practical ways to cut cooling energy, with sources.",
+      },
+      eyebrow: "Guide · Gulf farming",
+      title: "Indoor farming in the Gulf heat: cooling, humidity and power",
+      lead: "In a well-insulated indoor farm, most of the heat that cooling removes comes from the lights and the plants, not from outside. But outside heat still adds load, and it limits cheap tricks like using outside air. In Jordan and the Gulf, insulation, running the lights at night, and managing humidity make the biggest difference.",
+      date: "2026-10-16",
+      dateText: "16 October 2026",
+      image: "container-zoom",
+      imageAlt: "A close-up of one container in a 3D container-farm twin: racks of leafy greens under LED light, with climate readings pinned above.",
+      summary: [
+        "Lights and plant moisture are the main cooling load in a closed farm; outside heat comes on top.",
+        "A study of container farms found hotter climates use more energy, and energy-saving tricks work less well there.",
+        "Running lights at night cut cooling energy by up to 19.4% in that study.",
+        "Removing moisture is part of cooling: track humidity as closely as temperature.",
+      ],
+      sections: [
+        {
+          id: "load",
+          h: "Where does the heat in an indoor farm come from?",
+          body: [
+            "Almost all the electricity that goes into the lights ends up as heat, and plants release water into the air as they grow. In a closed farm, the cooling system has to remove both: the heat, and the moisture. A study of vertical farms in different climates found that cooling stayed the biggest energy demand because of exactly these two loads, LED heat and dehumidification.",
+            "Outside heat adds to this through the walls, the roof and every time a door opens. That's where the Gulf climate comes in.",
+          ],
+        },
+        {
+          id: "climate",
+          h: "How much does a hot climate add?",
+          body: [
+            "It depends mostly on insulation. A 2023 study modelled container farms in eight climate zones and found they use less energy in colder places, where saving measures also work better. Using outside air to help cooling (an \"economizer\") cut cooling demand by 58.3% in the coldest region but only 3.5% in the hottest.",
+            "A 2025 study that modelled the same insulated vertical farm in Trondheim, Shanghai and Dubai found that, with good insulation and climate control, the outside climate had little effect on how much was grown; light intensity remained the main driver of energy use. More on this in [how much energy a vertical farm uses per kg](/learn/vertical-farm-energy-per-kg).",
+          ],
+        },
+        {
+          id: "humidity",
+          h: "Why does humidity matter as much as temperature?",
+          body: [
+            "Plants release most of the water they take up back into the air. If that moisture isn't removed, humidity climbs, leaves stay wet and disease risk rises. Removing moisture takes energy, so humidity belongs on the same dashboard as temperature, per floor or container. In humid coastal summers, outside air is also wet, so opening doors or vents brings moisture in, not just heat.",
+          ],
+        },
+        {
+          id: "cut",
+          h: "How can a farm in the Gulf cut its cooling energy?",
+          body: ["Start with the building and the schedule, before new equipment:"],
+          list: [
+            "Insulate walls, roof and floor well, and seal gaps. For containers, avoid direct afternoon sun where you can: shade or a white roof helps.",
+            "Run the lights at night, when outside air is cooler. In the 2023 container-farm study, this cut cooling (HVAC) energy by up to 19.4%.",
+            "Keep doors closed: use a small entry area and plan work to limit openings.",
+            "Give each crop the light it needs, not the maximum: every extra watt of light is extra heat to remove.",
+            "Service cooling units on schedule and keep coils clean; dusty coils work harder.",
+            "Track cooling run-time and energy per floor or container, so one that's struggling stands out.",
+          ],
+        },
+        {
+          id: "power",
+          h: "What about power cuts and cooling failures?",
+          body: [
+            "In a closed, lit room in hot weather, temperature can rise quickly if cooling stops. Set alerts for temperature and for cooling failures, know how long your crop can wait, and plan what turns off first (usually the lights) if power is limited.",
+          ],
+        },
+        {
+          id: "track",
+          h: "What should you track in a hot climate?",
+          body: ["On top of the usual climate, water and batch records, add:"],
+          list: [
+            "Temperature and humidity per floor or container, with alerts.",
+            "Cooling run-time and energy, side by side with outside temperature.",
+            "Door openings, if you can.",
+            "Energy per kg, month by month, to see the effect of each change. See [the complete guide](/learn/indoor-farm-guide).",
+          ],
+        },
+        {
+          id: "lamina",
+          h: "How does Lamina help?",
+          body: [
+            "Lamina shows each floor or container's climate, light hours and energy in one live 3D view, so a container that's running hot or humid stands out at a glance. See a container farm in the [live demo](/demo?type=container), or read [container farm vs. vertical farm](/learn/container-vs-vertical-farm).",
+          ],
+        },
+      ],
+      faq: [
+        { q: "Is indoor farming possible in the Gulf summer?", a: "Yes. With good insulation and climate control, a closed farm can grow all year; studies that modelled Dubai found the outside climate had little effect on yield. The cost is in cooling energy, which good design and scheduling can reduce." },
+        { q: "Should I run the lights at night?", a: "Often, yes. Night air is cooler, so the cooling works less hard. A study of container farms found this cut cooling energy by up to 19.4%." },
+        { q: "Are greenhouses better than closed farms in the Gulf?", a: "Greenhouses use free sunlight, so they buy less electricity, but they're harder to keep cool and use more water. A 2018 study found closed plant factories used 28–95% less water than greenhouses. The right choice depends on your crop, water and power costs." },
+      ],
+      solutions: ["container", "greenhouse"],
+      demo: "container",
+      kind: "tech",
+      terms: [
+        { t: "HVAC", d: "Heating, ventilation and air conditioning; in farms it also removes moisture." },
+        { t: "Dehumidification", d: "Removing water vapour from the air, usually by cooling it below its dew point." },
+        { t: "Economizer", d: "Using cool outside air to help with cooling; works poorly when outside air is hot or humid." },
+        { t: "Run-time", d: "How many hours a cooling unit works in a day; a rising run-time is an early warning." },
+      ],
+      sources: [
+        { t: "Container farms: energy modeling considering crop growth and energy-saving potential in different climates (2023). Journal of Cleaner Production", url: "https://www.sciencedirect.com/science/article/abs/pii/S0959652623025118" },
+        { t: "Thermo-economic optimization of vertical farms exploring multiple design options for the built environment and HVAC system (2025). Applied Thermal Engineering", url: "https://www.sciencedirect.com/science/article/pii/S135943112502215X" },
+        { t: "Beyond yield: integrating energy, water, cost, and carbon to benchmark indoor vertical farming viability (2025), arXiv 2507.18419", url: "https://arxiv.org/abs/2507.18419" },
+        { t: "Graamans et al. (2018), Plant factories versus greenhouses: comparison of resource use efficiency. Agricultural Systems 160", url: "https://www.sciencedirect.com/science/article/abs/pii/S0308521X17307151" },
+      ],
+      about: ["Indoor farming", "Hot climate", "HVAC", "Container farming", "Gulf"],
+    },
+    containers: {
+      meta: {
+        title: "Container farm software: what to look for",
+        description:
+          "What container farm software should do: per-container climate and alerts, batch tracking, your own data, local support. Plus what changed after Freight Farms closed.",
+      },
+      eyebrow: "Guide · Container farms",
+      title: "Container farm software: what to look for",
+      lead: "Good container farm software shows every container's climate with alerts, tracks each batch across containers, lets you export your own data, and keeps working if the internet drops. The 2025 closure of Freight Farms, a well-known container farm maker, showed why owning your data and having support nearby matter.",
+      date: "2026-10-16",
+      dateText: "16 October 2026",
+      image: "container",
+      imageAlt: "A 3D twin of a container farm: four shipping containers side by side with racks of greens inside and a cart that carries crates to packing.",
+      summary: [
+        "Per-container climate, water and light, with alerts when one drifts.",
+        "Batch tracking that follows crops across containers to packing and delivery.",
+        "Export your data any time, in a format you can open yourself.",
+        "Local control keeps running without the cloud; support in your time zone and language.",
+      ],
+      sections: [
+        {
+          id: "need",
+          h: "What should container farm software do?",
+          body: ["Whatever you choose, check it does these well:"],
+          list: [
+            "Shows each container's temperature, humidity, CO₂, water and light, with alerts.",
+            "Compares containers side by side: the same recipe with different results points to a problem.",
+            "Tracks each batch from seeding to delivery, across containers. See [seed-to-delivery tracking](/learn/seed-to-delivery-tracking).",
+            "Records energy per container, so you know your energy per kg.",
+            "Works on a phone, for the person walking between containers.",
+          ],
+        },
+        {
+          id: "own",
+          h: "Why does owning your data matter?",
+          body: [
+            "Your records of what grew where, and how, are the most valuable thing your farm produces after the crop. Make sure you can export them (climate history, batches, harvests) in a common format like a spreadsheet, and do it regularly. If a provider changes, closes or raises prices, your history stays with you.",
+          ],
+        },
+        {
+          id: "freight",
+          h: "What happened to Freight Farms?",
+          body: [
+            "Freight Farms, a US maker of container farms and the Farmhand software, ceased operations on 30 April 2025 and filed for Chapter 7 bankruptcy. Its customers were told cloud services and support would end. In July 2025, the Canadian company Growcer bought Freight Farms' assets and says Farmhand continues and support is available again. If you run a Freight Farms container, confirm your software and support arrangements directly with Growcer, and export your farm's data while you do.",
+          ],
+        },
+        {
+          id: "local",
+          h: "Does it keep working if the internet goes down?",
+          body: [
+            "It should. Climate control, lights and pumps should run from local controllers on the container itself, with the software watching and recording. If the cloud goes down, the crop must still be safe. Ask any provider what keeps running offline and what doesn't.",
+          ],
+        },
+        {
+          id: "questions",
+          h: "What should you ask a software provider?",
+          body: ["Before you sign, ask:"],
+          list: [
+            "Can I export all my data, any time, as a spreadsheet?",
+            "What keeps working if your service or the internet is down?",
+            "Who supports me, in which language and time zone?",
+            "Does it work with my existing sensors and controllers, or only yours?",
+            "Can it show my other growing areas too (rooms, greenhouses), not only containers?",
+            "What does it cost after any free period, and can I leave at any time?",
+          ],
+        },
+        {
+          id: "lamina",
+          h: "Where does Lamina fit?",
+          body: [
+            "Lamina doesn't make containers or control your equipment. It's a live 3D twin that sits alongside your control system: every container's climate, light recipe and harvests in one view, with batches tracked from seed to delivery. It works for mixed farms too (containers, rooms, greenhouses), in English and Arabic, with support from Amman. Pilot farms use it free for three months, and your data stays yours. See it in the [container farm demo](/demo?type=container).",
+          ],
+        },
+      ],
+      faq: [
+        { q: "Does Freight Farms still exist?", a: "Freight Farms ceased operations in April 2025. In July 2025 Growcer bought its assets and says it continues the Farmhand software and support for Freight Farms containers. Check current details with Growcer." },
+        { q: "Can I use different software with my container farm?", a: "Often, yes, for monitoring and records, as long as you can read the sensor data or enter readings yourself. Keep the container's own controller running the equipment." },
+        { q: "Does Lamina replace my container's controller?", a: "No. Lamina shows and records what's happening across your farm; your controllers keep running the lights, climate and pumps." },
+      ],
+      solutions: ["container", "tower"],
+      demo: "container",
+      sources: [
+        { t: "Vertical Farm Daily: Freight Farms files for Chapter 7 bankruptcy, leaving growers disconnected", url: "https://www.verticalfarmdaily.com/article/9728357/freight-farms-files-for-chapter-7-bankruptcy-leaving-growers-disconnected/" },
+        { t: "AgFunderNews: Freight Farms customers find a new home as Growcer acquires the former's assets", url: "https://agfundernews.com/freight-farms-customers-find-a-new-home-as-vertical-farming-co-growcer-acquires-the-formers-assets" },
+        { t: "Freight Farms: Growcer acquires Freight Farms, opening a new chapter for modular farming", url: "https://www.freightfarms.com/news/growcer-acquires-freight-farms-opening-a-new-chapter-for-modular-farming" },
+      ],
+      about: ["Container farming", "Farm management software", "Data ownership"],
+    },
   },
 } satisfies { index: Record<string, unknown>; items: Record<Guide, GuideCopy> };
 

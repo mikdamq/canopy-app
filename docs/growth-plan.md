@@ -1,6 +1,6 @@
 # Growth plan: tracking, keywords, site map, content and schema
 
-**Status:** approved ("let's do everything, step by step", 16 Oct 2026). Progress: ☑ step 1 (GA4 tracking, shorter titles and descriptions, structured data on the request and privacy pages) · ☑ step 2 (main guide + energy guide, with sources, term boxes, TechArticle/citation schema) · ◐ step 3 (the other guides). All on PR #15.
+**Status:** approved ("let's do everything, step by step", 16 Oct 2026). Progress: ☑ step 1 (GA4 tracking, shorter titles and descriptions, structured data on the request and privacy pages) · ☑ step 2 (main guide + energy guide, with sources, term boxes, TechArticle/citation schema) · ◐ step 3: ☑ B4, C1, C4 · ☐ A3, A4, B2, B3, C2. All on PR #15.
 
 **Where it comes from:** a 5-step brief (analytics → keywords → site map → article → schema audit), adapted to what Lamina really is: **farm software** (a live 3D twin), for **Jordan and the Gulf**, in **English and Arabic**, sold through a **free pilot**, with **no calls**. Anything in the brief that doesn't fit (growing hardware, investor deck, ROI calculator, made-up yield numbers) is left out, and each section says why.
 
@@ -83,7 +83,7 @@ The brief's `estimated_sqm` becomes `size_band`. Sending the exact area would be
 
 The brief named Plenty, Bowery and Freight Farms. They're growers or hardware sellers, and all three are in trouble, which is itself a content opportunity:
 
-- **Freight Farms** (container farms) **ceased operations on 30 April 2025**. Owners keep their containers, but **cloud software access and support ended**. Those owners now need tracking software, and container farms are one of Lamina's four farm types. ([iGrow News](https://igrownews.com/agtech-companies/freight-farms/))
+- **Freight Farms** (container farms) **ceased operations on 30 April 2025** and filed for Chapter 7; cloud services and support were to end. **Update (16 Oct):** in July 2025 **Growcer** bought its assets and says the Farmhand software continues, so these owners are *not* left without software. The guide (C4) is written as a neutral "what to look for" piece instead. ([Vertical Farm Daily](https://www.verticalfarmdaily.com/article/9728357/freight-farms-files-for-chapter-7-bankruptcy-leaving-growers-disconnected/), [AgFunderNews](https://agfundernews.com/freight-farms-customers-find-a-new-home-as-vertical-farming-co-growcer-acquires-the-formers-assets))
 - **Bowery Farming** shut down (late 2024) and its assets were sold. ([Agriculture Dive](https://www.agriculturedive.com/news/celebrity-backed-indoor-farming-company-bowery-closes-lays-off-187-workers/732282), [Fertilizer Daily](https://www.fertilizerdaily.com/20251114-bowery-farmings-70m-georgia-vertical-farm-heads-to-liquidation-as-startups-collapse-triggers-nationwide-sell-offs/))
 - **Plenty** filed for Chapter 11 in March 2025 and kept two sites running. ([Fertilizer Daily](https://fertilizerdaily.com/20250326-vertical-farming-startup-plenty-filed-for-bankruptcy-despite-raising-1-billion-from-softbank-walmart-and-jeff-bezos))
 
@@ -94,7 +94,7 @@ The brief named Plenty, Bowery and Freight Farms. They're growers or hardware se
 | **iUNU (LUNA) + Artemis** | Greenhouse cameras and sensors + cultivation management (US). ([AgFunder News](https://agfundernews.com/artemis-acquired-by-iunu-in-continued-rollup-plots-agrifinance-offering)) | Greenhouse-first, enterprise, English only, no Gulf focus |
 | **Priva** | Greenhouse climate and energy control (Netherlands) | Hardware-linked control, not a whole-farm view |
 | **Infinite Acres "Loop" (80 Acres) with Siemens** | Their own farms' platform; the digital twin is "in development". ([Siemens](https://www.siemens.com/en-us/company/insights/digital-transformation-80-acres-farms/)) | Not offered to small and mid-size farms |
-| **Freight Farms "farmhand"** | Container farm software | **Switched off** (2025) |
+| **Freight Farms "Farmhand"** | Container farm software | Now run by **Growcer** after Freight Farms closed (2025) |
 
 **Questions buyers ask that nobody answers well (our content gap):**
 1. How much energy does a vertical farm really use per kg, and where does it go?
@@ -116,14 +116,14 @@ The brief named Plenty, Bowery and Freight Farms. They're growers or hardware se
 | | A2 How to track a vertical farm from seed to delivery | ✅ in PR #15 | `/learn/seed-to-delivery-tracking` |
 | | A3 Sensors for indoor farms: what to measure, and where | new | `/learn/indoor-farm-sensors` |
 | | A4 Light recipes explained: spectrum, PPFD, DLI and photoperiod | new | `/learn/light-recipes` |
-| **B. Energy and money** | B1 How much energy does a vertical farm use per kg? | new, **first to write** | `/learn/vertical-farm-energy-per-kg` |
+| **B. Energy and money** | B1 How much energy does a vertical farm use per kg? | ✅ PR #15 | `/learn/vertical-farm-energy-per-kg` |
 | | B2 Cost per kg: how to work it out for your farm (optional calculator later) | new | `/learn/cost-per-kg` |
 | | B3 Yield per square metre: how to measure it honestly | new | `/learn/yield-per-square-metre` |
-| | B4 Why big vertical farms failed, and what small farms should track | new | `/learn/why-vertical-farms-fail` |
-| **C. Gulf farming and resources** | C1 Indoor farming in the Gulf heat: cooling, humidity, power | new | `/learn/gulf-heat-indoor-farming` |
+| | B4 Why big vertical farms failed, and what small farms should track | ✅ PR #15 | `/learn/why-vertical-farms-fail` |
+| **C. Gulf farming and resources** | C1 Indoor farming in the Gulf heat: cooling, humidity, power | ✅ PR #15 | `/learn/gulf-heat-indoor-farming` |
 | | C2 How much water does hydroponics really save? | new | `/learn/hydroponics-water-use` |
 | | C3 Container farm vs. vertical farm: what to track in each | ✅ in PR #15 | `/learn/container-vs-vertical-farm` |
-| | C4 Container farm owners: keeping your farm tracked after Freight Farms | new | `/learn/container-farm-software` |
+| | C4 Container farm software: what to look for | ✅ PR #15 | `/learn/container-farm-software` |
 
 That makes **9 new guides + the main guide**, each in English and Arabic. At about 2–3 a week, it's a 4–5 week run. Each guide links to its Solutions page, the demo (with the right farm type) and the pilot request.
 

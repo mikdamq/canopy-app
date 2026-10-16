@@ -69,7 +69,8 @@ export function GuideCard({ lang, g, guide, read, open, badge }: { lang: Locale;
   );
 }
 
-export const otherGuides = (g: Guide) => GUIDES.filter((o) => o !== g);
+/** Up to four other guides for "More guides", the main guide first. */
+export const otherGuides = (g: Guide) => GUIDES.filter((o) => o !== g).slice(0, 4);
 
 /** One section of a guide: its h2, paragraphs, then a list, steps or table if it has one. */
 export function GuideBlock({ lang, s }: { lang: Locale; s: GuideSection }) {
