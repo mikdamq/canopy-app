@@ -1,6 +1,6 @@
 # Growth plan: tracking, keywords, site map, content and schema
 
-**Status:** draft for Mikdam's review (15 Oct 2026). Nothing here is built yet. Reply "go" (or tell me what to change) and I'll build it step by step, one PR at a time.
+**Status:** approved ("let's do everything, step by step", 16 Oct 2026). Progress: ☑ step 1 (GA4 tracking, shorter titles and descriptions, structured data on the request and privacy pages) · ◐ step 2 (main guide + energy guide) · ☐ step 3 (the other guides). All on PR #15.
 
 **Where it comes from:** a 5-step brief (analytics → keywords → site map → article → schema audit), adapted to what Lamina really is: **farm software** (a live 3D twin), for **Jordan and the Gulf**, in **English and Arabic**, sold through a **free pilot**, with **no calls**. Anything in the brief that doesn't fit (growing hardware, investor deck, ROI calculator, made-up yield numbers) is left out, and each section says why.
 

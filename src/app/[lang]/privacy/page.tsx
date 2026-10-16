@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Fragment } from "react";
+import { JsonLd } from "@/components/page/json-ld";
 import { SiteFooter } from "@/components/ui/site-footer";
 import { SiteHeader } from "@/components/ui/site-header";
 import { fmt, hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { breadcrumbs, graph, webPage } from "@/lib/schema";
 import { pageMeta } from "@/lib/seo";
 import { brandName, CONTACT_EMAIL } from "@/lib/site";
 
@@ -55,6 +57,15 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
   return (
     <div className="flex min-h-svh flex-col bg-bg">
       <SiteHeader lang={lang} nav={d.nav} wa={d.whatsapp} langHref={`/${other}/privacy`} />
+      <JsonLd
+        data={graph(
+          webPage(lang, "/privacy", d.meta.privacyTitle, d.meta.privacyDescription),
+          breadcrumbs([
+            { name: d.nav.home, path: `/${lang}` },
+            { name: d.meta.privacyTitle, path: `/${lang}/privacy` },
+          ]),
+        )}
+      />
       <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 pt-8 pb-20 sm:px-6 lg:pt-14">
         <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
           {/* Contents, pinned on wide screens */}

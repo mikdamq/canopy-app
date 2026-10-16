@@ -22,7 +22,7 @@ import { isFarmType } from "@/components/twin/layouts";
 import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { COUNTRIES, countryByName, withCountryCode } from "@/lib/countries";
 import { WHATSAPP_NUMBER, whatsappUrl } from "@/lib/site";
-import { track } from "@/lib/analytics";
+import { sizeBand, track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 type R = Dict["request"];
@@ -296,7 +296,7 @@ export default function RequestFlow({
       setF((p) => ({ ...p, phone: body.phone }));
       setEmailed(out.emailed === true);
       setPass(out.details ?? "");
-      track("request_sent", { source, lang });
+      track("request_sent", { source, lang, type: body.farmType, country: body.country });
       clearDraft();
       swapped.current = true;
       setStatus("done");
@@ -325,7 +325,12 @@ export default function RequestFlow({
         body: JSON.stringify({ token: pass, details: parsed.data, request }),
       });
       if (!res.ok) throw new Error(String(res.status));
-      track("request_details", { stage: "sent", lang });
+      track("request_details", {
+        stage: "sent",
+        lang,
+        ...(parsed.data.role ? { role: parsed.data.role } : {}),
+        ...(sizeBand(parsed.data.areaM2) ? { size_band: sizeBand(parsed.data.areaM2)! } : {}),
+      });
       setXStatus("done");
     } catch {
       setXStatus("error");

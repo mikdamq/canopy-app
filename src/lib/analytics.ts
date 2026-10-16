@@ -1,7 +1,8 @@
 /**
  * Funnel analytics. Umami counts page views on its own (that's the "landing" step);
- * these are the custom steps after it. Everything is a no-op until the Umami / Clarity
- * IDs are set, so nothing breaks in development.
+ * these are the custom steps after it. Every event also goes to Google Analytics 4 and
+ * Clarity, but those two only load after the visitor clicks "Allow". Everything is a
+ * no-op until the IDs are set, so nothing breaks in development.
  */
 export type FunnelEvent = "demo_opened" | "demo_interaction" | "request_details" | "demo_tour" | "request_error" | "request_sent" | "whatsapp_click";
 type Data = Record<string, string | number | boolean>;
@@ -10,12 +11,16 @@ declare global {
   interface Window {
     umami?: { track: (event: string, data?: Data) => void };
     clarity?: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
 export const UMAMI_ID = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID || "";
 export const UMAMI_SRC = process.env.NEXT_PUBLIC_UMAMI_SRC || "https://cloud.umami.is/script.js";
 export const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID || "";
+export const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
+/** Tools that set cookies, so the visitor is asked first. */
+export const NEEDS_CONSENT = Boolean(CLARITY_ID || GA_ID);
 
 /**
  * Umami calls this before sending anything. It drops the farm name (?farm=) from the
@@ -41,6 +46,41 @@ export function track(event: FunnelEvent, data?: Data) {
   if (window.umami) window.umami.track(event, data);
   else if (UMAMI_ID) pending.push([event, data]);
   window.clarity?.("event", event);
+  if (window.gtag) {
+    // GA4 reports read `farm_type`; Umami keeps the shorter `type`.
+    const { type, ...rest } = data ?? {};
+    const params = type === undefined ? rest : { ...rest, farm_type: type };
+    window.gtag("event", event, params);
+    // Google's standard name for a lead, so GA4 can count it as a key event.
+    if (event === "request_sent") window.gtag("event", "generate_lead", params);
+  }
+}
+
+/** The address without the farm name (?farm=), for page views sent to GA4. */
+export function cleanLocation() {
+  const u = new URL(window.location.href);
+  u.searchParams.delete("farm");
+  return u.href;
+}
+
+/** A farm's area as a band, so reports never carry the exact figure. */
+export function sizeBand(m2?: number) {
+  if (!m2) return undefined;
+  if (m2 < 100) return "under 100";
+  if (m2 < 500) return "100-500";
+  if (m2 < 2000) return "500-2000";
+  return "over 2000";
+}
+
+/** Removes Google Analytics cookies (_ga, _ga_…) when the visitor withdraws consent. */
+export function clearGaCookies() {
+  const host = window.location.hostname;
+  const domains = ["", host, `.${host.replace(/^www\./, "")}`];
+  for (const c of document.cookie.split(";")) {
+    const name = c.split("=")[0].trim();
+    if (!name.startsWith("_ga")) continue;
+    for (const d of domains) document.cookie = `${name}=; Max-Age=0; path=/${d ? `; domain=${d}` : ""}`;
+  }
 }
 
 export function flushPending() {
@@ -50,7 +90,7 @@ export function flushPending() {
   }
 }
 
-/* Consent for Clarity (the only part that sets cookies). Stored in this browser only. */
+/* Consent for Clarity and GA4 (the parts that set cookies). Stored in this browser only. */
 export type Consent = "granted" | "denied";
 const KEY = "canopy-consent";
 export const CONSENT_OPEN_EVENT = "canopy:consent-open";

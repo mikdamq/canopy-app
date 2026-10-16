@@ -38,6 +38,13 @@ Last updated: 15 Oct 2026 (growth plan added for review; GA4 decided).
 
 ## 3. Accounts and settings
 
+- [ ] **Google Analytics 4** (decided 15 Oct; the site is ready for it, PR #15):
+  1. **analytics.google.com** → Create property "Lamina" (time zone Amman, currency USD) → **Web** data stream `https://laminafarm.app`.
+  2. Copy the **Measurement ID** (`G-…`, not secret) → GitHub → Settings → Secrets and variables → Actions → **Variables** → New: `NEXT_PUBLIC_GA_ID` → then Actions → cPanel package → Run workflow.
+  3. In GA4 → Admin → **Custom definitions** → Create these event-scoped dimensions (name = parameter): `farm_type`, `country`, `lang`, `size_band`, `place`, `stage`.
+  4. Admin → **Key events**: mark `generate_lead` (main), plus `whatsapp_click` and `demo_opened`.
+  5. Admin → Data collection: keep **Google signals off**. Admin → Data retention: **14 months**.
+  6. Admin → Product links → **Search Console** → link laminafarm.app (after the Search Console step above).
 - [ ] **Umami:** add `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (and `NEXT_PUBLIC_UMAMI_SRC` if its script address isn't `https://cloud.umami.is/script.js`) under GitHub → Settings → Secrets and variables → Actions → **Variables**, then Actions → cPanel package → Run workflow. Then check Realtime shows you, Events shows `demo_opened`, and no farm names appear in page addresses.
 - [ ] **Clarity:** Settings → Masking → **Strict** (hides all on-page text in recordings, so nobody's farm or contact details are ever recorded). The ID is already built in; don't paste Clarity's script anywhere.
 - [ ] **Speed on a real phone:** open **https://pagespeed.web.dev**, test `laminafarm.app/en` and `laminafarm.app/en/demo`, and **send me the two result links**. My test machine can't measure real phone speed for the 3D pages.

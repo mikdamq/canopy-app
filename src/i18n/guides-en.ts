@@ -41,7 +41,7 @@ const guidesEn = {
     meta: {
       title: "Guides: digital twins and tracking for indoor farms",
       description:
-        "Plain guides for indoor farm owners and grow managers: what a farm digital twin is, how to track a vertical farm from seed to delivery, and what to track in a container farm vs. a vertical farm.",
+        "Plain guides for indoor farm teams: what a farm digital twin is, seed-to-delivery tracking, and what to track in container vs. vertical farms.",
     },
     eyebrow: "Guides",
     title: "Guides for indoor farm teams",
@@ -60,7 +60,7 @@ const guidesEn = {
       meta: {
         title: "What is a farm digital twin? A plain guide",
         description:
-          "A farm digital twin is a live 3D copy of your farm, kept up to date with your data. What it shows, how it differs from a dashboard, what you need to start, and when it's worth it.",
+          "A farm digital twin is a live 3D copy of your farm, kept up to date with your data: what it shows, how it differs from a dashboard and how to start.",
       },
       eyebrow: "Guide · Digital twins",
       title: "What is a digital twin for a farm?",
@@ -150,7 +150,7 @@ const guidesEn = {
       meta: {
         title: "How to track a vertical farm from seed to delivery",
         description:
-          "A practical guide to seed-to-delivery tracking for vertical and indoor farms: one batch ID, the five moments to record, a simple spreadsheet to start with, and common mistakes.",
+          "Seed-to-delivery tracking for vertical and indoor farms: one batch ID, the five moments to record, a simple spreadsheet to start, and common mistakes.",
       },
       eyebrow: "Guide · Traceability",
       title: "How to track a vertical farm from seed to delivery",

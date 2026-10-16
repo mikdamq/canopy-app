@@ -113,6 +113,7 @@ These are built into the pages. After adding or changing one, rebuild: **Actions
 | Name | Value |
 |---|---|
 | `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | your Umami Website ID |
+| `NEXT_PUBLIC_GA_ID` | your Google Analytics 4 Measurement ID (`G-…`, not secret). Loads only after the visitor clicks "Allow" |
 | `NEXT_PUBLIC_UMAMI_SRC` | only if Umami's tracking code shows a script address other than `https://cloud.umami.is/script.js` (the EU region may use a different one) |
 | `NEXT_PUBLIC_CLARITY_ID` | not needed: `yv5sglt7cp` is already the default |
 | `NEXT_PUBLIC_SITE_URL` | not needed: `https://laminafarm.app` is already the default |

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/page/json-ld";
 import RequestFlow from "@/components/request/request-flow";
 import { isFarmType } from "@/components/twin/layouts";
 import { SiteHeader } from "@/components/ui/site-header";
 import { hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { breadcrumbs, graph, webPage } from "@/lib/schema";
 import { pageMeta } from "@/lib/seo";
 import { BOOKING_URL, brandName, CONTACT_EMAIL, cleanFarmName } from "@/lib/site";
 
@@ -39,6 +41,15 @@ export default async function RequestPage({ params, searchParams }: PageProps<"/
         wa={d.whatsapp}
         variant="request"
         langHref={`/${other}/request${q.size ? `?${q}` : ""}`}
+      />
+      <JsonLd
+        data={graph(
+          webPage(lang, "/request", d.meta.requestTitle, d.meta.description, "ContactPage"),
+          breadcrumbs([
+            { name: d.nav.home, path: `/${lang}` },
+            { name: d.meta.requestTitle, path: `/${lang}/request` },
+          ]),
+        )}
       />
       <main id="main" className="mx-auto w-full max-w-6xl px-4 pt-6 pb-20 sm:px-6 lg:pt-12">
         <RequestFlow

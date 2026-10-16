@@ -21,7 +21,7 @@ const pagesEn = {
     meta: {
       title: "Product: a live 3D digital twin for indoor farms",
       description:
-        "Lamina turns your vertical farm, container farm, greenhouse or lab into a live 3D twin: every floor, crop, light recipe and crate, from seed to delivery, in one view.",
+        "Lamina turns your vertical farm, container farm, greenhouse or lab into a live 3D twin: every floor, crop, light recipe and crate, from seed to delivery.",
     },
     eyebrow: "Product",
     title: "A live 3D twin of your whole farm",
@@ -57,9 +57,9 @@ const pagesEn = {
   },
   solutions: {
     meta: {
-      title: "Solutions for vertical farms, container farms, greenhouses and labs",
+      title: "Solutions for every kind of indoor farm",
       description:
-        "One live 3D twin, shaped to your kind of indoor farm: vertical towers, container farms, hydroponic greenhouses and research labs, in Jordan, the UAE, Saudi Arabia and the Gulf.",
+        "One live 3D twin, shaped to your farm: vertical towers, container farms, hydroponic greenhouses and research labs, in Jordan and the Gulf.",
     },
     eyebrow: "Solutions",
     title: "Built around your kind of farm",
@@ -71,7 +71,7 @@ const pagesEn = {
         meta: {
           title: "Vertical farm software: a live 3D twin of every floor",
           description:
-            "Lamina shows your vertical farm as a live 3D tower: every floor's climate, crop and light recipe, the lift, and every crate from seed to delivery. Free pilot in Jordan and the Gulf.",
+            "See your vertical farm as a live 3D tower: each floor's climate, crop and light recipe, and every crate from seed to delivery. Free pilot in Jordan and the Gulf.",
         },
         eyebrow: "Vertical farms",
         title: "Vertical farm software that shows every floor at once",
@@ -102,7 +102,7 @@ const pagesEn = {
         meta: {
           title: "Container farm software: every container in one live 3D view",
           description:
-            "Lamina shows all your shipping-container farms in one live 3D view: racks, climate, light recipes and harvests per container, and the cart that moves crates. Free pilot in Jordan and the Gulf.",
+            "All your shipping-container farms in one live 3D view: racks, climate, light recipes and harvests per container. Free pilot in Jordan and the Gulf.",
         },
         eyebrow: "Container farms",
         title: "Container farm software that puts every container in one view",
@@ -133,7 +133,7 @@ const pagesEn = {
         meta: {
           title: "Hydroponic greenhouse software: bays, sun and LEDs in 3D",
           description:
-            "Lamina shows your hydroponic greenhouse as a live 3D twin: every bay's climate and crop, how much the sun covers, and when LEDs top up. Free pilot in Jordan and the Gulf.",
+            "Your hydroponic greenhouse as a live 3D twin: each bay's climate and crop, how much the sun covers, and when LEDs top up. Free pilot in Jordan and the Gulf.",
         },
         eyebrow: "Hydroponic greenhouses",
         title: "Hydroponic greenhouse software for every bay, sun and LED",
@@ -164,7 +164,7 @@ const pagesEn = {
         meta: {
           title: "Research lab software: growth chambers and trials in 3D",
           description:
-            "Lamina shows your plant research lab as a live 3D twin: every growth chamber's climate, light recipe and trial, side by side. Free pilot for labs in Jordan and the Gulf.",
+            "Your plant research lab as a live 3D twin: each growth chamber's climate, light recipe and trial, side by side. Free pilot for labs in Jordan and the Gulf.",
         },
         eyebrow: "Research labs",
         title: "Software for plant research labs and growth chambers",
@@ -196,7 +196,7 @@ const pagesEn = {
     meta: {
       title: "Free pilot program for indoor farms in Jordan and the Gulf",
       description:
-        "Get a live 3D twin of your farm, set up in about two weeks and free for three months. For vertical farms, container farms, greenhouses and labs in Jordan, the UAE, Saudi Arabia and the Gulf.",
+        "A live 3D twin of your farm, set up in about two weeks and free for three months. For towers, containers, greenhouses and labs in Jordan and the Gulf.",
     },
     eyebrow: "Pilot program",
     title: "A free pilot for your farm",
@@ -234,9 +234,9 @@ const pagesEn = {
   },
   about: {
     meta: {
-      title: "About Lamina: live 3D twins for indoor farms, built in Amman",
+      title: "About Lamina: live 3D farm twins, built in Amman",
       description:
-        "Lamina is a young company based in Amman, Jordan, building live 3D digital twins for vertical farms, container farms, greenhouses and research labs across Jordan and the Gulf.",
+        "Lamina is a young company in Amman, Jordan, building live 3D digital twins for vertical farms, container farms, greenhouses and labs in Jordan and the Gulf.",
     },
     eyebrow: "About",
     title: "We help farm teams see the whole farm",
@@ -262,7 +262,7 @@ const pagesEn = {
     meta: {
       title: "FAQ: digital twins, setup, the free pilot and your data",
       description:
-        "Answers to the questions farm owners ask about Lamina: what a farm digital twin is, which farms it works for, sensors, setup time, the free pilot, pricing and data privacy.",
+        "Answers for farm owners: what a farm digital twin is, which farms it suits, sensors, setup time, the free pilot, pricing and data privacy.",
     },
     eyebrow: "FAQ",
     title: "Questions farm owners ask us",
