@@ -2,18 +2,14 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 15 Oct 2026 (growth plan added for review; GA4 decided).
+Last updated: 16 Oct 2026 (guides merged; company names removed; GA4 ready).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
 ## 1. This week
 
-- [ ] **Review the growth plan** in `docs/growth-plan.md` (tracking with GA4, keywords, site map, next articles, schema) and reply "go" or tell me what to change. Also send me **your LinkedIn profile address** (for the author page).
-- [ ] **Review the 10 newest guides** too (all on PR #15; the ones with numbers list their sources at the bottom): *Running an indoor farm: the complete guide*, *Sensors for indoor farms*, *How much energy does a vertical farm use per kg?*, *Cost per kg*, *Yield per square metre*, *Light recipes explained*, *How much water does hydroponics really save?*, *Why big vertical farms failed*, *Indoor farming in the Gulf heat*, *Container farm software: what to look for*. The last one mentions Freight Farms and Growcer by name, from public news reports; tell me if you'd rather leave company names out.
-- [ ] **Review the 3 guides** (English and Arabic) on the preview of PR #15, then say "Merge":
-  - English: https://deploy-preview-15--frabjous-caramel-1e10ec.netlify.app/en/learn
-  - Arabic: https://deploy-preview-15--frabjous-caramel-1e10ec.netlify.app/ar/learn
-  - They're signed "By Mikdam Qandil, founder of Lamina"; tell me if you'd rather it say "The Lamina team". Also tell me any facts that don't match your experience, and topics for the next guides.
+- [ ] **Send me your LinkedIn profile address** (for the author line on the guides and the About page).
+- [ ] **Read the 13 guides on the live site** when you have time (laminafarm.app/en/learn and /ar/learn) and tell me any facts that don't match your experience, plus topics for the next guides. Company names are left out for now, as you asked.
 - [ ] **Try the live site on your phone** and tell me anything that feels off:
   - the demo's guided tour (it starts after the welcome card; the **Tour** button replays it) and the toolbar that opens one panel at a time;
   - the header and ☰ menu on every page;
@@ -91,4 +87,5 @@ My cloud workspace can't open `laminafarm.app` or `*.netlify.app` (blocked by it
 - [x] Working hours: Sunday to Thursday, 9:00–23:00 Amman time (10 Oct)
 - [x] Pricing answer: "Free during the pilot. Before it ends we agree a price together, based on your farm's size. No surprises, no lock-in." (10 Oct)
 - [x] Email designs approved (10 Oct)
-- [x] Merged: PR #6 (rename, navigation, marketing kit), PR #12 (emails, short form), PR #13 (content pages, header), PR #14 (demo tour and toolbar)
+- [x] Merged: PR #6 (rename, navigation, marketing kit), PR #12 (emails, short form), PR #13 (content pages, header), PR #14 (demo tour and toolbar), PR #15 (13 guides, new guide layout, GA4 support, sitemap) (16 Oct)
+- [x] Growth plan approved; guide layout approved (16 Oct)
