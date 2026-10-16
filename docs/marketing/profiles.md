@@ -79,7 +79,7 @@ Created 16 Oct 2026. Where each field lives: **Edit page → Header** (logo, cov
 > نجري تجارب مجانية مدتها 3 أشهر مع مجموعة صغيرة من المزارع في الأردن والخليج. نبني النسخة الرقمية على مخطط مزرعتك الحقيقي خلال أسبوعين تقريبًا، وتتواصل مع المؤسس مباشرة عبر واتساب، ولا نشارك بياناتك أو نبيعها أبدًا.
 >
 > جرّب العرض باسم مزرعتك: https://laminafarm.app/ar
-> للتواصل: hello@laminafarm.app · واتساب 7016 351 78 962+
+> للتواصل: hello@laminafarm.app · واتساب ‎+962 78 7016 351
 
 **Specialties** (up to 20; type each and press Enter)
 Digital twin · Vertical farming · Indoor farming · Controlled environment agriculture · Hydroponics · Container farming · Greenhouse management · Farm management software · AgTech · 3D visualization · Farm monitoring · LED light recipes · Crop planning · Seed-to-delivery traceability · Farm operations · Food security
