@@ -571,6 +571,305 @@ const guidesEn = {
       ],
       about: ["Vertical farming", "Energy efficiency", "LED lighting", "Lettuce"],
     },
+    cost: {
+      meta: {
+        title: "Cost per kg: how to work it out for your farm",
+        description:
+          "A step-by-step way to work out your indoor farm's cost per kg of sellable crop: what to count, how to split it by floor, and how to use it to set prices.",
+      },
+      eyebrow: "Guide · Money",
+      title: "Cost per kg: how to work it out for your indoor farm",
+      lead: "Cost per kg is everything it costs to run your farm for a month, divided by the kilos you sold that month. Compare it with your selling price per kg: if cost is higher, the farm loses money on every kilo, however good the crop looks. Work it out monthly, and per floor or container where you can.",
+      date: "2026-10-16",
+      dateText: "16 October 2026",
+      image: "greenhouse-zoom",
+      imageAlt: "A close-up of one bay in a 3D hydroponic greenhouse twin: rows of leafy greens with climate readings pinned above.",
+      summary: [
+        "Cost per kg = monthly running costs ÷ kilos sold that month.",
+        "Count everything: electricity, labour, seeds and nutrients, packaging, water, rent, repairs.",
+        "Use kilos sold, not harvested: waste is a cost, not output.",
+        "Split by floor or container to find which parts of the farm pay.",
+      ],
+      sections: [
+        {
+          id: "formula",
+          h: "What is cost per kg?",
+          body: [
+            "It's the total cost of running the farm over a period, divided by the weight of crop you sold in the same period. It's the single number that tells you whether each kilo makes or loses money, once you put it next to your selling price per kg.",
+          ],
+        },
+        {
+          id: "count",
+          h: "What should you count?",
+          body: ["Include every monthly cost, even ones that feel fixed:"],
+          table: {
+            head: ["Cost", "Where to find it"],
+            rows: [
+              ["Electricity", "Your meter or bill; per floor or container if you can"],
+              ["Labour", "Wages for everyone working on the farm, including packing"],
+              ["Seeds, substrate, nutrients", "Purchase records, spread over the months they're used"],
+              ["Packaging and delivery", "Boxes, labels, fuel or delivery fees"],
+              ["Water", "Bill or tanker costs"],
+              ["Rent and services", "Rent, internet, insurance, software"],
+              ["Repairs and spare parts", "Average over the year, so one big repair doesn't distort a month"],
+              ["Equipment (optional)", "The cost of lights, racks and cooling spread over their life, if you want the full picture"],
+            ],
+          },
+        },
+        {
+          id: "steps",
+          h: "How do you work it out, step by step?",
+          body: ["Do this at the end of every month:"],
+          steps: [
+            { t: "Add up the month's costs", d: "Use the list above. Keep the same list every month so months compare." },
+            { t: "Add up the kilos sold", d: "Sellable weight that left the farm, not what was harvested." },
+            { t: "Divide", d: "Costs ÷ kilos sold = cost per kg. Write it next to your average selling price per kg." },
+            { t: "Look at the trend", d: "One month can mislead; three months in a row tells you the direction." },
+          ],
+        },
+        {
+          id: "split",
+          h: "How do you split it by floor or container?",
+          body: [
+            "Some costs belong to one floor or container (its electricity, its harvests); others are shared (rent, packing staff). Give each floor its own electricity and kilos, then share the rest by growing area. A floor with a much higher cost per kg is where to look first: often a climate problem, an older light, or racks that aren't full.",
+          ],
+        },
+        {
+          id: "lower",
+          h: "What usually lowers cost per kg?",
+          body: ["The biggest levers are usually these:"],
+          list: [
+            "Fill every rack: empty space still costs light, cooling and rent.",
+            "Cut waste: every kilo thrown away carries its full cost.",
+            "Match light to the crop: see [light recipes explained](/learn/light-recipes).",
+            "Lower energy per kg: see [how much energy a vertical farm uses per kg](/learn/vertical-farm-energy-per-kg).",
+            "Sell to buyers who value freshness and consistency, so the price per kg is higher.",
+          ],
+        },
+        {
+          id: "lamina",
+          h: "How does Lamina help?",
+          body: [
+            "Lamina keeps energy, harvests and batches per floor or container in one place, so working out cost per kg each month is quick, and the floors that cost most stand out. Read [why big vertical farms failed](/learn/why-vertical-farms-fail) for why this number matters so much, or [try the demo](/demo).",
+          ],
+        },
+      ],
+      faq: [
+        { q: "Should I use kilos harvested or kilos sold?", a: "Kilos sold. Harvested weight that's thrown away or not bought still cost money to grow, so counting it would make the farm look better than it is." },
+        { q: "Should I include the cost of equipment?", a: "For a monthly running check, start without it. For pricing and expansion decisions, add the equipment spread over its useful life, so you see the full cost." },
+        { q: "What's a good cost per kg?", a: "There's no single number: it depends on your crop, your market and your prices. What matters is that it's below your selling price per kg, with room for a bad month." },
+      ],
+      solutions: ["tower", "greenhouse"],
+      demo: "tower",
+      about: ["Farm economics", "Cost per kilogram", "Indoor farming"],
+    },
+    lights: {
+      meta: {
+        title: "Light recipes explained: PPFD, DLI and photoperiod",
+        description:
+          "What a light recipe is for an indoor farm: spectrum, intensity (PPFD), day length and daily light (DLI), how to calculate DLI, and what research says for lettuce.",
+      },
+      eyebrow: "Guide · Light",
+      title: "Light recipes explained: spectrum, PPFD, DLI and photoperiod",
+      lead: "A light recipe is the set of light settings a crop grows under: the colour mix (spectrum), the intensity (PPFD), the hours per day (photoperiod), and the total light per day that results (DLI). For lettuce, research and grower guides usually point to a daily light total of roughly 11–17 mol/m²/day; more light grows faster but costs more in electricity and cooling.",
+      date: "2026-10-16",
+      dateText: "16 October 2026",
+      image: "lab-zoom",
+      imageAlt: "A close-up of a growth chamber in a 3D research-lab twin: trays of seedlings under LED panels, with readings pinned above.",
+      summary: [
+        "DLI = PPFD × hours of light × 3,600 ÷ 1,000,000.",
+        "200 µmol/m²/s for 16 hours gives a DLI of about 11.5 mol/m²/day.",
+        "A 2023 study found 11.5 mol/m²/day the best DLI for iceberg lettuce in an indoor vertical system.",
+        "Light intensity drives both growth and energy use, so more is not always better.",
+      ],
+      sections: [
+        {
+          id: "what",
+          h: "What is a light recipe?",
+          body: [
+            "It's the combination of four settings: spectrum (the mix of colours, often red, blue and white), PPFD (how much usable light reaches the plants each second), photoperiod (how many hours a day the lights are on) and the DLI that results (the total usable light per day). Each crop, and often each growth stage, has its own recipe.",
+          ],
+        },
+        {
+          id: "dli",
+          h: "How do you calculate DLI?",
+          body: [
+            "Multiply the light intensity by the seconds the lights are on, then convert to moles: DLI = PPFD × hours × 3,600 ÷ 1,000,000. For example, 200 µmol/m²/s for 16 hours gives 200 × 16 × 3,600 ÷ 1,000,000 ≈ 11.5 mol/m²/day.",
+          ],
+          table: {
+            head: ["PPFD (µmol/m²/s)", "Hours of light", "DLI (mol/m²/day)"],
+            rows: [
+              ["200", "12", "8.6"],
+              ["200", "16", "11.5"],
+              ["200", "20", "14.4"],
+              ["250", "16", "14.4"],
+            ],
+          },
+          note: "The first three rows are the settings tested in the 2023 iceberg lettuce study listed below.",
+        },
+        {
+          id: "lettuce",
+          h: "How much light does lettuce need?",
+          body: [
+            "A 2023 study grew iceberg lettuce in an indoor vertical hydroponic system at 200 µmol/m²/s with 12, 16 and 20 hours of light, and recommended a DLI of 11.5 mol/m²/day (16 hours); more light didn't improve the crop's appearance. Grower guides commonly give about 12–17 mol/m²/day for lettuce, and warn that very high daily light can cause tipburn.",
+            "Start in that range, then adjust by watching growth, quality and energy together. Other crops, like herbs or fruiting plants, need different recipes.",
+          ],
+        },
+        {
+          id: "spectrum",
+          h: "Does the colour of the light matter?",
+          body: [
+            "Yes, but less than the total amount for most leafy greens. Red and blue are used efficiently by plants; white light makes it easier for staff to see the crop's real colour and spot problems. Many farms use a white or red-and-white mix. Changing spectrum can change leaf shape, colour and taste, so test on one floor before changing them all.",
+          ],
+        },
+        {
+          id: "cost",
+          h: "How does light affect energy and cooling?",
+          body: [
+            "Light is usually the biggest energy use in a vertical farm, and nearly all of it becomes heat that the cooling has to remove. A 2025 study found light intensity was the main driver of total energy use, and its most cost-effective setup used 250 µmol/m²/s. More in [how much energy a vertical farm uses per kg](/learn/vertical-farm-energy-per-kg).",
+          ],
+        },
+        {
+          id: "track",
+          h: "What should you record for each light recipe?",
+          body: ["For each floor or chamber, keep:"],
+          list: [
+            "Spectrum, PPFD at canopy level, hours on, and the resulting DLI.",
+            "When the recipe changed, and why.",
+            "Days to harvest, harvest weight and quality for each batch under that recipe.",
+            "Electricity used by the lights, for energy per kg.",
+          ],
+        },
+        {
+          id: "lamina",
+          h: "How does Lamina help?",
+          body: [
+            "Lamina shows each floor's light recipe and its effect on growth speed and energy per kilo, side by side, so you can compare recipes on real batches. Try the light recipes in the [live demo](/demo), or read [the complete guide](/learn/indoor-farm-guide).",
+          ],
+        },
+      ],
+      faq: [
+        { q: "Is more light always better?", a: "No. More light speeds growth up to a point, but each extra unit costs electricity and cooling, and very high daily light can cause tipburn in lettuce." },
+        { q: "Is a longer day better than brighter light?", a: "Research on lettuce suggests that spreading the same daily light over more hours can make photosynthesis more efficient, and lower intensity means less heat at any moment. Test on one floor first." },
+        { q: "How do I measure PPFD?", a: "With a quantum (PAR) meter held at the top of the plants, at several points across the rack, since light is weaker at the edges." },
+      ],
+      solutions: ["lab", "tower"],
+      demo: "lab",
+      kind: "tech",
+      terms: [
+        { t: "PPFD", d: "Photosynthetic photon flux density: usable light reaching the plants each second, in µmol/m²/s." },
+        { t: "DLI", d: "Daily light integral: total usable light per day, in mol/m²/day." },
+        { t: "Photoperiod", d: "Hours per day the lights are on." },
+        { t: "Spectrum", d: "The mix of light colours, e.g. red, blue and white." },
+        { t: "Tipburn", d: "Browning at leaf edges, often linked to fast growth under high light." },
+      ],
+      sources: [
+        { t: "Determination of optimal daily light integral (DLI) for indoor cultivation of iceberg lettuce in an indigenous vertical hydroponic system (2023). Scientific Reports", url: "https://www.nature.com/articles/s41598-023-36997-2" },
+        { t: "Longer photoperiods with the same daily light integral increase daily electron transport through photosystem II in lettuce (2020). Plants", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7570151/" },
+        { t: "Hort Americas: Daily light integral, are your plants receiving the right amount of light?", url: "https://hortamericas.com/blog/science/daily-light-integral-how-much-light-do-i-need/" },
+        { t: "Beyond yield: integrating energy, water, cost, and carbon to benchmark indoor vertical farming viability (2025), arXiv 2507.18419", url: "https://arxiv.org/abs/2507.18419" },
+      ],
+      about: ["LED grow lights", "Daily light integral", "Lettuce", "Vertical farming"],
+    },
+    water: {
+      meta: {
+        title: "How much water does hydroponics really save?",
+        description:
+          "Hydroponic lettuce can use a fraction of the water of field lettuce, but needs far more energy. What the studies measured, and how to track water per kg.",
+      },
+      eyebrow: "Guide · Water",
+      title: "How much water does hydroponics really save?",
+      lead: "Hydroponic lettuce can use around a tenth of the water of field-grown lettuce: one well-known study estimated about 20 litres per kg in a hydroponic greenhouse against about 250 in the field. But the same study found hydroponics needed far more energy. In water-scarce places like Jordan and the Gulf, that trade is often worth it, if you track both.",
+      date: "2026-10-16",
+      dateText: "16 October 2026",
+      image: "greenhouse",
+      imageAlt: "A 3D twin of a hydroponic greenhouse: glass bays with rows of greens, sunlight from above and LED bars for cloudy hours.",
+      summary: [
+        "A 2015 modelling study: about 20 L/kg for hydroponic greenhouse lettuce vs about 250 L/kg in the field (Arizona).",
+        "A 2022 study found water use from 1.6 to 93 L per kg across hydroponic systems.",
+        "Closed plant factories used 28–95% less water than greenhouses in a 2018 study.",
+        "The catch is energy: hydroponics used far more energy per kg in the 2015 study.",
+      ],
+      sections: [
+        {
+          id: "numbers",
+          h: "How much water does hydroponic lettuce use?",
+          body: ["Published figures vary with the system and the climate, but all point the same way:"],
+          table: {
+            head: ["Study", "What it compared", "Water per kg of lettuce"],
+            rows: [
+              ["Barbosa et al., 2015 (model, Arizona)", "Field vs hydroponic greenhouse", "about 250 L vs about 20 L"],
+              ["Journal of Cleaner Production, 2022", "Hydroponic controlled-environment systems", "1.6 to 93 L"],
+              ["Graamans et al., 2018", "Plant factories vs greenhouses (NL, UAE, Sweden)", "28–95% less in plant factories"],
+            ],
+          },
+          note: "The 2015 figures are model estimates for one region, not measured farms.",
+        },
+        {
+          id: "why",
+          h: "Why does hydroponics use less water?",
+          body: [
+            "In a recirculating system, the water that roots don't take up flows back to the tank and is used again, instead of draining into the soil. In a closed room, much of the water plants release into the air can also be collected by the cooling system as condensate. Very little is lost, so most of the water ends up in the crop or back in the system.",
+          ],
+        },
+        {
+          id: "catch",
+          h: "What's the catch?",
+          body: [
+            "Energy. The same 2015 study estimated that hydroponic greenhouse lettuce needed many times more energy per kg than field lettuce, mostly for climate control and lighting, while also producing far more per square metre. The 2022 study found the environmental footprint of indoor lettuce depends heavily on how the electricity is generated. See [how much energy a vertical farm uses per kg](/learn/vertical-farm-energy-per-kg).",
+          ],
+        },
+        {
+          id: "gulf",
+          h: "Why does this matter in Jordan and the Gulf?",
+          body: [
+            "Water is among the scarcest resources in the region, and much of the fresh produce is imported. Growing leafy greens with a fraction of the water is one of the main reasons farms here move indoors. The trade-off with electricity is real, so the best farms track water and energy per kg together. See [indoor farming in the Gulf heat](/learn/gulf-heat-indoor-farming).",
+          ],
+        },
+        {
+          id: "track",
+          h: "How do you track water per kg on your farm?",
+          body: ["Measure what goes in, and divide by what you sell:"],
+          steps: [
+            { t: "Meter the top-ups", d: "Record every litre added to the tanks, per system or container, with a simple water meter." },
+            { t: "Note what leaves", d: "Tank dumps and flushes, so you know how much is wasted." },
+            { t: "Divide by kilos sold", d: "Litres added ÷ kilos sold = litres per kg. Compare month by month." },
+          ],
+        },
+        {
+          id: "save",
+          h: "How can a farm save more water?",
+          body: ["A few habits make most of the difference:"],
+          list: [
+            "Fix leaks fast: a dripping fitting can waste more than the plants drink.",
+            "Dump tanks only when tests say so (EC, pH, disease), not by habit.",
+            "Collect cooling condensate, and test it before reusing it.",
+            "Keep tank levels and top-ups in the same record as harvests, so water per kg is easy to see.",
+          ],
+        },
+        {
+          id: "lamina",
+          h: "How does Lamina help?",
+          body: [
+            "Lamina keeps water readings and top-ups per system or container next to harvests and energy, so water per kg and energy per kg sit side by side. See a hydroponic greenhouse in the [demo](/demo?type=greenhouse).",
+          ],
+        },
+      ],
+      faq: [
+        { q: "Does hydroponics save 90% of water?", a: "For lettuce compared with field growing, many studies point to large savings; one well-known model estimated about 20 vs 250 litres per kg, a saving of over 90%. Real farms vary with design, climate and leaks." },
+        { q: "Is a closed indoor farm better for water than a greenhouse?", a: "Usually yes: a 2018 study found plant factories used 28–95% less water than greenhouses, but needed more purchased electricity." },
+        { q: "What's a good water use per kg?", a: "It depends on the system and the climate. Track your own number monthly; a sudden rise usually means a leak, a dump or a problem with the crop." },
+      ],
+      solutions: ["greenhouse", "container"],
+      demo: "greenhouse",
+      kind: "tech",
+      sources: [
+        { t: "Barbosa et al. (2015), Comparison of land, water, and energy requirements of lettuce grown using hydroponic vs. conventional agricultural methods. IJERPH 12(6)", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4483736/" },
+        { t: "Comparative environmental footprints of lettuce supplied by hydroponic controlled-environment agriculture and field-based supply chains (2022). Journal of Cleaner Production", url: "https://www.sciencedirect.com/science/article/pii/S0959652622028013" },
+        { t: "Graamans et al. (2018), Plant factories versus greenhouses: comparison of resource use efficiency. Agricultural Systems 160", url: "https://www.sciencedirect.com/science/article/abs/pii/S0308521X17307151" },
+      ],
+      about: ["Hydroponics", "Water use", "Lettuce", "Water scarcity"],
+    },
     failures: {
       meta: {
         title: "Why big vertical farms failed, and what to track",

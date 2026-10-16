@@ -1,6 +1,6 @@
 # Growth plan: tracking, keywords, site map, content and schema
 
-**Status:** approved ("let's do everything, step by step", 16 Oct 2026). Progress: ☑ step 1 (GA4 tracking, shorter titles and descriptions, structured data on the request and privacy pages) · ☑ step 2 (main guide + energy guide, with sources, term boxes, TechArticle/citation schema) · ◐ step 3: ☑ B4, C1, C4 · ☐ A3, A4, B2, B3, C2. All on PR #15.
+**Status:** approved ("let's do everything, step by step", 16 Oct 2026). Progress: ☑ step 1 (GA4 tracking, shorter titles and descriptions, structured data on the request and privacy pages) · ☑ step 2 (main guide + energy guide, with sources, term boxes, TechArticle/citation schema) · ◐ step 3: ☑ B4, C1, C4, A4, B2, C2 · ☐ A3, B3. All on PR #15.
 
 **Where it comes from:** a 5-step brief (analytics → keywords → site map → article → schema audit), adapted to what Lamina really is: **farm software** (a live 3D twin), for **Jordan and the Gulf**, in **English and Arabic**, sold through a **free pilot**, with **no calls**. Anything in the brief that doesn't fit (growing hardware, investor deck, ROI calculator, made-up yield numbers) is left out, and each section says why.
 
@@ -115,13 +115,13 @@ The brief named Plenty, Bowery and Freight Farms. They're growers or hardware se
 | **A. Monitoring and traceability** | A1 What is a digital twin for a farm? | ✅ in PR #15 | `/learn/what-is-a-farm-digital-twin` |
 | | A2 How to track a vertical farm from seed to delivery | ✅ in PR #15 | `/learn/seed-to-delivery-tracking` |
 | | A3 Sensors for indoor farms: what to measure, and where | new | `/learn/indoor-farm-sensors` |
-| | A4 Light recipes explained: spectrum, PPFD, DLI and photoperiod | new | `/learn/light-recipes` |
+| | A4 Light recipes explained: spectrum, PPFD, DLI and photoperiod | ✅ PR #15 | `/learn/light-recipes` |
 | **B. Energy and money** | B1 How much energy does a vertical farm use per kg? | ✅ PR #15 | `/learn/vertical-farm-energy-per-kg` |
-| | B2 Cost per kg: how to work it out for your farm (optional calculator later) | new | `/learn/cost-per-kg` |
+| | B2 Cost per kg: how to work it out for your farm (optional calculator later) | ✅ PR #15 | `/learn/cost-per-kg` |
 | | B3 Yield per square metre: how to measure it honestly | new | `/learn/yield-per-square-metre` |
 | | B4 Why big vertical farms failed, and what small farms should track | ✅ PR #15 | `/learn/why-vertical-farms-fail` |
 | **C. Gulf farming and resources** | C1 Indoor farming in the Gulf heat: cooling, humidity, power | ✅ PR #15 | `/learn/gulf-heat-indoor-farming` |
-| | C2 How much water does hydroponics really save? | new | `/learn/hydroponics-water-use` |
+| | C2 How much water does hydroponics really save? | ✅ PR #15 | `/learn/hydroponics-water-use` |
 | | C3 Container farm vs. vertical farm: what to track in each | ✅ in PR #15 | `/learn/container-vs-vertical-farm` |
 | | C4 Container farm software: what to look for | ✅ PR #15 | `/learn/container-farm-software` |
 
