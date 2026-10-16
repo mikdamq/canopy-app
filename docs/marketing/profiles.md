@@ -5,8 +5,8 @@ The images are in `social/`.
 | File | Where it goes | Size |
 |---|---|---|
 | `linkedin-banner-en.png` / `-ar.png` | Your personal LinkedIn profile → background photo | 1584 × 396 (sent at 2×) |
-| `linkedin-company-cover-en.png` / `-ar.png` | The Lamina company page → cover image | 1128 × 191 (sent at 2×) |
-| `logo-400.png` | The Lamina company page → logo | 400 × 400 |
+| `linkedin-company-cover-en.jpg` / `-ar.jpg` | The Lamina company page → cover image | 4200 × 700 JPEG (LinkedIn's size since 2025; max 3 MB) |
+| `logo-400.png` | The Lamina company page → logo | 400 × 400 (LinkedIn's recommended size) |
 | `avatar-1080.png` | Instagram profile picture (and anywhere else you need a square mark) | 1080 × 1080 |
 
 The banner copy sits on the right, because LinkedIn puts your profile photo over the bottom-left. Use the English banner if your profile is in English.
@@ -35,7 +35,7 @@ The banner copy sits on the right, because LinkedIn puts your profile photo over
 - **Name:** Lamina
 - **URL:** linkedin.com/company/laminafarm (or the closest one free)
 - **Website:** `https://laminafarm.app/en?utm_source=linkedin&utm_medium=company&utm_campaign=page`
-- **Industry:** Software Development (or "Farming", if you'd rather be found by farms)
+- **Industry:** Software Development (decided 16 Oct 2026; farms find you through the tagline, About and specialties)
 - **Size:** 2–10 employees · **Type:** Privately held
 - **Location:** Amman, Jordan
 
