@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 16 Oct 2026 (guides merged; company names removed; GA4 ready).
+Last updated: 17 Oct 2026 (LinkedIn page live; 2-week posting plan from Sun 18 Oct).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
@@ -20,7 +20,7 @@ Last updated: 16 Oct 2026 (guides merged; company names removed; GA4 ready).
 
 ## 2. Before your first post or outreach message
 
-- [ ] **Confirm the site's promises:**
+- [x] **Confirm the site's promises** (approved in your marketing brief, 16 Oct):
   - reply within one business day;
   - set up in about two weeks;
   - free for 3 months;
@@ -37,13 +37,13 @@ Last updated: 16 Oct 2026 (guides merged; company names removed; GA4 ready).
 
 - [ ] **Google Analytics 4** (decided 15 Oct; the site is ready for it, PR #15):
   1. **analytics.google.com** → Create property "Lamina" (time zone Amman, currency USD) → **Web** data stream `https://laminafarm.app`.
-  2. Copy the **Measurement ID** (`G-…`, not secret) → GitHub → Settings → Secrets and variables → Actions → **Variables** → New: `NEXT_PUBLIC_GA_ID` → then Actions → cPanel package → Run workflow.
+  2. ☑ Property and web stream made; Measurement ID **`G-XJLFVKG30Q`** (17 Oct, not secret). Don't paste Google's script anywhere: the site loads it itself, only after "Allow". GitHub variable `NEXT_PUBLIC_GA_ID` added (17 Oct). Still to do: Actions → cPanel package → **Run workflow**, then check **Reports → Realtime** after clicking Allow on the site.
   3. In GA4 → Admin → **Custom definitions** → Create these event-scoped dimensions (name = parameter): `farm_type`, `country`, `lang`, `size_band`, `place`, `stage`.
   4. Admin → **Key events**: mark `generate_lead` (main), plus `whatsapp_click` and `demo_opened`.
   5. Admin → Data collection: keep **Google signals off**. Admin → Data retention: **14 months**.
   6. Admin → Product links → **Search Console** → link laminafarm.app (after the Search Console step above).
 - [ ] **Umami:** add `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (and `NEXT_PUBLIC_UMAMI_SRC` if its script address isn't `https://cloud.umami.is/script.js`) under GitHub → Settings → Secrets and variables → Actions → **Variables**, then Actions → cPanel package → Run workflow. Then check Realtime shows you, Events shows `demo_opened`, and no farm names appear in page addresses.
-- [ ] **Clarity:** Settings → Masking → **Strict** (hides all on-page text in recordings, so nobody's farm or contact details are ever recorded). The ID is already built in; don't paste Clarity's script anywhere.
+- [x] **Clarity:** (done 17 Oct) Settings → Masking → **Strict** (hides all on-page text in recordings, so nobody's farm or contact details are ever recorded). The ID is already built in; don't paste Clarity's script anywhere.
 - [ ] **Speed on a real phone:** open **https://pagespeed.web.dev**, test `laminafarm.app/en` and `laminafarm.app/en/demo`, and **send me the two result links**. My test machine can't measure real phone speed for the 3D pages.
 - [ ] **Namecheap:** turn on **Withheld for Privacy** and **Auto-renew** for laminafarm.app.
 - [ ] **Leave Vercel** (any time): delete the Vercel project (Settings → Advanced → Delete), remove the Vercel app from GitHub (GitHub → Settings → Applications → Vercel → Uninstall), then delete your Vercel account if you like. Its bot still comments on every PR until then.
@@ -54,9 +54,18 @@ Last updated: 16 Oct 2026 (guides merged; company names removed; GA4 ready).
 - [ ] **Look through the kit:** one-pager, banners, 5 posts and clips in `docs/marketing/`. Tell me what to change: wording, images, colours.
 - [ ] Ask a native speaker to read the **Arabic** of posts 1 and 5 and the Arabic one-pager.
 - [ ] **Your LinkedIn profile:** new banner, headline, a line about Lamina and the Featured link (texts in `docs/marketing/profiles.md`). Prospects will look you up.
-- [ ] **Create the Lamina company page** on LinkedIn: logo, cover, tagline and About (all in `profiles.md`).
-- [ ] **Post 1** once the promises in section 2 are confirmed, then one post every 2–3 days (`posts.md`).
-- [ ] **Social handles:** grab @lamina / @laminafarm (or close) on Instagram and LinkedIn. Instagram posts can come later, with the same images and bio.
+- [x] **Lamina company page** is live: **linkedin.com/company/laminafarm** (17 Oct):
+  - [x] Step 1, basics: name **Lamina**, address `linkedin.com/company/laminafarm`, website with UTM, industry **Software Development**, size **2–10**, type **Self-employed**, location **Amman, Jordan** (done 16 Oct)
+  - [x] Step 2, logo `social/logo-400.png` and the cover `social/linkedin-company-cover-en.jpg` (re-made at LinkedIn's new **4200 × 700** on 16 Oct; the Arabic one is `-ar.jpg`, kept for later)
+  - [x] Step 3, the rest of **Edit page → Details**: About, year founded (2026), phone, then the **Arabic** name, tagline and About via **Manage languages** (all texts in `profiles.md`; a language can't be removed once added)
+  - [x] Step 4, custom button (Visit website), 16 specialties, community hashtags if offered (all in `profiles.md`)
+- [ ] **Step 5, start the page** (plan in `docs/marketing/posts.md`, from Sun 18 Oct):
+  - [ ] Add Lamina to your **Experience** (Founder, pick the Lamina page from the list so the logo shows)
+  - [ ] Sun 18 Oct, 9–11: **Post 1** in English from you (tower clip), Arabic from the page an hour later; pin it
+  - [ ] After Post 1: **invite connections** to follow the page (farm and AgTech people first)
+  - [ ] Posts 2–6 on Tue 20, Thu 22, Sun 25, Tue 27, Thu 29 Oct
+  - [ ] Merge the pull request that adds the LinkedIn link to the site's footer
+- [ ] **Social handles:** LinkedIn done (laminafarm). Still to grab: **@laminafarm** (or close) on Instagram. Instagram posts can come later, with the same images and bio.
 
 ## 5. Outreach
 

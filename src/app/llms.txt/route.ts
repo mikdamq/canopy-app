@@ -2,7 +2,7 @@ import en from "@/i18n/en";
 import guides from "@/i18n/guides-en";
 import pages from "@/i18n/pages-en";
 import { GUIDES, PAGE, SOLUTION_TYPES, guidePath, solutionPath } from "@/lib/routes";
-import { BRAND, BRAND_AR, CONTACT_EMAIL, baseUrl } from "@/lib/site";
+import { BRAND, BRAND_AR, CONTACT_EMAIL, LINKEDIN_URL, baseUrl } from "@/lib/site";
 
 /**
  * /llms.txt: a short plain-text summary of Lamina and its pages for AI assistants
@@ -20,7 +20,7 @@ export function GET() {
 
 > ${pages.product.lead}
 
-${BRAND} is based in Amman, Jordan, and works with indoor farms in Jordan, the UAE, Saudi Arabia and the Gulf. ${pages.pilot.price} Contact: ${CONTACT_EMAIL}. Every page is also in Arabic (replace /en/ with /ar/).
+${BRAND} is based in Amman, Jordan, and works with indoor farms in Jordan, the UAE, Saudi Arabia and the Gulf. ${pages.pilot.price} Contact: ${CONTACT_EMAIL}. LinkedIn: ${LINKEDIN_URL}. Every page is also in Arabic (replace /en/ with /ar/).
 
 ## Pages
 

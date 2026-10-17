@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CookieSettingsButton } from "@/components/analytics";
 import type { Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
-import { BRAND, CONTACT_EMAIL } from "@/lib/site";
+import { BRAND, CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/site";
 import { Logo } from "./logo";
 import { siteSolutions } from "./site-nav";
 import { WhatsAppLink } from "./whatsapp-link";
@@ -43,14 +43,19 @@ export function SiteFooter({ lang, d, nav, wa }: { lang: Locale; d: Dict["footer
         <div className="flex flex-col gap-3">
           <Logo />
           <p className="max-w-[32ch] text-[14px] text-muted">{d.tagline}</p>
-          <p className="text-[14px] text-muted">
-            {d.contact}:{" "}
-            <a href={`mailto:${CONTACT_EMAIL}`} className={link} dir="ltr">
-              {CONTACT_EMAIL}
-            </a>
-            <WhatsAppLink d={wa} place="footer" className={`${link} ms-3 inline-flex items-center gap-1.5`}>
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-muted">
+            <span>
+              {d.contact}:{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className={link} dir="ltr">
+                {CONTACT_EMAIL}
+              </a>
+            </span>
+            <WhatsAppLink d={wa} place="footer" className={`${link} inline-flex items-center gap-1.5`}>
               {wa.short}
             </WhatsAppLink>
+            <a href={LINKEDIN_URL} className={link} target="_blank" rel="noopener">
+              LinkedIn
+            </a>
           </p>
         </div>
         {columns.map((c) => (

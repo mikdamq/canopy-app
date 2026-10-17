@@ -31,7 +31,7 @@ Each one is a 15-second, silent take on the sample farm "Green Valley":
 They have no sound and no captions, so they work muted in a feed. Add your own voice-over if you like (script ideas are in `docs/launch-kit/demo-video.md`).
 
 ## Before posting anything
-- **The domain has to be live.** Every link and the QR codes point to `laminafarm.app`.
+- ~~The domain has to be live.~~ Done: laminafarm.app is live (10 Oct 2026), so every link and QR code works.
 - **Confirm the promises** (owner to-do, section 4): "3 months free", "about two weeks" to set up, and the 2-minute feedback form every two weeks. The posts and the one-pager repeat them.
 - **Check the Arabic.** It's Modern Standard Arabic, written to read naturally. Have a native speaker read posts 1 and 5 once.
 

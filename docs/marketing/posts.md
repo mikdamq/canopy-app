@@ -1,4 +1,4 @@
-# First 5 posts (LinkedIn first, EN + AR)
+# First 6 posts (LinkedIn first, EN + AR)
 
 Images are in `posts/`, one per post and language, 1080 × 1350 (4:5, which fits both LinkedIn and Instagram feeds).
 
@@ -9,6 +9,27 @@ Images are in `posts/`, one per post and language, 1080 × 1350 (4:5, which fits
 - Put the link in the post itself. Don't move it to the first comment: that trick no longer helps reach and makes the post harder to act on.
 
 **Links:** each post has its own UTM tag, so Umami shows which post brought visitors. Keep the links exactly as written.
+
+## The first two weeks (from Sunday 18 Oct 2026)
+
+**Languages (decided 17 Oct):** the English version goes out from your personal profile; the Arabic version goes out from the Lamina page (linkedin.com/company/laminafarm) the same day, about an hour later. Both use the same image or clip.
+
+| Day | Post | You (English) | Lamina page (Arabic) |
+|---|---|---|---|
+| Sun 18 Oct | 1. Launch | `clips/lamina-demo-tower-en.mp4` | `clips/lamina-demo-tower-ar.mp4` |
+| Tue 20 Oct | 2. Every kind of farm | `posts/post-2-farm-types-en.jpg` | `-ar.jpg` |
+| Thu 22 Oct | 3. Light recipes | `posts/post-3-light-recipes-en.jpg` | `-ar.jpg` |
+| Sun 25 Oct | 4. Seed to plate | `posts/post-4-seed-to-plate-en.jpg` | `-ar.jpg` |
+| Tue 27 Oct | 5. The pilot offer | `posts/post-5-pilot-en.jpg` | `-ar.jpg` |
+| Thu 29 Oct | 6. Energy per kg (guide) | link preview (no upload) | link preview |
+
+**Every posting day (about 30 minutes):**
+- Post between 9:00 and 11:00 Amman time.
+- In the first hour, reply to every comment with a real sentence, not just "thanks".
+- Leave 3–5 thoughtful comments on other people's posts about indoor farming, AgTech or food security in Jordan and the Gulf. No links, no pitch.
+- When someone from a farm likes or comments, send them a connection request with a one-line note (no pitch; the messages in `docs/validation/outreach-messages.md` come later, once they've seen a few posts).
+
+**After Post 1:** pin it to your profile's Featured section, and on the page use **Feature on top**.
 
 **Tone:** bolder than the site, but every claim is true today. The numbers in post 3 come from the demo's sample data, and the post says so.
 
@@ -183,3 +204,41 @@ No calls, no contracts. A 2-minute form tells us about your farm:
 👈 https://laminafarm.app/ar/request?utm_source=linkedin&utm_medium=social&utm_campaign=post5
 
 #التقنيات_الزراعية #الزراعة_العمودية #ريادة_الأعمال #الأردن #الخليج
+
+---
+
+## Post 6: energy per kg (guide)
+
+No image to upload: paste the post, and LinkedIn shows the guide's own preview card. Every number is from the guide's source.
+
+### English
+
+Most vertical farms use about 10–18 kWh of electricity for every kilo of lettuce.
+
+That's what a 2025 review of 16 published studies found. The same review estimates a well-run farm could get to about 3–7 kWh per kg.
+
+The gap is mostly light and cooling. And you can't close a gap you don't measure.
+
+I wrote a plain guide: where the energy goes, why published numbers vary so much, what the Gulf heat changes, and how to work out your own kWh per kg with a meter and a scale.
+
+👉 https://laminafarm.app/en/learn/vertical-farm-energy-per-kg?utm_source=linkedin&utm_medium=social&utm_campaign=post6
+
+Source: Miserocchi & Franco (2025), Thermal Science and Engineering Progress.
+
+#VerticalFarming #Energy #ControlledEnvironmentAgriculture #AgTech
+
+### العربية
+
+تستهلك معظم المزارع العمودية نحو 10–18 كيلوواط ساعة من الكهرباء لكل كيلوغرام من الخس.
+
+هذا ما وجدته مراجعة نُشرت عام 2025 لـ16 دراسة منشورة. وتقدّر المراجعة نفسها أن المزرعة جيدة الإدارة قد تصل إلى نحو 3–7 كيلوواط ساعة لكل كيلوغرام.
+
+الفجوة سببها في الغالب الإضاءة والتبريد. ولا يمكنك سدّ فجوة لا تقيسها.
+
+كتبتُ دليلًا مبسّطًا: أين تذهب الطاقة، ولماذا تتفاوت الأرقام المنشورة إلى هذا الحد، وما الذي تغيّره حرارة الخليج، وكيف تحسب رقمك أنت لكل كيلوغرام بعدّاد وميزان.
+
+👈 https://laminafarm.app/ar/learn/vertical-farm-energy-per-kg?utm_source=linkedin&utm_medium=social&utm_campaign=post6
+
+المصدر: Miserocchi & Franco (2025)، Thermal Science and Engineering Progress.
+
+#الزراعة_العمودية #الطاقة #الزراعة_الذكية #التقنيات_الزراعية
