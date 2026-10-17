@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 16 Oct 2026 (LinkedIn company page: full page texts in `docs/marketing/profiles.md`).
+Last updated: 17 Oct 2026 (LinkedIn page live; 2-week posting plan from Sun 18 Oct).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
@@ -59,9 +59,13 @@ Last updated: 16 Oct 2026 (LinkedIn company page: full page texts in `docs/marke
   - [x] Step 2, logo `social/logo-400.png` and the cover `social/linkedin-company-cover-en.jpg` (re-made at LinkedIn's new **4200 × 700** on 16 Oct; the Arabic one is `-ar.jpg`, kept for later)
   - [x] Step 3, the rest of **Edit page → Details**: About, year founded (2026), phone, then the **Arabic** name, tagline and About via **Manage languages** (all texts in `profiles.md`; a language can't be removed once added)
   - [x] Step 4, custom button (Visit website), 16 specialties, community hashtags if offered (all in `profiles.md`)
-- [ ] **Step 5, start the page:** add Lamina to your Experience, Post 1, then invite connections, then the 2-week plan in `posts.md`
-- [ ] **Post 1** once the promises in section 2 are confirmed, then one post every 2–3 days (`posts.md`).
-- [ ] **Social handles:** grab @lamina / @laminafarm (or close) on Instagram and LinkedIn. Instagram posts can come later, with the same images and bio.
+- [ ] **Step 5, start the page** (plan in `docs/marketing/posts.md`, from Sun 18 Oct):
+  - [ ] Add Lamina to your **Experience** (Founder, pick the Lamina page from the list so the logo shows)
+  - [ ] Sun 18 Oct, 9–11: **Post 1** in English from you (tower clip), Arabic from the page an hour later; pin it
+  - [ ] After Post 1: **invite connections** to follow the page (farm and AgTech people first)
+  - [ ] Posts 2–6 on Tue 20, Thu 22, Sun 25, Tue 27, Thu 29 Oct
+  - [ ] Merge the pull request that adds the LinkedIn link to the site's footer
+- [ ] **Social handles:** LinkedIn done (laminafarm). Still to grab: **@laminafarm** (or close) on Instagram. Instagram posts can come later, with the same images and bio.
 
 ## 5. Outreach
 

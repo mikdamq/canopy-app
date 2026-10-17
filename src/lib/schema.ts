@@ -1,5 +1,5 @@
 import type { Locale } from "@/i18n/config";
-import { BRAND, BRAND_AR, CONTACT_EMAIL, WHATSAPP_NUMBER, baseUrl } from "./site";
+import { BRAND, BRAND_AR, CONTACT_EMAIL, WHATSAPP_NUMBER, LINKEDIN_URL, baseUrl } from "./site";
 
 /**
  * Structured data (JSON-LD, schema.org) for search engines and AI tools. Plain objects;
@@ -24,6 +24,7 @@ export function organization(): Thing {
     ...(WHATSAPP_NUMBER ? { telephone: `+${WHATSAPP_NUMBER}` } : {}),
     address: { "@type": "PostalAddress", addressLocality: "Amman", addressCountry: "JO" },
     areaServed: AREA.map((name) => ({ "@type": "Country", name })),
+    sameAs: [LINKEDIN_URL],
     founder: { "@type": "Person", name: "Mikdam Qandil", jobTitle: "Founder" },
     knowsAbout: ["vertical farming", "indoor farming", "container farms", "hydroponic greenhouses", "digital twins", "farm management software"],
   };
