@@ -20,7 +20,7 @@ Last updated: 16 Oct 2026 (LinkedIn company page: full page texts in `docs/marke
 
 ## 2. Before your first post or outreach message
 
-- [ ] **Confirm the site's promises:**
+- [x] **Confirm the site's promises** (approved in your marketing brief, 16 Oct):
   - reply within one business day;
   - set up in about two weeks;
   - free for 3 months;
@@ -43,7 +43,7 @@ Last updated: 16 Oct 2026 (LinkedIn company page: full page texts in `docs/marke
   5. Admin → Data collection: keep **Google signals off**. Admin → Data retention: **14 months**.
   6. Admin → Product links → **Search Console** → link laminafarm.app (after the Search Console step above).
 - [ ] **Umami:** add `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (and `NEXT_PUBLIC_UMAMI_SRC` if its script address isn't `https://cloud.umami.is/script.js`) under GitHub → Settings → Secrets and variables → Actions → **Variables**, then Actions → cPanel package → Run workflow. Then check Realtime shows you, Events shows `demo_opened`, and no farm names appear in page addresses.
-- [ ] **Clarity:** Settings → Masking → **Strict** (hides all on-page text in recordings, so nobody's farm or contact details are ever recorded). The ID is already built in; don't paste Clarity's script anywhere.
+- [x] **Clarity:** (done 17 Oct) Settings → Masking → **Strict** (hides all on-page text in recordings, so nobody's farm or contact details are ever recorded). The ID is already built in; don't paste Clarity's script anywhere.
 - [ ] **Speed on a real phone:** open **https://pagespeed.web.dev**, test `laminafarm.app/en` and `laminafarm.app/en/demo`, and **send me the two result links**. My test machine can't measure real phone speed for the 3D pages.
 - [ ] **Namecheap:** turn on **Withheld for Privacy** and **Auto-renew** for laminafarm.app.
 - [ ] **Leave Vercel** (any time): delete the Vercel project (Settings → Advanced → Delete), remove the Vercel app from GitHub (GitHub → Settings → Applications → Vercel → Uninstall), then delete your Vercel account if you like. Its bot still comments on every PR until then.
@@ -54,12 +54,12 @@ Last updated: 16 Oct 2026 (LinkedIn company page: full page texts in `docs/marke
 - [ ] **Look through the kit:** one-pager, banners, 5 posts and clips in `docs/marketing/`. Tell me what to change: wording, images, colours.
 - [ ] Ask a native speaker to read the **Arabic** of posts 1 and 5 and the Arabic one-pager.
 - [ ] **Your LinkedIn profile:** new banner, headline, a line about Lamina and the Featured link (texts in `docs/marketing/profiles.md`). Prospects will look you up.
-- [ ] **Create the Lamina company page** on LinkedIn (walked through step by step in the marketing chat, 16 Oct):
-  - [x] Step 1, basics: name **Lamina**, address `linkedin.com/company/laminafarm`, website with UTM, industry **Software Development**, size **2–10**, type **Self-employed**, location **Amman, Jordan** (done 16 Oct). Still to do: tell me the LinkedIn address you actually got
-  - [ ] Step 2, logo `social/logo-400.png` and the cover `social/linkedin-company-cover-en.jpg` (re-made at LinkedIn's new **4200 × 700** on 16 Oct; the Arabic one is `-ar.jpg`, kept for later)
-  - [ ] Step 3, the rest of **Edit page → Details**: About, year founded (2026), phone, then the **Arabic** name, tagline and About via **Manage languages** (all texts in `profiles.md`; a language can't be removed once added)
-  - [ ] Step 4, custom button (Visit website), 16 specialties, community hashtags if offered (all in `profiles.md`)
-  - [ ] Step 5, link your profile, invite people, first 3 posts, 2-week plan
+- [x] **Lamina company page** is live: **linkedin.com/company/laminafarm** (17 Oct):
+  - [x] Step 1, basics: name **Lamina**, address `linkedin.com/company/laminafarm`, website with UTM, industry **Software Development**, size **2–10**, type **Self-employed**, location **Amman, Jordan** (done 16 Oct)
+  - [x] Step 2, logo `social/logo-400.png` and the cover `social/linkedin-company-cover-en.jpg` (re-made at LinkedIn's new **4200 × 700** on 16 Oct; the Arabic one is `-ar.jpg`, kept for later)
+  - [x] Step 3, the rest of **Edit page → Details**: About, year founded (2026), phone, then the **Arabic** name, tagline and About via **Manage languages** (all texts in `profiles.md`; a language can't be removed once added)
+  - [x] Step 4, custom button (Visit website), 16 specialties, community hashtags if offered (all in `profiles.md`)
+- [ ] **Step 5, start the page:** add Lamina to your Experience, Post 1, then invite connections, then the 2-week plan in `posts.md`
 - [ ] **Post 1** once the promises in section 2 are confirmed, then one post every 2–3 days (`posts.md`).
 - [ ] **Social handles:** grab @lamina / @laminafarm (or close) on Instagram and LinkedIn. Instagram posts can come later, with the same images and bio.
 
