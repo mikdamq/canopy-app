@@ -37,7 +37,7 @@ Last updated: 16 Oct 2026 (LinkedIn company page: full page texts in `docs/marke
 
 - [ ] **Google Analytics 4** (decided 15 Oct; the site is ready for it, PR #15):
   1. **analytics.google.com** → Create property "Lamina" (time zone Amman, currency USD) → **Web** data stream `https://laminafarm.app`.
-  2. Copy the **Measurement ID** (`G-…`, not secret) → GitHub → Settings → Secrets and variables → Actions → **Variables** → New: `NEXT_PUBLIC_GA_ID` → then Actions → cPanel package → Run workflow.
+  2. ☑ Property and web stream made; Measurement ID **`G-XJLFVKG30Q`** (17 Oct, not secret). Don't paste Google's script anywhere: the site loads it itself, only after "Allow". Still to do: GitHub → Settings → Secrets and variables → Actions → **Variables** → New: `NEXT_PUBLIC_GA_ID` → then Actions → cPanel package → Run workflow.
   3. In GA4 → Admin → **Custom definitions** → Create these event-scoped dimensions (name = parameter): `farm_type`, `country`, `lang`, `size_band`, `place`, `stage`.
   4. Admin → **Key events**: mark `generate_lead` (main), plus `whatsapp_click` and `demo_opened`.
   5. Admin → Data collection: keep **Google signals off**. Admin → Data retention: **14 months**.
