@@ -17,6 +17,13 @@
   --green-ink: #086b4a;
   --led: #ff4fd8;
   --night: #0b1222;
+  /* Home page draft (/home-draft): forest bands, cream and sage panels, lime accent.
+     Lime is for fills and text on forest only; text on lime is always forest. */
+  --forest: #0e3b29;
+  --emerald: #08291c;
+  --cream: #f6f4ec;
+  --sage: #e3ebdc;
+  --lime: #c6f04d;
 }
 
 @theme inline {
@@ -30,6 +37,11 @@
   --color-green-ink: var(--green-ink);
   --color-led: var(--led);
   --color-night: var(--night);
+  --color-forest: var(--forest);
+  --color-emerald: var(--emerald);
+  --color-cream: var(--cream);
+  --color-sage: var(--sage);
+  --color-lime: var(--lime);
   --font-sans: var(--cf-sans);
   --font-display: var(--cf-display);
   --font-mono: var(--cf-mono);
@@ -42,6 +54,16 @@ html[lang="ar"] {
 html[lang="en"] {
   --cf-sans: var(--cf-latin), system-ui, sans-serif;
   --cf-display: var(--cf-latin-display), system-ui, sans-serif;
+}
+
+/* The home page draft's type: Plus Jakarta Sans for Latin, IBM Plex Sans Arabic for Arabic. */
+html[lang="en"] .draft-type {
+  --cf-sans: var(--cf-jakarta), system-ui, sans-serif;
+  --cf-display: var(--cf-jakarta), system-ui, sans-serif;
+}
+html[lang="ar"] .draft-type {
+  --cf-sans: var(--cf-arabic), var(--cf-jakarta), system-ui, sans-serif;
+  --cf-display: var(--cf-arabic), var(--cf-jakarta), system-ui, sans-serif;
 }
 
 /* Letter-spacing breaks the joins between Arabic letters. */

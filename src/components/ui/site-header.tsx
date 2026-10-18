@@ -24,7 +24,7 @@ export const SOLUTION_ICON: Record<SolutionType, typeof Building2> = {
 };
 
 /** "Solutions ▾": a disclosure listing the four farm types. Opens on click or hover; Escape closes it. */
-function SolutionsMenu({ lang, nav, active }: { lang: Locale; nav: Dict["nav"]; active: boolean }) {
+function SolutionsMenu({ lang, nav, active, dark }: { lang: Locale; nav: Dict["nav"]; active: boolean; dark?: boolean }) {
   const [open, setOpen] = useState(false);
   const wrap = useRef<HTMLDivElement>(null);
   const timer = useRef<number | undefined>(undefined);
@@ -50,7 +50,7 @@ function SolutionsMenu({ lang, nav, active }: { lang: Locale; nav: Dict["nav"]; 
         aria-expanded={open}
         aria-controls="solutions-menu"
         onClick={() => setOpen((v) => !v)}
-        className={cn("flex items-center gap-1 transition-colors hover:text-ink", (active || open) && "text-ink")}
+        className={cn("flex items-center gap-1 transition-colors", dark ? "hover:text-white" : "hover:text-ink", (active || open) && (dark ? "text-white" : "text-ink"))}
       >
         {nav.solutions}
         <ChevronDown className={cn("size-3.5 transition-transform", open && "rotate-180")} aria-hidden />
@@ -98,6 +98,7 @@ function SolutionsMenu({ lang, nav, active }: { lang: Locale; nav: Dict["nav"]; 
  * compact frosted bar. Pages sit in the middle; the two actions (the live demo and the
  * pilot request) sit on the right, apart from them. `variant="request"` is calmer: no
  * page links or actions (you're already in the form), with the menu at every size.
+ * `tone="dark"` is for pages that open on a dark band: light text, and a dark frosted bar.
  */
 export function SiteHeader({
   lang,
@@ -105,12 +106,14 @@ export function SiteHeader({
   wa,
   langHref,
   variant = "site",
+  tone = "light",
 }: {
   lang: Locale;
   nav: Dict["nav"];
   wa: Dict["whatsapp"];
   langHref: string;
   variant?: "site" | "request";
+  tone?: "light" | "dark";
 }) {
   const [compact, setCompact] = useState(false);
   const pathname = usePathname();
@@ -121,6 +124,7 @@ export function SiteHeader({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   const site = variant === "site";
+  const dark = tone === "dark";
   const isActive = (h: string) => pathname === h || pathname.startsWith(`${h}/`);
 
   return (
@@ -131,8 +135,10 @@ export function SiteHeader({
         className={cn(
           "fixed inset-x-0 top-0 z-50 border-b pt-[env(safe-area-inset-top,0px)] transition-[background-color,border-color,box-shadow] duration-300",
           compact
-            ? "border-line bg-bg/85 shadow-[0_8px_24px_-20px_rgba(20,27,43,0.5)] backdrop-blur-md"
-            : "border-transparent bg-transparent",
+            ? dark
+              ? "border-white/10 bg-emerald/95 text-white shadow-[0_8px_24px_-20px_rgba(0,0,0,0.6)] backdrop-blur-md"
+              : "border-line bg-bg/85 shadow-[0_8px_24px_-20px_rgba(20,27,43,0.5)] backdrop-blur-md"
+            : cn("border-transparent bg-transparent", dark && "text-white"),
         )}
       >
         <div
@@ -149,16 +155,16 @@ export function SiteHeader({
             <Logo />
           </Link>
           {site && (
-            <nav aria-label={nav.pages} className="ms-6 hidden items-center gap-6 text-[14.5px] font-medium text-muted lg:flex">
+            <nav aria-label={nav.pages} className={cn("ms-6 hidden items-center gap-6 text-[14.5px] font-medium lg:flex", dark ? "text-white/70" : "text-muted")}>
               {sitePages(lang, nav).map((pg) =>
                 pg.key === "solutions" ? (
-                  <SolutionsMenu key={pg.key} lang={lang} nav={nav} active={isActive(pg.href)} />
+                  <SolutionsMenu key={pg.key} lang={lang} nav={nav} active={isActive(pg.href)} dark={dark} />
                 ) : (
                   <Link
                     key={pg.key}
                     href={pg.href}
                     aria-current={isActive(pg.href) ? "page" : undefined}
-                    className={cn("transition-colors hover:text-ink", isActive(pg.href) && "text-ink")}
+                    className={cn("transition-colors", dark ? "hover:text-white" : "hover:text-ink", isActive(pg.href) && (dark ? "text-white" : "text-ink"))}
                   >
                     {pg.label}
                   </Link>
@@ -177,27 +183,40 @@ export function SiteHeader({
               href={langHref}
               title={nav.switchLangLabel}
               label={nav.switchLang}
-              className="rounded-full px-2.5 py-1.5 text-[13px] font-semibold text-muted transition-colors hover:text-ink"
+              className={cn("rounded-full px-2.5 py-1.5 text-[13px] font-semibold transition-colors", dark ? "text-white/70 hover:text-white" : "text-muted hover:text-ink")}
             />
             {site && (
               <>
                 <Link
                   href={`/${lang}/demo`}
-                  className="hidden items-center gap-1.5 rounded-full border-[1.5px] border-green px-3.5 py-[7px] text-[13.5px] font-semibold whitespace-nowrap text-green transition-colors hover:bg-green hover:text-white sm:flex"
+                  className={cn(
+                    "hidden items-center gap-1.5 rounded-full border-[1.5px] px-3.5 py-[7px] text-[13.5px] font-semibold whitespace-nowrap transition-colors sm:flex",
+                    dark ? "border-white/40 text-white hover:border-white hover:bg-white hover:text-forest" : "border-green text-green hover:bg-green hover:text-white",
+                  )}
                 >
                   <Play className="size-3.5 fill-current" aria-hidden />
                   {nav.demo}
                 </Link>
                 <Link
                   href={`/${lang}/request`}
-                  className="rounded-full bg-green px-3.5 py-1.5 text-[13px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-green-ink sm:px-4 sm:py-2 sm:text-[13.5px]"
+                  className={cn(
+                    "rounded-full px-3.5 py-1.5 text-[13px] font-semibold whitespace-nowrap transition-colors sm:px-4 sm:py-2 sm:text-[13.5px]",
+                    dark ? "bg-lime text-forest hover:bg-white" : "bg-green text-white hover:bg-green-ink",
+                  )}
                 >
                   <span className="sm:hidden">{nav.ctaShort}</span>
                   <span className="hidden sm:inline">{nav.cta}</span>
                 </Link>
               </>
             )}
-            <SiteMenu lang={lang} nav={nav} wa={wa} langHref={langHref} always={!site} />
+            <SiteMenu
+              lang={lang}
+              nav={nav}
+              wa={wa}
+              langHref={langHref}
+              always={!site}
+              className={dark ? "border-white/25 bg-white/10 text-white hover:border-white" : undefined}
+            />
           </div>
         </div>
       </header>

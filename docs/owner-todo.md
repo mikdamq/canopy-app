@@ -2,12 +2,13 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 16 Oct 2026 (guides merged; company names removed; GA4 ready).
+Last updated: 18 Oct 2026 (new home page draft to review).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
 ## 1. This week
 
+- [ ] **Review the new home page draft** (deep green, cream, lime; hidden from Google; the live home page is unchanged). Open `/en/home-draft` and `/ar/home-draft` on the preview of the new PR, then tell me what to change, or say "use it" to make it the real home page.
 - [ ] **Send me your LinkedIn profile address** (for the author line on the guides and the About page).
 - [ ] **Read the 13 guides on the live site** when you have time (laminafarm.app/en/learn and /ar/learn) and tell me any facts that don't match your experience, plus topics for the next guides. Company names are left out for now, as you asked.
 - [ ] **Try the live site on your phone** and tell me anything that feels off:
