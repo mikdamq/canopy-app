@@ -31,7 +31,7 @@ export function ReadingProgress({ target }: { target: string }) {
   }, [target]);
   return (
     <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 z-[70] h-[3px]">
-      <div ref={bar} className="h-full origin-left scale-x-0 bg-leaf rtl:origin-right" />
+      <div ref={bar} className="h-full origin-left scale-x-0 bg-lime rtl:origin-right" />
     </div>
   );
 }
@@ -80,7 +80,7 @@ export function TocButton({ label, closeLabel, items }: { label: string; closeLa
                 <a
                   href={`#${it.id}`}
                   onClick={() => setOpen(false)}
-                  className="flex gap-3 rounded-xl px-3 py-2 text-[14.5px] leading-snug hover:bg-[#eaf5ee] focus-visible:bg-[#eaf5ee]"
+                  className="flex gap-3 rounded-xl px-3 py-2 text-[14.5px] leading-snug hover:bg-sage focus-visible:bg-sage"
                 >
                   <span className="font-mono text-[12px] text-green" dir="ltr">
                     {String(i + 1).padStart(2, "0")}
@@ -98,7 +98,7 @@ export function TocButton({ label, closeLabel, items }: { label: string; closeLa
         aria-expanded={open}
         aria-controls="toc-panel"
         onClick={() => setOpen((o) => !o)}
-        className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-[14px] font-semibold text-white shadow-[0_12px_30px_-12px_rgba(20,27,43,0.6)] transition-colors hover:bg-[#263049]"
+        className="inline-flex items-center gap-2 rounded-full bg-forest px-4 py-2.5 text-[14px] font-semibold text-white shadow-[0_12px_30px_-12px_rgba(14,59,41,0.6)] transition-colors hover:bg-emerald"
       >
         {open ? <X className="size-4" aria-hidden /> : <List className="size-4" aria-hidden />}
         {open ? closeLabel : label}

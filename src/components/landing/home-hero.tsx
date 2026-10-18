@@ -5,7 +5,7 @@ import { Leaf } from "lucide-react";
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
-import type { HomeDraft } from "@/i18n/home-draft";
+import type { HomeCopy } from "@/i18n/home";
 import { CountUp, EASE, Typewriter } from "@/components/motion/kit";
 import { HeroTwin } from "@/components/landing/hero-twin";
 import { NameForm } from "@/components/landing/name-form";
@@ -16,8 +16,8 @@ const fade = (delay: number) => ({
   transition: { duration: 0.9, ease: EASE, delay },
 });
 
-/** The draft's hero, on the forest band: headline with the farm type in a lime badge, the name field, and the live farm. */
-export function DraftHero({ lang, d, x }: { lang: Locale; d: Dict; x: HomeDraft }) {
+/** The home page hero, on the forest band: headline with the farm type in a lime badge, the name field, and the live farm. */
+export function HomeHero({ lang, d, x }: { lang: Locale; d: Dict; x: HomeCopy }) {
   const h = d.hero;
   return (
     <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-4 pt-6 pb-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:pt-12 lg:pb-24">

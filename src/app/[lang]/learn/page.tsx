@@ -39,26 +39,28 @@ export default async function LearnPage({ params }: PageProps<"/[lang]/learn">) 
       d={d}
       p={p}
       path={PAGE.learn}
-      band
       crumbs={[{ name: d.nav.learn, path: href(lang, PAGE.learn) }]}
       ld={[webPage(lang, PAGE.learn, x.meta.title, x.meta.description, "CollectionPage"), list]}
     >
-      <header className="relative overflow-hidden bg-green text-white">
+      <header className="band relative overflow-hidden bg-forest text-white">
         <div
           aria-hidden
           className="pointer-events-none absolute -end-40 top-10 size-[520px] rounded-full bg-[radial-gradient(circle,rgba(159,224,184,0.35),transparent_65%)]"
         />
         <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 pt-10 pb-32 sm:px-6 sm:pt-14 sm:pb-40">
-          <p className="font-mono text-[12px] tracking-[0.12em] text-[#d6efe0] uppercase rtl:tracking-normal">{x.eyebrow}</p>
+          <p className="flex w-fit items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[12.5px] font-semibold text-lime">
+            <span className="size-1.5 rounded-full bg-current" aria-hidden />
+            {x.eyebrow}
+          </p>
           <h1 className="max-w-[18ch] font-display text-[40px] leading-[1.02] font-bold tracking-[-0.02em] text-balance sm:text-[60px]">{x.title}</h1>
-          <p className="max-w-[60ch] text-[18px] leading-relaxed text-[#e3f4ea]">{x.lead}</p>
+          <p className="max-w-[60ch] text-[18px] leading-relaxed text-white/75">{x.lead}</p>
           <nav aria-label={x.topicsLabel} className="pt-2">
             <ul className="flex flex-wrap gap-2">
               {GUIDE_TOPICS.map((t) => (
                 <li key={t}>
                   <a
                     href={`#${t}`}
-                    className="inline-flex rounded-full border border-white/40 px-4 py-2 text-[14.5px] font-semibold transition-colors hover:bg-white hover:text-green-ink"
+                    className="inline-flex rounded-full border border-white/40 px-4 py-2 text-[14.5px] font-semibold transition-colors hover:border-lime hover:bg-lime hover:text-forest"
                   >
                     {x.topics[t].t}
                   </a>
@@ -78,7 +80,7 @@ export default async function LearnPage({ params }: PageProps<"/[lang]/learn">) 
           key={t}
           id={t}
           aria-labelledby={`${t}-title`}
-          className={i === 1 ? "mt-16 scroll-mt-24 bg-ink text-white" : "scroll-mt-24"}
+          className={i === 1 ? "mt-16 scroll-mt-24 bg-emerald text-white" : "scroll-mt-24"}
         >
           <div className="mx-auto flex w-full max-w-6xl flex-col gap-7 px-4 py-14 sm:px-6 lg:py-20">
             <div className="flex max-w-[62ch] flex-col gap-2">

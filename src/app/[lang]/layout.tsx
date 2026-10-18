@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans_Arabic, Plus_Jakarta_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Analytics } from "@/components/analytics";
 import { LOCALES, dirOf, hasLocale } from "@/i18n/config";
@@ -7,8 +7,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { BRAND, baseUrl, brandName } from "@/lib/site";
 import "../globals.css";
 
-const latinDisplay = Bricolage_Grotesque({ subsets: ["latin"], weight: ["600", "700", "800"], variable: "--cf-latin-display" });
-const latin = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--cf-latin" });
+const latin = Plus_Jakarta_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--cf-latin" });
 const arabic = IBM_Plex_Sans_Arabic({ subsets: ["arabic"], weight: ["400", "500", "600", "700"], variable: "--cf-arabic" });
 const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--cf-mono" });
 
@@ -37,7 +36,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     <html
       lang={lang}
       dir={dirOf(lang)}
-      className={`${latinDisplay.variable} ${latin.variable} ${arabic.variable} ${mono.variable} h-full antialiased`}
+      className={`${latin.variable} ${arabic.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="min-h-full font-sans">
         <a

@@ -1,16 +1,10 @@
 import type { Locale } from "./config";
 
 /**
- * New copy for the home page draft (/[lang]/home-draft). Everything else on the draft
- * comes from the main dictionaries. Headlines are split into a / hl / b so the middle
+ * Copy for the home page that the main dictionaries don't already have. Headlines are split into a / hl / b so the middle
  * words can sit in a lime badge. Every number here is a promise already on the site.
  */
 const en = {
-  meta: {
-    title: "Home page draft · Lamina",
-    description: "A design draft of the Lamina home page.",
-  },
-  draft: "Design draft · hidden from Google",
   hero: {
     eyebrow: "Live 3D twins for indoor farms",
     chip: "Free pilots in Jordan and the Gulf",
@@ -63,20 +57,11 @@ const en = {
     ],
     quote: "From the founder",
   },
-  footer: {
-    tryTitle: "Try it with your farm's name",
-    reach: "Talk to us",
-  },
 };
 
-export type HomeDraft = typeof en;
+export type HomeCopy = typeof en;
 
-const ar: HomeDraft = {
-  meta: {
-    title: "مسودة الصفحة الرئيسية · لامينا",
-    description: "مسودة تصميم للصفحة الرئيسية لموقع لامينا.",
-  },
-  draft: "مسودة تصميم · مخفية عن Google",
+const ar: HomeCopy = {
   hero: {
     eyebrow: "نسخ رقمية حيّة ثلاثية الأبعاد للمزارع الداخلية",
     chip: "تجارب مجانية في الأردن والخليج",
@@ -129,10 +114,6 @@ const ar: HomeDraft = {
     ],
     quote: "من المؤسس",
   },
-  footer: {
-    tryTitle: "جرّبها باسم مزرعتك",
-    reach: "تواصل معنا",
-  },
 };
 
-export const homeDraft = (lang: Locale): HomeDraft => (lang === "ar" ? ar : en);
+export const homeCopy = (lang: Locale): HomeCopy => (lang === "ar" ? ar : en);

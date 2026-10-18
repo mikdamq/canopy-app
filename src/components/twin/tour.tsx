@@ -242,10 +242,10 @@ export function Tour({
         >
           {arrowStyle && <span aria-hidden className="absolute size-3 rotate-45 bg-white" style={arrowStyle} />}
           <div className="flex items-center justify-between gap-3">
-            <span className="rounded-full bg-[#eaf5ee] px-2 py-0.5 font-mono text-[11px] font-semibold text-green-ink" dir="ltr">
+            <span className="rounded-full bg-sage px-2 py-0.5 font-mono text-[11px] font-semibold text-green-ink" dir="ltr">
               {fmt(t.step, { n: i + 1, t: steps.length })}
             </span>
-            <button type="button" onClick={() => finish("skip")} aria-label={t.skip} className="grid size-7 place-items-center rounded-full text-muted hover:bg-[#f1f4f8] hover:text-ink">
+            <button type="button" onClick={() => finish("skip")} aria-label={t.skip} className="grid size-7 place-items-center rounded-full text-muted hover:bg-[#eeede3] hover:text-ink">
               <X className="size-4" aria-hidden />
             </button>
           </div>
@@ -265,7 +265,7 @@ export function Tour({
                 <Link
                   href={ctaHref}
                   onClick={() => finish("done")}
-                  className="flex items-center gap-1.5 rounded-xl bg-green px-4 py-2 text-[14px] font-semibold text-white hover:bg-green-ink"
+                  className="flex items-center gap-1.5 rounded-full bg-lime px-4 py-2 text-[14px] font-bold text-forest transition-colors hover:bg-forest hover:text-white"
                 >
                   {t.request}
                   <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
@@ -279,7 +279,7 @@ export function Tour({
                 <button
                   type="button"
                   onClick={() => go(i + 1)}
-                  className={cn("flex items-center gap-1.5 rounded-xl bg-green px-4 py-2 text-[14px] font-semibold text-white hover:bg-green-ink")}
+                  className={cn("flex items-center gap-1.5 rounded-full bg-lime px-4 py-2 text-[14px] font-bold text-forest transition-colors hover:bg-forest hover:text-white")}
                 >
                   {t.next}
                   <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />

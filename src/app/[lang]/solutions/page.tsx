@@ -31,10 +31,12 @@ export default async function SolutionsPage({ params }: PageProps<"/[lang]/solut
       path={PAGE.solutions}
       crumbs={[{ name: d.nav.solutions, path: href(lang, PAGE.solutions) }]}
       ld={[webPage(lang, PAGE.solutions, x.meta.title, x.meta.description, "CollectionPage")]}
+      intro={
+        <>
+          <PageIntro eyebrow={x.eyebrow} title={x.title} lead={x.lead} />
+        </>
+      }
     >
-      <div className="mx-auto w-full max-w-6xl px-4 pt-8 pb-6 sm:px-6 lg:pt-12">
-        <PageIntro eyebrow={x.eyebrow} title={x.title} lead={x.lead} />
-      </div>
       <div className="mx-auto w-full max-w-6xl px-4 pt-6 pb-16 sm:px-6 lg:pb-20">
         <ul className="grid gap-5 sm:grid-cols-2">
           {SOLUTION_TYPES.map((t, i) => {
@@ -43,7 +45,7 @@ export default async function SolutionsPage({ params }: PageProps<"/[lang]/solut
               <li key={t}>
                 <Link
                   href={href(lang, solutionPath(t))}
-                  className="group flex h-full flex-col gap-4 rounded-3xl border border-line bg-white p-4 transition-colors hover:border-green sm:p-5"
+                  className="group flex h-full flex-col gap-4 rounded-[28px] bg-white p-3 transition-shadow hover:shadow-[0_30px_60px_-35px_rgba(14,59,41,0.55)] sm:p-4"
                 >
                   <FarmImage name={t} alt={s.imageAlt} priority={i < 2} className="rounded-2xl" />
                   <div className="flex flex-col gap-2 px-1 pb-1">

@@ -2,7 +2,7 @@ import { Mail, MapPin, MessageCircle, Sprout, Users, ShieldCheck } from "lucide-
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Cards, PageIntro, Section } from "@/components/page/blocks";
+import { Cards, PageIntro, primaryCls, Section, secondaryCls } from "@/components/page/blocks";
 import { PageShell } from "@/components/page/page-shell";
 import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { fmt, hasLocale } from "@/i18n/config";
@@ -35,10 +35,12 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
       path={PAGE.about}
       crumbs={[{ name: d.nav.about, path: href(lang, PAGE.about) }]}
       ld={[webPage(lang, PAGE.about, x.meta.title, x.meta.description, "AboutPage"), organization()]}
+      intro={
+        <>
+          <PageIntro eyebrow={x.eyebrow} title={x.title} lead={x.lead} />
+        </>
+      }
     >
-      <div className="mx-auto w-full max-w-6xl px-4 pt-8 pb-6 sm:px-6 lg:pt-12">
-        <PageIntro eyebrow={x.eyebrow} title={x.title} lead={x.lead} />
-      </div>
 
       <Section id="name" title={x.nameTitle}>
         <p className="max-w-[65ch] text-[17px] leading-relaxed">{x.name}</p>
@@ -54,7 +56,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
 
       <Section id="founder" title={f.title}>
         <div className="flex flex-col gap-6 rounded-3xl border border-line bg-white p-6 sm:flex-row sm:p-8">
-          <span className="grid size-20 shrink-0 place-items-center rounded-full bg-green font-display text-[26px] font-bold text-white" aria-hidden>
+          <span className="grid size-20 shrink-0 place-items-center rounded-full bg-forest font-display text-[26px] font-bold text-lime" aria-hidden>
             {f.initials}
           </span>
           <div className="flex flex-col gap-3">
@@ -86,7 +88,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
         <div className="flex flex-wrap gap-3">
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="inline-flex items-center gap-2 rounded-xl border-2 border-green px-5 py-2.5 text-[15px] font-semibold text-green transition-colors hover:bg-green hover:text-white"
+            className={secondaryCls}
           >
             <Mail className="size-4" aria-hidden />
             <span dir="ltr">{CONTACT_EMAIL}</span>
@@ -94,7 +96,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
           <WhatsAppLink
             d={d.whatsapp}
             place="about"
-            className="inline-flex items-center gap-2 rounded-xl bg-green px-5 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-green-ink"
+            className={primaryCls}
           >
             <WhatsAppIcon className="size-4" />
             {d.whatsapp.label}

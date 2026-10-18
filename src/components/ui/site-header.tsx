@@ -66,8 +66,8 @@ function SolutionsMenu({ lang, nav, active, dark }: { lang: Locale; nav: Dict["n
               const Icon = SOLUTION_ICON[s.type];
               return (
                 <li key={s.type}>
-                  <Link href={s.href} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-[#eaf5ee]">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-[#eaf5ee] text-green">
+                  <Link href={s.href} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-sage">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-sage text-green">
                       <Icon className="size-4.5" aria-hidden />
                     </span>
                     <span className="flex flex-col">
@@ -82,7 +82,7 @@ function SolutionsMenu({ lang, nav, active, dark }: { lang: Locale; nav: Dict["n
           <Link
             href={`/${lang}/solutions`}
             onClick={() => setOpen(false)}
-            className="mt-1 block rounded-xl px-3 py-2.5 text-[14px] font-semibold text-green transition-colors hover:bg-[#eaf5ee]"
+            className="mt-1 block rounded-xl px-3 py-2.5 text-[14px] font-semibold text-green transition-colors hover:bg-sage"
           >
             {nav.solutionsAll}
           </Link>
@@ -98,7 +98,8 @@ function SolutionsMenu({ lang, nav, active, dark }: { lang: Locale; nav: Dict["n
  * compact frosted bar. Pages sit in the middle; the two actions (the live demo and the
  * pilot request) sit on the right, apart from them. `variant="request"` is calmer: no
  * page links or actions (you're already in the form), with the menu at every size.
- * `tone="dark"` is for pages that open on a dark band: light text, and a dark frosted bar.
+ * Every page opens on a forest band, so the default tone is "dark": light text at the top,
+ * and a dark frosted bar once the page scrolls. `tone="light"` is for a page that opens on cream.
  */
 export function SiteHeader({
   lang,
@@ -106,7 +107,7 @@ export function SiteHeader({
   wa,
   langHref,
   variant = "site",
-  tone = "light",
+  tone = "dark",
 }: {
   lang: Locale;
   nav: Dict["nav"];
@@ -173,7 +174,7 @@ export function SiteHeader({
             </nav>
           )}
           {!site && (
-            <Link href={`/${lang}`} className="hidden items-center gap-1.5 text-[14px] text-muted transition-colors hover:text-ink sm:flex">
+            <Link href={`/${lang}`} className={cn("hidden items-center gap-1.5 text-[14px] transition-colors sm:flex", dark ? "text-white/70 hover:text-white" : "text-muted hover:text-ink")}>
               <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
               {nav.backToSite}
             </Link>
@@ -191,7 +192,7 @@ export function SiteHeader({
                   href={`/${lang}/demo`}
                   className={cn(
                     "hidden items-center gap-1.5 rounded-full border-[1.5px] px-3.5 py-[7px] text-[13.5px] font-semibold whitespace-nowrap transition-colors sm:flex",
-                    dark ? "border-white/40 text-white hover:border-white hover:bg-white hover:text-forest" : "border-green text-green hover:bg-green hover:text-white",
+                    dark ? "border-white/40 text-white hover:border-white hover:bg-white hover:text-forest" : "border-forest/30 text-forest hover:border-forest",
                   )}
                 >
                   <Play className="size-3.5 fill-current" aria-hidden />
@@ -201,7 +202,7 @@ export function SiteHeader({
                   href={`/${lang}/request`}
                   className={cn(
                     "rounded-full px-3.5 py-1.5 text-[13px] font-semibold whitespace-nowrap transition-colors sm:px-4 sm:py-2 sm:text-[13.5px]",
-                    dark ? "bg-lime text-forest hover:bg-white" : "bg-green text-white hover:bg-green-ink",
+                    dark ? "bg-lime text-forest hover:bg-white" : "bg-lime text-forest hover:bg-forest hover:text-white",
                   )}
                 >
                   <span className="sm:hidden">{nav.ctaShort}</span>

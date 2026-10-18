@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Faq, PageIntro, SecondaryLink, Section } from "@/components/page/blocks";
+import { Faq, PageIntro, SecondaryLink, Section, secondaryCls } from "@/components/page/blocks";
 import { GuideCard } from "@/components/page/guide";
 import { PageShell } from "@/components/page/page-shell";
 import { WhatsAppIcon, WhatsAppLink } from "@/components/ui/whatsapp-link";
@@ -34,19 +34,21 @@ export default async function FaqPage({ params }: PageProps<"/[lang]/faq">) {
       path={PAGE.faq}
       crumbs={[{ name: d.nav.faq, path: href(lang, PAGE.faq) }]}
       ld={[webPage(lang, PAGE.faq, x.meta.title, x.meta.description), faqPage(x.groups.flatMap((g) => g.items))]}
+      intro={
+        <>
+          <PageIntro eyebrow={x.eyebrow} title={x.title} lead={x.lead}>
+            <WhatsAppLink
+              d={d.whatsapp}
+              place="faq"
+              className={secondaryCls}
+            >
+              <WhatsAppIcon className="size-4" />
+              {d.whatsapp.label}
+            </WhatsAppLink>
+          </PageIntro>
+        </>
+      }
     >
-      <div className="mx-auto w-full max-w-6xl px-4 pt-8 pb-2 sm:px-6 lg:pt-12">
-        <PageIntro eyebrow={x.eyebrow} title={x.title} lead={x.lead}>
-          <WhatsAppLink
-            d={d.whatsapp}
-            place="faq"
-            className="inline-flex items-center gap-2 rounded-xl border-2 border-green px-5 py-2.5 text-[15px] font-semibold text-green transition-colors hover:bg-green hover:text-white"
-          >
-            <WhatsAppIcon className="size-4" />
-            {d.whatsapp.label}
-          </WhatsAppLink>
-        </PageIntro>
-      </div>
       {x.groups.map((g, i) => (
         <Section key={g.t} id={`group-${i + 1}`} title={g.t}>
           <Faq items={g.items} />
