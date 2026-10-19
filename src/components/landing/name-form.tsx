@@ -27,13 +27,15 @@ export function NameForm({
   /** Link text for opening the demo without a name. */
   sample: string;
   note?: string;
-  tone?: "light" | "dark";
+  /** "forest" is the home page draft's dark green band, with a lime button. */
+  tone?: "light" | "dark" | "forest";
 }) {
   const router = useRouter();
   const id = useId();
   const [name, setName] = useState("");
   const [bad, setBad] = useState(false);
-  const dark = tone === "dark";
+  const forest = tone === "forest";
+  const dark = tone === "dark" || forest;
   return (
     <form
       className="flex w-full max-w-[520px] flex-col gap-2"
@@ -49,7 +51,8 @@ export function NameForm({
       </label>
       <div
         className={cn(
-          "flex flex-col gap-2 rounded-2xl border p-1.5 sm:flex-row",
+          "flex flex-col gap-2 border p-1.5 sm:flex-row",
+          forest ? "rounded-[22px] sm:rounded-full" : "rounded-2xl",
           dark ? "border-white/15 bg-white/10" : "border-line bg-white shadow-[0_16px_40px_-28px_rgba(20,27,43,0.5)]",
           bad && "border-[#e5484d]",
         )}
@@ -72,7 +75,10 @@ export function NameForm({
         />
         <button
           type="submit"
-          className="flex items-center justify-center gap-2 rounded-xl bg-green px-5 py-3 text-[15px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-green-ink"
+          className={cn(
+            "flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-[15px] font-semibold whitespace-nowrap transition-colors",
+            forest ? "rounded-full bg-lime text-forest hover:bg-white" : "bg-green text-white hover:bg-green-ink",
+          )}
         >
           {button}
           <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
@@ -91,7 +97,7 @@ export function NameForm({
           data-cursor="cta"
           className={cn(
             "inline-flex items-center gap-1 text-[13px] font-semibold underline-offset-4 hover:underline",
-            dark ? "text-[#7fe0a6]" : "text-green",
+            forest ? "text-lime" : dark ? "text-[#7fe0a6]" : "text-green",
           )}
         >
           {sample}

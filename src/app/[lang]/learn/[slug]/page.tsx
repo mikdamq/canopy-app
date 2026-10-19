@@ -48,7 +48,6 @@ export default async function GuidePage({ params }: PageProps<"/[lang]/learn/[sl
       d={d}
       p={p}
       path={path}
-      band
       crumbs={[
         { name: d.nav.learn, path: href(lang, PAGE.learn) },
         { name: x.title, path: href(lang, path) },
@@ -70,21 +69,21 @@ export default async function GuidePage({ params }: PageProps<"/[lang]/learn/[sl
     >
       <ReadingProgress target="article" />
       <article id="article">
-        <header className="bg-green text-white">
+        <header className="band bg-forest text-white">
           <div className="mx-auto flex w-full max-w-[760px] flex-col gap-5 px-4 pt-10 pb-28 sm:px-6 sm:pt-14 sm:pb-40">
             <p className="flex flex-wrap items-center gap-2 text-[13px]">
               <span className="rounded-full bg-white/15 px-3 py-1 font-semibold">{topic ? ix.topics[topic].t : ix.start}</span>
-              <span className="text-[#d6efe0]">{fmt(ix.read, { n: String(readMinutes(x)) })}</span>
+              <span className="text-white/60">{fmt(ix.read, { n: String(readMinutes(x)) })}</span>
             </p>
             <h1 className="font-display text-[36px] leading-[1.05] font-bold tracking-[-0.02em] text-balance sm:text-[52px]">{x.title}</h1>
-            <p className="text-[18px] leading-relaxed text-[#e3f4ea] sm:text-[19px]">{x.lead}</p>
+            <p className="text-[18px] leading-relaxed text-white/75 sm:text-[19px]">{x.lead}</p>
             <div className="flex items-center gap-3 pt-2 text-[14px]">
               <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white font-display text-[14px] font-bold text-green-ink" aria-hidden>
                 MQ
               </span>
               <span className="flex flex-col">
                 <span className="font-semibold">{ix.by}</span>
-                <time dateTime={x.date} className="text-[#d6efe0]">
+                <time dateTime={x.date} className="text-white/60">
                   {fmt(ix.updated, { date: x.dateText })}
                 </time>
               </span>
@@ -97,7 +96,7 @@ export default async function GuidePage({ params }: PageProps<"/[lang]/learn/[sl
         </div>
 
         <div className="mx-auto flex w-full max-w-[720px] flex-col gap-14 px-4 pt-12 pb-16 sm:px-6 sm:pt-16 lg:pb-24">
-          <aside aria-labelledby="short-title" className="flex flex-col gap-4 rounded-3xl border-s-4 border-green bg-[#eaf5ee] p-6 sm:p-8">
+          <aside aria-labelledby="short-title" className="flex flex-col gap-4 rounded-3xl border-s-4 border-forest bg-sage p-6 sm:p-8">
             <h2 id="short-title" className="font-display text-[21px] font-bold text-green-ink">
               {ix.shortAnswer}
             </h2>
@@ -133,7 +132,7 @@ export default async function GuidePage({ params }: PageProps<"/[lang]/learn/[sl
       </article>
 
       {x.terms && (
-        <section aria-labelledby="terms-title" className="bg-ink text-white">
+        <section aria-labelledby="terms-title" className="bg-emerald text-white">
           <div className="mx-auto flex w-full max-w-[720px] flex-col gap-6 px-4 py-14 sm:px-6 lg:py-20">
             <h2 id="terms-title" className="font-display text-[26px] font-bold sm:text-[30px]">
               {ix.terms}
@@ -150,7 +149,7 @@ export default async function GuidePage({ params }: PageProps<"/[lang]/learn/[sl
         </section>
       )}
 
-      <section id="faq" aria-labelledby="faq-title" className="scroll-mt-24 bg-[#eaf5ee]">
+      <section id="faq" aria-labelledby="faq-title" className="scroll-mt-24 bg-sage">
         <div className="mx-auto flex w-full max-w-[720px] flex-col gap-6 px-4 py-14 sm:px-6 lg:py-20">
           <h2 id="faq-title" className="font-display text-[26px] font-bold text-green-ink sm:text-[30px]">
             {p.common.faqTitle}
@@ -176,7 +175,7 @@ export default async function GuidePage({ params }: PageProps<"/[lang]/learn/[sl
               <li key={t}>
                 <Link
                   href={href(lang, solutionPath(t))}
-                  className="group flex items-center justify-between gap-3 rounded-2xl border border-line bg-white px-5 py-4 font-semibold transition-colors hover:border-green"
+                  className="group flex items-center justify-between gap-3 rounded-[20px] bg-white px-5 py-4 font-bold transition-colors hover:bg-lime"
                 >
                   {d.nav.solutionNames[t]}
                   <ArrowRight className="size-4 text-green rtl:rotate-180" aria-hidden />

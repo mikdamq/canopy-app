@@ -32,18 +32,20 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
       path={PAGE.product}
       crumbs={[{ name: d.nav.product, path: href(lang, PAGE.product) }]}
       ld={[webPage(lang, PAGE.product, x.meta.title, x.meta.description), software(lang, x.meta.description), faqPage(x.faq)]}
+      intro={
+        <>
+          <PageIntro
+            eyebrow={x.eyebrow}
+            title={x.title}
+            lead={x.lead}
+            aside={<FarmImage name="tower-night" alt={d.meta.ogAlt} priority />}
+          >
+            <PrimaryLink href={href(lang, PAGE.demo)}>{p.common.ctaDemo}</PrimaryLink>
+            <SecondaryLink href={href(lang, PAGE.request)}>{p.common.ctaRequest}</SecondaryLink>
+          </PageIntro>
+        </>
+      }
     >
-      <div className="mx-auto w-full max-w-6xl px-4 pt-8 pb-6 sm:px-6 lg:pt-12">
-        <PageIntro
-          eyebrow={x.eyebrow}
-          title={x.title}
-          lead={x.lead}
-          aside={<FarmImage name="tower-night" alt={d.meta.ogAlt} priority />}
-        >
-          <PrimaryLink href={href(lang, PAGE.demo)}>{p.common.ctaDemo}</PrimaryLink>
-          <SecondaryLink href={href(lang, PAGE.request)}>{p.common.ctaRequest}</SecondaryLink>
-        </PageIntro>
-      </div>
 
       <Section id="what" title={x.whatTitle}>
         <div className="grid max-w-[70ch] gap-4 text-[16.5px] leading-relaxed">

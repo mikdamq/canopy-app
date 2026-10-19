@@ -1,79 +1,97 @@
+import { Mail } from "lucide-react";
 import Link from "next/link";
 import { CookieSettingsButton } from "@/components/analytics";
+import { NameForm } from "@/components/landing/name-form";
 import type { Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
 import { BRAND, CONTACT_EMAIL } from "@/lib/site";
-import { Logo } from "./logo";
-import { siteSolutions } from "./site-nav";
-import { WhatsAppLink } from "./whatsapp-link";
+import { Mark } from "./logo";
+import { sitePages, siteSolutions } from "./site-nav";
+import { WhatsAppIcon, WhatsAppLink } from "./whatsapp-link";
 
-const link = "text-ink underline-offset-4 hover:underline";
+const link = "text-white/85 transition-colors hover:text-lime";
+const pill =
+  "inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-2 text-[13.5px] font-semibold transition-colors hover:border-lime hover:text-lime";
 
-/** The footer, with a full site map: every page in this language, for people and crawlers. */
-export function SiteFooter({ lang, d, nav, wa }: { lang: Locale; d: Dict["footer"]; nav: Dict["nav"]; wa: Dict["whatsapp"] }) {
+/**
+ * The footer on every page: the farm-name field (its "sign-up bar"), then a full site map
+ * of this language for people and crawlers, and a large low-opacity wordmark at the bottom.
+ */
+export function SiteFooter({ lang, d }: { lang: Locale; d: Dict }) {
   const year = new Date().getFullYear();
   const h = (p: string) => `/${lang}${p}`;
   const columns: { title: string; links: [string, string][] }[] = [
+    { title: d.footer.explore, links: sitePages(lang, d.nav).map((p) => [p.href, p.label]) },
+    { title: d.nav.solutions, links: siteSolutions(lang, d.nav).map((s) => [s.href, s.label]) },
     {
-      title: nav.product,
+      title: d.nav.product,
       links: [
-        [h("/product"), nav.product],
-        [h("/demo"), nav.demo],
-        [h("/request"), nav.cta],
-      ],
-    },
-    {
-      title: nav.solutions,
-      links: [...siteSolutions(lang, nav).map((s) => [s.href, s.label] as [string, string]), [h("/solutions"), nav.solutionsAll]],
-    },
-    {
-      title: BRAND,
-      links: [
-        [h("/pilot"), nav.pilot],
-        [h("/learn"), nav.learn],
-        [h("/about"), nav.about],
-        [h("/faq"), nav.faq],
-        [h("/privacy"), d.privacy],
+        [h("/demo"), d.nav.demo],
+        [h("/request"), d.nav.cta],
+        [h("/privacy"), d.footer.privacy],
       ],
     },
   ];
   return (
-    <footer className="border-t border-line">
-      <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1.2fr)_repeat(3,minmax(0,1fr))]">
-        <div className="flex flex-col gap-3">
-          <Logo />
-          <p className="max-w-[32ch] text-[14px] text-muted">{d.tagline}</p>
-          <p className="text-[14px] text-muted">
-            {d.contact}:{" "}
-            <a href={`mailto:${CONTACT_EMAIL}`} className={link} dir="ltr">
-              {CONTACT_EMAIL}
-            </a>
-            <WhatsAppLink d={wa} place="footer" className={`${link} ms-3 inline-flex items-center gap-1.5`}>
-              {wa.short}
-            </WhatsAppLink>
-          </p>
+    <footer className="relative overflow-hidden rounded-t-[40px] bg-forest text-white">
+      <div className="relative mx-auto w-full max-w-6xl px-4 pt-16 pb-10 sm:px-6 lg:pt-20">
+        <div className="grid gap-8 rounded-[32px] bg-emerald p-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
+          <div className="flex flex-col gap-3">
+            <h2 className="text-[30px] leading-[1.12] font-extrabold tracking-[-0.03em] sm:text-[38px]">{d.tryBand.title}</h2>
+            <p className="max-w-[44ch] text-[15.5px] leading-relaxed text-white/65">{d.final.sub}</p>
+          </div>
+          <NameForm lang={lang} tone="forest" label={d.hero.inputLabel} placeholder={d.hero.placeholder} button={d.hero.open} error={d.hero.nameError} sample={d.hero.sample} />
         </div>
-        {columns.map((c) => (
-          <nav key={c.title} aria-label={c.title} className="flex flex-col gap-3">
-            <p className="text-[13px] font-semibold tracking-wide text-muted uppercase rtl:tracking-normal">{c.title}</p>
-            <ul className="flex flex-col gap-2 text-[14.5px] font-medium">
-              {c.links.map(([href, label]) => (
-                <li key={href}>
-                  <Link href={href} className={link}>
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        ))}
+
+        <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))]">
+          <div className="flex flex-col gap-4">
+            <span className="flex items-center gap-2 text-[19px] font-extrabold">
+              <Mark />
+              {BRAND}
+            </span>
+            <p className="max-w-[32ch] text-[14.5px] leading-relaxed text-white/60">{d.footer.tagline}</p>
+            <p className="text-[13px] font-semibold text-white/50">{d.footer.contact}</p>
+            <div className="flex flex-wrap gap-2">
+              <a href={`mailto:${CONTACT_EMAIL}`} className={pill} dir="ltr">
+                <Mail className="size-4" aria-hidden />
+                {CONTACT_EMAIL}
+              </a>
+              <WhatsAppLink d={d.whatsapp} place="footer" className={pill}>
+                <WhatsAppIcon className="size-4" />
+                {d.whatsapp.short}
+              </WhatsAppLink>
+            </div>
+          </div>
+          {columns.map((c) => (
+            <nav key={c.title} aria-label={c.title} className="flex flex-col gap-3">
+              <p className="text-[13px] font-semibold text-white/50">{c.title}</p>
+              <ul className="flex flex-col gap-2 text-[14.5px] font-medium">
+                {c.links.map(([href, label]) => (
+                  <li key={href}>
+                    <Link href={href} className={link}>
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
+
+        <div className="mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-white/60">
+          <span>
+            © {year} {BRAND}. {d.footer.rights}
+          </span>
+          <CookieSettingsButton label={d.footer.cookies} className="cursor-pointer text-white/60 hover:text-white" />
+        </div>
       </div>
-      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-5 text-[13px] text-muted sm:px-6">
-        <span>
-          © {year} {BRAND}. {d.rights}
-        </span>
-        <CookieSettingsButton label={d.cookies} className={`${link} cursor-pointer text-muted`} />
-      </div>
+      <span
+        aria-hidden
+        className="pointer-events-none -mt-4 -mb-[0.2em] block text-center text-[clamp(110px,25vw,340px)] leading-[0.9] font-extrabold tracking-[-0.06em] text-white/[0.05] select-none"
+        dir="ltr"
+      >
+        {BRAND}
+      </span>
     </footer>
   );
 }

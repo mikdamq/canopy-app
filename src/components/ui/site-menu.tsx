@@ -102,7 +102,7 @@ export function SiteMenu({
           <AnimatePresence>
             {open && (
               <motion.div
-                className={cn("fixed inset-0 z-[70] bg-[#0b1222]/40 backdrop-blur-[2px]", !always && "lg:hidden")}
+                className={cn("fixed inset-0 z-[70] bg-[#04170f]/50 backdrop-blur-[2px]", !always && "lg:hidden")}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -161,14 +161,14 @@ export function SiteMenu({
                     <Link
                       href={`/${lang}/request`}
                       onClick={close}
-                      className="rounded-xl bg-green px-4 py-3 text-center text-[15px] font-semibold text-white"
+                      className="rounded-full bg-lime px-4 py-3 text-center text-[15px] font-bold text-forest"
                     >
                       {nav.cta}
                     </Link>
                     <Link
                       href={`/${lang}/demo`}
                       onClick={close}
-                      className="rounded-xl border-2 border-green px-4 py-2.5 text-center text-[15px] font-semibold text-green"
+                      className="rounded-full border-2 border-forest/25 px-4 py-2.5 text-center text-[15px] font-bold text-forest"
                     >
                       {nav.demo}
                     </Link>

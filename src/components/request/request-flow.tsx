@@ -84,7 +84,7 @@ function Field({ label, error, hint, children, htmlFor }: { label: string; error
 
 const inputCls = (bad?: boolean) =>
   cn(
-    "w-full rounded-xl border bg-white px-3.5 py-2.5 text-[15px] outline-none transition-colors placeholder:text-[#6b7689] focus:border-green",
+    "w-full rounded-xl border bg-white px-3.5 py-2.5 text-[15px] outline-none transition-colors placeholder:text-[#7a857c] focus:border-forest",
     bad ? "border-[#e5484d]" : "border-line",
   );
 
@@ -119,7 +119,7 @@ function Chips<T extends string>({
           }}
           className={cn(
             "flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-[13.5px] font-medium transition-colors",
-            on(o) ? "border-green bg-[#eaf6ef] text-green-ink" : "border-line bg-white hover:border-[#8c97ab]",
+            on(o) ? "border-forest bg-sage text-forest" : "border-line bg-white hover:border-forest/40",
           )}
         >
           {multi && on(o) && <Check className="size-3.5" aria-hidden />}
@@ -366,7 +366,10 @@ export default function RequestFlow({
         {/* Intro and progress */}
         <aside className="flex flex-col gap-6 lg:sticky lg:top-8 lg:self-start">
           <div className="flex flex-col gap-3">
-            <p className="font-mono text-[12px] tracking-[0.1em] text-green uppercase">{r.eyebrow}</p>
+            <p className="flex w-fit items-center gap-2 rounded-full bg-forest/[0.07] px-3 py-1 text-[12.5px] font-semibold text-forest">
+              <span className="size-1.5 rounded-full bg-current" aria-hidden />
+              {r.eyebrow}
+            </p>
             <h1 className="font-display text-[34px] leading-[1.05] font-bold tracking-[-0.02em] text-balance sm:text-[44px]">
               {sent ? fmt(r.doneHeading, { name: firstName }) : r.title}
             </h1>
@@ -381,7 +384,7 @@ export default function RequestFlow({
                   <span
                     className={cn(
                       "grid size-8 place-items-center rounded-full font-mono text-[12px] transition-colors",
-                      done ? "bg-green text-white" : active ? "bg-ink text-white" : "bg-white text-muted ring-1 ring-line",
+                      done ? "bg-forest text-lime" : active ? "bg-lime text-forest" : "bg-white text-muted ring-1 ring-line",
                     )}
                   >
                     {done ? <Check className="size-4" aria-hidden /> : i + 1}
@@ -542,7 +545,7 @@ export default function RequestFlow({
                         type="checkbox"
                         checked={f.consent}
                         onChange={(e) => set("consent", e.target.checked)}
-                        className="mt-0.5 size-[18px] accent-green"
+                        className="mt-0.5 size-[18px] accent-forest"
                       />
                       {r.fields.consent}
                     </label>
@@ -567,7 +570,7 @@ export default function RequestFlow({
                     <button
                       type="submit"
                       disabled={status === "sending"}
-                      className="flex items-center justify-center gap-2 rounded-xl bg-green px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-green-ink disabled:opacity-60 sm:ms-auto"
+                      className="flex items-center justify-center gap-2 rounded-full bg-lime px-6 py-3 text-[15px] font-bold text-forest transition-colors hover:bg-forest hover:text-white disabled:opacity-60 sm:ms-auto"
                     >
                       {status === "sending" && <Loader2 className="size-4 animate-spin" aria-hidden />}
                       {status === "sending" ? r.sending : r.submit}
@@ -577,7 +580,7 @@ export default function RequestFlow({
               ) : (
                 <div className="flex flex-col gap-6">
                   {/* Success band, edge to edge across the top of the card, like the confirmation email. */}
-                  <div role="status" className="-mx-5 -mt-5 flex flex-col items-center gap-3 rounded-t-3xl bg-green px-6 pt-9 pb-8 text-center text-white sm:-mx-8 sm:-mt-8">
+                  <div role="status" className="-mx-5 -mt-5 flex flex-col items-center gap-3 rounded-t-3xl bg-forest px-6 pt-9 pb-8 text-center text-white sm:-mx-8 sm:-mt-8">
                     <motion.span
                       initial={{ scale: 0.4, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
@@ -586,12 +589,12 @@ export default function RequestFlow({
                     >
                       <Check className="size-8" strokeWidth={3} aria-hidden />
                     </motion.span>
-                    <span className="mt-2 rounded-full bg-[#17613a] px-3.5 py-1 text-[13px] font-semibold text-[#e3f4ea]">
+                    <span className="mt-2 rounded-full bg-lime px-3.5 py-1 text-[13px] font-bold text-forest">
                       {r.done.badge}
                     </span>
                     <h2 className="font-display text-[22px] leading-snug font-bold text-balance sm:text-[26px]">{r.done.reply}</h2>
                     {emailed && (
-                      <p className="flex items-center gap-2 text-[14.5px] text-[#e3f4ea]">
+                      <p className="flex items-center gap-2 text-[14.5px] text-white/75">
                         <Mail className="size-4" aria-hidden />
                         {r.done.emailed}
                       </p>
@@ -604,11 +607,11 @@ export default function RequestFlow({
                         <li
                           key={n.t}
                           className={cn(
-                            "grid grid-cols-[32px_minmax(0,1fr)] gap-3 rounded-2xl bg-[#eaf5ee] p-4",
-                            i === 0 && WHATSAPP_NUMBER && "ring-2 ring-green",
+                            "grid grid-cols-[32px_minmax(0,1fr)] gap-3 rounded-2xl bg-sage p-4",
+                            i === 0 && WHATSAPP_NUMBER && "ring-2 ring-lime",
                           )}
                         >
-                          <span className="grid size-8 place-items-center rounded-full bg-green font-mono text-[13px] font-semibold text-white" dir="ltr">
+                          <span className="grid size-8 place-items-center rounded-full bg-forest text-[13px] font-bold text-lime" dir="ltr">
                             {i + 1}
                           </span>
                           <div className="flex flex-col gap-0.5">
@@ -620,7 +623,7 @@ export default function RequestFlow({
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={() => track("whatsapp_click", { place: "done" })}
-                                className="mt-2 inline-flex items-center gap-2 self-start rounded-xl bg-green px-4 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-green-ink"
+                                className="mt-2 inline-flex items-center gap-2 self-start rounded-full bg-lime px-4 py-2.5 text-[14px] font-bold text-forest transition-colors hover:bg-forest hover:text-white"
                               >
                                 <WhatsAppIcon className="size-4" />
                                 {r.done.photos}
@@ -635,7 +638,7 @@ export default function RequestFlow({
                     <div className="rounded-2xl border border-line p-5">
                       {xStatus === "done" ? (
                         <p className="flex items-center gap-2.5 text-[14.5px] font-semibold text-green-ink" role="status">
-                          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-green text-white">
+                          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-forest text-lime">
                             <Check className="size-4" aria-hidden />
                           </span>
                           {r.details.done}
@@ -653,7 +656,7 @@ export default function RequestFlow({
                                 setXOpen(true);
                                 track("request_details", { stage: "open", lang });
                               }}
-                              className="inline-flex items-center gap-2 self-start rounded-xl border-2 border-green px-4 py-2 text-[14px] font-semibold text-green transition-colors hover:bg-green hover:text-white"
+                              className="inline-flex items-center gap-2 self-start rounded-full border-2 border-forest/25 px-4 py-2 text-[14px] font-bold text-forest transition-colors hover:border-forest"
                             >
                               <Plus className="size-4" aria-hidden />
                               {r.details.open}
@@ -733,7 +736,7 @@ export default function RequestFlow({
                               <button
                                 type="submit"
                                 disabled={xStatus === "sending"}
-                                className="flex items-center justify-center gap-2 self-start rounded-xl bg-green px-5 py-2.5 text-[14.5px] font-semibold text-white transition-colors hover:bg-green-ink disabled:opacity-60"
+                                className="flex items-center justify-center gap-2 self-start rounded-full bg-lime px-5 py-2.5 text-[14.5px] font-bold text-forest transition-colors hover:bg-forest hover:text-white disabled:opacity-60"
                               >
                                 {xStatus === "sending" && <Loader2 className="size-4 animate-spin" aria-hidden />}
                                 {xStatus === "sending" ? r.details.sending : r.details.send}
@@ -745,10 +748,10 @@ export default function RequestFlow({
                     </div>
                   )}
                   <div className="flex flex-wrap items-center gap-2 border-t border-line pt-5">
-                    <Link href={demoHref} className="rounded-xl border-2 border-green px-4 py-2 text-[14px] font-semibold text-green transition-colors hover:bg-green hover:text-white">
+                    <Link href={demoHref} className="rounded-full border-2 border-forest/25 px-4 py-2 text-[14px] font-bold text-forest transition-colors hover:border-forest">
                       {r.done.demo}
                     </Link>
-                    <Link href={`/${lang}`} className="rounded-xl border border-line px-4 py-2.5 text-[14px] font-semibold hover:border-ink">
+                    <Link href={`/${lang}`} className="rounded-full border-2 border-forest/25 px-4 py-2 text-[14px] font-bold hover:border-forest">
                       {r.done.home}
                     </Link>
                     {bookingHref && (

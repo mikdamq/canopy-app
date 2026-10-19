@@ -30,21 +30,23 @@ export default async function PilotPage({ params }: PageProps<"/[lang]/pilot">) 
       path={PAGE.pilot}
       crumbs={[{ name: d.nav.pilot, path: href(lang, PAGE.pilot) }]}
       ld={[webPage(lang, PAGE.pilot, x.meta.title, x.meta.description), service(lang, x.title, x.meta.description, PAGE.pilot), faqPage(faq)]}
+      intro={
+        <>
+          <PageIntro eyebrow={x.eyebrow} title={x.title} lead={x.lead}>
+            <PrimaryLink href={href(lang, PAGE.request)}>{p.common.ctaRequest}</PrimaryLink>
+            <SecondaryLink href={href(lang, PAGE.demo)}>{p.common.ctaDemo}</SecondaryLink>
+          </PageIntro>
+          <dl className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {x.facts.map((f) => (
+              <div key={f.k} className="flex flex-col gap-1 rounded-[24px] border border-white/10 bg-white/[0.06] p-5">
+                <dt className="text-[13px] text-white/60">{f.k}</dt>
+                <dd className="font-display text-[20px] leading-tight font-bold">{f.v}</dd>
+              </div>
+            ))}
+          </dl>
+        </>
+      }
     >
-      <div className="mx-auto w-full max-w-6xl px-4 pt-8 pb-6 sm:px-6 lg:pt-12">
-        <PageIntro eyebrow={x.eyebrow} title={x.title} lead={x.lead}>
-          <PrimaryLink href={href(lang, PAGE.request)}>{p.common.ctaRequest}</PrimaryLink>
-          <SecondaryLink href={href(lang, PAGE.demo)}>{p.common.ctaDemo}</SecondaryLink>
-        </PageIntro>
-        <dl className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {x.facts.map((f) => (
-            <div key={f.k} className="flex flex-col gap-1 rounded-2xl bg-green p-5 text-white">
-              <dt className="text-[13px] text-[#e3f4ea]">{f.k}</dt>
-              <dd className="font-display text-[20px] leading-tight font-bold">{f.v}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
 
       <Section id="included" title={d.pilot.freeTitle} tone="white">
         <div className="grid gap-8 lg:grid-cols-2">

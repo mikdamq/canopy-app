@@ -226,7 +226,7 @@ function TopBar({ snap, d, lang, nav, wa, brand, farm, homeHref, ctaHref, langHr
       <Link
         href={ctaHref}
         data-tour="cta"
-        className="hidden items-center gap-1.5 rounded-xl bg-green px-3 py-2 text-[13px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-green-ink sm:flex"
+        className="hidden items-center gap-1.5 rounded-full bg-lime px-3 py-2 text-[13px] font-bold whitespace-nowrap text-forest transition-colors hover:bg-forest hover:text-white sm:flex"
       >
         {d.getThis}
         <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
@@ -273,7 +273,7 @@ const PILL: Record<Snapshot["floors"][number]["state"], string> = {
   growing: "bg-[#ddf4ea] text-[#086b4a]",
   ready: "bg-[#fff1d6] text-[#8a5300]",
   harvesting: "bg-[#e3ebff] text-[#2f5bea]",
-  empty: "bg-[#eef1f6] text-muted",
+  empty: "bg-[#eeede3] text-muted",
   seeding: "bg-[#e3ebff] text-[#2f5bea]",
 };
 
@@ -473,7 +473,7 @@ function Journey({ snap, d, bare }: { snap: Snapshot; d: D; bare?: boolean }) {
               <span
                 className={cn(
                   "relative grid size-[34px] place-items-center rounded-full transition-colors",
-                  active ? "bg-green text-white shadow-[0_0_0_5px_rgba(46,158,91,0.18)]" : "bg-[#eef1f6] text-muted",
+                  active ? "bg-forest text-lime shadow-[0_0_0_5px_rgba(198,240,77,0.35)]" : "bg-[#eeede3] text-muted",
                 )}
               >
                 <Icon className="size-4" aria-hidden />
@@ -526,7 +526,7 @@ function Clock({ snap, sim, d, bare }: { snap: Snapshot; sim: FarmSim; d: D; bar
           onClick={() => sim.setPlaying(!snap.playing)}
           className={cn(
             "flex items-center gap-1.5 rounded-xl px-3 py-2 text-[13px] font-semibold transition-colors",
-            snap.playing ? "bg-green text-white" : "border border-line bg-white",
+            snap.playing ? "bg-forest text-lime" : "border border-line bg-white",
           )}
         >
           {snap.playing ? <Pause className="size-4" aria-hidden /> : <Play className="size-4" aria-hidden />}
@@ -590,7 +590,7 @@ function Dock({ d, panel, onPanel, compact }: { d: D; panel: TourPanel | null; o
             className={cn(
               "flex items-center justify-center rounded-xl font-semibold whitespace-nowrap transition-colors",
               compact ? "min-w-0 flex-col gap-1 px-1 py-2 text-[11px] leading-tight" : "gap-2 px-3.5 py-2 text-[13.5px]",
-              on ? "bg-ink text-white" : "text-muted hover:bg-[#f1f4f8] hover:text-ink",
+              on ? "bg-ink text-white" : "text-muted hover:bg-[#eeede3] hover:text-ink",
             )}
           >
             <Icon className="size-4 shrink-0" aria-hidden />
@@ -616,7 +616,7 @@ function Panel({ d, panel, onClose, children }: { d: D; panel: TourPanel; onClos
     >
       <div className="flex items-center justify-between gap-2">
         <h2 className="text-[13.5px] font-bold">{d.dock[panel]}</h2>
-        <button type="button" onClick={onClose} aria-label={d.dock.close} className="grid size-7 place-items-center rounded-full text-muted hover:bg-[#f1f4f8] hover:text-ink">
+        <button type="button" onClick={onClose} aria-label={d.dock.close} className="grid size-7 place-items-center rounded-full text-muted hover:bg-[#eeede3] hover:text-ink">
           <X className="size-4" aria-hidden />
         </button>
       </div>
@@ -649,7 +649,7 @@ function Welcome({ d, farm, type, onType, onStart }: {
       role="dialog"
       aria-modal="true"
       aria-labelledby="welcome-title"
-      className="fixed inset-0 z-50 grid place-items-center bg-[#0b1222]/45 p-4 backdrop-blur-[2px]"
+      className="fixed inset-0 z-50 grid place-items-center bg-[#04170f]/50 p-4 backdrop-blur-[2px]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -703,7 +703,7 @@ function Welcome({ d, farm, type, onType, onStart }: {
                   )}
                 >
                   <input type="radio" name="farm-type" value={t} checked={on} onChange={() => onType(t)} className="sr-only" />
-                  <span className={cn("grid size-8 shrink-0 place-items-center rounded-lg", on ? "bg-green text-white" : "bg-[#f1f4f8] text-ink")}>
+                  <span className={cn("grid size-8 shrink-0 place-items-center rounded-lg", on ? "bg-forest text-lime" : "bg-[#eeede3] text-ink")}>
                     <Icon className="size-4" aria-hidden />
                   </span>
                   <span className="flex min-w-0 flex-col">
@@ -725,7 +725,7 @@ function Welcome({ d, farm, type, onType, onStart }: {
             className="rounded-xl border border-line px-3 py-2.5 text-[15px] font-normal outline-none focus:border-green"
           />
         </label>
-        <button ref={startBtn} type="submit" className="rounded-xl bg-green px-4 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-green-ink">
+        <button ref={startBtn} type="submit" className="rounded-full bg-lime px-4 py-3 text-[15px] font-bold text-forest transition-colors hover:bg-forest hover:text-white">
           {d.welcome.start}
         </button>
       </motion.form>
@@ -891,7 +891,7 @@ export default function TwinApp({
             </div>
           </>
         ) : (
-          <div className="flex flex-col gap-3 border-t border-line bg-[#f1f4f8] p-3">
+          <div className="flex flex-col gap-3 border-t border-line bg-[#eeede3] p-3">
             <div className="sticky top-[76px] z-30">
               <Dock d={dict} panel={panel} onPanel={setPanel} compact />
             </div>
@@ -904,7 +904,7 @@ export default function TwinApp({
           <Link
             href={ctaHref}
             data-tour="cta"
-            className="flex items-center justify-center gap-1.5 rounded-xl bg-green px-4 py-3 text-[15px] font-semibold text-white"
+            className="flex items-center justify-center gap-1.5 rounded-full bg-lime px-4 py-3 text-[15px] font-bold text-forest transition-colors hover:bg-forest hover:text-white"
           >
             {dict.getThis}
             <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
