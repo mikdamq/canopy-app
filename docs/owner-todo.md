@@ -59,7 +59,7 @@ Last updated: 19 Oct 2026 (brand identity round; posting on hold).
   - [x] Step 2, logo `social/logo-400.png` and the cover `social/linkedin-company-cover-en.jpg` (re-made at LinkedIn's new **4200 × 700** on 16 Oct; the Arabic one is `-ar.jpg`, kept for later)
   - [x] Step 3, the rest of **Edit page → Details**: About, year founded (2026), phone, then the **Arabic** name, tagline and About via **Manage languages** (all texts in `profiles.md`; a language can't be removed once added)
   - [x] Step 4, custom button (Visit website), 16 specialties, community hashtags if offered (all in `profiles.md`)
-- [ ] **Brand identity first** (decided 19 Oct): posting is **on hold** until we have a real logo. I'm drawing 5 logo directions (layers, leaf blade, digital twin/3D, wordmark-led, stacked floors) on a page you can comment on. Your part: **pick one (or a mix) and art-direct**; then I build the full logo system (symbol, English and Arabic wordmarks, lockups, app icon, favicon, sizes)
+- [ ] **Brand identity first** (decided 19 Oct): posting is **on hold** until we have a real logo. the 5 logo directions are ready on the concept board: https://claude.ai/artifact/DbbG4UNHyWNZDpSGBjpiTp (files in `docs/brand/`). Your part: **pick one (or a mix) and art-direct**, in chat or as comments on the board; then I build the full logo system (symbol, English and Arabic wordmarks, lockups, app icon, favicon, sizes)
 - [ ] **Step 5, start the page** (on hold until the identity is ready; plan in `docs/marketing/posts.md`):
   - [ ] Add Lamina to your **Experience** (Founder, pick the Lamina page from the list so the logo shows)
   - [ ] Post 1 (new date after the identity) in English from you (tower clip), Arabic from the page an hour later; pin it
