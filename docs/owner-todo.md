@@ -2,13 +2,13 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 18 Oct 2026 (new look on the whole site, to review).
+Last updated: 19 Oct 2026 (new look merged and live).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
 ## 1. This week
 
-- [ ] **Review the new look on the whole site** (PR #17 preview, English and Arabic, desktop and phone): home, Product, Solutions, Pilot, About, FAQ, Guides, the request form, Privacy, the demo and a wrong address (404). Then say "merge" and it goes live on laminafarm.app.
+- [ ] **Look at the new design on the live site** (laminafarm.app, on your phone too) and tell me anything to polish. Next on my side: the link-preview pictures and the two emails in the new colours.
 - [ ] **Send me your LinkedIn profile address** (for the author line on the guides and the About page).
 - [ ] **Read the 13 guides on the live site** when you have time (laminafarm.app/en/learn and /ar/learn) and tell me any facts that don't match your experience, plus topics for the next guides. Company names are left out for now, as you asked.
 - [ ] **Try the live site on your phone** and tell me anything that feels off:
@@ -88,5 +88,5 @@ My cloud workspace can't open `laminafarm.app` or `*.netlify.app` (blocked by it
 - [x] Working hours: Sunday to Thursday, 9:00–23:00 Amman time (10 Oct)
 - [x] Pricing answer: "Free during the pilot. Before it ends we agree a price together, based on your farm's size. No surprises, no lock-in." (10 Oct)
 - [x] Email designs approved (10 Oct)
-- [x] Merged: PR #6 (rename, navigation, marketing kit), PR #12 (emails, short form), PR #13 (content pages, header), PR #14 (demo tour and toolbar), PR #15 (13 guides, new guide layout, GA4 support, sitemap) (16 Oct)
+- [x] Merged: PR #6 (rename, navigation, marketing kit), PR #12 (emails, short form), PR #13 (content pages, header), PR #14 (demo tour and toolbar), PR #15 (13 guides, new guide layout, GA4 support, sitemap) (16 Oct), PR #17 (new look on the whole site: forest, cream and lime) (19 Oct)
 - [x] Growth plan approved; guide layout approved (16 Oct)
