@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 17 Oct 2026 (LinkedIn page live; 2-week posting plan from Sun 18 Oct).
+Last updated: 19 Oct 2026 (brand identity round; posting on hold).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
@@ -59,11 +59,12 @@ Last updated: 17 Oct 2026 (LinkedIn page live; 2-week posting plan from Sun 18 O
   - [x] Step 2, logo `social/logo-400.png` and the cover `social/linkedin-company-cover-en.jpg` (re-made at LinkedIn's new **4200 × 700** on 16 Oct; the Arabic one is `-ar.jpg`, kept for later)
   - [x] Step 3, the rest of **Edit page → Details**: About, year founded (2026), phone, then the **Arabic** name, tagline and About via **Manage languages** (all texts in `profiles.md`; a language can't be removed once added)
   - [x] Step 4, custom button (Visit website), 16 specialties, community hashtags if offered (all in `profiles.md`)
-- [ ] **Step 5, start the page** (plan in `docs/marketing/posts.md`, from Sun 18 Oct):
+- [ ] **Brand identity first** (decided 19 Oct): posting is **on hold** until we have a real logo. I'm drawing 5 logo directions (layers, leaf blade, digital twin/3D, wordmark-led, stacked floors) on a page you can comment on. Your part: **pick one (or a mix) and art-direct**; then I build the full logo system (symbol, English and Arabic wordmarks, lockups, app icon, favicon, sizes)
+- [ ] **Step 5, start the page** (on hold until the identity is ready; plan in `docs/marketing/posts.md`):
   - [ ] Add Lamina to your **Experience** (Founder, pick the Lamina page from the list so the logo shows)
-  - [ ] Sun 18 Oct, 9–11: **Post 1** in English from you (tower clip), Arabic from the page an hour later; pin it
+  - [ ] Post 1 (new date after the identity) in English from you (tower clip), Arabic from the page an hour later; pin it
   - [ ] After Post 1: **invite connections** to follow the page (farm and AgTech people first)
-  - [ ] Posts 2–6 on Tue 20, Thu 22, Sun 25, Tue 27, Thu 29 Oct
+  - [ ] Posts 2–6, every 2–3 days after Post 1
   - [ ] Merge the pull request that adds the LinkedIn link to the site's footer
 - [ ] **Social handles:** LinkedIn done (laminafarm). Still to grab: **@laminafarm** (or close) on Instagram. Instagram posts can come later, with the same images and bio.
 
@@ -76,7 +77,6 @@ Last updated: 17 Oct 2026 (LinkedIn page live; 2-week posting plan from Sun 18 O
 ## 6. Later, or when you're ready
 
 - [ ] **Trademark check** for "Lamina": WIPO Brand Database, classes 9 and 42 (plus Saudi Arabia's SAIP and the UAE if you can).
-- [ ] **Logo:** the Lamina wordmark (EN + Arabic). The site uses the leaf mark plus "Lamina" in the brand font until then.
 - [ ] **(On hold since 10 Oct) Landing images** (AI, photo-real, warm light): make the 6 images in `docs/image-brief.md` with your own tool (check it isn't from an Israeli company), and send them in chat. Start with 1 and 2, the hero background.
 
 ## Optional: let me test the live site myself

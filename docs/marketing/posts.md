@@ -10,7 +10,9 @@ Images are in `posts/`, one per post and language, 1080 × 1350 (4:5, which fits
 
 **Links:** each post has its own UTM tag, so Umami shows which post brought visitors. Keep the links exactly as written.
 
-## The first two weeks (from Sunday 18 Oct 2026)
+## The first two weeks (on hold)
+
+> **On hold (19 Oct 2026):** no posts until the new brand identity is chosen and the kit is re-made with it. The dates below get moved then.
 
 **Languages (decided 17 Oct):** the English version goes out from your personal profile; the Arabic version goes out from the Lamina page (linkedin.com/company/laminafarm) the same day, about an hour later. Both use the same image or clip.
 
