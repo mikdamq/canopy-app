@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 19 Oct 2026 (brand identity round; posting on hold).
+Last updated: 20 Oct 2026 (Twin logo system ready for review).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
@@ -59,7 +59,11 @@ Last updated: 19 Oct 2026 (brand identity round; posting on hold).
   - [x] Step 2, logo `social/logo-400.png` and the cover `social/linkedin-company-cover-en.jpg` (re-made at LinkedIn's new **4200 × 700** on 16 Oct; the Arabic one is `-ar.jpg`, kept for later)
   - [x] Step 3, the rest of **Edit page → Details**: About, year founded (2026), phone, then the **Arabic** name, tagline and About via **Manage languages** (all texts in `profiles.md`; a language can't be removed once added)
   - [x] Step 4, custom button (Visit website), 16 specialties, community hashtags if offered (all in `profiles.md`)
-- [ ] **Brand identity first** (decided 19 Oct): posting is **on hold** until we have a real logo. the 5 logo directions are ready on the concept board: https://claude.ai/artifact/DbbG4UNHyWNZDpSGBjpiTp (files in `docs/brand/`). Your part: **pick one (or a mix) and art-direct**, in chat or as comments on the board; then I build the full logo system (symbol, English and Arabic wordmarks, lockups, app icon, favicon, sizes)
+- [ ] **Brand identity first** (posting on hold until it's done):
+  - [x] Pick a logo direction: **C · Twin** (20 Oct)
+  - [ ] **Review the logo system** on the board (top row): https://claude.ai/artifact/DbbG4UNHyWNZDpSGBjpiTp, and confirm "Lamina" with a capital L. Files: `docs/brand/logo/` (SVG + PNG), rules in `docs/brand/README.md`
+  - [ ] Then: I put the new logo on the site (header, footer, favicon, share images, emails) and re-make the marketing kit (covers, banners, posts, one-pager)
+  - [ ] Then: swap the logo on the LinkedIn page to `docs/brand/logo/png/linkedin-logo-400.png`, and use `avatar-1080.png` for WhatsApp Business
 - [ ] **Step 5, start the page** (on hold until the identity is ready; plan in `docs/marketing/posts.md`):
   - [ ] Add Lamina to your **Experience** (Founder, pick the Lamina page from the list so the logo shows)
   - [ ] Post 1 (new date after the identity) in English from you (tower clip), Arabic from the page an hour later; pin it
