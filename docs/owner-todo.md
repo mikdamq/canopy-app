@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 20 Oct 2026 (Twin logo system ready for review).
+Last updated: 20 Oct 2026 (Mikdam is drawing the final logo).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
@@ -61,7 +61,11 @@ Last updated: 20 Oct 2026 (Twin logo system ready for review).
   - [x] Step 4, custom button (Visit website), 16 specialties, community hashtags if offered (all in `profiles.md`)
 - [ ] **Brand identity first** (posting on hold until it's done):
   - [x] Pick a logo direction: **C · Twin** (20 Oct)
-  - [ ] **Review the logo system** on the board (top row): https://claude.ai/artifact/DbbG4UNHyWNZDpSGBjpiTp, and confirm "Lamina" with a capital L. Files: `docs/brand/logo/` (SVG + PNG), rules in `docs/brand/README.md`
+  - [ ] **You draw the final logo** (decided 20 Oct), starting from the Twin direction if you like (my files: `docs/brand/logo/`, rules in `docs/brand/README.md`). Send me, as **SVG** (text turned into outlines):
+    - the symbol; plus simpler versions for 24 px and 16 px if it has fine detail;
+    - the horizontal logo in English, and in Arabic if you make one;
+    - one-colour versions (dark and white), or tell me I can make them;
+    - the exact colours if they change, and the font if the name isn't in Bricolage Grotesque
   - [ ] Then: I put the new logo on the site (header, footer, favicon, share images, emails) and re-make the marketing kit (covers, banners, posts, one-pager)
   - [ ] Then: swap the logo on the LinkedIn page to `docs/brand/logo/png/linkedin-logo-400.png`, and use `avatar-1080.png` for WhatsApp Business
 - [ ] **Step 5, start the page** (on hold until the identity is ready; plan in `docs/marketing/posts.md`):
