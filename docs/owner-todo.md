@@ -67,7 +67,7 @@ Last updated: 20 Oct 2026 (Mikdam is drawing the final logo).
     - one-colour versions (dark and white), or tell me I can make them;
     - the exact colours if they change, and the font if the name isn't in Bricolage Grotesque
   - [ ] Then: I put the new logo on the site (header, footer, favicon, share images, emails) and re-make the marketing kit (covers, banners, posts, one-pager)
-  - [ ] Then: swap the logo on the LinkedIn page to `docs/brand/logo/png/linkedin-logo-400.png`, and use `avatar-1080.png` for WhatsApp Business
+  - [ ] Then: swap the logo on the LinkedIn page and set the WhatsApp Business photo (I make both images from your files)
 - [ ] **Step 5, start the page** (on hold until the identity is ready; plan in `docs/marketing/posts.md`):
   - [ ] Add Lamina to your **Experience** (Founder, pick the Lamina page from the list so the logo shows)
   - [ ] Post 1 (new date after the identity) in English from you (tower clip), Arabic from the page an hour later; pin it
