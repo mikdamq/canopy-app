@@ -10,7 +10,9 @@ Made 9 Oct 2026. LinkedIn first, bold tone, English and Arabic. Everything uses 
 | `one-pager/*.jpg` | The same page as an image | Send in WhatsApp, where people won't open a PDF |
 | `social/` | LinkedIn banner, company cover, logo, Instagram avatar | Set up the profiles (see `profiles.md`) |
 | `profiles.md` | Headline, tagline, About text and bios (EN/AR) | Copy and paste into LinkedIn and Instagram |
-| `posts/` + `posts.md` | 5 launch posts: images and captions, EN/AR, each with its own tracked link | Post one every 2–3 days |
+| `posts/` + `posts.md` | 18 LinkedIn posts (6 weeks), EN/AR, each with its own tracked link; images for posts 1–5 (to be re-made with the new logo) | Post one every 2–3 days |
+| `instagram.md` | Instagram profile, formats, the first 9 posts (grid plan and captions), Reel ideas | When LinkedIn is running |
+| `video-scripts.md` | 30–60 s screen-recording scripts, one per farm type, EN/AR | WhatsApp replies, video posts, Reels |
 | `clips/` | 15-second square demo videos: one per farm type (EN) plus the tower in Arabic | Posts, WhatsApp status, and replies to "what does it look like?" |
 | `source/` | The scripts that made all of this | Re-making the kit after design changes (see below) |
 

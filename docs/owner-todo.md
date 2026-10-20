@@ -2,7 +2,7 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 20 Oct 2026 (Mikdam is drawing the final logo).
+Last updated: 20 Oct 2026 (posts 7–18, Instagram plan and video scripts written).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
@@ -52,7 +52,8 @@ Last updated: 20 Oct 2026 (Mikdam is drawing the final logo).
 ## 4. Marketing kit (guide: `docs/marketing/README.md`)
 
 - [ ] **Look through the kit:** one-pager, banners, 5 posts and clips in `docs/marketing/`. Tell me what to change: wording, images, colours.
-- [ ] Ask a native speaker to read the **Arabic** of posts 1 and 5 and the Arabic one-pager.
+- [ ] **Check the Arabic yourself** (decided 20 Oct): posts 1–18 in `docs/marketing/posts.md`, the captions in `instagram.md`, the voice-overs in `video-scripts.md`, and the Arabic one-pager. Mark changes in the files or send them in chat
+- [ ] **New content to review** (20 Oct): LinkedIn posts 7–18 (weeks 3–6, mostly from the guides), the Instagram plan (`instagram.md`), and the 4 demo video scripts (`video-scripts.md`; record them once the logo is in)
 - [ ] **Your LinkedIn profile:** new banner, headline, a line about Lamina and the Featured link (texts in `docs/marketing/profiles.md`). Prospects will look you up.
 - [x] **Lamina company page** is live: **linkedin.com/company/laminafarm** (17 Oct):
   - [x] Step 1, basics: name **Lamina**, address `linkedin.com/company/laminafarm`, website with UTM, industry **Software Development**, size **2–10**, type **Self-employed**, location **Amman, Jordan** (done 16 Oct)
