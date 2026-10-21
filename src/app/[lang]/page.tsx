@@ -22,15 +22,19 @@ const FEATURE_IMG = ["tower-zoom", "lab-zoom", "container-zoom", "tower-night"];
 const TYPE_ICON = [Building2, Container, Sprout, FlaskConical];
 const TYPE_IMG = ["tower", "container", "greenhouse", "lab"];
 
-/** Key words in a heading, in a lime badge. */
+/**
+ * Key words in a heading, in a lime badge. It's an inline block, so the line box grows
+ * around it instead of the badge painting over the line above (Arabic letters reach far
+ * above and below the line).
+ */
 function Hl({ children }: { children: ReactNode }) {
-  return <span className="rounded-[0.38em] bg-lime px-[0.22em] text-forest [box-decoration-break:clone]">{children}</span>;
+  return <span className="my-[0.08em] inline-block rounded-[0.38em] bg-lime px-[0.22em] py-[0.02em] leading-[1.2] text-forest rtl:leading-[1.45]">{children}</span>;
 }
 
 /** A heading split into a / hl / b, the middle part in a lime badge. */
 function Title({ t, className, as: Tag = "h2" }: { t: { a: string; hl: string; b: string }; className?: string; as?: "h2" | "h3" }) {
   return (
-    <Tag className={cn("max-w-[20ch] text-[34px] leading-[1.12] font-extrabold tracking-[-0.03em] text-balance sm:text-[46px]", className)}>
+    <Tag className={cn("max-w-[20ch] text-[34px] leading-[1.15] font-extrabold tracking-[-0.03em] text-balance rtl:leading-[1.4] sm:text-[46px]", className)}>
       {t.a} <Hl>{t.hl}</Hl>
       {t.b && ` ${t.b}`}
     </Tag>

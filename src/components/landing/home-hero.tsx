@@ -32,7 +32,7 @@ export function HomeHero({ lang, d, x }: { lang: Locale; d: Dict; x: HomeCopy })
           {x.hero.eyebrow}
         </motion.p>
         <h1
-          className="text-[42px] leading-[1.06] font-extrabold tracking-[-0.035em] text-white sm:text-[58px] lg:text-[66px]"
+          className="text-[42px] leading-[1.06] font-extrabold tracking-[-0.035em] text-white rtl:leading-[1.3] sm:text-[58px] lg:text-[66px]"
           aria-label={`${h.titleA} ${h.words[0]} ${h.titleB}`}
         >
           <motion.span {...fade(0.15)} className="block" aria-hidden>
