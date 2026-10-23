@@ -127,7 +127,7 @@ Leave out the Supabase and email settings on Netlify. Then test requests sent fr
 
 ## If something goes wrong
 - **"Incomplete response" or error 503:** open File Manager → `lamina` → `stderr.log` (if it's there), and send me the last 20 lines. They don't contain your passwords.
-- **The site shows an old version:** check `BUILD.txt`, then repeat Part 2. Don't forget **Restart**.
+- **The site shows an old version** (BUILD.txt is new, but pages look old): the app was serving pages it had saved for itself. File Manager → Settings → **Show Hidden Files** → open `lamina/.next/server` → delete the **route-cache** folder → **Restart**. Since 23 Oct 2026 the site no longer saves those copies and every upload clears the folder, so this shouldn't come back.
 - **Run NPM Install fails:** send me a screenshot of the message.
 - **The form says it couldn't send:** check the cPanel settings in Part 3, especially the SMTP server and password, then Restart.
 

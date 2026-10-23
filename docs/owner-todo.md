@@ -2,13 +2,13 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 21 Oct 2026 (live site needs a manual restart).
+Last updated: 23 Oct 2026 (found why the live site showed the old design).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
 ## 1. This week
 
-- [ ] **The live site still shows the old design** (the redesign and the badge fix were uploaded on 19 and 21 Oct, but the app didn't seem to restart). Open laminafarm.app in a private window; if it's still old: cPanel → **Setup Node.js App** → laminafarm.app → **Restart**, wait 30 seconds, refresh. Tell me whether that fixed it, so I can make the automatic restart reliable.
+- [ ] **Show the new design on the live site (one time, 2 minutes):** cPanel → File Manager → Settings → tick **Show Hidden Files** → open `lamina` → `.next` → `server` → delete the **route-cache** folder → Setup Node.js App → **Restart**. Then check laminafarm.app/ar. (The app had saved its own copies of the pages from 10 Oct and kept serving them; the next update stops this for good.)
 - [ ] **Look at the new design on the live site** (laminafarm.app, on your phone too) and tell me anything to polish. Next on my side: the link-preview pictures and the two emails in the new colours.
 - [ ] **Send me your LinkedIn profile address** (for the author line on the guides and the About page).
 - [ ] **Read the 13 guides on the live site** when you have time (laminafarm.app/en/learn and /ar/learn) and tell me any facts that don't match your experience, plus topics for the next guides. Company names are left out for now, as you asked.
