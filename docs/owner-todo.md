@@ -18,7 +18,7 @@ Last updated: 23 Oct 2026.
 - [ ] **Send yourself a test request in Arabic** on your phone (an English test worked on 23 Oct). Check both emails arrive and aren't in **Spam**, then try "Tell us more" on the thank-you screen and check you get the "More details: …" email.
 - [ ] **Email trust records**, so your emails don't land in Spam (still needed, 23 Oct):
   1. cPanel → **Email Deliverability** → find laminafarm.app. If DKIM and SPF both say **Valid**, they're done. If either shows a problem, click **Repair** (or **Manage** → Install the suggested record) and confirm.
-  2. cPanel → **Zone Editor** → laminafarm.app → **+ Add Record** → TXT. Name: `_dmarc`. Value: `v=DMARC1; p=none; rua=mailto:hello@laminafarm.app`. Save.
+  2. ☑ **DMARC already exists** (`_dmarc`: `v=DMARC1; p=none;`, found 23 Oct). Don't add a second one. Optional: **Edit** it to `v=DMARC1; p=none; rua=mailto:hello@laminafarm.app` to get weekly reports.
   3. Send a test request, open the email in Gmail → ⋮ → **Show original**: SPF, DKIM and DMARC should all say **PASS**. Send me a screenshot of that box if any says FAIL
 - [ ] **Google Search Console and Bing Webmaster Tools:** follow **`docs/search-console.md`** (about 15 minutes). It covers adding the site, the TXT record in cPanel, sending the sitemap, and copying it all to Bing.
 
