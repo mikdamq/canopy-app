@@ -10,7 +10,7 @@ import { getDictionary, getPages } from "@/i18n/dictionaries";
 import { PAGE, href } from "@/lib/routes";
 import { organization, webPage } from "@/lib/schema";
 import { contentMeta } from "@/lib/seo";
-import { brandName, CONTACT_EMAIL } from "@/lib/site";
+import { brandName, CONTACT_EMAIL, FOUNDER_LINKEDIN } from "@/lib/site";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/about">): Promise<Metadata> {
   const { lang } = await params;
@@ -63,6 +63,9 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
             <div>
               <p className="font-display text-[20px] font-bold">{f.name}</p>
               <p className="text-[14px] text-muted">{f.role}</p>
+              <a href={FOUNDER_LINKEDIN} target="_blank" rel="noopener" className="mt-1 inline-block text-[14px] font-semibold text-green underline-offset-4 hover:underline">
+                LinkedIn
+              </a>
             </div>
             {f.note.map((t) => (
               <p key={t} className="max-w-[65ch] text-[16px] leading-relaxed">

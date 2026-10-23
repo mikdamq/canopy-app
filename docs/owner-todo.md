@@ -2,26 +2,29 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 19 Oct 2026 (new look merged and live).
+Last updated: 23 Oct 2026.
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
 ## 1. This week
 
 - [ ] **Look at the new design on the live site** (laminafarm.app, on your phone too) and tell me anything to polish. Next on my side: the link-preview pictures and the two emails in the new colours.
-- [ ] **Send me your LinkedIn profile address** (for the author line on the guides and the About page).
+- [x] **Your LinkedIn profile:** linkedin.com/in/mikdam (23 Oct). Now linked from every guide's author line, the About page and the founder's structured data (live once PR #16 is merged)
 - [ ] **Read the 13 guides on the live site** when you have time (laminafarm.app/en/learn and /ar/learn) and tell me any facts that don't match your experience, plus topics for the next guides. Company names are left out for now, as you asked.
 - [ ] **Try the live site on your phone** and tell me anything that feels off:
   - the demo's guided tour (it starts after the welcome card; the **Tour** button replays it) and the toolbar that opens one panel at a time;
   - the header and ☰ menu on every page;
   - open a page, tap a link, then press Back: it should come back instantly (L8).
-- [ ] **Send yourself a test request in Arabic** on your phone. Check both emails arrive and aren't in **Spam**, then try "Tell us more" on the thank-you screen and check you get the "More details: …" email.
-- [ ] **Email trust records**, so your emails don't land in Spam: **SPF and DKIM** via cPanel → Email Deliverability → Repair, and **DMARC** in cPanel → Zone Editor (guide: `docs/accounts-setup.md`, phase 1).
+- [ ] **Send yourself a test request in Arabic** on your phone (an English test worked on 23 Oct). Check both emails arrive and aren't in **Spam**, then try "Tell us more" on the thank-you screen and check you get the "More details: …" email.
+- [ ] **Email trust records**, so your emails don't land in Spam (still needed, 23 Oct):
+  1. ☑ **SPF is in place** (`v=spf1 +a +mx +ip4:66.29.146.180 include:spf.web-hosting.com ~all`, checked 23 Oct; make sure there's only one `v=spf1` record). Still to check: **DKIM**, a TXT record `default._domainkey` starting `v=DKIM1`. cPanel → **Email Deliverability** → find laminafarm.app. If DKIM and SPF both say **Valid**, they're done. If either shows a problem, click **Repair** (or **Manage** → Install the suggested record) and confirm.
+  2. ☑ **DMARC already exists** (`_dmarc`: `v=DMARC1; p=none;`, found 23 Oct). Don't add a second one. Optional: **Edit** it to `v=DMARC1; p=none; rua=mailto:hello@laminafarm.app` to get weekly reports.
+  3. Send a test request, open the email in Gmail → ⋮ → **Show original**: SPF, DKIM and DMARC should all say **PASS**. Send me a screenshot of that box if any says FAIL
 - [ ] **Google Search Console and Bing Webmaster Tools:** follow **`docs/search-console.md`** (about 15 minutes). It covers adding the site, the TXT record in cPanel, sending the sitemap, and copying it all to Bing.
 
 ## 2. Before your first post or outreach message
 
-- [ ] **Confirm the site's promises:**
+- [x] **Confirm the site's promises** (approved in your marketing brief, 16 Oct):
   - reply within one business day;
   - set up in about two weeks;
   - free for 3 months;
@@ -38,13 +41,13 @@ Last updated: 19 Oct 2026 (new look merged and live).
 
 - [ ] **Google Analytics 4** (decided 15 Oct; the site is ready for it, PR #15):
   1. **analytics.google.com** → Create property "Lamina" (time zone Amman, currency USD) → **Web** data stream `https://laminafarm.app`.
-  2. Copy the **Measurement ID** (`G-…`, not secret) → GitHub → Settings → Secrets and variables → Actions → **Variables** → New: `NEXT_PUBLIC_GA_ID` → then Actions → cPanel package → Run workflow.
+  2. ☑ Property and web stream made; Measurement ID **`G-XJLFVKG30Q`** (17 Oct, not secret). Don't paste Google's script anywhere: the site loads it itself, only after "Allow". GitHub variable `NEXT_PUBLIC_GA_ID` added (17 Oct), and it's in the live site (checked in the 21 Oct build). GA only loads after a visitor clicks **Allow**, so GA's own "no data received" check can't see it. Test: a private window, no ad blocker, click **Allow**, then **Reports → Realtime** should show you within a minute. Don't paste Google's snippet anywhere.
   3. In GA4 → Admin → **Custom definitions** → Create these event-scoped dimensions (name = parameter): `farm_type`, `country`, `lang`, `size_band`, `place`, `stage`.
   4. Admin → **Key events**: mark `generate_lead` (main), plus `whatsapp_click` and `demo_opened`.
   5. Admin → Data collection: keep **Google signals off**. Admin → Data retention: **14 months**.
   6. Admin → Product links → **Search Console** → link laminafarm.app (after the Search Console step above).
 - [ ] **Umami:** add `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (and `NEXT_PUBLIC_UMAMI_SRC` if its script address isn't `https://cloud.umami.is/script.js`) under GitHub → Settings → Secrets and variables → Actions → **Variables**, then Actions → cPanel package → Run workflow. Then check Realtime shows you, Events shows `demo_opened`, and no farm names appear in page addresses.
-- [ ] **Clarity:** Settings → Masking → **Strict** (hides all on-page text in recordings, so nobody's farm or contact details are ever recorded). The ID is already built in; don't paste Clarity's script anywhere.
+- [x] **Clarity:** (done 17 Oct) Settings → Masking → **Strict** (hides all on-page text in recordings, so nobody's farm or contact details are ever recorded). The ID is already built in; don't paste Clarity's script anywhere.
 - [ ] **Speed on a real phone:** open **https://pagespeed.web.dev**, test `laminafarm.app/en` and `laminafarm.app/en/demo`, and **send me the two result links**. My test machine can't measure real phone speed for the 3D pages.
 - [ ] **Namecheap:** turn on **Withheld for Privacy** and **Auto-renew** for laminafarm.app.
 - [ ] **Leave Vercel** (any time): delete the Vercel project (Settings → Advanced → Delete), remove the Vercel app from GitHub (GitHub → Settings → Applications → Vercel → Uninstall), then delete your Vercel account if you like. Its bot still comments on every PR until then.
@@ -53,11 +56,30 @@ Last updated: 19 Oct 2026 (new look merged and live).
 ## 4. Marketing kit (guide: `docs/marketing/README.md`)
 
 - [ ] **Look through the kit:** one-pager, banners, 5 posts and clips in `docs/marketing/`. Tell me what to change: wording, images, colours.
-- [ ] Ask a native speaker to read the **Arabic** of posts 1 and 5 and the Arabic one-pager.
+- [ ] **Check the Arabic yourself** (decided 20 Oct): posts 1–18 in `docs/marketing/posts.md`, the captions in `instagram.md`, the voice-overs in `video-scripts.md`, and the Arabic one-pager. Mark changes in the files or send them in chat
+- [ ] **New content to review** (20 Oct): LinkedIn posts 7–18 (weeks 3–6, mostly from the guides), the Instagram plan (`instagram.md`), and the 4 demo video scripts (`video-scripts.md`; record them once the logo is in)
 - [ ] **Your LinkedIn profile:** new banner, headline, a line about Lamina and the Featured link (texts in `docs/marketing/profiles.md`). Prospects will look you up.
-- [ ] **Create the Lamina company page** on LinkedIn: logo, cover, tagline and About (all in `profiles.md`).
-- [ ] **Post 1** once the promises in section 2 are confirmed, then one post every 2–3 days (`posts.md`).
-- [ ] **Social handles:** grab @lamina / @laminafarm (or close) on Instagram and LinkedIn. Instagram posts can come later, with the same images and bio.
+- [x] **Lamina company page** is live: **linkedin.com/company/laminafarm** (17 Oct):
+  - [x] Step 1, basics: name **Lamina**, address `linkedin.com/company/laminafarm`, website with UTM, industry **Software Development**, size **2–10**, type **Self-employed**, location **Amman, Jordan** (done 16 Oct)
+  - [x] Step 2, logo `social/logo-400.png` and the cover `social/linkedin-company-cover-en.jpg` (re-made at LinkedIn's new **4200 × 700** on 16 Oct; the Arabic one is `-ar.jpg`, kept for later)
+  - [x] Step 3, the rest of **Edit page → Details**: About, year founded (2026), phone, then the **Arabic** name, tagline and About via **Manage languages** (all texts in `profiles.md`; a language can't be removed once added)
+  - [x] Step 4, custom button (Visit website), 16 specialties, community hashtags if offered (all in `profiles.md`)
+- [ ] **Brand identity first** (posting on hold until it's done):
+  - [x] Pick a logo direction: **C · Twin** (20 Oct)
+  - [ ] **You draw the final logo** (decided 20 Oct), starting from the Twin direction if you like (my files: `docs/brand/logo/`, rules in `docs/brand/README.md`). Send me, as **SVG** (text turned into outlines):
+    - the symbol; plus simpler versions for 24 px and 16 px if it has fine detail;
+    - the horizontal logo in English, and in Arabic if you make one;
+    - one-colour versions (dark and white), or tell me I can make them;
+    - the exact colours if they change, and the font if the name isn't in Bricolage Grotesque
+  - [ ] Then: I put the new logo on the site (header, footer, favicon, share images, emails) and re-make the marketing kit (covers, banners, posts, one-pager)
+  - [ ] Then: swap the logo on the LinkedIn page and set the WhatsApp Business photo (I make both images from your files)
+- [ ] **Step 5, start the page** (on hold until the identity is ready; plan in `docs/marketing/posts.md`):
+  - [ ] Add Lamina to your **Experience** (Founder, pick the Lamina page from the list so the logo shows)
+  - [ ] Post 1 (new date after the identity) in English from you (tower clip), Arabic from the page an hour later; pin it
+  - [ ] After Post 1: **invite connections** to follow the page (farm and AgTech people first)
+  - [ ] Posts 2–6, every 2–3 days after Post 1
+  - [ ] Merge the pull request that adds the LinkedIn link to the site's footer
+- [ ] **Social handles:** LinkedIn done (laminafarm). Still to grab: **@laminafarm** (or close) on Instagram. Instagram posts can come later, with the same images and bio.
 
 ## 5. Outreach
 
@@ -68,7 +90,6 @@ Last updated: 19 Oct 2026 (new look merged and live).
 ## 6. Later, or when you're ready
 
 - [ ] **Trademark check** for "Lamina": WIPO Brand Database, classes 9 and 42 (plus Saudi Arabia's SAIP and the UAE if you can).
-- [ ] **Logo:** the Lamina wordmark (EN + Arabic). The site uses the leaf mark plus "Lamina" in the brand font until then.
 - [ ] **(On hold since 10 Oct) Landing images** (AI, photo-real, warm light): make the 6 images in `docs/image-brief.md` with your own tool (check it isn't from an Israeli company), and send them in chat. Start with 1 and 2, the hero background.
 
 ## Optional: let me test the live site myself

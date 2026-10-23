@@ -124,15 +124,17 @@ const banner = (lang, w = 1584, h = 396) => {
   </div></div>`;
 };
 
-// LinkedIn company page cover 1128x191.
+// LinkedIn company page cover: 4200x700 since 2025 (drawn at 1200x200, sent at 3.5x).
+// LinkedIn trims the edges on some screens and the logo sits over the bottom-left, so the
+// copy stays in the middle band and the farm fills the far side.
 const cover = (lang) => {
   const t = T[lang];
   const rtl = lang === "ar";
-  return `<div class="r" dir="${rtl ? "rtl" : "ltr"}" style="width:1128px;height:191px;background:${NIGHT}">
-  <div class="img" style="${rtl ? "left" : "right"}:-60px;top:-90px;width:620px;height:388px;background-image:url(${IMG}tower-en-night-clean.jpg);background-size:cover;-webkit-mask-image:radial-gradient(closest-side at 44% 50%,#000 60%,transparent 100%)"></div>
-  <div style="position:absolute;top:0;bottom:0;${rtl ? "right" : "left"}:250px;display:flex;flex-direction:column;justify-content:center;gap:8px">
+  return `<div class="r" dir="${rtl ? "rtl" : "ltr"}" style="width:1200px;height:200px;background:${NIGHT}">
+  <div class="img" style="${rtl ? "left:-150px" : "right:-40px"};top:-96px;width:660px;height:413px;background-image:url(${IMG}tower-en-night-clean.jpg);background-size:cover;${rtl ? "transform:scaleX(-1);" : ""}-webkit-mask-image:radial-gradient(closest-side at 44% 50%,#000 60%,transparent 100%)"></div>
+  <div style="position:absolute;top:0;bottom:0;${rtl ? "right" : "left"}:270px;display:flex;flex-direction:column;justify-content:center;gap:8px">
     <div class="m" style="color:#ff4fd8;font-size:12px">${t.eyebrow}</div>
-    <div class="d" style="color:#fff;font-size:40px">${t.head.replace("<br>", " ")}</div>
+    <div class="d" style="color:#fff;font-size:42px">${t.head.replace("<br>", " ")}</div>
     <div class="m" style="color:#7ee2a4;font-size:13px;text-transform:none;letter-spacing:0">laminafarm.app</div>
   </div></div>`;
 };
@@ -297,7 +299,7 @@ for (const lang of ["en", "ar"]) {
   await p.close();
 }
 const doc = (lang, html) => `<!doctype html><html lang="${lang}" dir="${lang === "ar" ? "rtl" : "ltr"}" class="${head[lang].cls}"><head><meta charset="utf-8">${head[lang].css.map((h) => `<link rel="stylesheet" href="${h}">`).join("")}<style>${BASE(lang)} body{margin:0;background:transparent}</style></head><body>${html}</body></html>`;
-async function render(lang, html, file, w, h, { pdf = false, scale = 1 } = {}) {
+async function render(lang, html, file, w, h, { pdf = false, scale = 1, jpg = false } = {}) {
   if (ONLY && !file.includes(ONLY)) return;
   const p = await b.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: scale });
   await p.route(`${SITE}/__mk`, (r) => r.fulfill({ contentType: "text/html", body: doc(lang, html) }));
@@ -306,7 +308,7 @@ async function render(lang, html, file, w, h, { pdf = false, scale = 1 } = {}) {
   await p.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => console.log("  (network not idle)"));
   await p.evaluate(() => Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 5000))]));
   await p.waitForTimeout(400);
-  await p.screenshot({ path: `${OUT}/${file}.png`, clip: { x: 0, y: 0, width: w, height: h } });
+  await p.screenshot({ path: `${OUT}/${file}.${jpg ? "jpg" : "png"}`, clip: { x: 0, y: 0, width: w, height: h }, ...(jpg && { type: "jpeg", quality: 92 }) });
   if (pdf) await p.pdf({ path: `${OUT}/${file}.pdf`, width: `${w}px`, height: `${h}px`, printBackground: true, pageRanges: "1" });
   await p.close();
   console.log("wrote", file);
@@ -314,7 +316,7 @@ async function render(lang, html, file, w, h, { pdf = false, scale = 1 } = {}) {
 
 for (const lang of ["en", "ar"]) {
   await render(lang, banner(lang), `social/linkedin-banner-${lang}`, 1584, 396, { scale: 2 });
-  await render(lang, cover(lang), `social/linkedin-company-cover-${lang}`, 1128, 191, { scale: 2 });
+  await render(lang, cover(lang), `social/linkedin-company-cover-${lang}`, 1200, 200, { scale: 3.5, jpg: true });
   await render(lang, post1(lang), `posts/post-1-launch-${lang}`, PW, PH);
   await render(lang, post2(lang), `posts/post-2-farm-types-${lang}`, PW, PH);
   await render(lang, post3(lang), `posts/post-3-light-recipes-${lang}`, PW, PH);

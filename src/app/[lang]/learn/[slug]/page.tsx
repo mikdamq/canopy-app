@@ -11,6 +11,7 @@ import { getDictionary, getGuides, getPages } from "@/i18n/dictionaries";
 import { GUIDES, GUIDE_SLUG, PAGE, demoPath, guideBySlug, guidePath, href, solutionPath, topicOf } from "@/lib/routes";
 import { article, faqPage, webPage } from "@/lib/schema";
 import { contentMeta } from "@/lib/seo";
+import { FOUNDER_LINKEDIN } from "@/lib/site";
 
 export function generateStaticParams() {
   return LOCALES.flatMap((lang) => GUIDES.map((g) => ({ lang, slug: GUIDE_SLUG[g] })));
@@ -82,7 +83,9 @@ export default async function GuidePage({ params }: PageProps<"/[lang]/learn/[sl
                 MQ
               </span>
               <span className="flex flex-col">
-                <span className="font-semibold">{ix.by}</span>
+                <a href={FOUNDER_LINKEDIN} target="_blank" rel="author noopener" className="font-semibold underline-offset-4 hover:underline">
+                  {ix.by}
+                </a>
                 <time dateTime={x.date} className="text-white/60">
                   {fmt(ix.updated, { date: x.dateText })}
                 </time>

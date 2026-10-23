@@ -4,7 +4,7 @@ import { CookieSettingsButton } from "@/components/analytics";
 import { NameForm } from "@/components/landing/name-form";
 import type { Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/en";
-import { BRAND, CONTACT_EMAIL } from "@/lib/site";
+import { BRAND, CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/site";
 import { Mark } from "./logo";
 import { sitePages, siteSolutions } from "./site-nav";
 import { WhatsAppIcon, WhatsAppLink } from "./whatsapp-link";
@@ -60,6 +60,12 @@ export function SiteFooter({ lang, d }: { lang: Locale; d: Dict }) {
                 <WhatsAppIcon className="size-4" />
                 {d.whatsapp.short}
               </WhatsAppLink>
+              <a href={LINKEDIN_URL} className={pill} target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" className="size-4" fill="currentColor" aria-hidden>
+                  <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11H3v-11Zm6.5 0h3.8v1.5h.06c.53-1 1.83-1.8 3.77-1.8 4 0 4.37 2.4 4.37 5.5v5.8h-4v-5.1c0-1.25-.02-2.85-1.75-2.85-1.75 0-2.02 1.36-2.02 2.76v5.19h-4v-11Z" />
+                </svg>
+                LinkedIn
+              </a>
             </div>
           </div>
           {columns.map((c) => (

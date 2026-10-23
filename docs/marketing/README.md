@@ -10,7 +10,9 @@ Made 9 Oct 2026. LinkedIn first, bold tone, English and Arabic. Everything uses 
 | `one-pager/*.jpg` | The same page as an image | Send in WhatsApp, where people won't open a PDF |
 | `social/` | LinkedIn banner, company cover, logo, Instagram avatar | Set up the profiles (see `profiles.md`) |
 | `profiles.md` | Headline, tagline, About text and bios (EN/AR) | Copy and paste into LinkedIn and Instagram |
-| `posts/` + `posts.md` | 5 launch posts: images and captions, EN/AR, each with its own tracked link | Post one every 2–3 days |
+| `posts/` + `posts.md` | 18 LinkedIn posts (6 weeks), EN/AR, each with its own tracked link; images for posts 1–5 (to be re-made with the new logo) | Post one every 2–3 days |
+| `instagram.md` | Instagram profile, formats, the first 9 posts (grid plan and captions), Reel ideas | When LinkedIn is running |
+| `video-scripts.md` | 30–60 s screen-recording scripts, one per farm type, EN/AR | WhatsApp replies, video posts, Reels |
 | `clips/` | 15-second square demo videos: one per farm type (EN) plus the tower in Arabic | Posts, WhatsApp status, and replies to "what does it look like?" |
 | `source/` | The scripts that made all of this | Re-making the kit after design changes (see below) |
 
@@ -31,7 +33,7 @@ Each one is a 15-second, silent take on the sample farm "Green Valley":
 They have no sound and no captions, so they work muted in a feed. Add your own voice-over if you like (script ideas are in `docs/launch-kit/demo-video.md`).
 
 ## Before posting anything
-- **The domain has to be live.** Every link and the QR codes point to `laminafarm.app`.
+- ~~The domain has to be live.~~ Done: laminafarm.app is live (10 Oct 2026), so every link and QR code works.
 - **Confirm the promises** (owner to-do, section 4): "3 months free", "about two weeks" to set up, and the 2-minute feedback form every two weeks. The posts and the one-pager repeat them.
 - **Check the Arabic.** It's Modern Standard Arabic, written to read naturally. Have a native speaker read posts 1 and 5 once.
 
