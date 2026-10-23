@@ -75,7 +75,7 @@ export function GuideCard({
         href={href(lang, guidePath(guide))}
         className={cn(
           "group flex h-full flex-col overflow-hidden rounded-3xl border transition-colors",
-          dark ? "border-white/10 bg-white/[0.06] text-white hover:border-white/40" : "border-line bg-white hover:border-green",
+          dark ? "border-white/10 bg-white/[0.06] text-white hover:border-white/40" : "border-transparent bg-white hover:border-forest/25",
         )}
       >
         <div className="overflow-hidden">
@@ -84,7 +84,7 @@ export function GuideCard({
         <div className="flex flex-1 flex-col gap-2.5 p-5 sm:p-6">
           <p className={cn("flex flex-wrap items-center gap-2 text-[12.5px]", dark ? "text-[#b9c3d6]" : "text-muted")}>
             {tag && (
-              <span className={cn("rounded-full px-2.5 py-0.5 font-semibold", dark ? "bg-white/10 text-white" : "bg-[#eaf5ee] text-green-ink")}>{tag}</span>
+              <span className={cn("rounded-full px-2.5 py-0.5 font-semibold", dark ? "bg-white/10 text-white" : "bg-sage text-green-ink")}>{tag}</span>
             )}
             <span>{fmt(read, { n: String(readMinutes(g)) })}</span>
           </p>
@@ -105,7 +105,7 @@ export function FeaturedGuide({ lang, g, badge, read, open }: { lang: Locale; g:
   return (
     <Link
       href={href(lang, guidePath("guide"))}
-      className="group grid overflow-hidden rounded-[28px] border border-line bg-white shadow-[0_30px_80px_-40px_rgba(20,27,43,0.45)] transition-colors hover:border-green lg:grid-cols-[1.15fr_1fr]"
+      className="group grid overflow-hidden rounded-[32px] border border-transparent bg-white shadow-[0_30px_80px_-40px_rgba(14,59,41,0.5)] transition-colors hover:border-forest/25 lg:grid-cols-[1.15fr_1fr]"
     >
       <div className="overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element -- static WebP still in two sizes; no image optimiser on the cPanel host */}
@@ -123,7 +123,7 @@ export function FeaturedGuide({ lang, g, badge, read, open }: { lang: Locale; g:
       </div>
       <div className="flex flex-col justify-center gap-4 p-6 sm:p-10">
         <p className="flex flex-wrap items-center gap-2 text-[13px] text-muted">
-          <span className="rounded-full bg-green px-3 py-1 font-semibold text-white">{badge}</span>
+          <span className="rounded-full bg-lime px-3 py-1 font-bold text-forest">{badge}</span>
           <span>{fmt(read, { n: String(readMinutes(g)) })}</span>
         </p>
         <h2 className="font-display text-[28px] leading-[1.08] font-bold tracking-[-0.015em] text-balance sm:text-[36px]">{g.title}</h2>
@@ -159,15 +159,15 @@ export function GuideBlock({ lang, s, n }: { lang: Locale; s: GuideSection; n: n
         </h2>
       </div>
       {s.body.map((t) => (
-        <p key={t} className="text-[17.5px] leading-[1.8] text-[#2a3345] sm:text-[18px]">
+        <p key={t} className="text-[17.5px] leading-[1.8] text-ink/85 sm:text-[18px]">
           <Rich lang={lang} text={t} />
         </p>
       ))}
       {s.list && (
         <ul className="flex flex-col gap-3">
           {s.list.map((t) => (
-            <li key={t} className="flex items-start gap-3 text-[17px] leading-[1.7] text-[#2a3345]">
-              <span className="mt-1 grid size-6 shrink-0 place-items-center rounded-full bg-green text-white">
+            <li key={t} className="flex items-start gap-3 text-[17px] leading-[1.7] text-ink/85">
+              <span className="mt-1 grid size-6 shrink-0 place-items-center rounded-full bg-forest text-lime">
                 <Check className="size-3.5" strokeWidth={3} aria-hidden />
               </span>
               <span>
@@ -188,7 +188,7 @@ export function GuideBlock({ lang, s, n }: { lang: Locale; s: GuideSection; n: n
             <thead>
               <tr>
                 {s.table.head.map((h, i) => (
-                  <th key={i} scope="col" className="border-b border-green-ink bg-green px-4 py-3 text-start font-semibold text-white">
+                  <th key={i} scope="col" className="border-b border-forest bg-forest px-4 py-3 text-start font-semibold text-white">
                     {h}
                   </th>
                 ))}
@@ -196,14 +196,14 @@ export function GuideBlock({ lang, s, n }: { lang: Locale; s: GuideSection; n: n
             </thead>
             <tbody>
               {s.table.rows.map((row, r) => (
-                <tr key={r} className="even:bg-[#f6f9f7]">
+                <tr key={r} className="even:bg-cream">
                   {row.map((c, i) =>
                     i === 0 && s.table!.head[0] === "" ? (
                       <th key={i} scope="row" className="border-b border-line px-4 py-3 text-start align-top font-semibold [tr:last-child_&]:border-b-0">
                         {c}
                       </th>
                     ) : (
-                      <td key={i} className="border-b border-line px-4 py-3 align-top leading-relaxed text-[#3a4458] [tr:last-child_&]:border-b-0">
+                      <td key={i} className="border-b border-line px-4 py-3 align-top leading-relaxed text-ink/80 [tr:last-child_&]:border-b-0">
                         {c}
                       </td>
                     ),

@@ -35,13 +35,15 @@ export default async function RequestPage({ params, searchParams }: PageProps<"/
   const other = lang === "en" ? "ar" : "en";
   return (
     <div className="min-h-svh bg-bg">
-      <SiteHeader
-        lang={lang}
-        nav={d.nav}
-        wa={d.whatsapp}
-        variant="request"
-        langHref={`/${other}/request${q.size ? `?${q}` : ""}`}
-      />
+      <div className="bg-forest text-white">
+        <SiteHeader
+          lang={lang}
+          nav={d.nav}
+          wa={d.whatsapp}
+          variant="request"
+          langHref={`/${other}/request${q.size ? `?${q}` : ""}`}
+        />
+      </div>
       <JsonLd
         data={graph(
           webPage(lang, "/request", d.meta.requestTitle, d.meta.description, "ContactPage"),

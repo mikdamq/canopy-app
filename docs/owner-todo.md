@@ -2,20 +2,24 @@
 
 One list of everything that's waiting on you. I update it every time something changes. Tick items off, or just tell me in chat and I'll tick them.
 
-Last updated: 20 Oct 2026 (posts 7–18, Instagram plan and video scripts written).
+Last updated: 23 Oct 2026.
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
 ## 1. This week
 
-- [ ] **Send me your LinkedIn profile address** (for the author line on the guides and the About page).
+- [ ] **Look at the new design on the live site** (laminafarm.app, on your phone too) and tell me anything to polish. Next on my side: the link-preview pictures and the two emails in the new colours.
+- [x] **Your LinkedIn profile:** linkedin.com/in/mikdam (23 Oct). Now linked from every guide's author line, the About page and the founder's structured data (live once PR #16 is merged)
 - [ ] **Read the 13 guides on the live site** when you have time (laminafarm.app/en/learn and /ar/learn) and tell me any facts that don't match your experience, plus topics for the next guides. Company names are left out for now, as you asked.
 - [ ] **Try the live site on your phone** and tell me anything that feels off:
   - the demo's guided tour (it starts after the welcome card; the **Tour** button replays it) and the toolbar that opens one panel at a time;
   - the header and ☰ menu on every page;
   - open a page, tap a link, then press Back: it should come back instantly (L8).
-- [ ] **Send yourself a test request in Arabic** on your phone. Check both emails arrive and aren't in **Spam**, then try "Tell us more" on the thank-you screen and check you get the "More details: …" email.
-- [ ] **Email trust records**, so your emails don't land in Spam: **SPF and DKIM** via cPanel → Email Deliverability → Repair, and **DMARC** in cPanel → Zone Editor (guide: `docs/accounts-setup.md`, phase 1).
+- [ ] **Send yourself a test request in Arabic** on your phone (an English test worked on 23 Oct). Check both emails arrive and aren't in **Spam**, then try "Tell us more" on the thank-you screen and check you get the "More details: …" email.
+- [ ] **Email trust records**, so your emails don't land in Spam (still needed, 23 Oct):
+  1. cPanel → **Email Deliverability** → find laminafarm.app. If DKIM and SPF both say **Valid**, they're done. If either shows a problem, click **Repair** (or **Manage** → Install the suggested record) and confirm.
+  2. cPanel → **Zone Editor** → laminafarm.app → **+ Add Record** → TXT. Name: `_dmarc`. Value: `v=DMARC1; p=none; rua=mailto:hello@laminafarm.app`. Save.
+  3. Send a test request, open the email in Gmail → ⋮ → **Show original**: SPF, DKIM and DMARC should all say **PASS**. Send me a screenshot of that box if any says FAIL
 - [ ] **Google Search Console and Bing Webmaster Tools:** follow **`docs/search-console.md`** (about 15 minutes). It covers adding the site, the TXT record in cPanel, sending the sitemap, and copying it all to Bing.
 
 ## 2. Before your first post or outreach message
@@ -105,5 +109,5 @@ My cloud workspace can't open `laminafarm.app` or `*.netlify.app` (blocked by it
 - [x] Working hours: Sunday to Thursday, 9:00–23:00 Amman time (10 Oct)
 - [x] Pricing answer: "Free during the pilot. Before it ends we agree a price together, based on your farm's size. No surprises, no lock-in." (10 Oct)
 - [x] Email designs approved (10 Oct)
-- [x] Merged: PR #6 (rename, navigation, marketing kit), PR #12 (emails, short form), PR #13 (content pages, header), PR #14 (demo tour and toolbar), PR #15 (13 guides, new guide layout, GA4 support, sitemap) (16 Oct)
+- [x] Merged: PR #6 (rename, navigation, marketing kit), PR #12 (emails, short form), PR #13 (content pages, header), PR #14 (demo tour and toolbar), PR #15 (13 guides, new guide layout, GA4 support, sitemap) (16 Oct), PR #17 (new look on the whole site: forest, cream and lime) (19 Oct)
 - [x] Growth plan approved; guide layout approved (16 Oct)

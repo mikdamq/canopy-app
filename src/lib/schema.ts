@@ -1,5 +1,5 @@
 import type { Locale } from "@/i18n/config";
-import { BRAND, BRAND_AR, CONTACT_EMAIL, WHATSAPP_NUMBER, LINKEDIN_URL, baseUrl } from "./site";
+import { BRAND, BRAND_AR, CONTACT_EMAIL, WHATSAPP_NUMBER, LINKEDIN_URL, FOUNDER_LINKEDIN, baseUrl } from "./site";
 
 /**
  * Structured data (JSON-LD, schema.org) for search engines and AI tools. Plain objects;
@@ -25,7 +25,7 @@ export function organization(): Thing {
     address: { "@type": "PostalAddress", addressLocality: "Amman", addressCountry: "JO" },
     areaServed: AREA.map((name) => ({ "@type": "Country", name })),
     sameAs: [LINKEDIN_URL],
-    founder: { "@type": "Person", name: "Mikdam Qandil", jobTitle: "Founder" },
+    founder: { "@type": "Person", name: "Mikdam Qandil", jobTitle: "Founder", sameAs: [FOUNDER_LINKEDIN] },
     knowsAbout: ["vertical farming", "indoor farming", "container farms", "hydroponic greenhouses", "digital twins", "farm management software"],
   };
 }
@@ -126,7 +126,7 @@ export function article(
     dateModified: a.date,
     inLanguage: lang,
     articleSection: a.section,
-    author: { "@type": "Person", name: "Mikdam Qandil", jobTitle: "Founder", worksFor: { "@id": ORG_ID() } },
+    author: { "@type": "Person", name: "Mikdam Qandil", jobTitle: "Founder", url: FOUNDER_LINKEDIN, sameAs: [FOUNDER_LINKEDIN], worksFor: { "@id": ORG_ID() } },
     publisher: { "@id": ORG_ID() },
     ...(a.about?.length ? { about: a.about.map((name) => ({ "@type": "Thing", name })) } : {}),
     ...(a.sources?.length ? { citation: a.sources.map((s) => ({ "@type": "CreativeWork", name: s.t, url: s.url })) } : {}),

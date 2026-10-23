@@ -56,7 +56,17 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
 
   return (
     <div className="flex min-h-svh flex-col bg-bg">
-      <SiteHeader lang={lang} nav={d.nav} wa={d.whatsapp} langHref={`/${other}/privacy`} />
+      <div className="band bg-forest text-white">
+        <SiteHeader lang={lang} nav={d.nav} wa={d.whatsapp} langHref={`/${other}/privacy`} />
+        <div className="mx-auto w-full max-w-6xl px-4 pt-10 pb-16 sm:px-6 lg:pt-14 lg:pb-20">
+          <p className="flex w-fit items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[12.5px] font-semibold text-lime">
+            <span className="size-1.5 rounded-full bg-current" aria-hidden />
+            {p.eyebrow}
+          </p>
+          <h1 className="mt-4 text-[38px] leading-[1.06] font-extrabold tracking-[-0.035em] sm:text-[56px]">{p.title}</h1>
+          <p className="mt-3 text-[13.5px] text-white/60">{p.updated}</p>
+        </div>
+      </div>
       <JsonLd
         data={graph(
           webPage(lang, "/privacy", d.meta.privacyTitle, d.meta.privacyDescription),
@@ -66,7 +76,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
           ]),
         )}
       />
-      <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 pt-8 pb-20 sm:px-6 lg:pt-14">
+      <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 pt-12 pb-20 sm:px-6 lg:pt-16">
         <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
           {/* Contents, pinned on wide screens */}
           <nav aria-label={p.title} className="hidden lg:block">
@@ -85,10 +95,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
           </nav>
 
           <article className="max-w-[68ch] min-w-0">
-            <p className="font-mono text-[12px] tracking-[0.12em] text-green uppercase">{p.eyebrow}</p>
-            <h1 className="mt-3 font-display text-[36px] leading-[1.05] font-bold tracking-[-0.02em] sm:text-[48px]">{p.title}</h1>
-            <p className="mt-3 text-[13px] text-muted">{p.updated}</p>
-            <p className="mt-6 text-[17px] leading-relaxed">{fmt(p.intro, { brand: brandName(lang) })}</p>
+            <p className="text-[17px] leading-relaxed">{fmt(p.intro, { brand: brandName(lang) })}</p>
 
             <div className="mt-10 flex flex-col gap-10">
               {p.sections.map((s, i) => (
@@ -99,7 +106,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
                     </span>
                     {s.t}
                   </h2>
-                  <div className="mt-3 flex flex-col gap-3 text-[15.5px] leading-relaxed text-[#2b3447]">
+                  <div className="mt-3 flex flex-col gap-3 text-[15.5px] leading-relaxed text-ink/80">
                     {s.p.map((t) => (
                       <Para key={t} text={t} brand={brandName(lang)} />
                     ))}
@@ -110,7 +117,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
 
             <Link
               href={`/${lang}`}
-              className="mt-12 inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-4 py-2 text-[14px] font-semibold transition-colors hover:border-ink"
+              className="mt-12 inline-flex items-center gap-1.5 rounded-full border-2 border-forest/25 px-4 py-2 text-[14px] font-bold transition-colors hover:border-forest"
             >
               <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
               {p.back}
@@ -118,7 +125,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
           </article>
         </div>
       </main>
-      <SiteFooter lang={lang} d={d.footer} nav={d.nav} wa={d.whatsapp} />
+      <SiteFooter lang={lang} d={d} />
     </div>
   );
 }

@@ -1,22 +1,29 @@
 @import "tailwindcss";
 
 /*
- * Lamina palette. Light, clean control-room feel: cool off-white ground,
- * deep ink text, one living green, and the pink of grow lights as a rare accent.
+ * Lamina palette (18 Oct 2026): deep forest and emerald bands, cream and sage panels,
+ * lime for calls to action, badges and highlighted words, and the pink of grow lights
+ * as a rare accent. Text on lime is always forest; white and small text never go on leaf.
  */
 :root {
-  --bg: #eef2f5;
+  --bg: #f6f4ec;
   --paper: #ffffff;
-  --ink: #141b2b;
-  --muted: #5b677d;
-  --line: #dce2ec;
+  --ink: #0f2a1e;
+  --muted: #55635a;
+  --line: #e0e3d6;
   /* Buttons and green text: deep enough for white text and small labels (5.4:1). */
   --green: #1f7a45;
   /* The brand's lighter green, for shapes only: logo mark, progress bars, dots, glows. */
   --leaf: #2e9e5b;
   --green-ink: #086b4a;
   --led: #ff4fd8;
-  --night: #0b1222;
+  --night: #08291c;
+  /* Bands and accents. Lime is for fills, and for text on forest only. */
+  --forest: #0e3b29;
+  --emerald: #08291c;
+  --cream: #f6f4ec;
+  --sage: #e3ebdc;
+  --lime: #c6f04d;
 }
 
 @theme inline {
@@ -30,18 +37,24 @@
   --color-green-ink: var(--green-ink);
   --color-led: var(--led);
   --color-night: var(--night);
+  --color-forest: var(--forest);
+  --color-emerald: var(--emerald);
+  --color-cream: var(--cream);
+  --color-sage: var(--sage);
+  --color-lime: var(--lime);
   --font-sans: var(--cf-sans);
   --font-display: var(--cf-display);
   --font-mono: var(--cf-mono);
 }
 
+/* Plus Jakarta Sans for Latin text and headings; IBM Plex Sans Arabic for Arabic. */
 html[lang="ar"] {
   --cf-sans: var(--cf-arabic), var(--cf-latin), system-ui, sans-serif;
-  --cf-display: var(--cf-arabic), var(--cf-latin-display), system-ui, sans-serif;
+  --cf-display: var(--cf-arabic), var(--cf-latin), system-ui, sans-serif;
 }
 html[lang="en"] {
   --cf-sans: var(--cf-latin), system-ui, sans-serif;
-  --cf-display: var(--cf-latin-display), system-ui, sans-serif;
+  --cf-display: var(--cf-latin), system-ui, sans-serif;
 }
 
 /* Letter-spacing breaks the joins between Arabic letters. */
