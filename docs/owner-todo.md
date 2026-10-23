@@ -6,6 +6,13 @@ Last updated: 23 Oct 2026 (found why the live site showed the old design).
 
 **The site is live at laminafarm.app.** Sections 1–3 are what stands between it and your first outreach. Sections 4–6 can follow.
 
+## Next on my side
+
+- Merge PR #19 when you say so (stops the live site from getting stuck on old pages), then check laminafarm.app/build.txt shows the new version.
+- Link previews (the picture when you share a link) and the two emails in the new colours and font.
+- Re-make the marketing kit (one-pager, banners, posts) in the new look, once you've reviewed the live site.
+- Everything that went wrong and how we fixed it is in `docs/problems-and-fixes.md`.
+
 ## 1. This week
 
 - [ ] **Show the new design on the live site (one time, 2 minutes):** cPanel → File Manager → Settings → tick **Show Hidden Files** → open `lamina` → `.next` → `server` → delete the **route-cache** folder → Setup Node.js App → **Restart**. Then check laminafarm.app/ar. (The app had saved its own copies of the pages from 10 Oct and kept serving them; the next update stops this for good.)
