@@ -32,6 +32,8 @@ printf 'omit=optional\nfund=false\naudit=false\n' > "$OUT/.npmrc"
 
 # Record what was built, for support.
 { echo "commit: ${GITHUB_SHA:-$(git rev-parse HEAD 2>/dev/null || echo unknown)}"; echo "built: $(date -u +%Y-%m-%dT%H:%M:%SZ)"; } > "$OUT/BUILD.txt"
+# The same note at laminafarm.app/build.txt, to check which version is live after a merge.
+cp "$OUT/BUILD.txt" "$OUT/public/build.txt"
 
 (cd dist && zip -qr lamina-cpanel.zip lamina)
 echo "Package ready: dist/lamina-cpanel.zip ($(du -h dist/lamina-cpanel.zip | cut -f1))"

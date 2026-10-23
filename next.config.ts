@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
   // The live site runs as a Node.js app on cPanel: `STANDALONE=1 pnpm build` makes a
   // self-contained server (.next/standalone) to upload. Netlify staging builds normally.
   output: process.env.STANDALONE === "1" ? "standalone" : undefined,
+  // Next 16 saves a copy of each page in .next/server/route-cache the first time it's
+  // served and prefers that copy from then on. Uploads replace the build but never that
+  // folder, so the live site kept serving its first copies after every update (Oct 2026).
+  // Keep those copies in memory only; a restart then always serves the new build.
+  experimental: { isrFlushToDisk: false },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

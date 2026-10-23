@@ -54,6 +54,9 @@ ftp "mirror --reverse --parallel=4 --verbose=1 $SRC/ /" || {
   fi
   exit 1
 }
+# Clear the pages the old server saved for itself (Next's route cache): it prefers them
+# over the new build, so without this the site keeps showing the previous version.
+ftp "rm -r -f .next/server/route-cache" || true
 # Restart last, once every file is in place.
 ftp "mkdir -p -f tmp; put -O tmp dist/restart.txt"
 
