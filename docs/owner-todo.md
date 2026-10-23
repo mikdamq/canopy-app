@@ -41,7 +41,7 @@ Last updated: 23 Oct 2026.
 
 - [ ] **Google Analytics 4** (decided 15 Oct; the site is ready for it, PR #15):
   1. **analytics.google.com** → Create property "Lamina" (time zone Amman, currency USD) → **Web** data stream `https://laminafarm.app`.
-  2. ☑ Property and web stream made; Measurement ID **`G-XJLFVKG30Q`** (17 Oct, not secret). Don't paste Google's script anywhere: the site loads it itself, only after "Allow". GitHub variable `NEXT_PUBLIC_GA_ID` added (17 Oct). Still to do: Actions → cPanel package → **Run workflow**, then check **Reports → Realtime** after clicking Allow on the site.
+  2. ☑ Property and web stream made; Measurement ID **`G-XJLFVKG30Q`** (17 Oct, not secret). Don't paste Google's script anywhere: the site loads it itself, only after "Allow". GitHub variable `NEXT_PUBLIC_GA_ID` added (17 Oct), and it's in the live site (checked in the 21 Oct build). GA only loads after a visitor clicks **Allow**, so GA's own "no data received" check can't see it. Test: a private window, no ad blocker, click **Allow**, then **Reports → Realtime** should show you within a minute. Don't paste Google's snippet anywhere.
   3. In GA4 → Admin → **Custom definitions** → Create these event-scoped dimensions (name = parameter): `farm_type`, `country`, `lang`, `size_band`, `place`, `stage`.
   4. Admin → **Key events**: mark `generate_lead` (main), plus `whatsapp_click` and `demo_opened`.
   5. Admin → Data collection: keep **Google signals off**. Admin → Data retention: **14 months**.
